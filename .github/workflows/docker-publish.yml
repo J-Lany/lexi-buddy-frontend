@@ -31,12 +31,12 @@ jobs:
           context: .
           push: true
           provenance: false
-          tags: ghcr.io/j-lany/lexy-buddy-frontend:main
-          outputs: type=image,name=ghcr.io/j-lany/lexy-buddy-frontend:main
+          tags: ghcr.io/j-lany/lexi-buddy-frontend:main
+          outputs: type=image,name=ghcr.io/j-lany/lexi-buddy-frontend:main
 
       - name: Trigger Infra Deploy
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRA_TRIGGER_TOKEN }}
-          repository: J-Lany/lexy-buddy-infra
+          repository: J-Lany/lexi-buddy-infra
           event-type: deploy

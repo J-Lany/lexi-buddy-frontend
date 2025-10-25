@@ -1,8 +1,8 @@
 {
-  "name": "lexy-buddy-frontend",
+  "name": "lexi-buddy-frontend",
   "version": "0.1.0",
   "private": true,
-  "description": "Frontend for Lexy Buddy (Next.js + TypeScript + React 19)",
+  "description": "Frontend for Lexi Buddy (Next.js + TypeScript + React 19)",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
