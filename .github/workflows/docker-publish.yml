@@ -2,7 +2,7 @@ name: Build & Publish Docker image
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "develop" ]
     tags: [ "v*" ]
 
 jobs:
@@ -16,27 +16,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Log in to GitHub Container Registry
+      - name: Log in to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Extract branch name
+        id: branch
+        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
+      - name: Build and push image
         uses: docker/build-push-action@v5
-        env:
-          BUILDKIT_PROGRESS: plain
         with:
           context: .
           push: true
           provenance: false
-          tags: ghcr.io/j-lany/lexi-buddy-frontend:main
-          outputs: type=image,name=ghcr.io/j-lany/lexi-buddy-frontend:main
+          tags: |
+            ghcr.io/j-lany/lexi-buddy-frontend:${{ env.BRANCH }}
 
       - name: Trigger Infra Deploy
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.INFRA_TRIGGER_TOKEN }}
           repository: J-Lany/lexi-buddy-infra
-          event-type: deploy
+          event-type: deploy-${{ env.BRANCH }}
+          client-payload: '{"ref": "${{ env.BRANCH }}"}'
