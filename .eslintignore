@@ -5,3 +5,4 @@ dist
 .husky
 .env
 .git
+package-lock.json
