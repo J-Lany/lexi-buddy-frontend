@@ -27,12 +27,22 @@ jobs:
         id: branch
         run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
 
+      - name: Set API URL for branch
+        run: |
+          if [ "${{ env.BRANCH }}" = "main" ]; then
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_PROD }}" >> $GITHUB_ENV
+          else
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}" >> $GITHUB_ENV
+          fi
+
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           provenance: false
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ env.NEXT_PUBLIC_API_URL }}
           tags: |
             ghcr.io/j-lany/lexi-buddy-frontend:${{ env.BRANCH }}
 
