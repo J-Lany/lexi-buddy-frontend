@@ -26,7 +26,9 @@ export default function FormContent() {
   const signup = useSignupMutation();
 
   const onSubmit = (data: FormValues) => {
-    signup.mutate(data, {
+    const { email, password } = data;
+    const payload = { email, password };
+    signup.mutate(payload, {
       onSuccess: () => {
         toast.success('Account created 🎉', {
           description: 'Check your email to activate your account.',
@@ -34,7 +36,7 @@ export default function FormContent() {
         router.push(EAppRoutes.LOGIN);
       },
       onError: (error) => {
-        toast.error('Something went wrong', { description: error.message || 'Please try again.' });
+        toast.error('Something went wrong', { description: error.message });
       },
     });
   };
