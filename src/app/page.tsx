@@ -1,9 +1,6 @@
-import styles from './page.module.css';
+import { redirect } from 'next/navigation';
+import { EAppRoutes } from '@/lib/routes';
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>Home page</main>
-    </div>
-  );
+  return redirect(EAppRoutes.STUDENTS);
 }

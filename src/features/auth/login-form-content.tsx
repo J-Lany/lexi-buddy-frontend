@@ -30,7 +30,7 @@ export default function LoginFormContent() {
     const payload = { email, password };
     signup.mutate(payload, {
       onSuccess: () => {
-        router.push(EAppRoutes.HOME);
+        router.push(EAppRoutes.STUDENTS);
       },
       onError: (error) => {
         toast.error('Something went wrong', { description: error.message });
