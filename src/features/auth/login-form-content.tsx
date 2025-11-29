@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FormValues } from '@/features/auth/utils/types';
+import { LoginFormValues } from '@/features/auth/utils/types';
 import { loginSchema } from '@/features/auth/utils/validation';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ export default function LoginFormContent() {
   const router = useRouter();
   const signup = useSigninMutation();
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: LoginFormValues) => {
     const { email, password } = data;
     const payload = { email, password };
     signup.mutate(payload, {
