@@ -7,33 +7,30 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { FormValues } from '@/features/auth/utils/types';
-import { signupSchema } from '@/features/auth/utils/validation';
-import { useSignupMutation } from '@/features/auth/hooks/use-signup';
+import { LoginFormValues } from '@/features/auth/utils/types';
+import { loginSchema } from '@/features/auth/utils/validation';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { EAppRoutes } from '@/lib/routes';
+import { useSigninMutation } from '@/features/auth/hooks/use-sigin';
 
-export default function FormContent() {
+export default function LoginFormContent() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(signupSchema),
+    resolver: zodResolver(loginSchema),
   });
   const router = useRouter();
-  const signup = useSignupMutation();
+  const signup = useSigninMutation();
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: LoginFormValues) => {
     const { email, password } = data;
     const payload = { email, password };
     signup.mutate(payload, {
       onSuccess: () => {
-        toast.success('Account created 🎉', {
-          description: 'Check your email to activate your account.',
-        });
-        router.push(EAppRoutes.LOGIN);
+        router.push(EAppRoutes.HOME);
       },
       onError: (error) => {
         toast.error('Something went wrong', { description: error.message });
@@ -44,9 +41,9 @@ export default function FormContent() {
   return (
     <form className="flex flex-col gap-6 p-4" onSubmit={handleSubmit(onSubmit)}>
       <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Create an account</h2>
+        <h2 className="text-2xl font-semibold">Login to your account</h2>
         <p className="text-muted-foreground text-sm">
-          Enter your information below to create your account.
+          Enter your email below to login to your account
         </p>
       </div>
 
@@ -68,24 +65,16 @@ export default function FormContent() {
             </FieldDescription>
           )}
         </Field>
-
-        <Field>
-          <FieldLabel>Confirm Password</FieldLabel>
-          <Input {...register('confirmPassword')} type="password" />
-          {errors.confirmPassword && (
-            <p className="text-sm text-destructive mt-1">{errors.confirmPassword.message}</p>
-          )}
-        </Field>
       </div>
 
       <Button disabled={isSubmitting} className="w-full h-11 text-base">
-        {isSubmitting ? 'Creating...' : 'Create Account'}
+        {isSubmitting ? 'In process...' : 'Login'}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
-        Already have an account?{' '}
-        <Link href={EAppRoutes.LOGIN} className="underline font-medium text-primary">
-          Sign in
+        Don’t have an account?{' '}
+        <Link href={EAppRoutes.REGISTRATION} className="underline font-medium text-primary">
+          Sign up
         </Link>
       </p>
     </form>
