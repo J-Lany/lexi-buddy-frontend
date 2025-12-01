@@ -19,7 +19,7 @@ export default function StudentsPage() {
           <Button
             size="lg"
             variant={isStudetnsTab ? 'default' : 'outline'}
-            className="rounded-full"
+            className="rounded-full flex-1 sm:flex-none"
             onClick={() => setTabIndex(EStudentsTab.STUDENTS)}
           >
             All students
@@ -27,7 +27,7 @@ export default function StudentsPage() {
           <Button
             size="lg"
             variant={isGroupsTab ? 'default' : 'outline'}
-            className="rounded-full"
+            className="rounded-full flex-1 sm:flex-none"
             onClick={() => setTabIndex(EStudentsTab.GROUPS)}
           >
             Groups

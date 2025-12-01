@@ -37,7 +37,28 @@ const mock = [
     level: 'C1',
   },
   {
+    id: 'lmokn5',
+    name: 'Elena',
+    telegram: 'elenap',
+    group: 'Dogs',
+    level: 'A2',
+  },
+  {
     id: 'plmokn5',
+    name: 'Elena',
+    telegram: 'elenap',
+    group: 'Dogs',
+    level: 'A2',
+  },
+  {
+    id: 'plmokn',
+    name: 'Elena',
+    telegram: 'elenap',
+    group: 'Dogs',
+    level: 'A2',
+  },
+  {
+    id: 'plmkn5',
     name: 'Elena',
     telegram: 'elenap',
     group: 'Dogs',
@@ -48,7 +69,7 @@ const mock = [
 export function StudentTable() {
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-4 py-3 px-6 font-semibold rounded-full">
+      <div className="hidden sm:grid grid-cols-4 py-3 px-6 font-semibold rounded-full">
         <span>Name</span>
         <span>Telegram</span>
         <span>Group</span>
