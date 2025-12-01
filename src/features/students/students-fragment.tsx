@@ -8,7 +8,7 @@ export function StudentsFragment() {
       <Button className="rounded-full w-48" variant="outline">
         + Add student
       </Button>
-      <Input placeholder="search" className="w-[384px]" />
+      <Input placeholder="search" className="w-full md:w-[384px]" />
       <StudentTable />
     </section>
   );
