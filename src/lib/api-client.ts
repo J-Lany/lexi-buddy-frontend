@@ -1,9 +1,18 @@
 import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
-import { ApiError } from 'next/dist/server/api-utils';
 
-type ApiErrorResponse = {
-  message?: string;
-};
+type ApiErrorResponse = { message?: string };
+
+export class HttpError extends Error {
+  status?: number;
+  code?: string;
+
+  constructor(message: string, opts?: { status?: number; code?: string }) {
+    super(message);
+    this.name = 'HttpError';
+    this.status = opts?.status;
+    this.code = opts?.code;
+  }
+}
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -44,10 +53,14 @@ api.interceptors.response.use(
       } catch {}
     }
 
-    const message = error.response?.data?.message ?? error.message ?? 'Something went wrong';
+    const message: string =
+      error.response?.data?.message ?? error.message ?? 'Something went wrong';
 
     return Promise.reject(
-      new ApiError(message, { status: error.response?.status, code: error.code }),
+      new HttpError(message, {
+        status: error.response?.status,
+        code: error.code,
+      }),
     );
   },
 );
