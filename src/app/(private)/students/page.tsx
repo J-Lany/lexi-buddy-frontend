@@ -14,7 +14,7 @@ export default function StudentsPage() {
 
   return (
     <main>
-      <section className="flex flex-col gap-8">
+      <section className="max-w-5xl flex flex-col gap-8">
         <div className="flex gap-4">
           <Button
             size="lg"
