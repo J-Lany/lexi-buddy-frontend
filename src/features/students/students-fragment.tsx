@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { StudentTable } from '@/features/students/student-table';
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
+import { CreateGroupModal } from '@/features/students/create-group/create-group-modal';
 
 export function StudentsFragment() {
   const { isError, isLoading, data, error } = useGetStudents();
