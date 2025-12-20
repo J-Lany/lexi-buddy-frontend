@@ -21,10 +21,10 @@ export function StudentsPicker({
   onChange,
 }: {
   students: Student[];
-  value: string[];
-  onChange: (ids: string[]) => void;
+  value: number[];
+  onChange: (ids: number[]) => void;
 }) {
-  const toggle = (id: string) => {
+  const toggle = (id: number) => {
     onChange(value.includes(id) ? value.filter((x) => x !== id) : [...value, id]);
   };
 

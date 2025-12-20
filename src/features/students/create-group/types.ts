@@ -1,5 +1,5 @@
 export type Student = {
-  id: string;
+  id: number;
   name: string;
   username: string;
   groupName: string;
@@ -10,5 +10,5 @@ export type CreateGroupDraft = {
   name: string;
   level: string;
   description: string;
-  studentIds: string[];
+  studentIds: number[];
 };
