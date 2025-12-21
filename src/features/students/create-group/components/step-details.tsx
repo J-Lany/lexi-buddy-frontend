@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import type { CreateGroupDraft } from './types';
+import type { CreateGroupDraft } from '../types';
 
 export function StepDetails({
   draft,

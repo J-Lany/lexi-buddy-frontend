@@ -1,4 +1,4 @@
-import { Student, StudentRow } from '@/features/students/student-row';
+import { Student, StudentRow } from '@/features/students/get-students/components/student-row';
 
 export function StudentTable({ students }: { students: Student[] }) {
   return (

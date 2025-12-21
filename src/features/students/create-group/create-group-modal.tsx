@@ -20,9 +20,9 @@ import {
 } from '@/features/students/hooks/use-create-group';
 
 import type { CreateGroupDraft, Student } from './types';
-import { StepDetails } from './step-details';
-import { StepStudents } from './step-students';
-import { StepProgress } from './step-progress';
+import { StepDetails } from './components/step-details';
+import { StepStudents } from './components/step-students';
+import { StepProgress } from './components/step-progress';
 
 const initialDraft: CreateGroupDraft = {
   name: '',

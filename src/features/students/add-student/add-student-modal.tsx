@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 
-import { StudentSearchPicker } from './student-search-picker';
+import { StudentSearchPicker } from './components/student-search-picker';
 import type { StudentSearchItem } from '@/features/students/hooks/use-search-students';
 import { useCreateTeacherRequestMutation } from '@/features/students/hooks/use-create-teacher-request';
 
