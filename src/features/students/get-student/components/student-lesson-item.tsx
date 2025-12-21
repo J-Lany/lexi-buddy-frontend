@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import type { StudentDashboard } from '@/features/students/api/use-get-student-dashboard';
 import { formatDate } from '@/features/students/utils/helpers';
+import type { StudentDashboard } from '@/features/students/utils/types';
 
 export default function StudentLessonItem({
   lesson,

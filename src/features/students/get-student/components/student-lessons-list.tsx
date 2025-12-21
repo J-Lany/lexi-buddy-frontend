@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { StudentDashboard } from '@/features/students/api/use-get-student-dashboard';
 import StudentLessonItem from './student-lesson-item';
+import type { StudentDashboard } from '@/features/students/utils/types';
 
 export default function StudentLessonsList({ lessons }: { lessons: StudentDashboard['lessons'] }) {
   return (

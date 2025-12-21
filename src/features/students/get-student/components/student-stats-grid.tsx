@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { StudentDashboard } from '@/features/students/api/use-get-student-dashboard';
 import { formatDate } from '@/features/students/utils/helpers';
+import type { StudentDashboard } from '@/features/students/utils/types';
 
 export default function StudentStatsGrid({
   stats,
