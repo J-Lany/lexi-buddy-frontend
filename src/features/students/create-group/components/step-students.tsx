@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import type { CreateGroupDraft, Student } from './types';
+import type { CreateGroupDraft, Student } from '../types';
 import { StudentsPicker } from './students-picker';
 
 export function StepStudents({

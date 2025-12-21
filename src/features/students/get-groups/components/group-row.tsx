@@ -1,4 +1,4 @@
-import { Student } from '@/features/students/student-row';
+import { Student } from '@/features/students/get-students/components/student-row';
 
 export type Group = {
   id: number;

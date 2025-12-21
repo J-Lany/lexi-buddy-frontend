@@ -1,4 +1,4 @@
-import { Group, GroupRow } from '@/features/students/group-row';
+import { Group, GroupRow } from '@/features/students/get-groups/components/group-row';
 
 export function GroupTable({ groups }: { groups: Group[] }) {
   return (

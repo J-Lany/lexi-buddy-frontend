@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export type Student = {
   id: string;
   name: string;
@@ -8,7 +10,8 @@ export type Student = {
 
 export function StudentRow({ student }: { student: Student }) {
   return (
-    <div
+    <Link
+      href={`/students/${student.id}`}
       className="
         flex items-center justify-between
         py-3 px-4
@@ -26,6 +29,6 @@ export function StudentRow({ student }: { student: Student }) {
         <span className="text-gray-600 truncate">{student.groupName}</span>
         <span className="text-gray-600 truncate">{student.level}</span>
       </div>
-    </div>
+    </Link>
   );
 }

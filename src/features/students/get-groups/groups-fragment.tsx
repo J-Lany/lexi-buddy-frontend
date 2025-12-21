@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { useGetGroups } from '@/features/students/hooks/use-get-groups';
-import { GroupTable } from '@/features/students/group-table';
+import { GroupTable } from '@/features/students/get-groups/components/group-table';
 import { CreateGroupModal } from '@/features/students/create-group/create-group-modal';
 
 export function GroupsFragment() {

@@ -13,7 +13,7 @@ import {
   CommandSeparator,
 } from '@/components/ui/command';
 
-import type { Student } from './types';
+import type { Student } from '../types';
 
 export function StudentsPicker({
   students,
