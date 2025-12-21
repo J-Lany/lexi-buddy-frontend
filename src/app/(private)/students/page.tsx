@@ -1,10 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { EStudentsTab } from '@/features/students/utils/consts';
-import { StudentsFragment } from '@/features/students/get-students/students-fragment';
-import { GroupsFragment } from '@/features/students/get-groups/groups-fragment';
+import { GroupsFragment } from '@/features/groups/group-table/groups-fragment';
+import { StudentsFragment } from '@/features/students/students-table/students-fragment';
 
 export default function StudentsPage() {
   const [tabIndex, setTabIndex] = useState(EStudentsTab.STUDENTS);

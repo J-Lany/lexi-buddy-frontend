@@ -1,12 +1,10 @@
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { StudentTable } from '@/features/students/get-students/components/student-table';
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
-import { CreateGroupModal } from '@/features/students/create-group/create-group-modal';
-import { InviteStudentModal } from '@/features/students/add-student/add-student-modal';
+import { InviteStudentModal } from '@/features/students/add-student-modal/add-student-modal';
+import { StudentTable } from '@/features/students/students-table/components/student-table';
 
 export function StudentsFragment() {
-  const { isError, isLoading, data, error } = useGetStudents();
+  const { data } = useGetStudents();
 
   return (
     <section className="flex flex-col gap-4">

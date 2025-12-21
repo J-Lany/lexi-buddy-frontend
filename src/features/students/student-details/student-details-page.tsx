@@ -1,11 +1,11 @@
 'use client';
 
-import StudentDetailsSkeleton from '@/features/students/get-student/components/student-details-skeleton';
-import StudentDetailsError from '@/features/students/get-student/components/student-details-error';
-import StudentProfileCard from '@/features/students/get-student/components/student-profile-card';
-import StudentStatsGrid from '@/features/students/get-student/components/student-stats-grid';
-import StudentLessonsList from '@/features/students/get-student/components/student-lessons-list';
 import { useGetStudentDashboard } from '@/features/students/hooks/use-get-student-dashboard';
+import StudentDetailsError from '@/features/students/student-details/components/student-details-error';
+import StudentDetailsSkeleton from '@/features/students/student-details/components/student-details-skeleton';
+import StudentStatsGrid from '@/features/students/student-details/components/student-stats-grid';
+import StudentProfileCard from '@/features/students/student-details/components/student-profile-card';
+import StudentLessonsList from '@/features/students/student-details/components/student-lessons-list';
 
 export default function StudentDetailsPage({ studentId }: { studentId: string }) {
   const { data, isLoading, isError } = useGetStudentDashboard(studentId);

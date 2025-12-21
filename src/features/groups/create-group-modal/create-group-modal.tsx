@@ -17,7 +17,7 @@ import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import {
   CreateGroupPayload,
   useCreateGroupMutation,
-} from '@/features/students/hooks/use-create-group';
+} from '@/features/groups/hooks/use-create-group';
 
 import type { CreateGroupDraft, Student } from './types';
 import { StepDetails } from './components/step-details';
