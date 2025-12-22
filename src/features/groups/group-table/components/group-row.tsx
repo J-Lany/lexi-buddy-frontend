@@ -1,5 +1,5 @@
-import { Student } from '@/features/students/get-students/components/student-row';
 import Link from 'next/link';
+import { Student } from '@/features/groups/create-group-modal/types';
 
 export type Group = {
   id: number;
