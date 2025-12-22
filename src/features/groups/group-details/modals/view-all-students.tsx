@@ -38,9 +38,11 @@ export function ViewAllStudentsDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="ml-auto">
-          View all
-        </Button>
+        {students.length > 2 && (
+          <Button variant="ghost" className="ml-auto">
+            View all
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent className="max-w-lg sm:max-w-2xl">

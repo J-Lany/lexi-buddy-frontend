@@ -11,11 +11,13 @@ export default function GroupLessonsList({ lessons }: { lessons: GroupLesson[] }
         <ViewAllLessonsDialog lessons={lessons} title="All lessons" />
       </CardHeader>
 
-      <CardContent className="overflow-x-auto -mx-6 px-6 pb-2">
+      <CardContent className="overflow-x-auto px-6 pb-2">
         <div className="flex gap-4 w-max snap-x snap-mandatory">
-          {lessons.map((l) => (
-            <LessonCard key={l.id} lesson={l} />
-          ))}
+          {lessons.length === 0 ? (
+            <div className="text-sm text-muted-foreground">Nothing here</div>
+          ) : (
+            lessons.map((l) => <LessonCard key={l.id} lesson={l} />)
+          )}
         </div>
       </CardContent>
     </Card>

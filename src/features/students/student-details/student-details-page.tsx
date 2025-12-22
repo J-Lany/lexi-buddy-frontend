@@ -14,7 +14,7 @@ export default function StudentDetailsPage({ studentId }: { studentId: string })
   if (isError || !data) return <StudentDetailsError />;
 
   return (
-    <div className="flex flex-col gap-6 pb-17">
+    <div className="max-w-5xl flex flex-col gap-6 pb-17">
       <StudentProfileCard student={data.student} groups={data.groups} stats={data.stats} />
       <StudentStatsGrid stats={data.stats} lessonsTotal={data.lessons.length} />
       <StudentLessonsList lessons={data.lessons} />

@@ -23,9 +23,11 @@ export function ViewAllLessonsDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" className="ml-auto">
-          View all
-        </Button>
+        {lessons.length > 2 && (
+          <Button variant="ghost" className="ml-auto">
+            View all
+          </Button>
+        )}
       </DialogTrigger>
 
       <DialogContent className="max-w-lg sm:max-w-2xl">
@@ -35,9 +37,11 @@ export function ViewAllLessonsDialog({
 
         <ScrollArea className="max-h-[70vh] pr-4">
           <div className="grid gap-4 sm:grid-cols-2">
-            {lessons.map((l) => (
-              <LessonCard key={l.id} lesson={l} />
-            ))}
+            {lessons.length === 0 ? (
+              <div className="text-sm text-muted-foreground">Nothing here</div>
+            ) : (
+              lessons.map((l) => <LessonCard key={l.id} lesson={l} />)
+            )}
           </div>
         </ScrollArea>
       </DialogContent>

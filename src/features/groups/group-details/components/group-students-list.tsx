@@ -11,12 +11,13 @@ export default function GroupStudentsList({ students }: { students: GroupStudent
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {students.map((s) => (
-          <div key={s.id} className="flex justify-between items-center">
-            <div>
-              <div className="font-semibold">{s.name}</div>
-              {s.username && <div className="text-sm text-blue-600">@{s.username}</div>}
-            </div>
-            <div className="text-sm text-muted-foreground">{s.level}</div>
+          <div
+            key={s.id}
+            className="grid grid-cols-[1fr_1fr_auto] items-center border p-3  rounded-xl"
+          >
+            <div className="font-semibold truncate">{s.name}</div>
+            {s.username && <div className="text-sm text-blue-600 truncate">@{s.username}</div>}
+            <div className="text-sm text-muted-foreground truncate">{s.level}</div>
           </div>
         ))}
       </CardContent>

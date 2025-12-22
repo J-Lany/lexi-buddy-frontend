@@ -15,7 +15,7 @@ export default function GroupDetailsPage({ groupId }: { groupId: string }) {
   if (isError || !data) return <StudentDetailsError />;
 
   return (
-    <div className="flex flex-col gap-6 pb-17">
+    <div className="max-w-5xl flex flex-col gap-6 pb-17">
       <GroupProfileCard group={data.group} />
       <GroupStatsGrid
         studentsCount={data.group.studentsCount}
