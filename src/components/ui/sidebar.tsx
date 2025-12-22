@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { RoutesLabels } from '@/lib/routes';
+import { EAppRoutes, RoutesLabels } from '@/lib/routes';
 import { cn } from '@/lib/utils';
 
 export function Sidebar() {
@@ -11,7 +11,8 @@ export function Sidebar() {
   return (
     <nav className="flex flex-col gap-6  p-6">
       {RoutesLabels.map(({ label, href }) => {
-        const isActive = pathname?.startsWith(href);
+        const isGroupPage = pathname?.startsWith(EAppRoutes.GROUPS) && href === EAppRoutes.STUDENTS;
+        const isActive = pathname?.startsWith(href) || isGroupPage;
         return (
           <Link
             key={href}

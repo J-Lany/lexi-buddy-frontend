@@ -34,7 +34,9 @@ export function MobileFooter() {
     <footer className="fixed bottom-0 left-0 right-0 bg-white border-t sm:hidden">
       <nav className="flex justify-around items-center h-16 px-4">
         {navItemsWithIcons.map((item) => {
-          const isActive = pathname?.startsWith(item.href);
+          const isGroupPage =
+            pathname?.startsWith(EAppRoutes.GROUPS) && item.href === EAppRoutes.STUDENTS;
+          const isActive = pathname?.startsWith(item.href) || isGroupPage;
           const Icon = item.IconComponent;
 
           return (

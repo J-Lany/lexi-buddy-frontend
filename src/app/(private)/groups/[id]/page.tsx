@@ -1,3 +1,5 @@
-export default function GroupPage() {
-  return <h1>Particular Group Page</h1>;
+import GroupDetailsPage from '@/features/groups/group-details/group-details-page';
+
+export default function GroupPage({ params }: { params: { id: string } }) {
+  return <GroupDetailsPage groupId={params.id} />;
 }
