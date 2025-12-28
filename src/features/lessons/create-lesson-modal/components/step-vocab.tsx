@@ -8,17 +8,13 @@ import { useTranslateMutation } from '@/features/lessons/create-lesson-modal/hoo
 import { Loader } from 'lucide-react';
 import { CreateLessonDraft, VocabItem } from '@/features/lessons/create-lesson-modal/types';
 
-export function StepVocab({
-  draft,
-  onChange,
-  onNext,
-  onBack,
-}: {
+type Props = {
   draft: CreateLessonDraft;
   onChange: (patch: Partial<CreateLessonDraft>) => void;
   onNext: () => void;
   onBack: () => void;
-}) {
+};
+export function StepVocab({ draft, onChange, onNext, onBack }: Props) {
   const initialTerms = draft?.vocabItems.map((i) => i.term).join('. ');
 
   const [terms, setTerms] = useState(initialTerms);

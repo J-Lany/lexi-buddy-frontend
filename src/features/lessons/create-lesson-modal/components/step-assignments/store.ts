@@ -1,10 +1,6 @@
 import { EAssigmentType, TAssignment } from '@/features/lessons/create-lesson-modal/types';
 
-type AssignmentState = {
-  [key in EAssigmentType]?: TAssignment[];
-};
-
-type AssignmentState = {
+export type AssignmentState = {
   [key in EAssigmentType]?: TAssignment[];
 };
 

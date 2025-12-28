@@ -8,12 +8,23 @@ import {
 } from '@/features/lessons/create-lesson-modal/components/step-assignments/utils';
 import { assignmentReducer } from '@/features/lessons/create-lesson-modal/components/step-assignments/store';
 import { useCreateAssigments } from '@/features/lessons/create-lesson-modal/hooks/use-create-assigments';
-import { EAssigmentType } from '@/features/lessons/create-lesson-modal/types';
+import {
+  CreateLessonDraft,
+  EAssigmentType,
+  TAssignment,
+} from '@/features/lessons/create-lesson-modal/types';
 import { AssignmentCard } from '@/features/lessons/create-lesson-modal/components/step-assignments/assignment-card';
 import { useCreateLesson } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
 import { toast } from 'sonner';
 
-export function StepAssignments({ draft, onChange, onNext, onBack }) {
+type Props = {
+  draft: CreateLessonDraft;
+  onChange: (patch: Partial<CreateLessonDraft>) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
+
+export function StepAssignments({ draft, onNext, onBack }: Props) {
   const [generatedAssignments, dispatch] = useReducer(assignmentReducer, {});
   const { mutate, isPending, isError, error } = useCreateAssigments();
   const { mutate: createLesson, isPending: isCreating } = useCreateLesson();
@@ -46,7 +57,10 @@ export function StepAssignments({ draft, onChange, onNext, onBack }) {
       },
       {
         onSuccess: (data) => {
-          const dataWithType = data.map((question) => ({ ...question, assignmentType }));
+          const dataWithType = data.map((question: Partial<TAssignment>) => ({
+            ...question,
+            assignmentType,
+          }));
           dispatch({
             type: 'SET_ASSIGNMENTS',
             payload: {

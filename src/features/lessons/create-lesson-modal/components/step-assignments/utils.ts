@@ -4,6 +4,8 @@ import {
   TAnswer,
   TAssignment,
 } from '@/features/lessons/create-lesson-modal/types';
+import { CreateLessonPayload } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
+import { AssignmentState } from '@/features/lessons/create-lesson-modal/components/step-assignments/store';
 
 export const getTypeLabel = (type: EAssigmentType): string => {
   switch (type) {
@@ -20,25 +22,24 @@ export const getTypeLabel = (type: EAssigmentType): string => {
   }
 };
 
-export const prepareLessonToSubmit = (draft: Partial<CreateLessonDraft>, generatedAssignments) => {
-  if (!generatedAssignments) return;
-
-  const assignments = Object.entries(generatedAssignments).map(
-    ([type, questions]: [string, TAssignment]) => {
-      return {
-        type: type,
-        questions: questions.map((q: TAssignment) => ({
-          text: q.question,
-          questionType: q.questionType,
-          explanation: q.explanation,
-          answers: q.answers.map((a: TAnswer) => ({
-            text: a.text,
-            isCorrect: a.isCorrect,
-          })),
+export const prepareLessonToSubmit = (
+  draft: Partial<CreateLessonDraft>,
+  generatedAssignments: AssignmentState,
+): CreateLessonPayload => {
+  const assignments = Object.entries(generatedAssignments)
+    .filter(([, questions]) => Array.isArray(questions) && questions.length > 0)
+    .map(([type, questions]) => ({
+      type: type as EAssigmentType,
+      questions: (questions as TAssignment[]).map((q) => ({
+        text: q.question,
+        questionType: q.questionType,
+        explanation: q.explanation,
+        answers: q.answers.map((a: TAnswer) => ({
+          text: a.text,
+          isCorrect: a.isCorrect,
         })),
-      };
-    },
-  );
+      })),
+    }));
 
   return {
     title: draft.title,
@@ -47,5 +48,5 @@ export const prepareLessonToSubmit = (draft: Partial<CreateLessonDraft>, generat
     topic: draft.topic,
     vocabItems: draft.vocabItems,
     assignments,
-  };
+  } as CreateLessonPayload;
 };
