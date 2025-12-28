@@ -1,13 +1,15 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @tailwind base;
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body {
@@ -145,7 +147,7 @@ a {
   --input: oklch(0.43 0.21 293);
   --ring: oklch(0.88 0.07 210);
 
-  --chart-1: oklch(0.81 0.10 294);
+  --chart-1: oklch(0.81 0.1 294);
   --chart-2: oklch(0.71 0.16 294);
   --chart-3: oklch(0.73 0.13 216);
   --chart-4: oklch(0.54 0.25 293);
@@ -173,7 +175,6 @@ a {
 }
 
 @layer utilites {
-
 }
 
 .back-gradient {

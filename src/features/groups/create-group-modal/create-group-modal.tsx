@@ -6,7 +6,6 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -22,7 +21,7 @@ import {
 import type { CreateGroupDraft, Student } from './types';
 import { StepDetails } from './components/step-details';
 import { StepStudents } from './components/step-students';
-import { StepProgress } from './components/step-progress';
+import { StepProgress } from '@/components/ui/progress-bar';
 
 const initialDraft: CreateGroupDraft = {
   name: '',
@@ -88,7 +87,10 @@ export function CreateGroupModal() {
       <DialogContent className="sm:max-w-[560px]">
         <DialogHeader className="space-y-3">
           <DialogTitle className="text-base">
-            <StepProgress step={step} />
+            <StepProgress
+              currentStep={step}
+              steps={[{ label: 'Group details' }, { label: 'Add students' }]}
+            />
           </DialogTitle>
         </DialogHeader>
 
