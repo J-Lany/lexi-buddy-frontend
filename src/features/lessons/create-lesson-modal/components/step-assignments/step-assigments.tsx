@@ -24,7 +24,7 @@ type Props = {
   onBack: () => void;
 };
 
-export function StepAssignments({ draft, onNext, onBack }: Props) {
+export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
   const [generatedAssignments, dispatch] = useReducer(assignmentReducer, {});
   const { mutate, isPending, isError, error } = useCreateAssigments();
   const { mutate: createLesson, isPending: isCreating } = useCreateLesson();
@@ -76,10 +76,11 @@ export function StepAssignments({ draft, onNext, onBack }: Props) {
   const handleNext = () => {
     const finalLesson = prepareLessonToSubmit(draft, generatedAssignments);
     createLesson(finalLesson, {
-      onSuccess: () => {
+      onSuccess: (data) => {
         toast.success('Lesson created 🎉', {
           description: 'The lesson has been added to your list.',
         });
+        onChange({ lessonId: data.lessonId });
         onNext();
       },
       onError: (e) => {

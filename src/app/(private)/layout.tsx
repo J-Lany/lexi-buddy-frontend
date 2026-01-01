@@ -4,7 +4,7 @@ import { Header } from '@/components/ui/header';
 import { MobileFooter } from '@/components/ui/mobile-footer';
 
 export const metadata: Metadata = {
-  title: 'Private room',
+  title: 'Lexi room',
   description: 'Generated lessons',
 };
 

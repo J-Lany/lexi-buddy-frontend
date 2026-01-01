@@ -26,7 +26,7 @@ const authApi = axios.create({
 
 let refreshPromise: Promise<void> | null = null;
 
-async function refreshAccessToken() {
+export async function refreshAccessToken() {
   await authApi.post('/auth/refresh');
 }
 
