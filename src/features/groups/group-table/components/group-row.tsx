@@ -4,6 +4,7 @@ import { Student } from '@/features/groups/create-group-modal/types';
 export type Group = {
   id: number;
   name: string;
+  level?: string;
   students: Student[];
 };
 export function GroupRow({ group }: { group: Group }) {

@@ -7,8 +7,8 @@ export type CreateLessonDraft = {
   vocabItems: VocabItem[];
   assignments: Assigment[];
   lessonId?: number;
-  studentIds?: [];
-  groupIds?: [];
+  studentIds?: number[];
+  groupIds?: number[];
 };
 
 export type VocabItem = {

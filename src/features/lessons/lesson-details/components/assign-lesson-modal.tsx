@@ -35,7 +35,10 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
           });
         },
         onError: (e) => {
-          toast.error('Failed to assign lesson', { description: e.message });
+          const description =
+            e instanceof Error ? e.message : 'Something went wrong. Please try again later.';
+
+          toast.error('Failed to assign lesson', { description });
         },
         onSettled: () => {
           setOpen(false);

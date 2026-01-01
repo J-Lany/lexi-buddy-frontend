@@ -27,7 +27,7 @@ export function ActivationInfo() {
         setStatus(EActivationStatus.ERROR);
       },
     });
-  }, [token]);
+  }, [token, activate]);
 
   return (
     <div className="w-full max-w-md space-y-6 text-center">

@@ -53,7 +53,10 @@ export function StepStudents({ draft, onChange, onNext, onBack }: Props) {
           });
         },
         onError: (e) => {
-          toast.error('Failed to assign lesson', { description: e.message });
+          const description =
+            e instanceof Error ? e.message : 'Something went wrong. Please try again later.';
+
+          toast.error('Failed to assign lesson', { description });
         },
         onSettled: () => {
           onNext();

@@ -4,6 +4,8 @@ import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import { useGetGroups } from '@/features/groups/hooks/use-get-groups';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { Student } from '@/features/students/students-table/components/student-row';
+import { Group } from '@/features/groups/group-table/components/group-row';
 
 type StudentsGroupsSelectorProps = {
   selectedStudentIds: number[];
@@ -42,10 +44,10 @@ export function StudentsGroupsSelector({
   };
 
   const studentsToChoise = selectedBeforeStudents
-    ? students?.filter((s) => !selectedBeforeStudents?.includes(s.id))
+    ? students?.filter((s: Student) => !selectedBeforeStudents?.includes(Number(s.id)))
     : students;
   const groupToChoise = selectedBeforeGroups
-    ? groups?.filter((g) => !selectedBeforeGroups?.includes(g.id))
+    ? groups?.filter((g: Group) => !selectedBeforeGroups?.includes(g.id))
     : groups;
 
   return (
@@ -54,7 +56,7 @@ export function StudentsGroupsSelector({
         <div className="text-sm font-medium">Students</div>
         <div className="max-h-60 overflow-y-auto space-y-1 rounded-xl border px-3 py-2">
           {studentsToChoise && studentsToChoise.length > 0 ? (
-            studentsToChoise.map((s) => (
+            studentsToChoise.map((s: Student) => (
               <Label key={s.id} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <Checkbox
                   checked={selectedStudentIds.includes(s.id)}
@@ -78,7 +80,7 @@ export function StudentsGroupsSelector({
         <div className="text-sm font-medium">Groups</div>
         <div className="max-h-60 overflow-y-auto space-y-1 rounded-xl border px-3 py-2">
           {groupToChoise && groupToChoise.length > 0 ? (
-            groupToChoise.map((g) => (
+            groupToChoise.map((g: Group) => (
               <Label key={g.id} className="flex items-center gap-2 py-1 text-sm cursor-pointer">
                 <Checkbox
                   checked={selectedGroupIds.includes(g.id)}
