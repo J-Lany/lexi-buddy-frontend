@@ -10,10 +10,10 @@ import { LessonAssigneesCard } from '@/features/lessons/lesson-details/component
 
 export default function LessonDetailsPage({ lessonId }: { lessonId: string }) {
   const { data, isLoading, isError } = useGetLessonDetails(lessonId);
-  console.log('data, isLoading, isError', data, isLoading, isError);
+
   if (isLoading) {
     return (
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 pb-17">
+      <div className="flex w-full max-w-5xl flex-col gap-6 pb-17">
         <Skeleton className="h-40 rounded-3xl" />
         <Skeleton className="h-44 rounded-3xl" />
         <Skeleton className="h-56 rounded-3xl" />
@@ -23,14 +23,14 @@ export default function LessonDetailsPage({ lessonId }: { lessonId: string }) {
 
   if (isError || !data) {
     return (
-      <div className="mx-auto w-full max-w-5xl pb-17">
+      <div className="w-full max-w-5xl pb-17">
         <Card className="rounded-3xl p-6 text-sm text-red-600">Failed to load lesson</Card>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 pb-17">
+    <div className="flex w-full max-w-5xl flex-col gap-6 pb-17">
       <LessonHeaderCard lesson={data} />
       <LessonAssigneesCard lesson={data} />
       <LessonVocabCard vocab={data.vocab} />

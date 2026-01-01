@@ -1,6 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
-import { LESSON_DETAILS_QUERY_KEY, LESSONS_QUERY_KEY } from '@/features/students/utils/consts';
+import {
+  GROUP_DASHBOARD_QUERY_KEY,
+  LESSON_DETAILS_QUERY_KEY,
+  LESSONS_QUERY_KEY,
+  STUDENT_DASHBOARD_QUERY_KEY,
+} from '@/features/students/utils/consts';
 
 type AssignLessonInput = {
   lessonId: number;
@@ -24,13 +29,38 @@ export function useAssignLesson() {
 
       return data as AssignLessonResponse;
     },
-    onSuccess: (_data, { lessonId }) => {
+    onSuccess: (_data, { lessonId, studentIds, groupIds }) => {
       queryClient.invalidateQueries({
         queryKey: [LESSON_DETAILS_QUERY_KEY, String(lessonId)],
       });
+
       queryClient.invalidateQueries({
         queryKey: [LESSONS_QUERY_KEY],
       });
+
+      if (studentIds?.length) {
+        studentIds.forEach((id) =>
+          queryClient.invalidateQueries({
+            queryKey: [STUDENT_DASHBOARD_QUERY_KEY, id],
+          }),
+        );
+      } else {
+        queryClient.invalidateQueries({
+          queryKey: [STUDENT_DASHBOARD_QUERY_KEY],
+        });
+      }
+
+      if (groupIds?.length) {
+        groupIds.forEach((id) =>
+          queryClient.invalidateQueries({
+            queryKey: [GROUP_DASHBOARD_QUERY_KEY, id],
+          }),
+        );
+      } else {
+        queryClient.invalidateQueries({
+          queryKey: [GROUP_DASHBOARD_QUERY_KEY],
+        });
+      }
     },
   });
 }

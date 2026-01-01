@@ -64,7 +64,7 @@ export function CreateLessonModal() {
     >
       <DialogTrigger asChild>
         <Button type="button" variant="outline" className="rounded-full w-48">
-          New lesson
+          + New lesson
         </Button>
       </DialogTrigger>
 

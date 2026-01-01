@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { CreateLessonDraft } from '@/features/lessons/create-lesson-modal/types';
 import { useAssignLesson } from '@/features/lessons/create-lesson-modal/hooks/use-assign-lesson';
 import { StudentsGroupsSelector } from '@/features/lessons/lesson-details/components/students-groups-selector';
+import { toast } from 'sonner';
 
 type Props = {
   draft: CreateLessonDraft;
@@ -13,7 +14,7 @@ type Props = {
 };
 
 export function StepStudents({ draft, onChange, onNext, onBack }: Props) {
-  const { mutateAsync, isPending } = useAssignLesson();
+  const { mutate, isPending } = useAssignLesson();
 
   const studentIds = draft.studentIds ?? [];
   const groupIds = draft.groupIds ?? [];
@@ -28,7 +29,7 @@ export function StepStudents({ draft, onChange, onNext, onBack }: Props) {
 
   const nothingSelected = studentIds.length === 0 && groupIds.length === 0;
 
-  const handleFinalize = async () => {
+  const handleFinalize = () => {
     if (!draft.lessonId) {
       onNext();
       return;
@@ -39,13 +40,26 @@ export function StepStudents({ draft, onChange, onNext, onBack }: Props) {
       return;
     }
 
-    await mutateAsync({
-      lessonId: draft.lessonId,
-      studentIds: studentIds.length ? studentIds : undefined,
-      groupIds: groupIds.length ? groupIds : undefined,
-    });
-
-    onNext();
+    mutate(
+      {
+        lessonId: draft.lessonId,
+        studentIds: studentIds.length ? studentIds : [],
+        groupIds: groupIds.length ? groupIds : [],
+      },
+      {
+        onSuccess: () => {
+          toast.success('Lesson assign to students 🎉', {
+            description: 'The lesson has been added to students list.',
+          });
+        },
+        onError: (e) => {
+          toast.error('Failed to assign lesson', { description: e.message });
+        },
+        onSettled: () => {
+          onNext();
+        },
+      },
+    );
   };
 
   return (

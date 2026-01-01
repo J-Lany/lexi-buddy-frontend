@@ -1,21 +1,23 @@
 'use client';
-import { Button } from '@/components/ui/button';
+
 import { useReducer, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
+
+import { Button } from '@/components/ui/button';
 import {
   getTypeLabel,
   prepareLessonToSubmit,
 } from '@/features/lessons/create-lesson-modal/components/step-assignments/utils';
 import { assignmentReducer } from '@/features/lessons/create-lesson-modal/components/step-assignments/store';
 import { useCreateAssigments } from '@/features/lessons/create-lesson-modal/hooks/use-create-assigments';
+import { useCreateLesson } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
 import {
   CreateLessonDraft,
   EAssigmentType,
   TAssignment,
 } from '@/features/lessons/create-lesson-modal/types';
 import { AssignmentCard } from '@/features/lessons/create-lesson-modal/components/step-assignments/assignment-card';
-import { useCreateLesson } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
-import { toast } from 'sonner';
 
 type Props = {
   draft: CreateLessonDraft;
@@ -24,9 +26,16 @@ type Props = {
   onBack: () => void;
 };
 
+const ASSIGNMENT_TYPES: EAssigmentType[] = [
+  EAssigmentType.DEFINITION_QUIZ,
+  EAssigmentType.GAP_FILLING,
+  EAssigmentType.PHRASE_FAIL,
+  EAssigmentType.COLLOCATION_CHECK,
+];
+
 export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
   const [generatedAssignments, dispatch] = useReducer(assignmentReducer, {});
-  const { mutate, isPending, isError, error } = useCreateAssigments();
+  const { mutate: generateAssignments, isError, error } = useCreateAssigments();
   const { mutate: createLesson, isPending: isCreating } = useCreateLesson();
 
   const [expandedTypes, setExpandedTypes] = useState<Record<EAssigmentType, boolean>>({
@@ -36,6 +45,10 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
     [EAssigmentType.COLLOCATION_CHECK]: false,
   });
 
+  const [loadingType, setLoadingType] = useState<EAssigmentType | null>(null);
+
+  const canNext = Object.values(generatedAssignments).some((arr) => arr && arr.length > 0);
+
   const toggleExpanded = (type: EAssigmentType) => {
     setExpandedTypes((prev) => ({
       ...prev,
@@ -43,10 +56,10 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
     }));
   };
 
-  const canNext = Object.values(generatedAssignments).some((arr) => arr?.length > 0);
-
   const handleCreateClick = (assignmentType: EAssigmentType) => {
-    mutate(
+    setLoadingType(assignmentType);
+
+    generateAssignments(
       {
         level: draft.level,
         topic: draft.topic,
@@ -61,6 +74,7 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
             ...question,
             assignmentType,
           }));
+
           dispatch({
             type: 'SET_ASSIGNMENTS',
             payload: {
@@ -69,22 +83,33 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
             },
           });
         },
+        onError: (e) => {
+          toast.error('Failed to generate assignments', {
+            description: e instanceof Error ? e.message : 'An error occurred.',
+          });
+        },
+        onSettled: () => {
+          setLoadingType(null);
+        },
       },
     );
   };
 
   const handleNext = () => {
     const finalLesson = prepareLessonToSubmit(draft, generatedAssignments);
+
     createLesson(finalLesson, {
       onSuccess: (data) => {
         toast.success('Lesson created 🎉', {
           description: 'The lesson has been added to your list.',
         });
-        onChange({ lessonId: data.lessonId });
+        onChange({ lessonId: data.id });
         onNext();
       },
       onError: (e) => {
-        toast.error('Failed to create lesson', { description: e.message });
+        toast.error('Failed to create lesson', {
+          description: e.message,
+        });
       },
     });
   };
@@ -94,31 +119,41 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
     onBack();
   };
 
+  const errorMessage =
+    isError && error ? (error instanceof Error ? error.message : 'An error occurred.') : null;
+
   return (
     <div className="space-y-6">
-      {[
-        EAssigmentType.DEFINITION_QUIZ,
-        EAssigmentType.GAP_FILLING,
-        EAssigmentType.PHRASE_FAIL,
-        EAssigmentType.COLLOCATION_CHECK,
-      ].map((type) => {
+      {ASSIGNMENT_TYPES.map((type) => {
         const assignments = generatedAssignments[type] || [];
         const isExpanded = expandedTypes[type];
+        const hasAssignments = assignments.length > 0;
+
+        const isLoading = loadingType === type;
+        const isAnyLoading = loadingType !== null;
 
         return (
-          <div key={type} className="border rounded-md p-4 space-y-4">
-            <div className="flex justify-between items-center">
+          <div key={type} className="space-y-4 rounded-md border p-4">
+            <div className="flex items-center justify-between">
               <span className="font-medium">{getTypeLabel(type)}</span>
-              <div className="flex gap-2 items-center">
-                {isPending ? (
-                  <Button variant="outline" size="sm" disabled>
+
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleCreateClick(type)}
+                  disabled={isAnyLoading}
+                >
+                  {isLoading ? (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  </Button>
-                ) : (
-                  <Button type="button" size="sm" onClick={() => handleCreateClick(type)}>
-                    {assignments.length ? 'Regenerate' : 'Generate'}
-                  </Button>
-                )}
+                  ) : hasAssignments ? (
+                    'Regenerate'
+                  ) : (
+                    'Generate'
+                  )}
+                </Button>
+
                 <Button
                   type="button"
                   variant="ghost"
@@ -130,22 +165,19 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
               </div>
             </div>
 
-            {isError && error && (
-              <div className="text-sm text-red-500">
-                {error instanceof Error ? error.message : 'An error occurred.'}
-              </div>
-            )}
+            {errorMessage && <div className="text-sm text-red-500">{errorMessage}</div>}
 
-            {isExpanded && !isPending && (
+            {isExpanded && (
               <div className="mt-4 space-y-4">
-                {assignments.length ? (
+                {hasAssignments ? (
                   assignments.map((assignment, index) => (
                     <AssignmentCard
-                      key={index}
+                      key={`${type}-${index}`}
                       assignment={assignment}
                       onChange={(updated) => {
                         const updatedAssignments = [...assignments];
                         updatedAssignments[index] = updated;
+
                         dispatch({
                           type: 'SET_ASSIGNMENTS',
                           payload: { typeKey: type, data: updatedAssignments },
@@ -166,9 +198,13 @@ export function StepAssignments({ draft, onNext, onBack, onChange }: Props) {
         <Button type="button" variant="outline" onClick={handleBackClick}>
           Back
         </Button>
-        <Button type="button" onClick={handleNext} disabled={!canNext}>
+
+        <Button type="button" onClick={handleNext} disabled={!canNext || isCreating}>
           {isCreating ? (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Saving...
+            </>
           ) : (
             'Save and continue assign lesson'
           )}

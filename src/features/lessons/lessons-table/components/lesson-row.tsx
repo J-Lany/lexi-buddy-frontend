@@ -1,14 +1,38 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { LessonSummary } from '@/features/lessons/create-lesson-modal/types';
+import type { LucideIcon } from 'lucide-react';
+import { BookOpen, BookOpenText, GraduationCap, Brain, Sparkles, Star } from 'lucide-react';
+
+import { AGE_LABELS, ELevel, LessonSummary } from '@/features/lessons/create-lesson-modal/types';
 import { EAppRoutes } from '@/lib/routes';
 
 export type Lesson = LessonSummary;
 
+const LEVEL_ICONS: Record<ELevel, LucideIcon> = {
+  [ELevel.A1]: BookOpen,
+  [ELevel.A2]: BookOpenText,
+  [ELevel.B1]: GraduationCap,
+  [ELevel.B2]: Brain,
+  [ELevel.C1]: Sparkles,
+  [ELevel.C2]: Star,
+};
+
 export function LessonRow({ lesson }: { lesson: Lesson }) {
   const router = useRouter();
-  const statsText = `${lesson.vocabCount} words · ${lesson.assignmentsCount} tasks`;
+
+  const stats = `${lesson.vocabCount} words · ${lesson.assignmentsCount} tasks`;
+  const ageLabel = lesson.ageCategory
+    ? (AGE_LABELS[lesson.ageCategory] ?? lesson.ageCategory)
+    : null;
+
+  const metaParts = [lesson.topic || null, lesson.level || null, ageLabel].filter(
+    Boolean,
+  ) as string[];
+  const meta = metaParts.join(' · ');
+
+  const LevelIcon: LucideIcon | undefined =
+    (lesson.level && LEVEL_ICONS[lesson.level as ELevel]) || undefined;
 
   const handleClick = () => {
     router.push(`${EAppRoutes.LESSONS}/${lesson.id}`);
@@ -18,53 +42,54 @@ export function LessonRow({ lesson }: { lesson: Lesson }) {
     <button
       type="button"
       onClick={handleClick}
+      aria-label={`Open lesson ${lesson.title}`}
       className="
-        w-full rounded-full bg-white/95 border border-white/80
-        px-4 py-3 sm:px-6
+        w-full text-left
+        rounded-3xl
+        bg-white/95 border border-white/80
+        px-5 sm:px-6 py-4 sm:py-4.5
         shadow-[0_8px_24px_rgba(15,116,143,0.06)]
-        hover:bg-muted cursor-pointer
         transition
+        hover:bg-sky-50/70
+        active:translate-y-[1px] active:shadow-[0_4px_16px_rgba(15,116,143,0.06)]
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300
       "
     >
-      <div
-        className="
-          grid gap-y-1 gap-x-4
-          text-left text-sm
-          sm:grid-cols-[minmax(0,2.5fr)_minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.5fr)]
-          sm:items-center
-        "
-      >
-        <div className="flex flex-col">
-          <span className="font-medium truncate">{lesson.title}</span>
-          <span className="text-xs text-muted-foreground sm:hidden">
-            {lesson.topic || 'No topic'}
-          </span>
+      <div className="flex items-start gap-3 sm:gap-4">
+        {/* level thumbnail */}
+        <div
+          className="
+            mt-0.5
+            flex h-8 w-8 sm:h-9 sm:w-9
+            items-center justify-center
+            rounded-2xl
+            bg-sky-50 text-sky-700
+            shrink-0
+          "
+        >
+          {LevelIcon && <LevelIcon size={18} strokeWidth={2} />}
         </div>
 
-        <div className="hidden sm:block truncate text-sm text-muted-foreground">
-          {lesson.topic || '—'}
-        </div>
-
-        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
-          {lesson.level && (
-            <span className="inline-flex items-center justify-center rounded-full border border-sky-200 bg-sky-50 px-2.5 py-0.5 text-[11px] font-medium text-sky-800">
-              {lesson.level}
+        {/* content */}
+        <div className="flex-1 min-w-0">
+          {/* 1-я строка: title + stats */}
+          <div className="flex items-start justify-between gap-3">
+            <span className="font-semibold text-[15px] sm:text-[16px] truncate">
+              {lesson.title}
             </span>
-          )}
-          {lesson.ageCategory && (
-            <span className="truncate text-[11px] sm:text-xs uppercase tracking-wide text-muted-foreground/80">
-              {lesson.ageCategory}
+
+            <span className="text-[12px] sm:text-sm font-medium text-slate-900 whitespace-nowrap">
+              {stats}
             </span>
+          </div>
+
+          {/* 2-я строка: topic · level · age */}
+          {meta && (
+            <div className="mt-1 text-[11px] sm:text-xs text-muted-foreground leading-snug truncate">
+              {meta}
+            </div>
           )}
         </div>
-
-        <div className="text-xs sm:text-sm text-muted-foreground sm:text-right">{statsText}</div>
-      </div>
-
-      <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground sm:hidden">
-        {lesson.topic && <span className="truncate">Topic: {lesson.topic}</span>}
-        <span>{statsText}</span>
       </div>
     </button>
   );

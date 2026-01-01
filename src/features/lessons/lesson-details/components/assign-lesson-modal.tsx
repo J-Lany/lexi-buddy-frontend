@@ -23,10 +23,10 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
   const [open, setOpen] = useState(false);
   const [studentIds, setStudentIds] = useState<number[]>([]);
   const [groupIds, setGroupIds] = useState<number[]>([]);
-  const { mutateAsync, isPending } = useAssignLesson();
+  const { mutate, isPending } = useAssignLesson();
 
-  const handleAssign = async () => {
-    await mutateAsync(
+  const handleAssign = () => {
+    mutate(
       { lessonId, studentIds, groupIds },
       {
         onSuccess: () => {
@@ -37,9 +37,11 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
         onError: (e) => {
           toast.error('Failed to assign lesson', { description: e.message });
         },
+        onSettled: () => {
+          setOpen(false);
+        },
       },
     );
-    setOpen(false);
   };
 
   const disabled = isPending || (studentIds.length === 0 && groupIds.length === 0);

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Sidebar } from '@/components/ui/sidebar';
 import { Header } from '@/components/ui/header';
 import { MobileFooter } from '@/components/ui/mobile-footer';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: 'Lexi room',
@@ -20,7 +21,9 @@ export default async function PrivateLayout({
         <aside className="border-r hidden sm:block">
           <Sidebar />
         </aside>
-        <main className="p-6 min-h-0 back-gradient flex-1 overflow-y-auto">{children}</main>
+        <main className="p-6 md:pl-8 lg:pl-12 min-h-0 back-gradient flex-1 overflow-y-auto">
+          {children}
+        </main>
       </div>
       <MobileFooter />
     </div>
