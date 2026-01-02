@@ -11,21 +11,13 @@ import { CreateLessonDraft, VocabItem } from '@/features/lessons/create-lesson-m
 type Props = {
   draft: CreateLessonDraft;
   onChange: (patch: Partial<CreateLessonDraft>) => void;
-  onNext: () => void;
-  onBack: () => void;
 };
-export function StepVocab({ draft, onChange, onNext, onBack }: Props) {
+export function StepVocab({ draft, onChange }: Props) {
   const initialTerms = draft?.vocabItems.map((i) => i.term).join('. ');
 
   const [terms, setTerms] = useState(initialTerms);
   const { mutate, isPending, isError, error } = useTranslateMutation();
   const [vocabItems, setVocabItems] = useState<VocabItem[]>(draft.vocabItems ?? []);
-
-  const canNext =
-    draft.title.trim().length > 0 &&
-    draft.level &&
-    draft.topic.trim().length > 0 &&
-    vocabItems.length > 0;
 
   const handleTranslate = () => {
     setVocabItems([]);
@@ -75,6 +67,7 @@ export function StepVocab({ draft, onChange, onNext, onBack }: Props) {
     <div className="grid gap-4">
       <Textarea
         name="vocab"
+        className="min-h-[110px] rounded-3xl"
         placeholder="Enter up to 15 words separated by dots. Any extra words will be truncated."
         value={terms}
         onChange={(e) => {
@@ -105,49 +98,54 @@ export function StepVocab({ draft, onChange, onNext, onBack }: Props) {
         </div>
       )}
 
-      {vocabItems.length > 0 &&
-        vocabItems.map((item, i) => (
-          <div key={i} className="border-b border-slate-200 py-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex-1 flex flex-col">
-                <span className="text-xs font-medium text-slate-500">Term</span>
-                <Input value={item.term} className="mt-1" readOnly />
-              </div>
+      {vocabItems.length > 0 ? (
+        <div className="space-y-3">
+          <div className="ui-panel overflow-hidden">
+            {vocabItems.map((item, i) => (
+              <div key={i} className="px-4 py-4">
+                {i !== 0 ? <div className="-mx-4 mb-4 h-px bg-border/60" /> : null}
 
-              <div className="flex-[2] flex flex-col">
-                <span className="text-xs font-medium text-slate-500">Translation</span>
-                <Input
-                  value={item.translation}
-                  className="mt-1"
-                  onChange={(e) => handleChangeTranslation(i, e.target.value)}
-                />
-              </div>
-            </div>
+                <div className="grid gap-3">
+                  <div className="grid gap-1">
+                    <div className="ui-meta tracking-wide uppercase">Term</div>
+                    <Input value={item.term} readOnly className="h-11 rounded-2xl" />
+                  </div>
 
-            {item.synonyms && (
-              <div className="mt-2 sm:pl-8">
-                <span className="text-xs font-medium text-slate-500">Synonyms</span>
-                {item.synonyms?.map((synonym, si) => (
-                  <Input
-                    key={si}
-                    value={synonym}
-                    className="mt-1"
-                    onChange={(e) => handleChangeSynonym(i, si, e.target.value)}
-                  />
-                ))}
+                  <div className="grid gap-1">
+                    <div className="ui-meta tracking-wide uppercase">Translation</div>
+                    <Input
+                      value={item.translation}
+                      onChange={(e) => handleChangeTranslation(i, e.target.value)}
+                      className="h-11 rounded-2xl"
+                    />
+                  </div>
+
+                  {item.synonyms?.length ? (
+                    <div className="grid gap-2 pt-1">
+                      <div className="ui-meta tracking-wide uppercase">Synonyms</div>
+
+                      <div className="grid gap-2">
+                        {item.synonyms.map((syn, si) => (
+                          <Input
+                            key={si}
+                            value={syn}
+                            onChange={(e) => handleChangeSynonym(i, si, e.target.value)}
+                            className="h-11 rounded-2xl"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               </div>
-            )}
+            ))}
           </div>
-        ))}
 
-      <div className="flex justify-between gap-2 pt-2">
-        <Button type="button" variant="outline" onClick={onBack}>
-          Back
-        </Button>
-        <Button type="button" onClick={onNext} disabled={!canNext}>
-          Next
-        </Button>
-      </div>
+          <p className="text-[12px] text-muted-foreground">
+            Tip: translations and synonyms are editable.
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

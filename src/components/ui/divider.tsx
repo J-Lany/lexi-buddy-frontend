@@ -1,3 +1,3 @@
 export function Divider() {
-  return <div className="h-px bg-sky-100/70" />;
+  return <div className="h-px bg-border/60" />;
 }

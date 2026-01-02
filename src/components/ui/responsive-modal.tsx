@@ -99,7 +99,7 @@ export function ResponsiveModal({
     </DrawerHeader>
   ) : (
     <DrawerHeader className="border-b">
-      <div className="mx-auto mb-1 h-1.5 w-10 rounded-full bg-[color-mix(in_oklch,var(--foreground)_12%,white_88%)]" />
+      <div className="mx-auto mb-1 h-1.5 w-10 rounded-full bg-muted" />
     </DrawerHeader>
   );
 
@@ -112,9 +112,9 @@ export function ResponsiveModal({
         <DialogContent
           className={cn(
             desktopMaxWidthClassName,
-            // делаем вертикальный layout
-            'flex flex-col',
-            desktopFooter && 'p-0 overflow-hidden', // если есть футер, управляем паддингом сами
+            // ключевое: фиксируем высоту модалки и делаем внутренний layout скроллящимся
+            'flex max-h-[90dvh] flex-col overflow-hidden',
+            desktopFooter ? 'p-0' : '', // если есть футер — паддинги берём на себя
             className,
           )}
         >
@@ -127,11 +127,12 @@ export function ResponsiveModal({
             <div className={cn(desktopFooter ? 'px-6 pt-6' : '')}>{DesktopHeader}</div>
           ) : null}
 
-          {/* Content */}
+          {/* Content (scroll area) */}
           <div
             className={cn(
               desktopFooter ? 'px-6' : DesktopHeader ? 'mt-4' : '',
-              desktopFooter ? 'py-4 flex-1 overflow-y-auto' : '',
+              desktopFooter ? 'py-4' : '',
+              'min-h-0 flex-1 overflow-y-auto ui-scroll',
               desktopContentClassName,
             )}
           >
@@ -176,7 +177,9 @@ export function ResponsiveModal({
         <div
           className={cn(
             'px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]',
-            mobileStickyFooter ? 'flex-1 overflow-y-auto' : 'max-h-[78dvh] overflow-y-auto',
+            mobileStickyFooter
+              ? 'flex-1 overflow-y-auto ui-scroll'
+              : 'max-h-[78dvh] overflow-y-auto ui-scroll',
             mobileContentClassName,
           )}
         >

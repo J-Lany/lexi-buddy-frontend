@@ -6,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
 import {
   AGE_LABELS,
   AGE_SHORT_LABELS,
@@ -19,11 +18,9 @@ import { Textarea } from '@/components/ui/textarea';
 type Props = {
   draft: CreateLessonDraft;
   onChange: (patch: Partial<CreateLessonDraft>) => void;
-  onNext: () => void;
 };
 
-export function StepLessonMeta({ draft, onChange, onNext }: Props) {
-  const canNext = draft.topic.trim().length > 0 && draft.title.trim().length > 0;
+export function StepLessonMeta({ draft, onChange }: Props) {
   return (
     <div className="space-y-4">
       <Input
@@ -73,9 +70,6 @@ export function StepLessonMeta({ draft, onChange, onNext }: Props) {
         value={draft.topic}
         onChange={(e) => onChange({ topic: e.target.value })}
       />
-      <Button onClick={onNext} disabled={!canNext}>
-        Next
-      </Button>
     </div>
   );
 }
