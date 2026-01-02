@@ -17,10 +17,7 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   return (
     <CommandPrimitive
       data-slot="command"
-      className={cn(
-        'text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md',
-        className,
-      )}
+      className={cn('text-foreground flex w-full flex-col overflow-hidden', className)}
       {...props}
     />
   );
@@ -62,16 +59,28 @@ function CommandInput({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) {
   return (
-    <div data-slot="command-input-wrapper" className="flex h-9 items-center gap-2 border-b px-3">
-      <SearchIcon className="size-4 shrink-0 opacity-50" />
-      <CommandPrimitive.Input
-        data-slot="command-input"
+    <div data-slot="command-input-wrapper" className={cn('px-3 pt-3 pb-2', className)}>
+      <div
         className={cn(
-          'placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
-          className,
+          'flex items-center gap-2',
+          'h-11 rounded-xl px-3',
+          'bg-muted/25',
+          'border border-transparent',
+          'focus-within:border-border/60',
+          'focus-within:shadow-[0_0_0_3px_rgba(0,0,0,0.04)]',
         )}
-        {...props}
-      />
+      >
+        <SearchIcon className="size-4 shrink-0 opacity-50" />
+        <CommandPrimitive.Input
+          data-slot="command-input"
+          className={cn(
+            'flex w-full bg-transparent text-[15px] outline-none',
+            'placeholder:text-muted-foreground',
+            'disabled:cursor-not-allowed disabled:opacity-50',
+          )}
+          {...props}
+        />
+      </div>
     </div>
   );
 }
@@ -80,7 +89,7 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
   return (
     <CommandPrimitive.List
       data-slot="command-list"
-      className={cn('max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto', className)}
+      className={cn('max-h-[320px] overflow-y-auto overflow-x-hidden', 'px-3 pb-3 pt-2', className)}
       {...props}
     />
   );
@@ -104,7 +113,13 @@ function CommandGroup({
     <CommandPrimitive.Group
       data-slot="command-group"
       className={cn(
-        'text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
+        'text-foreground',
+        // heading
+        '[&_[cmdk-group-heading]]:px-1',
+        '[&_[cmdk-group-heading]]:py-2',
+        '[&_[cmdk-group-heading]]:text-[13px]',
+        '[&_[cmdk-group-heading]]:font-medium',
+        '[&_[cmdk-group-heading]]:text-muted-foreground',
         className,
       )}
       {...props}
@@ -119,7 +134,7 @@ function CommandSeparator({
   return (
     <CommandPrimitive.Separator
       data-slot="command-separator"
-      className={cn('bg-border -mx-1 h-px', className)}
+      className={cn('bg-border/60 mx-3 h-px', className)}
       {...props}
     />
   );
@@ -130,7 +145,10 @@ function CommandItem({ className, ...props }: React.ComponentProps<typeof Comman
     <CommandPrimitive.Item
       data-slot="command-item"
       className={cn(
-        "data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        // прозрачный контейнер: визуал рисует содержимое (StudentRow)
+        'p-0 rounded-xl outline-none select-none',
+        'data-[selected=true]:bg-transparent data-[selected=true]:text-inherit',
+        'data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
         className,
       )}
       {...props}

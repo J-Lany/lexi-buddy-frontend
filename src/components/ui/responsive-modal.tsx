@@ -47,6 +47,16 @@ type ResponsiveModalProps = {
 
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+
+  // mobile
+  mobileHeightClassName?: string;
+  mobileContentClassName?: string;
+  mobileStickyFooter?: React.ReactNode;
+
+  // desktop
+  desktopFooter?: React.ReactNode;
+  desktopContentClassName?: string;
+  desktopFooterClassName?: string;
 };
 
 export function ResponsiveModal({
@@ -59,6 +69,14 @@ export function ResponsiveModal({
   desktopMaxWidthClassName,
   open,
   onOpenChange,
+
+  mobileHeightClassName,
+  mobileContentClassName,
+  mobileStickyFooter,
+
+  desktopFooter,
+  desktopContentClassName,
+  desktopFooterClassName,
 }: ResponsiveModalProps) {
   const isDesktop = useMediaQuery('(min-width: 640px)');
   const isControlled = typeof open === 'boolean';
@@ -85,34 +103,91 @@ export function ResponsiveModal({
     </DrawerHeader>
   );
 
+  // ===================== DESKTOP (Dialog) =====================
   if (isDesktop) {
     return (
       <Dialog {...(isControlled ? { open, onOpenChange } : {})}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className={cn(desktopMaxWidthClassName, className)}>
+
+        <DialogContent
+          className={cn(
+            desktopMaxWidthClassName,
+            // делаем вертикальный layout
+            'flex flex-col',
+            desktopFooter && 'p-0 overflow-hidden', // если есть футер, управляем паддингом сами
+            className,
+          )}
+        >
           <VisuallyHidden>
-            <DrawerTitle>{title ?? 'Dialog'}</DrawerTitle>
+            <DialogTitle>{title ?? 'Dialog'}</DialogTitle>
           </VisuallyHidden>
-          {DesktopHeader}
-          <div className={cn(DesktopHeader ? 'mt-4' : '')}>{children}</div>
+
+          {/* Header */}
+          {DesktopHeader ? (
+            <div className={cn(desktopFooter ? 'px-6 pt-6' : '')}>{DesktopHeader}</div>
+          ) : null}
+
+          {/* Content */}
+          <div
+            className={cn(
+              desktopFooter ? 'px-6' : DesktopHeader ? 'mt-4' : '',
+              desktopFooter ? 'py-4 flex-1 overflow-y-auto' : '',
+              desktopContentClassName,
+            )}
+          >
+            {children}
+          </div>
+
+          {/* Footer */}
+          {desktopFooter ? (
+            <div
+              className={cn(
+                'border-t bg-background/80 backdrop-blur px-6 py-4',
+                desktopFooterClassName,
+              )}
+            >
+              {desktopFooter}
+            </div>
+          ) : null}
         </DialogContent>
       </Dialog>
     );
   }
 
+  // ===================== MOBILE (Drawer) =====================
   return (
     <Drawer {...(isControlled ? { open, onOpenChange } : {})}>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
 
-      <DrawerContent className={cn('rounded-t-[28px]', className)}>
+      <DrawerContent
+        className={cn(
+          'rounded-t-[28px]',
+          mobileHeightClassName,
+          mobileStickyFooter && 'flex flex-col',
+          className,
+        )}
+      >
         <VisuallyHidden>
           <DrawerTitle>{title ?? 'Dialog'}</DrawerTitle>
         </VisuallyHidden>
+
         {MobileHeader}
 
-        <div className="px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))] max-h-[78dvh] overflow-y-auto">
+        <div
+          className={cn(
+            'px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]',
+            mobileStickyFooter ? 'flex-1 overflow-y-auto' : 'max-h-[78dvh] overflow-y-auto',
+            mobileContentClassName,
+          )}
+        >
           {children}
         </div>
+
+        {mobileStickyFooter ? (
+          <div className="border-t bg-background/90 backdrop-blur px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
+            {mobileStickyFooter}
+          </div>
+        ) : null}
 
         <DrawerClose className="sr-only">Close</DrawerClose>
       </DrawerContent>

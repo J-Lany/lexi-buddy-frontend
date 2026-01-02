@@ -10,7 +10,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from '@/components/ui/command';
 
 import {
@@ -31,7 +30,7 @@ export function StudentSearchPicker({
   const { data = [], isFetching, isError, error } = useSearchStudents(normalized);
 
   return (
-    <div className="rounded-xl border overflow-hidden">
+    <div className="rounded-2xl border border-border/30 bg-muted/[0.15] overflow-hidden">
       <Command shouldFilter={false}>
         <div className="relative">
           <CommandInput
@@ -53,8 +52,6 @@ export function StudentSearchPicker({
             </Button>
           )}
         </div>
-
-        <CommandSeparator />
 
         <CommandList className="h-[260px] overflow-y-auto">
           {normalized.length < 2 ? (

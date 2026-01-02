@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { cn } from '@/lib/utils';
 
 function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
@@ -7,7 +6,17 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
     <textarea
       data-slot="textarea"
       className={cn(
-        'border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
+        [
+          'w-full rounded-xl px-3 py-2 text-[15px] md:text-[14px]',
+          'min-h-24',
+          'bg-background',
+          'border border-border/60',
+          'placeholder:text-muted-foreground',
+          'outline-none transition-[border-color,box-shadow,background-color] duration-150',
+          'focus-visible:border-[var(--focus-border)] focus-visible:shadow-[var(--focus-halo)]',
+          'disabled:pointer-events-none disabled:opacity-50',
+          'aria-invalid:border-destructive aria-invalid:shadow-[0_0_0_4px_color-mix(in_oklch,var(--destructive)_22%,white_78%)]',
+        ].join(' '),
         className,
       )}
       {...props}

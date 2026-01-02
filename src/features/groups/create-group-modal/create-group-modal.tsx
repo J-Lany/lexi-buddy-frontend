@@ -16,6 +16,7 @@ import type { CreateGroupDraft, Student } from './types';
 import { StepDetails } from './components/step-details';
 import { StepStudents } from './components/step-students';
 import { StepProgress } from '@/components/ui/progress-bar';
+import { CreateGroupFooter } from '@/features/groups/create-group-modal/components/create-group-footer';
 
 const initialDraft: CreateGroupDraft = {
   name: '',
@@ -35,6 +36,9 @@ export function CreateGroupModal() {
   const createGroup = useCreateGroupMutation();
 
   const patchDraft = (patch: Partial<CreateGroupDraft>) => setDraft((d) => ({ ...d, ...patch }));
+
+  const canNext = draft.name.trim().length > 0 && draft.level.trim().length > 0;
+  const canCreate = draft.studentIds.length >= 2 && !createGroup.isPending;
 
   const reset = () => {
     setStep(1);
@@ -64,6 +68,18 @@ export function CreateGroupModal() {
     );
   };
 
+  const footer = (
+    <CreateGroupFooter
+      step={step}
+      canNext={canNext}
+      canCreate={canCreate}
+      isCreating={createGroup.isPending}
+      onNext={() => setStep(2)}
+      onBack={() => setStep(1)}
+      onCreate={handleCreate}
+    />
+  );
+
   return (
     <ResponsiveModal
       open={open}
@@ -85,18 +101,14 @@ export function CreateGroupModal() {
           />
         </div>
       }
+      mobileHeightClassName="h-[78dvh]"
+      mobileStickyFooter={footer}
+      desktopFooter={footer}
     >
       {step === 1 ? (
-        <StepDetails draft={draft} onChange={patchDraft} onNext={() => setStep(2)} />
+        <StepDetails draft={draft} onChange={patchDraft} />
       ) : (
-        <StepStudents
-          students={students}
-          draft={draft}
-          onChange={patchDraft}
-          onBack={() => setStep(1)}
-          onCreate={handleCreate}
-          isCreating={createGroup.isPending}
-        />
+        <StepStudents students={students} draft={draft} onChange={patchDraft} />
       )}
     </ResponsiveModal>
   );

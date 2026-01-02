@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { cn } from '@/lib/utils';
 
 function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
@@ -8,9 +7,24 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
       type={type}
       data-slot="input"
       className={cn(
-        'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-        'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+        [
+          // size / shape
+          'h-11 w-full min-w-0 rounded-xl px-3 text-[15px] md:text-[14px]',
+          // surface
+          'bg-background',
+          // border
+          'border border-border/60',
+          // placeholder + selection
+          'placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground',
+          // motion
+          'transition-[border-color,box-shadow,background-color] duration-150',
+          // focus (Apple halo)
+          'outline-none focus-visible:border-[var(--focus-border)] focus-visible:shadow-[var(--focus-halo)]',
+          // disabled
+          'disabled:pointer-events-none disabled:opacity-50',
+          // invalid
+          'aria-invalid:border-destructive aria-invalid:shadow-[0_0_0_4px_color-mix(in_oklch,var(--destructive)_22%,white_78%)]',
+        ].join(' '),
         className,
       )}
       {...props}
