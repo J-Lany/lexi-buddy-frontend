@@ -1,67 +1,66 @@
 'use client';
 
+import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 type StepProgressProps = {
-  currentStep: number;
+  currentStep: number; // 1..n
   steps: { label: string; description?: string }[];
   className?: string;
 };
 
 export function StepProgress({ currentStep, steps, className }: StepProgressProps) {
   const total = Math.max(steps.length, 1);
-  const step = Math.min(Math.max(currentStep, 1), total);
+  const clamped = Math.min(Math.max(currentStep, 1), total);
 
-  const progress = total === 1 ? 1 : (step - 1) / (total - 1);
+  // 0..1
+  const p = total === 1 ? 1 : (clamped - 1) / (total - 1);
 
-  const active = steps[step - 1];
+  const active = steps[clamped - 1];
 
   return (
-    <div className={cn('flex flex-col items-center gap-3', className)}>
-      <div className="w-full max-w-[260px] sm:max-w-[320px]">
-        <div className="relative">
-          {/* track */}
-          <div className="h-2 rounded-full bg-muted" />
+    <div className={cn('w-full', className)}>
+      <div className="flex items-center justify-center">
+        <div className="relative w-[240px] sm:w-[320px]">
+          <div className="h-[6px] rounded-full bg-muted/60" />
 
-          {/* fill */}
           <div
-            className="absolute left-0 top-0 h-2 rounded-full bg-primary/70"
-            style={{ width: `${progress * 100}%` }}
+            className="absolute left-0 top-0 h-[6px] rounded-full bg-primary/55"
+            style={{ width: `${p * 100}%` }}
           />
 
-          <div className="absolute inset-0 flex items-center justify-between px-0.5">
+          <div className="absolute inset-0 flex items-center justify-between px-[2px]">
             {steps.map((_, i) => {
-              const n = i + 1;
-              const isDone = n < step;
-              const isCurrent = n === step;
-
+              const stepNo = i + 1;
+              const isPastOrCurrent = stepNo <= clamped;
               return (
-                <div key={n} className="relative grid place-items-center h-6 w-6 -mx-2">
-                  <div
-                    className={cn(
-                      'h-2 w-2 rounded-full transition',
-                      isDone && 'bg-primary/70',
-                      isCurrent && 'bg-primary',
-                      !isDone && !isCurrent && 'bg-muted-foreground/30',
-                    )}
-                    aria-current={isCurrent ? 'step' : undefined}
-                  />
-                  {isCurrent ? (
-                    <div className="absolute h-5 w-5 rounded-full ring-2 ring-primary/20" />
-                  ) : null}
-                </div>
+                <span
+                  key={stepNo}
+                  className={cn(
+                    'block size-[6px] rounded-full transition-opacity',
+                    isPastOrCurrent ? 'bg-primary/70' : 'bg-foreground/15',
+                  )}
+                />
               );
             })}
+          </div>
+
+          <div
+            className="absolute top-1/2 -translate-y-1/2"
+            style={{ left: `calc(${p * 100}% - 10px)` }}
+          >
+            <span className="grid place-items-center">
+              <span className="size-5 rounded-full bg-primary/20" />
+              <span className="absolute size-[10px] rounded-full bg-primary shadow-sm" />
+            </span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col items-center text-center">
+      <div className="mt-2 flex flex-col items-center">
         <div className="text-[15px] font-semibold leading-snug">{active?.label}</div>
         {active?.description ? (
-          <div className="mt-1 text-[12px] text-muted-foreground leading-snug">
-            {active.description}
-          </div>
+          <div className="ui-meta mt-0.5 text-center max-w-[28ch]">{active.description}</div>
         ) : null}
       </div>
     </div>

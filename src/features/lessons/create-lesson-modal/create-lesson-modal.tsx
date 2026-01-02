@@ -69,20 +69,15 @@ export function CreateLessonModal() {
           + New lesson
         </Button>
       }
-      // controlled
       open={open}
       onOpenChange={(v) => {
         setOpen(v);
         if (!v) reset();
       }}
-      // header replaces title/subtitle
       header={header}
       desktopMaxWidthClassName="sm:max-w-[560px]"
-      // IMPORTANT:
-      // не ставь overflow на Desktop DialogContent (он уже сам),
-      // а скролл пусть живет в children-обертке ниже
+      mobileHeightClassName="h-[95dvh]"
     >
-      {/* единый scroll контейнер (и для мобилки Drawer, и для desktop Dialog) */}
       <div className="max-h-[78dvh] overflow-y-auto">
         {step === 1 && (
           <StepLessonMeta draft={draft} onChange={handleDraftChange} onNext={() => setStep(2)} />
