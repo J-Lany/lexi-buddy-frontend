@@ -2,7 +2,7 @@ import { LessonsFragment } from '@/features/lessons/lessons-table/components/les
 
 export default function LessonsPage() {
   return (
-    <div className="max-w-5xl flex flex-col gap-4 pb-17">
+    <div className="max-w-5xl flex flex-col gap-4">
       <LessonsFragment />
     </div>
   );

@@ -1,14 +1,10 @@
 'use client';
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import * as React from 'react';
+import { Button } from '@/components/ui/button';
+import { ResponsiveModal } from '@/components/ui/responsive-modal';
+import { StepProgress } from '@/components/ui/progress-bar';
+
 import {
   Assigment,
   CreateLessonDraft,
@@ -16,9 +12,9 @@ import {
   ELevel,
   VocabItem,
 } from '@/features/lessons/create-lesson-modal/types';
+
 import { StepVocab } from '@/features/lessons/create-lesson-modal/components/step-vocab';
 import { StepStudents } from '@/features/lessons/create-lesson-modal/components/step-students';
-import { StepProgress } from '@/components/ui/progress-bar';
 import { StepLessonMeta } from '@/features/lessons/create-lesson-modal/components/step-lesson-meta';
 import { StepAssignments } from '@/features/lessons/create-lesson-modal/components/step-assignments/step-assigments';
 
@@ -38,10 +34,7 @@ export function CreateLessonModal() {
   const [step, setStep] = React.useState<1 | 2 | 3 | 4>(1);
 
   const handleDraftChange = (patch: Partial<CreateLessonDraft>) => {
-    setDraft((prev) => ({
-      ...prev,
-      ...patch,
-    }));
+    setDraft((prev) => ({ ...prev, ...patch }));
   };
 
   const reset = () => {
@@ -54,64 +47,74 @@ export function CreateLessonModal() {
     reset();
   };
 
+  const header = (
+    <div className="space-y-3">
+      <div className="text-base font-semibold">Create lesson</div>
+      <StepProgress
+        currentStep={step}
+        steps={[
+          { label: 'Lesson metadata' },
+          { label: 'Vocabulary translation' },
+          { label: 'Assignments' },
+          { label: 'Students & publishing' },
+        ]}
+      />
+    </div>
+  );
+
   return (
-    <Dialog
+    <ResponsiveModal
+      trigger={
+        <Button type="button" variant="outline" className="rounded-full w-48">
+          + New lesson
+        </Button>
+      }
+      // controlled
       open={open}
       onOpenChange={(v) => {
         setOpen(v);
         if (!v) reset();
       }}
+      // header replaces title/subtitle
+      header={header}
+      desktopMaxWidthClassName="sm:max-w-[560px]"
+      // IMPORTANT:
+      // не ставь overflow на Desktop DialogContent (он уже сам),
+      // а скролл пусть живет в children-обертке ниже
     >
-      <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="rounded-full w-48">
-          + New lesson
-        </Button>
-      </DialogTrigger>
+      {/* единый scroll контейнер (и для мобилки Drawer, и для desktop Dialog) */}
+      <div className="max-h-[78dvh] overflow-y-auto">
+        {step === 1 && (
+          <StepLessonMeta draft={draft} onChange={handleDraftChange} onNext={() => setStep(2)} />
+        )}
 
-      <DialogContent className="sm:max-w-[560px] max-h-[80vh] overflow-y-auto">
-        <DialogHeader className="space-y-3">
-          <DialogTitle className="text-base">Create lesson</DialogTitle>
-          <StepProgress
-            currentStep={step}
-            steps={[
-              { label: 'Lesson metadata' },
-              { label: 'Vocabulary translation' },
-              { label: 'Assignments' },
-              { label: 'Students & publishing' },
-            ]}
+        {step === 2 && (
+          <StepVocab
+            draft={draft}
+            onChange={handleDraftChange}
+            onNext={() => setStep(3)}
+            onBack={() => setStep(1)}
           />
-        </DialogHeader>
-        <div className="overflow-y-auto">
-          {step === 1 && (
-            <StepLessonMeta draft={draft} onChange={handleDraftChange} onNext={() => setStep(2)} />
-          )}
-          {step === 2 && (
-            <StepVocab
-              draft={draft}
-              onChange={handleDraftChange}
-              onNext={() => setStep(3)}
-              onBack={() => setStep(1)}
-            />
-          )}
+        )}
 
-          {step === 3 && (
-            <StepAssignments
-              draft={draft}
-              onChange={handleDraftChange}
-              onNext={() => setStep(4)}
-              onBack={() => setStep(2)}
-            />
-          )}
-          {step === 4 && (
-            <StepStudents
-              draft={draft}
-              onChange={handleDraftChange}
-              onNext={handleFinish}
-              onBack={() => setStep(3)}
-            />
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+        {step === 3 && (
+          <StepAssignments
+            draft={draft}
+            onChange={handleDraftChange}
+            onNext={() => setStep(4)}
+            onBack={() => setStep(2)}
+          />
+        )}
+
+        {step === 4 && (
+          <StepStudents
+            draft={draft}
+            onChange={handleDraftChange}
+            onNext={handleFinish}
+            onBack={() => setStep(3)}
+          />
+        )}
+      </div>
+    </ResponsiveModal>
   );
 }

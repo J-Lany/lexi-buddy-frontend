@@ -10,17 +10,17 @@ export default function StudentStatsGrid({
   lessonsTotal: number;
 }) {
   return (
-    <div className="grid grid-cols-2  gap-4 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
       <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle className="text-sm text-muted-foreground">Lessons</CardTitle>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs font-medium text-muted-foreground">Lessons</CardTitle>
         </CardHeader>
         <CardContent className="text-2xl font-semibold">{lessonsTotal}</CardContent>
       </Card>
 
       <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle className="text-sm text-muted-foreground">Assignments</CardTitle>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs font-medium text-muted-foreground">Assignments</CardTitle>
         </CardHeader>
         <CardContent className="text-2xl font-semibold">
           {stats.assignmentsDone}/{stats.assignmentsTotal}
@@ -28,8 +28,8 @@ export default function StudentStatsGrid({
       </Card>
 
       <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle className="text-sm text-muted-foreground">Avg score</CardTitle>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs font-medium text-muted-foreground">Avg score</CardTitle>
         </CardHeader>
         <CardContent className="text-2xl font-semibold">
           {typeof stats.avgScore === 'number' ? stats.avgScore.toFixed(2) : '—'}
@@ -37,10 +37,12 @@ export default function StudentStatsGrid({
       </Card>
 
       <Card className="rounded-2xl">
-        <CardHeader>
-          <CardTitle className="text-sm text-muted-foreground">Last submission</CardTitle>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xs font-medium text-muted-foreground">
+            Last submission
+          </CardTitle>
         </CardHeader>
-        <CardContent className="text-l font-semibold">
+        <CardContent className="text-sm font-medium text-foreground">
           {formatDate(stats.lastSubmittedAt) ?? '—'}
         </CardContent>
       </Card>

@@ -135,6 +135,8 @@ a {
   /* Shadows (one family across the app) */
   --shadow-card: 0 10px 30px rgba(15, 116, 143, 0.08);
   --shadow-card-hover: 0 14px 40px rgba(15, 116, 143, 0.10);
+
+  --mobile-footer: 72px;
 }
 
 @layer base {
@@ -185,6 +187,20 @@ a {
   @media (min-width: 640px) {
     .ui-stat {
       font-size: 14px;
+    }
+  }
+
+  /* Tinted secondary text (Apple-like "link tint" without web-blue) */
+  .ui-tint {
+    @apply truncate;
+    color: color-mix(in oklch, var(--primary) 70%, black 30%);
+    font-size: 12px;
+    line-height: 1.25rem; /* 20px */
+  }
+
+  @media (min-width: 640px) {
+    .ui-tint {
+      font-size: 13px;
     }
   }
 
@@ -470,6 +486,59 @@ a {
       color: color-mix(in oklch, var(--foreground) 80%, black 20%);
     }
   }
+
+  /* =========================================================
+   ROWS / LIST ITEMS (iOS inset-grouped vibe)
+   ========================================================= */
+
+  .ui-row {
+    @apply border;
+    background: color-mix(in oklch, var(--background) 86%, white 14%);
+    border-color: var(--border-soft);
+  }
+
+  /* Mobile-safe bottom padding for scroll areas with fixed footer */
+  .ui-safe-bottom {
+    padding-bottom: calc(var(--mobile-footer) + env(safe-area-inset-bottom));
+  }
+
+  /* Horizontal inset that still allows full-width highlight */
+  .ui-inset-x {
+    margin-left: -0.5rem;  /* = -mx-2 */
+    margin-right: -0.5rem;
+    padding-left: 0.5rem;  /* = px-2 */
+    padding-right: 0.5rem;
+  }
+
+  /* Base tappable row: uses ui-row surface + correct hit target */
+  .ui-list-row {
+    /* ui-row */
+    @apply border;
+    background: color-mix(in oklch, var(--background) 86%, white 14%);
+    border-color: var(--border-soft);
+
+    /* layout + shape */
+    @apply flex items-center justify-between rounded-2xl transition-colors;
+
+    /* hit target */
+    padding-top: 0.75rem;   /* py-3 */
+    padding-bottom: 0.75rem;
+
+    /* ui-focus */
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  }
+
+  /* Subtle system highlight (works on hover devices + touch press) */
+  @media (hover: hover) {
+    .ui-list-row:hover {
+      background: color-mix(in oklch, var(--foreground) 4%, white 96%);
+    }
+  }
+
+  .ui-list-row:active {
+    background: color-mix(in oklch, var(--foreground) 7%, white 93%);
+  }
+
 }
 
 .back-gradient {

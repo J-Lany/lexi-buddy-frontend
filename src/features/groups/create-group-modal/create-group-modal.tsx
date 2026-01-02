@@ -4,13 +4,7 @@ import * as React from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { ResponsiveModal } from '@/components/ui/responsive-modal';
 
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import {
@@ -71,42 +65,39 @@ export function CreateGroupModal() {
   };
 
   return (
-    <Dialog
+    <ResponsiveModal
       open={open}
       onOpenChange={(v) => {
         setOpen(v);
         if (!v) reset();
       }}
-    >
-      <DialogTrigger asChild>
+      trigger={
         <Button type="button" variant="outline" className="rounded-full w-48">
           + Create a new group
         </Button>
-      </DialogTrigger>
-
-      <DialogContent className="sm:max-w-[560px]">
-        <DialogHeader className="space-y-3">
-          <DialogTitle className="text-base">
-            <StepProgress
-              currentStep={step}
-              steps={[{ label: 'Group details' }, { label: 'Add students' }]}
-            />
-          </DialogTitle>
-        </DialogHeader>
-
-        {step === 1 ? (
-          <StepDetails draft={draft} onChange={patchDraft} onNext={() => setStep(2)} />
-        ) : (
-          <StepStudents
-            students={students}
-            draft={draft}
-            onChange={patchDraft}
-            onBack={() => setStep(1)}
-            onCreate={handleCreate}
-            isCreating={createGroup.isPending}
+      }
+      desktopMaxWidthClassName="sm:max-w-[560px]"
+      header={
+        <div className="py-1">
+          <StepProgress
+            currentStep={step}
+            steps={[{ label: 'Group details' }, { label: 'Add students' }]}
           />
-        )}
-      </DialogContent>
-    </Dialog>
+        </div>
+      }
+    >
+      {step === 1 ? (
+        <StepDetails draft={draft} onChange={patchDraft} onNext={() => setStep(2)} />
+      ) : (
+        <StepStudents
+          students={students}
+          draft={draft}
+          onChange={patchDraft}
+          onBack={() => setStep(1)}
+          onCreate={handleCreate}
+          isCreating={createGroup.isPending}
+        />
+      )}
+    </ResponsiveModal>
   );
 }

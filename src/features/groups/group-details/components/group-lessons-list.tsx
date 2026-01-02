@@ -16,7 +16,11 @@ export default function GroupLessonsList({ lessons }: { lessons: GroupLesson[] }
           {lessons.length === 0 ? (
             <div className="text-sm text-muted-foreground">Nothing here</div>
           ) : (
-            lessons.map((l) => <LessonCard key={l.id} lesson={l} />)
+            lessons.map((l) => (
+              <div key={l.id} className="w-64 shrink-0 snap-start">
+                <LessonCard lesson={l} />
+              </div>
+            ))
           )}
         </div>
       </CardContent>
