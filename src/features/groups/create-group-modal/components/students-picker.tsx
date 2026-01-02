@@ -52,15 +52,9 @@ export function StudentsPicker({
                     key={s.id}
                     value={`${s.username} ${s.name} ${s.id}`}
                     onSelect={() => toggle(s.id)}
-                    // снимаем “командные” стили, оставляем только поведение
                     className="p-0 aria-selected:bg-transparent data-[selected=true]:bg-transparent"
                   >
-                    <StudentRow
-                      selected={selected}
-                      primary={s.username}
-                      secondary={s.name}
-                      onToggle={() => toggle(s.id)}
-                    />
+                    <StudentRow selected={selected} primary={s.username} secondary={s.name} />
                   </CommandItem>
                 );
               })}

@@ -3,12 +3,12 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-export type SegmentedOption<T extends string> = {
+export type SegmentedOption<T extends string | number> = {
   value: T;
   label: string;
 };
 
-export function SegmentedControl<T extends string>({
+export function SegmentedControl<T extends string | number>({
   value,
   onChange,
   options,
@@ -16,7 +16,7 @@ export function SegmentedControl<T extends string>({
 }: {
   value: T;
   onChange: (value: T) => void;
-  options: SegmentedOption<T>[];
+  options: readonly SegmentedOption<T>[];
   className?: string;
 }) {
   const selectedIndex = Math.max(

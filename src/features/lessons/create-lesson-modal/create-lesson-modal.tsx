@@ -139,7 +139,7 @@ export function CreateLessonModal() {
     );
   };
 
-  const handleAssignmentChange = (type: EAssigmentType, index: number, updated) => {
+  const handleAssignmentChange = (type: EAssigmentType, index: number, updated: TAssignment) => {
     const current = generatedAssignments[type] || [];
     const next = [...current];
     next[index] = updated;
@@ -165,8 +165,15 @@ export function CreateLessonModal() {
         patchDraft({ lessonId: data.id });
         setStep(4);
       },
-      onError: (e) => {
-        toast.error('Failed to create lesson', { description: e?.message ?? 'Unknown error' });
+      onError: (error, _variables, _onMutateResult, _context) => {
+        const message =
+          error instanceof Error
+            ? error.message
+            : typeof error === 'string'
+              ? error
+              : 'Unknown error';
+
+        toast.error('Failed to create lesson', { description: message });
       },
     });
   };
@@ -196,8 +203,15 @@ export function CreateLessonModal() {
             description: 'The lesson has been added to students list.',
           });
         },
-        onError: (e) => {
-          toast.error('Failed to assign lesson', { description: e?.message ?? 'Unknown error' });
+        onError: (error, _variables, _onMutateResult, _context) => {
+          const message =
+            error instanceof Error
+              ? error.message
+              : typeof error === 'string'
+                ? error
+                : 'Unknown error';
+
+          toast.error('Failed to assign lesson', { description: message });
         },
         onSettled: () => {
           setOpen(false);

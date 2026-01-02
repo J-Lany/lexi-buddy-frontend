@@ -5,6 +5,7 @@ import { useGetGroups } from '@/features/groups/hooks/use-get-groups';
 import { GroupTable } from '@/features/groups/group-table/components/group-table';
 import { EmptyStateCard } from '@/components/ui/empty-state-card';
 import { CreateGroupModal } from '@/features/groups/create-group-modal/create-group-modal';
+import { Group } from '@/features/groups/group-table/components/group-row';
 
 export function GroupsFragment({ query }: { query: string }) {
   const { data } = useGetGroups();
@@ -13,7 +14,7 @@ export function GroupsFragment({ query }: { query: string }) {
     const q = query.trim().toLowerCase();
     if (!data || !q) return data ?? [];
 
-    return data.filter((g) => {
+    return data.filter((g: Group) => {
       const haystack = `${g.name ?? ''} ${g.level ?? ''}`.toLowerCase();
       return haystack.includes(q);
     });

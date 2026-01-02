@@ -29,7 +29,7 @@ type Props = {
 
   onToggleExpanded: (type: EAssigmentType) => void;
   onGenerate: (type: EAssigmentType) => void;
-  onAssignmentChange: (type: EAssigmentType, index: number, updated) => void;
+  onAssignmentChange: (type: EAssigmentType, index: number, updated: TAssignment) => void;
 };
 
 export function StepAssignments({
