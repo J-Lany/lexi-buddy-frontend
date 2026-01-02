@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export type Student = {
-  id: string;
+  id: number;
   name: string;
   username: string;
   groupName: string;

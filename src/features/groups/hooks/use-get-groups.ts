@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { GROUPS_QUERY_KEY, STUDENTS_QUERY_KEY } from '@/features/students/utils/consts';
+import { GROUPS_QUERY_KEY } from '@/features/students/utils/consts';
 import { api } from '@/lib/api-client';
 
 export function useGetGroups() {

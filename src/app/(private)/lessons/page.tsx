@@ -1,10 +1,9 @@
-import { CreateLessonModal } from '@/features/lessons/create-lesson-modal/create-lesson-modal';
+import { LessonsFragment } from '@/features/lessons/lessons-table/components/lessons-fragment';
 
 export default function LessonsPage() {
   return (
-    <div>
-      <h1>Lessons Page</h1>
-      <CreateLessonModal />
+    <div className="max-w-5xl flex flex-col gap-4 pb-17">
+      <LessonsFragment />
     </div>
   );
 }

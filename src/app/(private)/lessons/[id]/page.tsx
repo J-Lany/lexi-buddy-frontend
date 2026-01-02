@@ -1,3 +1,5 @@
-export default function LessonPage() {
-  return <h1>Particular Lesson Page</h1>;
+import LessonDetailsPage from '@/features/lessons/lesson-details/components/lesson-details-page';
+
+export default function LessonPage({ params }: { params: { id: string } }) {
+  return <LessonDetailsPage lessonId={params.id} />;
 }
