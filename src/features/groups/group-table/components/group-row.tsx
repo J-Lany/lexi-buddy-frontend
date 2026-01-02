@@ -1,20 +1,40 @@
+'use client';
+
 import Link from 'next/link';
-import { Student } from '@/features/groups/create-group-modal/types';
+import { Users } from 'lucide-react';
 
 export type Group = {
   id: number;
   name: string;
   level?: string;
-  students: Student[];
+  studentsCount: number;
 };
+
 export function GroupRow({ group }: { group: Group }) {
+  const meta = [group.level ? `Level ${group.level}` : null, `${group.studentsCount} students`]
+    .filter(Boolean)
+    .join(' · ');
+
   return (
     <Link
       href={`/groups/${group.id}`}
-      className="flex flex-col items-start sm:flex-row py-3 px-10 bg-white shadow-sm rounded-full hover:bg-muted cursor-pointer border-b sm:gap-4 sm:px-6"
+      className="ui-card ui-radius-card ui-focus block px-5 sm:px-6 py-4"
     >
-      <div className="font-semibold text-gray-800">{group.name}</div>
-      <div className="text-gray-600">{group.students.length} students</div>
+      <div className="flex items-start gap-3 sm:gap-4">
+        <div className="ui-thumb h-9 w-9">
+          <Users size={18} strokeWidth={2} className="text-primary" />
+        </div>
+
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-3">
+            <span className="ui-title">{group.name}</span>
+
+            {group.level && <span className="ui-pill">{group.level}</span>}
+          </div>
+
+          <div className="mt-1 ui-meta">{meta}</div>
+        </div>
+      </div>
     </Link>
   );
 }

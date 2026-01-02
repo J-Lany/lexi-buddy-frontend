@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { GROUP_DASHBOARD_QUERY_KEY } from '@/features/students/utils/consts';
 import { api } from '@/lib/api-client';
 import { GroupDashboard } from '@/features/groups/utils/types';
+import { GROUP_DASHBOARD_QUERY_KEY } from '@/lib/query-keys';
 
 export function useGetGroupDashboard(groupId: string) {
   return useQuery<GroupDashboard>({

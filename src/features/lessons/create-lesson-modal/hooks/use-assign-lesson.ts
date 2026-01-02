@@ -5,7 +5,7 @@ import {
   LESSON_DETAILS_QUERY_KEY,
   LESSONS_QUERY_KEY,
   STUDENT_DASHBOARD_QUERY_KEY,
-} from '@/features/students/utils/consts';
+} from '@/lib/query-keys';
 
 type AssignLessonInput = {
   lessonId: number;

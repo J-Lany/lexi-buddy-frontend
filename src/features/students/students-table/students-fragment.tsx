@@ -1,16 +1,46 @@
-import { Input } from '@/components/ui/input';
-import { useGetStudents } from '@/features/students/hooks/use-get-students';
-import { InviteStudentModal } from '@/features/students/add-student-modal/add-student-modal';
-import { StudentTable } from '@/features/students/students-table/components/student-table';
+'use client';
 
-export function StudentsFragment() {
+import { useMemo } from 'react';
+import { useGetStudents } from '@/features/students/hooks/use-get-students';
+import { StudentTable } from '@/features/students/students-table/components/student-table';
+import { EmptyStateCard } from '@/components/ui/empty-state-card';
+import { InviteStudentModal } from '@/features/students/add-student-modal/add-student-modal';
+
+export function StudentsFragment({ query }: { query: string }) {
   const { data } = useGetStudents();
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!data || !q) return data ?? [];
+
+    return data.filter((s) => {
+      const haystack = `${s.name} ${s.username} ${s.groupName} ${s.level}`.toLowerCase();
+      return haystack.includes(q);
+    });
+  }, [data, query]);
+
+  if (data && data.length === 0) {
+    return (
+      <section className="flex flex-col gap-4">
+        <EmptyStateCard
+          title="No students yet"
+          description="Invite your first student to start assigning lessons."
+          action={<InviteStudentModal />}
+        />
+      </section>
+    );
+  }
 
   return (
     <section className="flex flex-col gap-4">
-      <InviteStudentModal />
-      <Input placeholder="search" className="w-full md:w-[384px]" />
-      {data && <StudentTable students={data} />}
+      {!!filtered.length && <StudentTable students={filtered} />}
+
+      {data && data.length > 0 && filtered.length === 0 && (
+        <EmptyStateCard
+          title="No results"
+          description="Check the spelling or try another keyword."
+        />
+      )}
     </section>
   );
 }

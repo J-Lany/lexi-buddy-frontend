@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
 import { LessonDetails } from '@/features/lessons/create-lesson-modal/types';
-import { LESSON_DETAILS_QUERY_KEY } from '@/features/students/utils/consts';
+import { LESSON_DETAILS_QUERY_KEY } from '@/lib/query-keys';
 
 export function useGetLessonDetails(lessonId: string) {
   return useQuery<LessonDetails>({

@@ -9,20 +9,26 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col gap-6  p-6">
-      {RoutesLabels.map(({ label, href }) => {
-        const isGroupPage = pathname?.startsWith(EAppRoutes.GROUPS) && href === EAppRoutes.STUDENTS;
-        const isActive = pathname?.startsWith(href) || isGroupPage;
-        return (
-          <Link
-            key={href}
-            href={href}
-            className={cn('px-6 font-semibold text-l', isActive && 'text-primary')}
-          >
-            {label}
-          </Link>
-        );
-      })}
+    <nav className="ui-sidebar-nav">
+      <div className="ui-sidebar-list">
+        {RoutesLabels.map(({ label, href }) => {
+          const isGroupPage =
+            pathname?.startsWith(EAppRoutes.GROUPS) && href === EAppRoutes.STUDENTS;
+
+          const isActive = pathname?.startsWith(href) || isGroupPage;
+
+          return (
+            <Link
+              key={href}
+              href={href}
+              aria-current={isActive ? 'page' : undefined}
+              className={cn('ui-sidebar-item ui-focus', isActive && 'ui-sidebar-item-active')}
+            >
+              {label}
+            </Link>
+          );
+        })}
+      </div>
     </nav>
   );
 }

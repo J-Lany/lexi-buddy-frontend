@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
-import { STUDENTS_SEARCH_QUERY_KEY } from '@/features/students/utils/consts';
+import { STUDENTS_SEARCH_QUERY_KEY } from '@/lib/query-keys';
 
 export type StudentSearchItem = {
   id: number;
