@@ -86,7 +86,12 @@ export function InviteStudentModal() {
         />
 
         <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" onClick={handleSend} disabled={!canSend}>
+          <Button
+            type="button"
+            className="w-full sm:w-auto"
+            onClick={handleSend}
+            disabled={!canSend}
+          >
             {invite.isPending ? 'Sending…' : 'Send request'}
           </Button>
         </div>

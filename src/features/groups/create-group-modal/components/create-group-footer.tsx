@@ -22,7 +22,7 @@ export function CreateGroupFooter({
   if (step === 1) {
     return (
       <div className="flex justify-end">
-        <Button type="button" onClick={onNext} disabled={!canNext} className="h-11 rounded-xl px-6">
+        <Button type="button" onClick={onNext} disabled={!canNext} className="w-full sm:w-auto">
           Next
         </Button>
       </div>
@@ -31,16 +31,11 @@ export function CreateGroupFooter({
 
   return (
     <div className="flex justify-between gap-2">
-      <Button type="button" variant="outline" onClick={onBack} className="h-11 rounded-xl px-5">
+      <Button type="button" variant="outline" onClick={onBack} className="w-full sm:w-auto">
         Back
       </Button>
 
-      <Button
-        type="button"
-        onClick={onCreate}
-        disabled={!canCreate}
-        className="h-11 rounded-xl px-6"
-      >
+      <Button type="button" onClick={onCreate} disabled={!canCreate} className="w-full sm:w-auto">
         {isCreating ? 'Creating…' : 'Create'}
       </Button>
     </div>
