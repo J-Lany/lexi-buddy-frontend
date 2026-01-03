@@ -1,5 +1,6 @@
 import GroupDetailsPage from '@/features/groups/group-details/group-details-page';
 
-export default function GroupPage({ params }: { params: { id: string } }) {
-  return <GroupDetailsPage groupId={params.id} />;
+export default async function GroupPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  return <GroupDetailsPage groupId={id} />;
 }

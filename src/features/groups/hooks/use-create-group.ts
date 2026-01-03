@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
-import { GROUPS_QUERY_KEY } from '@/features/students/utils/consts';
+import { GROUPS_QUERY_KEY } from '@/lib/query-keys';
 
 export type CreateGroupPayload = {
   name: string;

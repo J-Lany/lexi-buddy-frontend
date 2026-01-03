@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
-import { STUDENTS_QUERY_KEY } from '@/features/students/utils/consts';
+import { STUDENTS_QUERY_KEY } from '@/lib/query-keys';
 
 export type CreateTeacherRequestPayload = {
   studentId: number;

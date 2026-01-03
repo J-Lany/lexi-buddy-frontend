@@ -1,5 +1,5 @@
 import { api } from '@/lib/api-client';
-import { LESSONS_QUERY_KEY } from '@/features/students/utils/consts';
+import { LESSONS_QUERY_KEY } from '@/lib/query-keys';
 import {
   EAgeGroup,
   ELevel,

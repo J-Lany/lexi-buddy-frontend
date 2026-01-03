@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { STUDENT_DASHBOARD_QUERY_KEY } from '@/features/students/utils/consts';
+import { STUDENT_DASHBOARD_QUERY_KEY } from '@/lib/query-keys';
 import { StudentDashboard } from '@/features/students/utils/types';
 import { api } from '@/lib/api-client';
 

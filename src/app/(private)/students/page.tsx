@@ -1,40 +1,44 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { EStudentsTab } from '@/features/students/utils/consts';
-import { GroupsFragment } from '@/features/groups/group-table/groups-fragment';
+import { Input } from '@/components/ui/input';
+import { SegmentedControl } from '@/components/ui/segmented-control';
 import { StudentsFragment } from '@/features/students/students-table/students-fragment';
+import { GroupsFragment } from '@/features/groups/group-table/groups-fragment';
+import { EStudentsTab, STUDENTS_TABS } from '@/features/students/utils/consts';
+import { InviteStudentModal } from '@/features/students/add-student-modal/add-student-modal';
+import { CreateGroupModal } from '@/features/groups/create-group-modal/create-group-modal';
 
 export default function StudentsPage() {
-  const [tabIndex, setTabIndex] = useState(EStudentsTab.STUDENTS);
+  const [tab, setTab] = useState<EStudentsTab>(EStudentsTab.STUDENTS);
+  const [query, setQuery] = useState('');
 
-  const isStudetnsTab = tabIndex === EStudentsTab.STUDENTS;
-  const isGroupsTab = tabIndex === EStudentsTab.GROUPS;
+  const action = tab === EStudentsTab.STUDENTS ? <InviteStudentModal /> : <CreateGroupModal />;
 
   return (
     <main>
-      <section className="max-w-5xl flex flex-col gap-8">
-        <div className="flex gap-4">
-          <Button
-            size="lg"
-            variant={isStudetnsTab ? 'default' : 'outline'}
-            className="rounded-full flex-1 sm:flex-none"
-            onClick={() => setTabIndex(EStudentsTab.STUDENTS)}
-          >
-            All students
-          </Button>
-          <Button
-            size="lg"
-            variant={isGroupsTab ? 'default' : 'outline'}
-            className="rounded-full flex-1 sm:flex-none"
-            onClick={() => setTabIndex(EStudentsTab.GROUPS)}
-          >
-            Groups
-          </Button>
+      <section className="max-w-5xl flex flex-col gap-6">
+        <div className="ui-panel ui-radius-card p-4 sm:p-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <SegmentedControl<EStudentsTab>
+              value={tab}
+              onChange={(v) => setTab(v)}
+              options={STUDENTS_TABS}
+              className="w-full sm:w-auto"
+            />
+            <div className="flex flex-col gap-3 w-full sm:flex-row sm:items-center sm:justify-end sm:w-auto">
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={tab === EStudentsTab.STUDENTS ? 'Search students' : 'Search groups'}
+                className="w-full sm:w-[360px] lg:w-[420px]"
+              />
+              <div className="sm:w-auto">{action}</div>
+            </div>
+          </div>
         </div>
-        {tabIndex === EStudentsTab.STUDENTS && <StudentsFragment />}
-        {tabIndex === EStudentsTab.GROUPS && <GroupsFragment />}
+        {tab === EStudentsTab.STUDENTS && <StudentsFragment query={query} />}
+        {tab === EStudentsTab.GROUPS && <GroupsFragment query={query} />}
       </section>
     </main>
   );

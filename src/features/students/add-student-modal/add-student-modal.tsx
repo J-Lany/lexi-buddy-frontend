@@ -4,14 +4,8 @@ import * as React from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { ResponsiveModal } from '@/components/ui/responsive-modal';
 
 import { StudentSearchPicker } from './components/student-search-picker';
 import type { StudentSearchItem } from '@/features/students/hooks/use-search-students';
@@ -55,47 +49,44 @@ export function InviteStudentModal() {
           reset();
         },
         onError: (e) => {
-          toast.error('Failed to send request', { description: e.message });
+          toast.error('Failed to send request', {
+            description: e instanceof Error ? e.message : 'Something went wrong',
+          });
         },
       },
     );
   };
 
   return (
-    <Dialog
+    <ResponsiveModal
+      trigger={
+        <Button type="button" variant="outline" className="rounded-full w-48">
+          + Add a student
+        </Button>
+      }
+      title="Invite a student"
       open={open}
       onOpenChange={(v) => {
         setOpen(v);
         if (!v) reset();
       }}
+      desktopMaxWidthClassName="sm:max-w-[560px]"
     >
-      <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="rounded-full w-48">
-          + Add a student
-        </Button>
-      </DialogTrigger>
+      <div className="grid gap-4">
+        <StudentSearchPicker value={draft.student} onChange={(student) => patch({ student })} />
 
-      <DialogContent className="sm:max-w-[560px]">
-        <DialogHeader className="space-y-3">
-          <DialogTitle className="text-base">Invite a student</DialogTitle>
-        </DialogHeader>
+        <Textarea
+          placeholder="Message (optional)"
+          value={draft.message}
+          onChange={(e) => patch({ message: e.target.value })}
+        />
 
-        <div className="grid gap-4">
-          <StudentSearchPicker value={draft.student} onChange={(student) => patch({ student })} />
-
-          <Textarea
-            placeholder="Message (optional)"
-            value={draft.message}
-            onChange={(e) => patch({ message: e.target.value })}
-          />
-
-          <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" onClick={handleSend} disabled={!canSend}>
-              {invite.isPending ? 'Sending…' : 'Send request'}
-            </Button>
-          </div>
+        <div className="flex justify-end gap-2 pt-2">
+          <Button type="button" onClick={handleSend} disabled={!canSend}>
+            {invite.isPending ? 'Sending…' : 'Send request'}
+          </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </ResponsiveModal>
   );
 }

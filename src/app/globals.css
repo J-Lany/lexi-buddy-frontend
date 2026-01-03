@@ -2,15 +2,14 @@
 @tailwind base;
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
-html,
-body {
-  max-width: 100vw;
+html, body {
   height: 100%;
-  overflow: hidden;
-  overscroll-behavior: none;
 }
+
+body {
+  overflow: hidden;
+}
+
 
 body {
   -webkit-font-smoothing: antialiased;
@@ -21,40 +20,45 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--background);
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+
   --color-destructive: var(--destructive);
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -63,6 +67,7 @@ a {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
   --color-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary) 100%);
   --color-table-header: var(--table-header);
 }
@@ -73,7 +78,11 @@ a {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
 
-  --gradient: linear-gradient(90deg, white 10%, var(--primary-foreground) 90%);
+  --gradient: linear-gradient(
+          90deg,
+          color-mix(in oklch, white 92%, var(--primary-foreground) 8%) 0%,
+          var(--primary-foreground) 100%
+  );
 
   --card: var(--background);
   --card-foreground: var(--foreground);
@@ -94,7 +103,6 @@ a {
   --accent-foreground: oklch(0.73 0.13 216);
 
   --destructive: oklch(0.6 0.19 27);
-  --destructive-foreground: oklch(0.88 0.07 210);
 
   --border: oklch(0.88 0.07 210);
   --input: oklch(0.88 0.07 210);
@@ -116,53 +124,23 @@ a {
   --sidebar-ring: oklch(0.88 0.07 210);
 
   --table-header: oklch(0.87 0 0);
-}
 
-.dark {
-  --background: oklch(0.28 0.14 291);
-  --foreground: oklch(0.95 0.03 212);
+  /* Surfaces */
+  --surface: color-mix(in oklch, var(--card) 92%, white 8%);
+  --surface-hover: color-mix(in oklch, var(--card) 88%, var(--primary-foreground) 12%);
 
-  --card: oklch(0.38 0.18 294);
-  --card-foreground: oklch(0.95 0.03 212);
+  /* Borders */
+  --border-soft: color-mix(in oklch, var(--border) 55%, white 45%);
 
-  --popover: oklch(0.38 0.18 294);
-  --popover-foreground: oklch(0.95 0.03 212);
+  /* Shadows (one family across the app) */
+  --shadow-card: 0 10px 30px rgba(15, 116, 143, 0.08);
+  --shadow-card-hover: 0 14px 40px rgba(15, 116, 143, 0.10);
 
-  --primary: oklch(0.71 0.16 294);
-  --primary-foreground: oklch(0.28 0.14 291);
+  /* Apple-like focus halo */
+  --focus-halo: 0 0 0 4px color-mix(in oklch, var(--primary) 22%, white 78%);
+  --focus-border: color-mix(in oklch, var(--primary) 55%, white 45%);
 
-  --secondary: oklch(0.49 0.24 293);
-  --secondary-foreground: oklch(0.95 0.03 212);
-
-  --muted: oklch(0.49 0.24 293);
-  --muted-foreground: oklch(0.88 0.07 210);
-
-  --accent: oklch(0.49 0.24 293);
-  --accent-foreground: oklch(0.95 0.03 212);
-
-  --destructive: oklch(0.62 0.18 27);
-  --destructive-foreground: oklch(0.95 0.03 212);
-
-  --border: oklch(0.43 0.21 293);
-  --input: oklch(0.43 0.21 293);
-  --ring: oklch(0.88 0.07 210);
-
-  --chart-1: oklch(0.81 0.1 294);
-  --chart-2: oklch(0.71 0.16 294);
-  --chart-3: oklch(0.73 0.13 216);
-  --chart-4: oklch(0.54 0.25 293);
-  --chart-5: oklch(0.49 0.24 293);
-
-  --sidebar: oklch(0.28 0.14 291);
-  --sidebar-foreground: oklch(0.95 0.03 212);
-  --sidebar-primary: oklch(0.71 0.16 294);
-  --sidebar-primary-foreground: oklch(0.28 0.14 291);
-  --sidebar-accent: oklch(0.49 0.24 293);
-  --sidebar-accent-foreground: oklch(0.95 0.03 212);
-  --sidebar-border: oklch(0.43 0.21 293);
-  --sidebar-ring: oklch(0.88 0.07 210);
-
-  --table-header: oklch(0.87 0 0);
+  --mobile-footer: 72px;
 }
 
 @layer base {
@@ -174,7 +152,397 @@ a {
   }
 }
 
-@layer utilites {
+@layer utilities {
+  /* =========================================================
+     TYPOGRAPHY
+     ========================================================= */
+
+  /* Primary title text for list rows, cards, and main labels */
+  .ui-title {
+    @apply font-semibold leading-snug truncate;
+    font-size: 15px; /* mobile default */
+  }
+
+  @media (min-width: 640px) {
+    .ui-title {
+      font-size: 16px; /* desktop */
+    }
+  }
+
+  /* Secondary / meta text under titles */
+  .ui-meta {
+    @apply text-muted-foreground leading-snug truncate;
+    font-size: 11px; /* mobile */
+    opacity: 0.85; /* quieter than main text */
+  }
+
+  @media (min-width: 640px) {
+    .ui-meta {
+      font-size: 12px; /* desktop */
+    }
+  }
+
+  /* Compact stats or trailing values */
+  .ui-stat {
+    @apply font-medium whitespace-nowrap text-foreground;
+    font-size: 12px;
+  }
+
+  @media (min-width: 640px) {
+    .ui-stat {
+      font-size: 14px;
+    }
+  }
+
+  /* Tinted secondary text (Apple-like "link tint" without web-blue) */
+  .ui-tint {
+    @apply truncate;
+    color: color-mix(in oklch, var(--primary) 70%, black 30%);
+    font-size: 12px;
+    line-height: 1.25rem; /* 20px */
+  }
+
+  @media (min-width: 640px) {
+    .ui-tint {
+      font-size: 13px;
+    }
+  }
+
+  /* =========================================================
+     APP SHELL (Header + Sidebar + Content)
+     ========================================================= */
+
+  /* One topbar height for the app */
+  .ui-topbar {
+    height: 56px;
+  }
+  @media (min-width: 640px) {
+    .ui-topbar {
+      height: 64px;
+    }
+  }
+
+  /* Calm system topbar surface */
+  .ui-topbar-surface {
+    @apply border-b;
+    background: color-mix(in oklch, var(--background) 90%, white 10%);
+    border-color: color-mix(in oklch, var(--border) 35%, white 65%);
+  }
+
+  /* Light glass effect */
+  .ui-topbar-blur {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Sidebar width (macOS-ish) */
+  .ui-sidebar {
+    width: 248px;
+  }
+
+  /* Sidebar surface */
+  .ui-sidebar-surface {
+    @apply border-r;
+    background: color-mix(in oklch, var(--surface) 88%, white 12%);
+    border-color: var(--border-soft);
+  }
+
+  /* Content container: left-aligned within content area */
+  .ui-content {
+    @apply w-full;
+  }
+
+  .ui-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  .ui-content-inner {
+    @apply w-full;
+    max-width: 1120px;
+    margin-right: auto;
+    margin-left: 0; /* key: not centered */
+  }
+
+  /* Horizontal padding used by header + content */
+  .ui-content-pad {
+    @apply px-5 sm:px-8;
+  }
+
+  /* Brand link */
+  .ui-brand {
+    @apply font-semibold tracking-tight;
+    font-size: 15px;
+  }
+  @media (min-width: 640px) {
+    .ui-brand {
+      font-size: 17px;
+    }
+  }
+
+  /* Header action button (ghost) */
+  .ui-topbar-action {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-2;
+    @apply text-muted-foreground hover:text-foreground transition-colors;
+  }
+
+  /* Sidebar item: ensure consistent focus without fighting hover outline */
+  .ui-sidebar-item:focus-visible {
+    outline: 2px solid color-mix(in oklch, var(--ring) 70%, white 30%);
+    outline-offset: 2px;
+  }
+
+  /* Topbar blur should be applied only when supported */
+  @supports (backdrop-filter: blur(10px)) {
+    .ui-topbar-blur {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  }
+
+  /* =========================================================
+     SIDEBAR (Apple-like)
+     ========================================================= */
+
+  .ui-sidebar-nav {
+    @apply px-3 py-5;
+  }
+
+  .ui-sidebar-list {
+    @apply flex flex-col gap-1;
+  }
+
+  .ui-sidebar-item {
+    @apply relative w-full rounded-2xl font-medium;
+    padding: 10px 16px 10px 28px; /* extra space for rail */
+    color: color-mix(in oklch, var(--foreground) 65%, var(--muted));
+    transition:
+            background-color 160ms ease-out,
+            box-shadow 160ms ease-out,
+            border-color 160ms ease-out,
+            color 120ms ease-out;
+  }
+
+  /* Hover fog (desktop only) */
+  @media (hover: hover) {
+    .ui-sidebar-item:hover:not(.ui-sidebar-item-active) {
+      background: color-mix(in oklch, white 40%, var(--surface) 60%);
+      outline: 1px solid color-mix(in oklch, var(--border) 25%, transparent 75%);
+      outline-offset: -1px;
+    }
+  }
+
+  /* Active selection: clear, but not “card-like” */
+  .ui-sidebar-item-active {
+    color: var(--foreground);
+    background: color-mix(in oklch, var(--background) 80%, white 20%);
+    border: 1px solid color-mix(in oklch, var(--border) 28%, white 72%);
+    box-shadow: 0 4px 10px rgba(15, 116, 143, 0.06); /* subtle */
+  }
+
+  /* Left rail (macOS selection cue) */
+  .ui-sidebar-item::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    border-radius: 999px;
+    background: color-mix(in oklch, var(--primary) 75%, white 25%);
+    opacity: 0;
+    transition: opacity 160ms ease-out;
+  }
+
+  .ui-sidebar-item-active::before {
+    opacity: 1;
+  }
+
+  /* Remove “press jump” */
+  .ui-sidebar-item:active {
+    transform: none;
+  }
+
+  /* =========================================================
+     SURFACES / CARDS
+     ========================================================= */
+
+  /* Base card surface */
+  .ui-card {
+    @apply border transition-colors transition-shadow duration-200 ease-out;
+    background: var(--surface);
+    border-color: var(--border-soft);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Hover state (hover devices only) */
+  @media (hover: hover) {
+    .ui-card:hover {
+      background: var(--surface-hover);
+      box-shadow: var(--shadow-card-hover);
+    }
+  }
+
+  /* Active / pressed */
+  .ui-card:active {
+    box-shadow: var(--shadow-card);
+    background: color-mix(in oklch, var(--surface) 96%, var(--foreground) 4%);
+  }
+
+  /* =========================================================
+     SHAPES
+     ========================================================= */
+
+  .ui-radius-card {
+    @apply rounded-3xl md:rounded-2xl;
+  }
+
+  /* =========================================================
+     ICON / THUMBNAIL
+     ========================================================= */
+
+  .ui-thumb {
+    @apply flex items-center justify-center shrink-0 rounded-2xl border;
+    background: color-mix(in oklch, var(--primary-foreground) 55%, white 45%);
+    border-color: color-mix(in oklch, var(--border) 45%, white 55%);
+  }
+
+  /* =========================================================
+     ACCESSIBILITY
+     ========================================================= */
+
+  .ui-focus {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  }
+
+  /* =========================================================
+     PILLS / BADGES
+     ========================================================= */
+
+  .ui-pill {
+    @apply inline-flex items-center justify-center rounded-full border px-2.5;
+    height: 22px;
+    font-size: 11px;
+    line-height: 1;
+    background: color-mix(in oklch, var(--primary-foreground) 40%, white 60%);
+    border-color: color-mix(in oklch, var(--border) 50%, white 50%);
+    color: color-mix(in oklch, var(--foreground) 70%, black 30%);
+  }
+
+  @media (min-width: 640px) {
+    .ui-pill {
+      height: 24px;
+      font-size: 12px;
+    }
+  }
+
+  /* =========================================================
+     PANELS (static surfaces — no hover glow)
+     ========================================================= */
+
+  .ui-panel {
+    @apply border rounded-3xl;
+    background: var(--surface);
+    border-color: var(--border-soft);
+    box-shadow: none;
+  }
+
+  /* =========================================================
+     SEGMENTED CONTROL
+     ========================================================= */
+
+  .ui-seg {
+    @apply relative isolate grid items-center p-1 rounded-full border;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    background: color-mix(in oklch, var(--surface) 92%, white 8%);
+    border-color: var(--border-soft);
+  }
+
+  .ui-seg-indicator {
+    @apply absolute inset-y-1 left-1 rounded-full;
+    width: calc((100% - 0.5rem) / var(--seg-count));
+    transform: translateX(calc(var(--seg-index) * 100%));
+    transition: transform 180ms ease, width 180ms ease;
+    background: color-mix(in oklch, var(--background) 92%, white 8%);
+    box-shadow: 0 10px 24px rgba(15, 116, 143, 0.12);
+    border: 1px solid color-mix(in oklch, var(--border) 40%, white 60%);
+  }
+
+  .ui-seg-item {
+    @apply relative z-10 px-4 h-9 rounded-full;
+    @apply text-sm font-medium text-muted-foreground;
+    @apply whitespace-nowrap select-none;
+    @apply transition-colors duration-150;
+  }
+
+  .ui-seg-item[data-state='active'] {
+    @apply text-foreground;
+  }
+
+  .ui-seg-item:active {
+    color: var(--foreground);
+  }
+
+  @media (hover: hover) {
+    .ui-seg-item:hover {
+      color: color-mix(in oklch, var(--foreground) 80%, black 20%);
+    }
+  }
+
+  /* =========================================================
+   ROWS / LIST ITEMS (iOS inset-grouped vibe)
+   ========================================================= */
+
+  .ui-row {
+    @apply border;
+    background: color-mix(in oklch, var(--background) 86%, white 14%);
+    border-color: var(--border-soft);
+  }
+
+  /* Mobile-safe bottom padding for scroll areas with fixed footer */
+  .ui-safe-bottom {
+    padding-bottom: calc(var(--mobile-footer) + env(safe-area-inset-bottom));
+  }
+
+  /* Horizontal inset that still allows full-width highlight */
+  .ui-inset-x {
+    margin-left: -0.5rem;  /* = -mx-2 */
+    margin-right: -0.5rem;
+    padding-left: 0.5rem;  /* = px-2 */
+    padding-right: 0.5rem;
+  }
+
+  /* Base tappable row: uses ui-row surface + correct hit target */
+  .ui-list-row {
+    /* ui-row */
+    @apply border;
+    background: color-mix(in oklch, var(--background) 86%, white 14%);
+    border-color: var(--border-soft);
+
+    /* layout + shape */
+    @apply flex items-center justify-between rounded-2xl transition-colors;
+
+    /* hit target */
+    padding-top: 0.75rem;   /* py-3 */
+    padding-bottom: 0.75rem;
+
+    /* ui-focus */
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+  }
+
+  /* Subtle system highlight (works on hover devices + touch press) */
+  @media (hover: hover) {
+    .ui-list-row:hover {
+      background: color-mix(in oklch, var(--foreground) 4%, white 96%);
+    }
+  }
+
+  .ui-list-row:active {
+    background: color-mix(in oklch, var(--foreground) 7%, white 93%);
+  }
+
 }
 
 .back-gradient {

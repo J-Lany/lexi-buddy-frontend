@@ -4,7 +4,7 @@ export type AssignmentState = {
   [key in EAssigmentType]?: TAssignment[];
 };
 
-type AssignmentAction =
+export type AssignmentAction =
   | { type: 'SET_ASSIGNMENTS'; payload: { typeKey: EAssigmentType; data: TAssignment[] } }
   | { type: 'RESET_ASSIGNMENTS' };
 

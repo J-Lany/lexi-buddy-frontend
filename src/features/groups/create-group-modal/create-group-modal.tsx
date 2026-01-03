@@ -4,13 +4,7 @@ import * as React from 'react';
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { ResponsiveModal } from '@/components/ui/responsive-modal';
 
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import {
@@ -22,6 +16,7 @@ import type { CreateGroupDraft, Student } from './types';
 import { StepDetails } from './components/step-details';
 import { StepStudents } from './components/step-students';
 import { StepProgress } from '@/components/ui/progress-bar';
+import { CreateGroupFooter } from '@/features/groups/create-group-modal/components/create-group-footer';
 
 const initialDraft: CreateGroupDraft = {
   name: '',
@@ -41,6 +36,9 @@ export function CreateGroupModal() {
   const createGroup = useCreateGroupMutation();
 
   const patchDraft = (patch: Partial<CreateGroupDraft>) => setDraft((d) => ({ ...d, ...patch }));
+
+  const canNext = draft.name.trim().length > 0 && draft.level.trim().length > 0;
+  const canCreate = draft.studentIds.length >= 2 && !createGroup.isPending;
 
   const reset = () => {
     setStep(1);
@@ -70,43 +68,48 @@ export function CreateGroupModal() {
     );
   };
 
+  const footer = (
+    <CreateGroupFooter
+      step={step}
+      canNext={canNext}
+      canCreate={canCreate}
+      isCreating={createGroup.isPending}
+      onNext={() => setStep(2)}
+      onBack={() => setStep(1)}
+      onCreate={handleCreate}
+    />
+  );
+
   return (
-    <Dialog
+    <ResponsiveModal
       open={open}
       onOpenChange={(v) => {
         setOpen(v);
         if (!v) reset();
       }}
-    >
-      <DialogTrigger asChild>
+      trigger={
         <Button type="button" variant="outline" className="rounded-full w-48">
           + Create a new group
         </Button>
-      </DialogTrigger>
-
-      <DialogContent className="sm:max-w-[560px]">
-        <DialogHeader className="space-y-3">
-          <DialogTitle className="text-base">
-            <StepProgress
-              currentStep={step}
-              steps={[{ label: 'Group details' }, { label: 'Add students' }]}
-            />
-          </DialogTitle>
-        </DialogHeader>
-
-        {step === 1 ? (
-          <StepDetails draft={draft} onChange={patchDraft} onNext={() => setStep(2)} />
-        ) : (
-          <StepStudents
-            students={students}
-            draft={draft}
-            onChange={patchDraft}
-            onBack={() => setStep(1)}
-            onCreate={handleCreate}
-            isCreating={createGroup.isPending}
+      }
+      desktopMaxWidthClassName="sm:max-w-[560px]"
+      header={
+        <div className="py-1">
+          <StepProgress
+            currentStep={step}
+            steps={[{ label: 'Group details' }, { label: 'Add students' }]}
           />
-        )}
-      </DialogContent>
-    </Dialog>
+        </div>
+      }
+      mobileHeightClassName="h-[78dvh]"
+      mobileStickyFooter={footer}
+      desktopFooter={footer}
+    >
+      {step === 1 ? (
+        <StepDetails draft={draft} onChange={patchDraft} />
+      ) : (
+        <StepStudents students={students} draft={draft} onChange={patchDraft} />
+      )}
+    </ResponsiveModal>
   );
 }

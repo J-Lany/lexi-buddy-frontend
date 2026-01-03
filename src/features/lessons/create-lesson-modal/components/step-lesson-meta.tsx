@@ -6,18 +6,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { CreateLessonDraft, EAgeGroup, ELevel } from '@/features/lessons/create-lesson-modal/types';
+import {
+  AGE_LABELS,
+  AGE_SHORT_LABELS,
+  CreateLessonDraft,
+  EAgeGroup,
+  ELevel,
+} from '@/features/lessons/create-lesson-modal/types';
 import { Textarea } from '@/components/ui/textarea';
 
 type Props = {
   draft: CreateLessonDraft;
   onChange: (patch: Partial<CreateLessonDraft>) => void;
-  onNext: () => void;
 };
 
-export function StepLessonMeta({ draft, onChange, onNext }: Props) {
-  const canNext = draft.topic.trim().length > 0 && draft.title.trim().length > 0;
+export function StepLessonMeta({ draft, onChange }: Props) {
   return (
     <div className="space-y-4">
       <Input
@@ -43,19 +46,21 @@ export function StepLessonMeta({ draft, onChange, onNext }: Props) {
           value={draft.ageGroup}
           onValueChange={(v) => onChange({ ageGroup: v as EAgeGroup })}
         >
-          {' '}
-          <SelectTrigger className="rounded-full h-12">
-            {' '}
-            <SelectValue placeholder="Lesson level*" />{' '}
-          </SelectTrigger>{' '}
+          <SelectTrigger className="h-11 rounded-xl">
+            <SelectValue placeholder="Age group*" />
+          </SelectTrigger>
+
           <SelectContent>
-            {' '}
             {Object.values(EAgeGroup).map((a) => (
               <SelectItem key={a} value={a}>
-                {' '}
-                {a}{' '}
+                <div className="flex flex-col">
+                  <span className="text-[14px] font-medium leading-snug">
+                    {AGE_SHORT_LABELS[a] ?? a}
+                  </span>
+                  <span className="ui-meta">{AGE_LABELS[a] ?? a}</span>
+                </div>
               </SelectItem>
-            ))}{' '}
+            ))}
           </SelectContent>
         </Select>
       </div>
@@ -65,9 +70,6 @@ export function StepLessonMeta({ draft, onChange, onNext }: Props) {
         value={draft.topic}
         onChange={(e) => onChange({ topic: e.target.value })}
       />
-      <Button onClick={onNext} disabled={!canNext}>
-        Next
-      </Button>
     </div>
   );
 }

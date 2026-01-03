@@ -7,6 +7,8 @@ import GroupStudentsList from './components/group-students-list';
 import { useGetGroupDashboard } from '@/features/groups/hooks/use-get-group-dashboard';
 import StudentDetailsSkeleton from '@/features/students/student-details/components/student-details-skeleton';
 import StudentDetailsError from '@/features/students/student-details/components/student-details-error';
+import { NavBack } from '@/components/ui/nav-back';
+import { EAppRoutes } from '@/lib/routes';
 
 export default function GroupDetailsPage({ groupId }: { groupId: string }) {
   const { data, isLoading, isError } = useGetGroupDashboard(groupId);
@@ -15,7 +17,10 @@ export default function GroupDetailsPage({ groupId }: { groupId: string }) {
   if (isError || !data) return <StudentDetailsError />;
 
   return (
-    <div className="max-w-5xl flex flex-col gap-6 pb-17">
+    <div className="max-w-5xl flex flex-col gap-6">
+      <div className="pt-1">
+        <NavBack href={EAppRoutes.GROUPS} label="Groups" />
+      </div>
       <GroupProfileCard group={data.group} />
       <GroupStatsGrid
         studentsCount={data.group.studentsCount}

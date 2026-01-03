@@ -9,12 +9,7 @@ export default function StudentLessonItem({
   lesson: StudentDashboard['lessons'][number];
 }) {
   return (
-    <div
-      className="
-        rounded-xl border bg-white p-4 transition-colors
-        sm:hover:bg-muted/40
-      "
-    >
+    <div className="ui-row rounded-2xl p-4 transition-colors">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="font-semibold truncate">{lesson.title}</div>

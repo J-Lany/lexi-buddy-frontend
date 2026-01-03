@@ -2,16 +2,9 @@
 
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Input } from '@/components/ui/input';
 import type { GroupStudent } from '@/features/groups/utils/types';
+import { ResponsiveModal } from '@/components/ui/responsive-modal';
 
 export function ViewAllStudentsDialog({
   students,
@@ -35,46 +28,43 @@ export function ViewAllStudentsDialog({
     });
   }, [q, students]);
 
+  if (students.length <= 2) return null;
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {students.length > 2 && (
-          <Button variant="ghost" className="ml-auto">
-            View all
-          </Button>
-        )}
-      </DialogTrigger>
+    <ResponsiveModal
+      trigger={
+        <Button variant="ghost" className="ml-auto">
+          View all
+        </Button>
+      }
+      title={title}
+      subtitle={`${students.length} students`}
+      desktopMaxWidthClassName="sm:max-w-2xl"
+    >
+      <Input
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Search by name / username / telegram / level..."
+        className="mb-3"
+      />
 
-      <DialogContent className="max-w-lg sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-
-        <Input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search by name / username / telegram / level..."
-        />
-
-        <ScrollArea className="max-h-[70vh] pr-4">
-          <div className="divide-y">
-            {filtered.map((s) => (
-              <div key={s.id} className="py-3 flex items-center justify-between">
-                <div className="min-w-0">
-                  <div className="font-semibold truncate">{s.name}</div>
-                  {s.username ? (
-                    <div className="text-sm text-blue-600 truncate">@{s.username}</div>
-                  ) : (
-                    <div className="text-sm text-muted-foreground">—</div>
-                  )}
-                </div>
-
-                <div className="text-sm text-muted-foreground shrink-0 ml-4">{s.level ?? '—'}</div>
-              </div>
-            ))}
+      <div className="flex flex-col gap-2">
+        {filtered.map((s) => (
+          <div key={s.id} role="button" tabIndex={0} className="ui-inset-x ui-list-row">
+            <div className="min-w-0">
+              <div className="ui-title">{s.name}</div>
+              {s.username ? (
+                <div className="ui-tint">@{s.username}</div>
+              ) : (
+                <div className="ui-meta">—</div>
+              )}
+            </div>
+            <div className="shrink-0 ml-4">
+              <span className="ui-pill">{s.level ?? '—'}</span>
+            </div>
           </div>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
+        ))}
+      </div>
+    </ResponsiveModal>
   );
 }

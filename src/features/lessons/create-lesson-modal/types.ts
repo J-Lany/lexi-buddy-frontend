@@ -60,10 +60,23 @@ export enum EAssigmentType {
   COLLOCATION_CHECK = 'collocation_check',
 }
 
+export const ASSIGNMENT_TYPES: EAssigmentType[] = [
+  EAssigmentType.DEFINITION_QUIZ,
+  EAssigmentType.GAP_FILLING,
+  EAssigmentType.PHRASE_FAIL,
+  EAssigmentType.COLLOCATION_CHECK,
+];
+
 export const AGE_LABELS: Record<string, string> = {
   UNDER_18: 'Kids & Teens (Under 18)',
   BETWEEN_18_35: 'Young Adults (18–35)',
   OVER_35: 'Adults 35+',
+};
+
+export const AGE_SHORT_LABELS: Record<string, string> = {
+  UNDER_18: 'Under 18',
+  BETWEEN_18_35: '18–35',
+  OVER_35: '35+',
 };
 
 export type LessonSummary = {
