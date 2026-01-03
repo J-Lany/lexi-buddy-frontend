@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslateMutation } from '@/features/lessons/create-lesson-modal/hooks/use-translate';
 import { Loader } from 'lucide-react';
 import { CreateLessonDraft, VocabItem } from '@/features/lessons/create-lesson-modal/types';
@@ -18,6 +18,15 @@ export function StepVocab({ draft, onChange }: Props) {
   const [terms, setTerms] = useState(initialTerms);
   const { mutate, isPending, isError, error } = useTranslateMutation();
   const [vocabItems, setVocabItems] = useState<VocabItem[]>(draft.vocabItems ?? []);
+
+  const onChangeRef = useRef(onChange);
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    onChangeRef.current({ vocabItems });
+  }, [vocabItems]);
 
   const handleTranslate = () => {
     setVocabItems([]);
@@ -37,7 +46,6 @@ export function StepVocab({ draft, onChange }: Props) {
       {
         onSuccess: (items) => {
           setVocabItems(items);
-          onChange({ vocabItems: items });
         },
       },
     );
@@ -47,7 +55,6 @@ export function StepVocab({ draft, onChange }: Props) {
     setVocabItems((prev) => {
       const next = [...prev];
       next[index] = { ...next[index], translation: value };
-      onChange({ vocabItems: next });
       return next;
     });
   };
@@ -58,7 +65,6 @@ export function StepVocab({ draft, onChange }: Props) {
       const synonyms = [...(next[index].synonyms ?? [])];
       synonyms[synonymIndex] = value;
       next[index] = { ...next[index], synonyms };
-      onChange({ vocabItems: next });
       return next;
     });
   };
