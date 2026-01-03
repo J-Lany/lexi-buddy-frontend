@@ -18,7 +18,7 @@ export default function FormContent() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(signupSchema),
   });
@@ -42,24 +42,38 @@ export default function FormContent() {
   };
 
   return (
-    <form className="flex flex-col gap-6 p-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Create an account</h2>
-        <p className="text-muted-foreground text-sm">
+    <form className="flex w-full flex-col gap-6 px-1" onSubmit={handleSubmit(onSubmit)}>
+      <header className="space-y-2 text-center">
+        <h1 className="text-[28px] leading-tight font-semibold tracking-tight">
+          Create an account
+        </h1>
+        <p className="text-[15px] leading-snug text-muted-foreground">
           Enter your information below to create your account.
         </p>
-      </div>
+      </header>
 
       <div className="flex flex-col gap-4">
         <Field>
-          <FieldLabel>Email</FieldLabel>
-          <Input {...register('email')} placeholder="m@example.com" />
+          <FieldLabel className="text-[13px] font-medium text-muted-foreground">Email</FieldLabel>
+          <Input
+            {...register('email')}
+            placeholder="m@example.com"
+            autoComplete="email"
+            className="h-11 rounded-2xl"
+          />
           {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
         </Field>
 
         <Field>
-          <FieldLabel>Password</FieldLabel>
-          <Input {...register('password')} type="password" />
+          <FieldLabel className="text-[13px] font-medium text-muted-foreground">
+            Password
+          </FieldLabel>
+          <Input
+            {...register('password')}
+            type="password"
+            autoComplete="new-password"
+            className="h-11 rounded-2xl"
+          />
           {errors.password ? (
             <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
           ) : (
@@ -70,16 +84,27 @@ export default function FormContent() {
         </Field>
 
         <Field>
-          <FieldLabel>Confirm Password</FieldLabel>
-          <Input {...register('confirmPassword')} type="password" />
+          <FieldLabel className="text-[13px] font-medium text-muted-foreground">
+            Confirm Password
+          </FieldLabel>
+          <Input
+            {...register('confirmPassword')}
+            type="password"
+            autoComplete="new-password"
+            className="h-11 rounded-2xl"
+          />
           {errors.confirmPassword && (
             <p className="text-sm text-destructive mt-1">{errors.confirmPassword.message}</p>
           )}
         </Field>
       </div>
 
-      <Button disabled={isSubmitting} className="w-full h-11 text-base">
-        {isSubmitting ? 'Creating...' : 'Create Account'}
+      <Button
+        type="submit"
+        disabled={signup.isPending}
+        className="h-11 w-full rounded-2xl text-[15px] font-semibold"
+      >
+        {signup.isPending ? 'Creating…' : 'Create Account'}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
