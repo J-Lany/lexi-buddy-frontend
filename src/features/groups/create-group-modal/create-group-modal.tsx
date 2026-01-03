@@ -105,7 +105,7 @@ export function CreateGroupModal() {
           />
         </div>
       }
-      mobileHeightClassName="h-[78dvh]"
+      mobileHeightClassName="h-[min(88dvh,680px)]"
       mobileStickyFooter={footer}
       desktopFooter={footer}
     >
