@@ -2,15 +2,10 @@
 
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
+import { ResponsiveSelect } from '@/components/ui/responsive-select';
 import type { CreateGroupDraft } from '../types';
+
+const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((v) => ({ value: v, label: v }));
 
 export function StepDetails({
   draft,
@@ -28,18 +23,13 @@ export function StepDetails({
         onChange={(e) => onChange({ name: e.target.value })}
       />
 
-      <Select value={draft.level} onValueChange={(v) => onChange({ level: v })}>
-        <SelectTrigger>
-          <SelectValue placeholder="Group level" />
-        </SelectTrigger>
-        <SelectContent>
-          {['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((l) => (
-            <SelectItem key={l} value={l}>
-              {l}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <ResponsiveSelect
+        value={draft.level}
+        onValueChange={(v) => onChange({ level: v })}
+        placeholder="Group level"
+        title="Group level"
+        options={LEVELS}
+      />
 
       <Textarea
         name="description"

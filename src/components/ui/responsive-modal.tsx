@@ -162,7 +162,7 @@ export function ResponsiveModal({
 
       <DrawerContent
         className={cn(
-          'rounded-t-[28px]',
+          'rounded-t-[28px] pb-[env(safe-area-inset-bottom)]',
           mobileHeightClassName,
           mobileStickyFooter && 'flex flex-col',
           className,
@@ -178,8 +178,8 @@ export function ResponsiveModal({
           className={cn(
             'px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]',
             mobileStickyFooter
-              ? 'flex-1 overflow-y-auto ui-scroll'
-              : 'max-h-[78dvh] overflow-y-auto ui-scroll',
+              ? 'flex-1 min-h-0 overflow-y-auto overscroll-contain ui-scroll'
+              : 'overflow-y-auto overscroll-contain ui-scroll',
             mobileContentClassName,
           )}
         >
