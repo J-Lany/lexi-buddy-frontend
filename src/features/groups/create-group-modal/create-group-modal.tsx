@@ -88,7 +88,11 @@ export function CreateGroupModal() {
         if (!v) reset();
       }}
       trigger={
-        <Button type="button" variant="outline" className="rounded-full w-48">
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
+        >
           + Create a new group
         </Button>
       }

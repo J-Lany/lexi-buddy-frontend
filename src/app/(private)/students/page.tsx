@@ -19,21 +19,21 @@ export default function StudentsPage() {
     <main>
       <section className="max-w-5xl flex flex-col gap-6">
         <div className="ui-panel ui-radius-card p-4 sm:p-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <SegmentedControl<EStudentsTab>
-              value={tab}
-              onChange={(v) => setTab(v)}
-              options={STUDENTS_TABS}
-              className="w-full sm:w-auto"
-            />
-            <div className="flex flex-col gap-3 w-full sm:flex-row sm:items-center sm:justify-end sm:w-auto">
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap items-stretch sm:items-center gap-3 min-w-0">
+              <SegmentedControl<EStudentsTab>
+                value={tab}
+                onChange={(v) => setTab(v)}
+                options={STUDENTS_TABS}
+                className="w-full sm:w-auto shrink-0"
+              />
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder={tab === EStudentsTab.STUDENTS ? 'Search students' : 'Search groups'}
-                className="w-full sm:w-[360px] lg:w-[420px]"
+                className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto sm:max-w-[clamp(320px,40vw,560px)]"
               />
-              <div className="sm:w-auto">{action}</div>
+              <div className="w-full sm:w-auto shrink-0">{action}</div>
             </div>
           </div>
         </div>
