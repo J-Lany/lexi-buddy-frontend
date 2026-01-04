@@ -75,16 +75,7 @@ export function InviteStudentModal() {
         if (!v) reset();
       }}
       desktopMaxWidthClassName="sm:max-w-[560px]"
-    >
-      <div className="grid gap-4">
-        <StudentSearchPicker value={draft.student} onChange={(student) => patch({ student })} />
-
-        <Textarea
-          placeholder="Message (optional)"
-          value={draft.message}
-          onChange={(e) => patch({ message: e.target.value })}
-        />
-
+      footer={
         <div className="flex justify-end gap-2 pt-2">
           <Button
             type="button"
@@ -95,6 +86,16 @@ export function InviteStudentModal() {
             {invite.isPending ? 'Sending…' : 'Send request'}
           </Button>
         </div>
+      }
+    >
+      <div className="grid gap-4">
+        <StudentSearchPicker value={draft.student} onChange={(student) => patch({ student })} />
+
+        <Textarea
+          placeholder="Message (optional)"
+          value={draft.message}
+          onChange={(e) => patch({ message: e.target.value })}
+        />
       </div>
     </ResponsiveModal>
   );
