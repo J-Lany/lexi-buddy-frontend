@@ -60,7 +60,11 @@ export function InviteStudentModal() {
   return (
     <ResponsiveModal
       trigger={
-        <Button type="button" variant="outline" className="rounded-full w-48">
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
+        >
           + Add a student
         </Button>
       }
@@ -70,7 +74,18 @@ export function InviteStudentModal() {
         setOpen(v);
         if (!v) reset();
       }}
-      desktopMaxWidthClassName="sm:max-w-[560px]"
+      footer={
+        <div className="flex justify-end gap-2 pt-2">
+          <Button
+            type="button"
+            className="w-full sm:w-auto"
+            onClick={handleSend}
+            disabled={!canSend}
+          >
+            {invite.isPending ? 'Sending…' : 'Send request'}
+          </Button>
+        </div>
+      }
     >
       <div className="grid gap-4">
         <StudentSearchPicker value={draft.student} onChange={(student) => patch({ student })} />
@@ -80,12 +95,6 @@ export function InviteStudentModal() {
           value={draft.message}
           onChange={(e) => patch({ message: e.target.value })}
         />
-
-        <div className="flex justify-end gap-2 pt-2">
-          <Button type="button" onClick={handleSend} disabled={!canSend}>
-            {invite.isPending ? 'Sending…' : 'Send request'}
-          </Button>
-        </div>
       </div>
     </ResponsiveModal>
   );

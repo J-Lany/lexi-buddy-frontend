@@ -5,17 +5,14 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { ResponsiveModal } from '@/components/ui/responsive-modal';
-
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import {
   CreateGroupPayload,
   useCreateGroupMutation,
 } from '@/features/groups/hooks/use-create-group';
-
 import type { CreateGroupDraft, Student } from './types';
 import { StepDetails } from './components/step-details';
 import { StepStudents } from './components/step-students';
-import { StepProgress } from '@/components/ui/progress-bar';
 import { CreateGroupFooter } from '@/features/groups/create-group-modal/components/create-group-footer';
 
 const initialDraft: CreateGroupDraft = {
@@ -88,22 +85,18 @@ export function CreateGroupModal() {
         if (!v) reset();
       }}
       trigger={
-        <Button type="button" variant="outline" className="rounded-full w-48">
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full whitespace-nowrap rounded-full px-5 sm:w-auto"
+        >
           + Create a new group
         </Button>
       }
-      desktopMaxWidthClassName="sm:max-w-[560px]"
-      header={
-        <div className="py-1">
-          <StepProgress
-            currentStep={step}
-            steps={[{ label: 'Group details' }, { label: 'Add students' }]}
-          />
-        </div>
-      }
-      mobileHeightClassName="h-[78dvh]"
-      mobileStickyFooter={footer}
-      desktopFooter={footer}
+      maxWidthClassName="sm:max-w-[560px]"
+      title={step === 1 ? 'Group details' : 'Add students'}
+      right={<div className="text-[13px] text-muted-foreground">{step} / 2</div>}
+      footer={footer}
     >
       {step === 1 ? (
         <StepDetails draft={draft} onChange={patchDraft} />

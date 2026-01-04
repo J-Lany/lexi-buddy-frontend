@@ -1,11 +1,8 @@
-import {
-  CreateLessonDraft,
-  EAssigmentType,
-  TAnswer,
-  TAssignment,
-} from '@/features/lessons/create-lesson-modal/types';
+import { CreateLessonDraft } from '@/features/lessons/create-lesson-modal/types';
 import { CreateLessonPayload } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
 import { AssignmentState } from '@/features/lessons/create-lesson-modal/components/step-assignments/store';
+import { EAssigmentType } from '@/lib/enums';
+import { TAnswer, TAssignment } from '@/lib/types';
 
 export const getTypeLabel = (type: EAssigmentType): string => {
   switch (type) {
@@ -49,4 +46,11 @@ export const prepareLessonToSubmit = (
     vocabItems: draft.vocabItems,
     assignments,
   } as CreateLessonPayload;
+};
+
+export const STEP_TITLES = {
+  1: 'Lesson details',
+  2: 'Vocabulary',
+  3: 'Assignments',
+  4: 'Assign lesson',
 };

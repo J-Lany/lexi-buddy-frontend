@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import type { LucideIcon } from 'lucide-react';
 import { Baby, Users, User } from 'lucide-react';
-import { AGE_LABELS, EAgeGroup } from '@/features/lessons/create-lesson-modal/types';
+import { EAgeGroup } from '@/lib/enums';
+import { AGE_LABELS } from '@/lib/consts';
 
 export type Student = {
   id: number;

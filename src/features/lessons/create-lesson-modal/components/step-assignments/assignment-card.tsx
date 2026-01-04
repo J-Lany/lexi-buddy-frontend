@@ -6,8 +6,7 @@ import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-
-import type { TAnswer, TAssignment } from '@/features/lessons/create-lesson-modal/types';
+import { TAnswer, TAssignment } from '@/lib/types';
 
 type AssignmentCardProps = {
   assignment: TAssignment;
@@ -29,7 +28,7 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
     onChange({ ...assignment, ...patch });
   };
 
-  const handleQuestionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleQuestionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const v = e.target.value;
     setQuestion(v);
     triggerChange({ question: v });
@@ -58,11 +57,11 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
     <div className="grid gap-4">
       <div className="grid gap-1.5">
         <div className="ui-meta tracking-wide uppercase">Question</div>
-        <Input
+        <Textarea
           value={question}
           onChange={handleQuestionChange}
           placeholder="Enter question"
-          className="h-11 rounded-2xl"
+          className="rounded-2xl h-auto"
         />
       </div>
 
@@ -97,7 +96,7 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
                     value={answer.text}
                     onChange={(e) => handleAnswerTextChange(idx, e.target.value)}
                     placeholder={`Answer ${idx + 1}`}
-                    className="h-11 rounded-2xl"
+                    className="rounded-2xl"
                   />
 
                   <div className="ui-meta shrink-0">{answer.isCorrect ? 'Correct' : ''}</div>
@@ -115,7 +114,7 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
           onChange={handleExplanationChange}
           rows={3}
           placeholder="Explanation for student"
-          className="min-h-[96px] rounded-3xl"
+          className="rounded-3xl"
         />
       </div>
     </div>

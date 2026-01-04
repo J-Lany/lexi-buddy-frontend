@@ -2,12 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { getTypeLabel } from '@/features/lessons/create-lesson-modal/components/step-assignments/utils';
-import {
-  ASSIGNMENT_TYPES,
-  CreateLessonDraft,
-  EAssigmentType,
-  TAssignment,
-} from '@/features/lessons/create-lesson-modal/types';
+import { CreateLessonDraft } from '@/features/lessons/create-lesson-modal/types';
 import { AssignmentCard } from '@/features/lessons/create-lesson-modal/components/step-assignments/assignment-card';
 import {
   Panel,
@@ -15,6 +10,8 @@ import {
 } from '@/features/lessons/create-lesson-modal/components/step-assignments/panels';
 import { Divider } from '@/components/ui/divider';
 import { cn } from '@/lib/utils';
+import { TAssignment } from '@/lib/types';
+import { ASSIGNMENT_TYPES, EAssigmentType } from '@/lib/enums';
 
 type Props = {
   draft: CreateLessonDraft;
@@ -70,7 +67,7 @@ export function StepAssignments({
               </div>
 
               <div className="flex items-center gap-2">
-                <StatusPill loading={isLoading} count={count} />
+                <StatusPill count={count} />
 
                 <Button
                   type="button"
@@ -80,7 +77,7 @@ export function StepAssignments({
                   disabled={isAnyLoading}
                   className="h-9 rounded-full px-4"
                 >
-                  {primaryLabel}
+                  {isLoading ? 'Generating…' : primaryLabel}
                 </Button>
 
                 <Button

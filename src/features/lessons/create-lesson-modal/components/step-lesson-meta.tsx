@@ -1,19 +1,9 @@
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  AGE_LABELS,
-  AGE_SHORT_LABELS,
-  CreateLessonDraft,
-  EAgeGroup,
-  ELevel,
-} from '@/features/lessons/create-lesson-modal/types';
+import { CreateLessonDraft } from '@/features/lessons/create-lesson-modal/types';
 import { Textarea } from '@/components/ui/textarea';
+import { ResponsiveSelect } from '@/components/ui/responsive-select';
+import { AGE_SELECTORS, LEVELS } from '@/lib/consts';
+import { EAgeGroup, ELevel } from '@/lib/enums';
 
 type Props = {
   draft: CreateLessonDraft;
@@ -29,44 +19,24 @@ export function StepLessonMeta({ draft, onChange }: Props) {
         value={draft.title}
         onChange={(e) => onChange({ title: e.target.value })}
       />
-      <div className="flex gap-4">
-        <Select value={draft.level} onValueChange={(v) => onChange({ level: v as ELevel })}>
-          <SelectTrigger className="rounded-full h-12">
-            <SelectValue placeholder="Lesson level*" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.values(ELevel).map((l) => (
-              <SelectItem key={l} value={l}>
-                {l}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select
-          value={draft.ageGroup}
-          onValueChange={(v) => onChange({ ageGroup: v as EAgeGroup })}
-        >
-          <SelectTrigger className="h-11 rounded-xl">
-            <SelectValue placeholder="Age group*" />
-          </SelectTrigger>
+      <ResponsiveSelect
+        value={draft.level}
+        onValueChange={(v) => onChange({ level: v as ELevel })}
+        placeholder="Lesson level"
+        title="Lesson level"
+        options={LEVELS}
+      />
+      <ResponsiveSelect
+        value={draft.ageGroup}
+        onValueChange={(v) => onChange({ ageGroup: v as EAgeGroup })}
+        placeholder="Age group"
+        title="Age group"
+        options={AGE_SELECTORS}
+      />
 
-          <SelectContent>
-            {Object.values(EAgeGroup).map((a) => (
-              <SelectItem key={a} value={a}>
-                <div className="flex flex-col">
-                  <span className="text-[14px] font-medium leading-snug">
-                    {AGE_SHORT_LABELS[a] ?? a}
-                  </span>
-                  <span className="ui-meta">{AGE_LABELS[a] ?? a}</span>
-                </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
       <Textarea
         name="topic"
-        placeholder="Lesson topic*"
+        placeholder="Lesson topic"
         value={draft.topic}
         onChange={(e) => onChange({ topic: e.target.value })}
       />

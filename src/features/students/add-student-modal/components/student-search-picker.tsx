@@ -53,7 +53,7 @@ export function StudentSearchPicker({
           )}
         </div>
 
-        <CommandList className="h-[260px] overflow-y-auto">
+        <CommandList className="h-auto overflow-y-auto">
           {normalized.length < 2 ? (
             <div className="h-full flex items-center justify-center p-3 text-xs text-muted-foreground">
               Type at least 2 characters to search

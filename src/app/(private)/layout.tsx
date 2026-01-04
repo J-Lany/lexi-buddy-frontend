@@ -6,7 +6,7 @@ import { MobileFooter } from '@/components/ui/mobile-footer';
 export default function PrivateLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-dvh flex-col">
-      <div className="sticky top-0 z-50 ui-topbar ui-topbar-surface ui-topbar-blur">
+      <div className="sticky top-0 z-50 ui-topbar ui-topbar-surface max-sm:backdrop-blur-xl max-sm:bg-background/80">
         <Header />
       </div>
 

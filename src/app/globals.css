@@ -2,15 +2,31 @@
 @tailwind base;
 @import 'tw-animate-css';
 
-html, body {
-  height: 100%;
+/* 1) Box sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+/* 2) Remove default margin/padding */
+html,
 body {
-  overflow: hidden;
+  margin: 0;
+  padding: 0;
+
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 
+/* 5) Better text rendering */
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -206,6 +222,65 @@ a {
     .ui-tint {
       font-size: 13px;
     }
+  }
+
+  /* =========================================================
+    AUTH (Apple-like)
+    ========================================================= */
+
+  .ui-auth-shell {
+    position: fixed;
+    inset: 0;
+
+    /* ключ: dvh корректно реагирует на клавиатуру/панели */
+    height: 100dvh;
+
+    /* fallback-и */
+    min-height: 100vh;
+    min-height: 100svh;
+
+    overflow: hidden;
+    background: var(--background);
+    overscroll-behavior: none;
+  }
+
+  .ui-auth-scroll {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    scroll-padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .ui-auth-center {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 480px;
+
+    padding: 40px 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-height: 100%;
+  }
+
+
+
+
+
+  /* macOS/iOS-like "sheet" */
+  .ui-auth-sheet {
+    @apply border rounded-3xl;
+    background: color-mix(in oklch, var(--background) 88%, white 12%);
+    border-color: var(--border-soft);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
 
   /* =========================================================
@@ -542,7 +617,6 @@ a {
   .ui-list-row:active {
     background: color-mix(in oklch, var(--foreground) 7%, white 93%);
   }
-
 }
 
 .back-gradient {

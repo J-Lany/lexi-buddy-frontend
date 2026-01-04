@@ -1,19 +1,10 @@
-import React from 'react';
 import { Card } from '@/components/ui/card';
 import LoginFormContent from '@/features/auth/login-form-content';
 
-export function SigninForm(props: React.ComponentProps<typeof Card>) {
+export function SigninForm() {
   return (
-    <div className="w-full max-w-sm">
-      <Card
-        {...props}
-        className="hidden md:block border-none rounded-2xl inset-shadow-2xs inset-shadow-sidebar-accent bg-white/95 backdrop-blur p-8"
-      >
-        <LoginFormContent />
-      </Card>
-      <div className="md:hidden">
-        <LoginFormContent />
-      </div>
-    </div>
+    <Card className="w-full p-0 md:ui-auth-sheet md:p-10 border-0 shadow-none bg-transparent">
+      <LoginFormContent />
+    </Card>
   );
 }

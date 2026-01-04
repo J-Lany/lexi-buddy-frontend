@@ -1,6 +1,6 @@
-import { EAgeGroup, EAssigmentType, ELevel } from '@/features/lessons/create-lesson-modal/types';
 import { api } from '@/lib/api-client';
 import { useMutation } from '@tanstack/react-query';
+import { EAgeGroup, EAssigmentType, ELevel } from '@/lib/enums';
 
 export type CreateAssugmentPayload = {
   level: ELevel;

@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { StatTile } from '@/features/lessons/lesson-details/components/lesson-header/components/stat-title';
 import { LessonDetails } from '@/features/lessons/create-lesson-modal/types';
+import { AGE_SHORT_LABELS } from '@/lib/consts';
 
 export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) {
   const vocabCount = lesson.vocab.length;
@@ -20,22 +21,21 @@ export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) 
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             {lesson.level ? (
               <Badge variant="secondary" className="rounded-full">
-                Level: {lesson.level}
+                {lesson.level}
               </Badge>
             ) : null}
             {lesson.ageCategory ? (
               <Badge variant="outline" className="rounded-full">
-                {lesson.ageCategory}
-              </Badge>
-            ) : null}
-            {lesson.topic ? (
-              <Badge variant="outline" className="max-w-full truncate rounded-full">
-                Topic: {lesson.topic}
+                {AGE_SHORT_LABELS[lesson.ageCategory]}
               </Badge>
             ) : null}
           </div>
+          {lesson.topic ? (
+            <div className="text-sm text-muted-foreground truncate" title={lesson.topic}>
+              Topic: <span className="text-foreground/80">{lesson.topic}</span>
+            </div>
+          ) : null}
         </div>
-
         {lesson.description ? (
           <p className="text-sm text-muted-foreground whitespace-pre-line">{lesson.description}</p>
         ) : null}

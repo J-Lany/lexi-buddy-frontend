@@ -15,65 +15,86 @@ import { EAppRoutes } from '@/lib/routes';
 import { useSigninMutation } from '@/features/auth/hooks/use-sigin';
 
 export default function LoginFormContent() {
+  const router = useRouter();
+  const signin = useSigninMutation();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     resolver: zodResolver(loginSchema),
+    mode: 'onSubmit',
   });
-  const router = useRouter();
-  const signup = useSigninMutation();
 
-  const onSubmit = (data: LoginFormValues) => {
-    const { email, password } = data;
-    const payload = { email, password };
-    signup.mutate(payload, {
-      onSuccess: () => {
-        router.push(EAppRoutes.STUDENTS);
-      },
-      onError: (error) => {
-        toast.error('Something went wrong', { description: error.message });
-      },
-    });
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        signin.mutate(data, {
+          onSuccess: () => resolve(),
+          onError: (e) => reject(e),
+        });
+      });
+
+      router.push(EAppRoutes.STUDENTS);
+    } catch (e) {
+      toast.error('Couldn’t sign in', {
+        description: e instanceof Error ? e.message : 'Please try again.',
+      });
+    }
   };
 
   return (
-    <form className="flex flex-col gap-6 p-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-semibold">Login to your account</h2>
-        <p className="text-muted-foreground text-sm">
-          Enter your email below to login to your account
-        </p>
-      </div>
+    <form className="flex w-full flex-col gap-6 px-1" onSubmit={handleSubmit(onSubmit)} noValidate>
+      <header className="space-y-2 text-center">
+        <h1 className="text-[28px] leading-tight font-semibold tracking-tight">Welcome back</h1>
+        <p className="text-[15px] leading-snug text-muted-foreground">Sign in to continue.</p>
+      </header>
 
       <div className="flex flex-col gap-4">
         <Field>
-          <FieldLabel>Email</FieldLabel>
-          <Input {...register('email')} placeholder="m@example.com" />
-          {errors.email && <p className="text-sm text-destructive mt-1">{errors.email.message}</p>}
+          <FieldLabel className="text-[13px] font-medium text-muted-foreground">Email</FieldLabel>
+          <Input
+            {...register('email')}
+            inputMode="email"
+            autoComplete="email"
+            placeholder="name@example.com"
+            className="h-11 rounded-2xl"
+          />
+          {errors.email && <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>}
         </Field>
 
         <Field>
-          <FieldLabel>Password</FieldLabel>
-          <Input {...register('password')} type="password" />
+          <FieldLabel className="text-[13px] font-medium text-muted-foreground">
+            Password
+          </FieldLabel>
+          <Input
+            {...register('password')}
+            type="password"
+            autoComplete="current-password"
+            className="h-11 rounded-2xl"
+          />
           {errors.password ? (
-            <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
+            <p className="mt-1 text-sm text-destructive">{errors.password.message}</p>
           ) : (
             <FieldDescription className="text-xs text-muted-foreground">
-              Must be at least 8 characters long.
+              Must be at least 8 characters.
             </FieldDescription>
           )}
         </Field>
       </div>
 
-      <Button disabled={isSubmitting} className="w-full h-11 text-base">
-        {isSubmitting ? 'In process...' : 'Login'}
+      <Button
+        type="submit"
+        disabled={signin.isPending}
+        className="h-11 w-full rounded-2xl text-[15px] font-semibold"
+      >
+        {signin.isPending ? 'Signing in…' : 'Continue'}
       </Button>
 
       <p className="text-center text-sm text-muted-foreground">
         Don’t have an account?{' '}
-        <Link href={EAppRoutes.REGISTRATION} className="underline font-medium text-primary">
+        <Link href={EAppRoutes.REGISTRATION} className="underline font-semibold text-primary">
           Sign up
         </Link>
       </p>

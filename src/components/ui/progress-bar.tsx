@@ -45,11 +45,8 @@ export function StepProgress({ currentStep, steps, className }: StepProgressProp
             })}
           </div>
 
-          <div
-            className="absolute top-1/2 -translate-y-1/2"
-            style={{ left: `calc(${p * 100}% - 10px)` }}
-          >
-            <span className="grid place-items-center">
+          <div className="absolute top-1/2 -translate-y-1/2" style={{ left: `${p * 100}%` }}>
+            <span className="grid place-items-center -translate-x-1/2">
               <span className="size-5 rounded-full bg-primary/20" />
               <span className="absolute size-[10px] rounded-full bg-primary shadow-sm" />
             </span>

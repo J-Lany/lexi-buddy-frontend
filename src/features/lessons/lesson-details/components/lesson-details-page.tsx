@@ -35,7 +35,7 @@ export default function LessonDetailsPage({ lessonId }: { lessonId: string }) {
   }
 
   return (
-    <div className="flex w-full max-w-5xl flex-col gap-6 pb-17">
+    <div className="flex w-full max-w-5xl flex-col gap-6">
       <div className="-mt-1">
         <NavBack href={EAppRoutes.LESSONS} label="Lessons" />
       </div>

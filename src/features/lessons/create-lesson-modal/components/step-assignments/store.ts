@@ -1,4 +1,5 @@
-import { EAssigmentType, TAssignment } from '@/features/lessons/create-lesson-modal/types';
+import { EAssigmentType } from '@/lib/enums';
+import { TAssignment } from '@/lib/types';
 
 export type AssignmentState = {
   [key in EAssigmentType]?: TAssignment[];
