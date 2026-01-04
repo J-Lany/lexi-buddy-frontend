@@ -54,7 +54,7 @@ export function CreateLessonFooter({
 
   if (step === 2) {
     return (
-      <div className="flex justify-between gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
         <Button type="button" variant="outline" onClick={onBack} className="h-11 rounded-xl px-5">
           Back
         </Button>
@@ -73,7 +73,7 @@ export function CreateLessonFooter({
 
   if (step === 3) {
     return (
-      <div className="flex justify-between gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
         <Button type="button" variant="outline" onClick={onBack} className="h-11 rounded-xl px-5">
           Back
         </Button>
@@ -91,7 +91,7 @@ export function CreateLessonFooter({
   }
 
   return (
-    <div className="flex justify-between gap-2">
+    <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
       <Button
         type="button"
         variant="outline"

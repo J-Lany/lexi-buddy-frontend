@@ -31,7 +31,7 @@ export function StepLessonMeta({ draft, onChange }: Props) {
       />
       <div className="flex gap-4">
         <Select value={draft.level} onValueChange={(v) => onChange({ level: v as ELevel })}>
-          <SelectTrigger className="rounded-full h-12">
+          <SelectTrigger className="rounded-xl h-12">
             <SelectValue placeholder="Lesson level*" />
           </SelectTrigger>
           <SelectContent>
@@ -46,7 +46,7 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           value={draft.ageGroup}
           onValueChange={(v) => onChange({ ageGroup: v as EAgeGroup })}
         >
-          <SelectTrigger className="h-11 rounded-xl">
+          <SelectTrigger className="h-12 rounded-xl">
             <SelectValue placeholder="Age group*" />
           </SelectTrigger>
 

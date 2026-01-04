@@ -11,7 +11,10 @@ import { useCreateAssigments } from '@/features/lessons/create-lesson-modal/hook
 import { useCreateLesson } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
 import { useAssignLesson } from '@/features/lessons/create-lesson-modal/hooks/use-assign-lesson';
 
-import { prepareLessonToSubmit } from '@/features/lessons/create-lesson-modal/components/step-assignments/utils';
+import {
+  prepareLessonToSubmit,
+  STEP_TITLES,
+} from '@/features/lessons/create-lesson-modal/components/step-assignments/utils';
 import {
   AssignmentAction,
   assignmentReducer,
@@ -249,27 +252,14 @@ export function CreateLessonModal() {
         if (!v) reset();
       }}
       trigger={
-        <Button type="button" variant="outline" className="rounded-full w-48">
+        <Button type="button" variant="outline" className="w-48 rounded-full">
           + New lesson
         </Button>
       }
-      desktopMaxWidthClassName="sm:max-w-[860px]"
-      header={
-        <div className="py-1">
-          <StepProgress
-            currentStep={step}
-            steps={[
-              { label: 'Lesson metadata' },
-              { label: 'Vocabulary translation' },
-              { label: 'Assignments' },
-              { label: 'Assign lesson' },
-            ]}
-          />
-        </div>
-      }
-      mobileHeightClassName="h-[92dvh]"
-      mobileStickyFooter={footer}
-      desktopFooter={footer}
+      maxWidthClassName="sm:max-w-[860px]"
+      title={STEP_TITLES[step]}
+      right={`${step} / 4`}
+      footer={footer}
     >
       {step === 1 ? (
         <StepLessonMeta draft={draft} onChange={patchDraft} />
