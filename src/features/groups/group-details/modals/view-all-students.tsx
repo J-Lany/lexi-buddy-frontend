@@ -38,8 +38,6 @@ export function ViewAllStudentsDialog({
         </Button>
       }
       title={title}
-      subtitle={`${students.length} students`}
-      desktopMaxWidthClassName="sm:max-w-2xl"
     >
       <Input
         value={q}

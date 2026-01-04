@@ -47,17 +47,19 @@ export function ResponsiveModal({
   onOpenChange,
 }: ResponsiveModalProps) {
   const isControlled = typeof open === 'boolean';
-  const hasFooter = Boolean(footer);
 
   return (
     <Dialog {...(isControlled ? { open, onOpenChange } : {})}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
 
       <DialogContent
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+        }}
         showCloseButton={false}
         className={cn(
           // Desktop modal
-          'sm:max-h-[90dvh] sm:flex sm:flex-col sm:overflow-hidden sm:rounded-lg sm:border sm:p-0',
+          'sm:max-h-[90dvh] sm:flex sm:flex-col sm:overflow-hidden sm:rounded-lg sm:p-0',
           maxWidthClassName ?? 'sm:max-w-lg',
 
           // Mobile fullscreen
@@ -73,7 +75,7 @@ export function ResponsiveModal({
         </VisuallyHidden>
 
         {/* HEADER */}
-        <div className="border-b bg-background/95 backdrop-blur">
+        <div className="bg-background/95 backdrop-blur">
           {/* safe-area */}
           <div className="pt-[env(safe-area-inset-top)]" />
 
@@ -141,7 +143,7 @@ export function ResponsiveModal({
         {footer ? (
           <div
             className={cn(
-              'border-t bg-background/90 backdrop-blur',
+              'bg-background/90 backdrop-blur',
               'px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4',
               'max-sm:sticky max-sm:bottom-0',
             )}

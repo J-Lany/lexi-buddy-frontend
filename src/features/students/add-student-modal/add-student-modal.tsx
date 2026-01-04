@@ -74,7 +74,6 @@ export function InviteStudentModal() {
         setOpen(v);
         if (!v) reset();
       }}
-      desktopMaxWidthClassName="sm:max-w-[560px]"
       footer={
         <div className="flex justify-end gap-2 pt-2">
           <Button

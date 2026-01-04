@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '@/lib/api-client';
-import { ELevel, EAgeGroup } from '@/features/lessons/create-lesson-modal/types';
+import { EAgeGroup, ELevel } from '@/lib/enums';
 
 export type TranslateReqPayload = {
   level: ELevel;

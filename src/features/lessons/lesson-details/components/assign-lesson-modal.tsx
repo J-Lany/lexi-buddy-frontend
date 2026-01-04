@@ -59,7 +59,6 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
         setOpen(v);
         if (!v) reset();
       }}
-      desktopMaxWidthClassName="sm:max-w-xl"
     >
       <div className="space-y-4">
         <StudentsGroupsSelector

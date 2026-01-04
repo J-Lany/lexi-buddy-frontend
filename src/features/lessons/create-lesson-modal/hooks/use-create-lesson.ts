@@ -1,12 +1,9 @@
 import { api } from '@/lib/api-client';
 import { LESSONS_QUERY_KEY } from '@/lib/query-keys';
-import {
-  EAgeGroup,
-  ELevel,
-  TAssignment,
-  VocabItem,
-} from '@/features/lessons/create-lesson-modal/types';
+import { VocabItem } from '@/features/lessons/create-lesson-modal/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { EAgeGroup, ELevel } from '@/lib/enums';
+import { TAssignment } from '@/lib/types';
 
 export type CreateLessonPayload = {
   title: string;

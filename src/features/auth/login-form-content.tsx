@@ -37,9 +37,9 @@ export default function LoginFormContent() {
       });
 
       router.push(EAppRoutes.STUDENTS);
-    } catch (error) {
+    } catch (e) {
       toast.error('Couldn’t sign in', {
-        description: error?.message ?? 'Please try again.',
+        description: e instanceof Error ? e.message : 'Please try again.',
       });
     }
   };

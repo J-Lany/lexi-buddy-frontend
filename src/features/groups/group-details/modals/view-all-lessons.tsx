@@ -23,8 +23,6 @@ export function ViewAllLessonsDialog({
         </Button>
       }
       title={title}
-      subtitle={`${lessons.length} lessons`}
-      desktopMaxWidthClassName="sm:max-w-2xl"
     >
       {lessons.length === 0 ? (
         <div className="py-6 text-sm text-muted-foreground">Nothing here</div>
