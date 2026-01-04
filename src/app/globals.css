@@ -617,7 +617,6 @@ a {
   .ui-list-row:active {
     background: color-mix(in oklch, var(--foreground) 7%, white 93%);
   }
-
 }
 
 .back-gradient {

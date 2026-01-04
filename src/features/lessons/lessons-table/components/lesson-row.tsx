@@ -4,8 +4,10 @@ import { useRouter } from 'next/navigation';
 import type { LucideIcon } from 'lucide-react';
 import { BookOpen, BookOpenText, GraduationCap, Brain, Sparkles, Star } from 'lucide-react';
 
-import { AGE_LABELS, ELevel, LessonSummary } from '@/features/lessons/create-lesson-modal/types';
+import { LessonSummary } from '@/features/lessons/create-lesson-modal/types';
 import { EAppRoutes } from '@/lib/routes';
+import { ELevel } from '@/lib/enums';
+import { AGE_LABELS } from '@/lib/consts';
 
 export type Lesson = LessonSummary;
 

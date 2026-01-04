@@ -16,16 +16,7 @@ export function PanelRow({
   return <div className={cn('px-4 py-4', className)}>{children}</div>;
 }
 
-export function StatusPill({ loading, count }: { loading: boolean; count: number }) {
-  if (loading) {
-    return (
-      <span className="ui-pill gap-1.5">
-        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-        Generating…
-      </span>
-    );
-  }
-
+export function StatusPill({ count }: { count: number }) {
   if (count > 0) {
     return <span className="ui-pill">{count}</span>;
   }

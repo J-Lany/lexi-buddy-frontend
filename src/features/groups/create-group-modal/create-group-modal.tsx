@@ -5,17 +5,14 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { ResponsiveModal } from '@/components/ui/responsive-modal';
-
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import {
   CreateGroupPayload,
   useCreateGroupMutation,
 } from '@/features/groups/hooks/use-create-group';
-
 import type { CreateGroupDraft, Student } from './types';
 import { StepDetails } from './components/step-details';
 import { StepStudents } from './components/step-students';
-import { StepProgress } from '@/components/ui/progress-bar';
 import { CreateGroupFooter } from '@/features/groups/create-group-modal/components/create-group-footer';
 
 const initialDraft: CreateGroupDraft = {

@@ -4,8 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ResponsiveSelect } from '@/components/ui/responsive-select';
 import type { CreateGroupDraft } from '../types';
-
-const LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'].map((v) => ({ value: v, label: v }));
+import { LEVELS } from '@/lib/consts';
 
 export function StepDetails({
   draft,

@@ -1,3 +1,5 @@
+import { EAgeGroup, EAssigmentType, ELevel } from '@/lib/enums';
+
 export type CreateLessonDraft = {
   title: string;
   level: ELevel;
@@ -23,60 +25,6 @@ export type Assigment = {
   level: ELevel;
   topic: string;
   ageGroup: EAgeGroup;
-};
-
-export type TAnswer = {
-  text: string;
-  isCorrect: boolean;
-};
-
-export type TAssignment = {
-  question: string;
-  questionType: 'multiple_choice' | 'gap_fill' | 'open_text';
-  answers: TAnswer[];
-  explanation: string;
-  assignmentType: EAssigmentType;
-};
-
-export enum ELevel {
-  A1 = 'A1',
-  A2 = 'A2',
-  B1 = 'B1',
-  B2 = 'B2',
-  C1 = 'C1',
-  C2 = 'C2',
-}
-
-export enum EAgeGroup {
-  UNDER_18 = 'UNDER_18',
-  BETWEEN_18_35 = 'BETWEEN_18_35',
-  OVER_35 = 'OVER_35',
-}
-
-export enum EAssigmentType {
-  DEFINITION_QUIZ = 'definition_quiz',
-  GAP_FILLING = 'gap_filling',
-  PHRASE_FAIL = 'phrase_fail',
-  COLLOCATION_CHECK = 'collocation_check',
-}
-
-export const ASSIGNMENT_TYPES: EAssigmentType[] = [
-  EAssigmentType.DEFINITION_QUIZ,
-  EAssigmentType.GAP_FILLING,
-  EAssigmentType.PHRASE_FAIL,
-  EAssigmentType.COLLOCATION_CHECK,
-];
-
-export const AGE_LABELS: Record<string, string> = {
-  UNDER_18: 'Kids & Teens (Under 18)',
-  BETWEEN_18_35: 'Young Adults (18–35)',
-  OVER_35: 'Adults 35+',
-};
-
-export const AGE_SHORT_LABELS: Record<string, string> = {
-  UNDER_18: 'Under 18',
-  BETWEEN_18_35: '18–35',
-  OVER_35: '35+',
 };
 
 export type LessonSummary = {

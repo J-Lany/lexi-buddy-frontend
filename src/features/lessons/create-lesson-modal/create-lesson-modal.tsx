@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { ResponsiveModal } from '@/components/ui/responsive-modal';
-import { StepProgress } from '@/components/ui/progress-bar';
 
 import { useCreateAssigments } from '@/features/lessons/create-lesson-modal/hooks/use-create-assigments';
 import { useCreateLesson } from '@/features/lessons/create-lesson-modal/hooks/use-create-lesson';
@@ -24,10 +23,7 @@ import type {
   Assigment,
   VocabItem,
   CreateLessonDraft,
-  EAssigmentType,
-  TAssignment,
 } from '@/features/lessons/create-lesson-modal/types';
-import { ASSIGNMENT_TYPES, EAgeGroup, ELevel } from '@/features/lessons/create-lesson-modal/types';
 
 import { StepLessonMeta } from '@/features/lessons/create-lesson-modal/components/step-lesson-meta';
 import { StepVocab } from '@/features/lessons/create-lesson-modal/components/step-vocab';
@@ -35,6 +31,8 @@ import { StepStudents } from '@/features/lessons/create-lesson-modal/components/
 
 import { CreateLessonFooter } from '@/features/lessons/create-lesson-modal/components/create-lesson-footer';
 import { StepAssignments } from '@/features/lessons/create-lesson-modal/components/step-assignments/step-assigments';
+import { ASSIGNMENT_TYPES, EAgeGroup, EAssigmentType, ELevel } from '@/lib/enums';
+import { TAssignment } from '@/lib/types';
 
 const initialDraft: CreateLessonDraft = {
   title: '',

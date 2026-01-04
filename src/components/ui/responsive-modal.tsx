@@ -131,9 +131,7 @@ export function ResponsiveModal({
           className={cn(
             'min-h-0 flex-1 overflow-y-auto overscroll-contain ui-scroll',
             'px-4 py-4 sm:px-6 sm:py-4',
-            hasFooter
-              ? 'pb-[calc(16px+env(safe-area-inset-bottom)+76px)] sm:pb-4'
-              : 'pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-4',
+            'pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-4',
           )}
         >
           {children}

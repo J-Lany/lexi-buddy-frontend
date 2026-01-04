@@ -40,12 +40,7 @@ export function CreateLessonFooter({
   if (step === 1) {
     return (
       <div className="flex justify-end">
-        <Button
-          type="button"
-          onClick={onNext}
-          disabled={!canNextMeta}
-          className="h-11 rounded-xl px-6"
-        >
+        <Button type="button" onClick={onNext} disabled={!canNextMeta} className="w-full sm:w-auto">
           Next
         </Button>
       </div>
@@ -54,17 +49,12 @@ export function CreateLessonFooter({
 
   if (step === 2) {
     return (
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
-        <Button type="button" variant="outline" onClick={onBack} className="h-11 rounded-xl px-5">
+      <div className="flex gap-2">
+        <Button type="button" variant="outline" onClick={onBack} className="flex-1 min-w-0">
           Back
         </Button>
 
-        <Button
-          type="button"
-          onClick={onNext}
-          disabled={!canNextVocab}
-          className="h-11 rounded-xl px-6"
-        >
+        <Button type="button" onClick={onNext} disabled={!canNextVocab} className="flex-1 min-w-0">
           Next
         </Button>
       </div>
@@ -73,8 +63,8 @@ export function CreateLessonFooter({
 
   if (step === 3) {
     return (
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
-        <Button type="button" variant="outline" onClick={onBack} className="h-11 rounded-xl px-5">
+      <div className="flex gap-2">
+        <Button type="button" variant="outline" onClick={onBack} className="flex-1 min-w-0">
           Back
         </Button>
 
@@ -82,7 +72,7 @@ export function CreateLessonFooter({
           type="button"
           onClick={onSaveLessonAndContinue}
           disabled={!canSaveAssignments || isCreatingLesson}
-          className="h-11 rounded-xl px-6"
+          className="flex-1 min-w-0"
         >
           {isCreatingLesson ? 'Saving…' : 'Save & continue'}
         </Button>
@@ -91,13 +81,13 @@ export function CreateLessonFooter({
   }
 
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:justify-between">
+    <div className="flex gap-2">
       <Button
         type="button"
         variant="outline"
         onClick={onBack}
         disabled={isAssigning}
-        className="h-11 rounded-xl px-5"
+        className="flex-1 min-w-0"
       >
         Back
       </Button>
@@ -107,7 +97,7 @@ export function CreateLessonFooter({
           type="button"
           onClick={onSkipFinish}
           disabled={isAssigning}
-          className="h-11 rounded-xl px-6"
+          className="flex-1 min-w-0"
         >
           Skip & finish
         </Button>
@@ -116,7 +106,7 @@ export function CreateLessonFooter({
           type="button"
           onClick={onFinishAssign}
           disabled={isAssigning}
-          className="h-11 rounded-xl px-6"
+          className="flex-1 min-w-0"
         >
           {isAssigning ? 'Assigning…' : 'Assign & finish'}
         </Button>
