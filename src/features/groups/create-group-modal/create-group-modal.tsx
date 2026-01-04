@@ -91,23 +91,15 @@ export function CreateGroupModal() {
         <Button
           type="button"
           variant="outline"
-          className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
+          className="w-full whitespace-nowrap rounded-full px-5 sm:w-auto"
         >
           + Create a new group
         </Button>
       }
-      desktopMaxWidthClassName="sm:max-w-[560px]"
-      header={
-        <div className="py-1">
-          <StepProgress
-            currentStep={step}
-            steps={[{ label: 'Group details' }, { label: 'Add students' }]}
-          />
-        </div>
-      }
-      mobileHeightClassName="h-[min(88dvh,680px)]"
-      mobileStickyFooter={footer}
-      desktopFooter={footer}
+      maxWidthClassName="sm:max-w-[560px]"
+      title={step === 1 ? 'Group details' : 'Add students'}
+      right={<div className="text-[13px] text-muted-foreground">{step} / 2</div>}
+      footer={footer}
     >
       {step === 1 ? (
         <StepDetails draft={draft} onChange={patchDraft} />

@@ -30,12 +30,12 @@ export function CreateGroupFooter({
   }
 
   return (
-    <div className="flex justify-between gap-2">
-      <Button type="button" variant="outline" onClick={onBack} className="w-full sm:w-auto">
+    <div className="flex gap-2">
+      <Button type="button" variant="outline" onClick={onBack} className="flex-1 min-w-0">
         Back
       </Button>
 
-      <Button type="button" onClick={onCreate} disabled={!canCreate} className="w-full sm:w-auto">
+      <Button type="button" onClick={onCreate} disabled={!canCreate} className="flex-1 min-w-0">
         {isCreating ? 'Creating…' : 'Create'}
       </Button>
     </div>

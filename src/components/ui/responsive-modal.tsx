@@ -2,198 +2,156 @@
 
 import * as React from 'react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { XIcon } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 import {
   Dialog,
+  DialogClose,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from '@/components/ui/drawer';
-
-function useMediaQuery(query: string) {
-  const [matches, setMatches] = React.useState(false);
-
-  React.useEffect(() => {
-    const m = window.matchMedia(query);
-    const onChange = () => setMatches(m.matches);
-    onChange();
-    m.addEventListener?.('change', onChange);
-    return () => m.removeEventListener?.('change', onChange);
-  }, [query]);
-
-  return matches;
-}
 
 type ResponsiveModalProps = {
   trigger: React.ReactNode;
   children: React.ReactNode;
 
-  title?: string;
-  subtitle?: string;
+  title: string;
+
+  /** Optional второй ряд под navbar (например мелкий текст/подсказка) */
   header?: React.ReactNode;
 
+  /** Right slot в navbar (на мобилке): например "1 / 2" */
+  right?: React.ReactNode;
+
+  footer?: React.ReactNode;
+
+  maxWidthClassName?: string;
   className?: string;
-  desktopMaxWidthClassName?: string;
 
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-
-  // mobile
-  mobileHeightClassName?: string;
-  mobileContentClassName?: string;
-  mobileStickyFooter?: React.ReactNode;
-
-  // desktop
-  desktopFooter?: React.ReactNode;
-  desktopContentClassName?: string;
-  desktopFooterClassName?: string;
 };
 
 export function ResponsiveModal({
   trigger,
   title,
-  subtitle,
   header,
+  right,
   children,
+  footer,
+  maxWidthClassName,
   className,
-  desktopMaxWidthClassName,
   open,
   onOpenChange,
-
-  mobileHeightClassName,
-  mobileContentClassName,
-  mobileStickyFooter,
-
-  desktopFooter,
-  desktopContentClassName,
-  desktopFooterClassName,
 }: ResponsiveModalProps) {
-  const isDesktop = useMediaQuery('(min-width: 640px)');
   const isControlled = typeof open === 'boolean';
+  const hasFooter = Boolean(footer);
 
-  const DesktopHeader = header ? (
-    <div>{header}</div>
-  ) : title ? (
-    <DialogHeader>
-      <DialogTitle>{title}</DialogTitle>
-      {subtitle ? <div className="ui-meta">{subtitle}</div> : null}
-    </DialogHeader>
-  ) : null;
-
-  const MobileHeader = header ? (
-    <div className="border-b px-4 pt-3 pb-3">{header}</div>
-  ) : title ? (
-    <DrawerHeader className="border-b">
-      <DrawerTitle className="text-[17px] font-semibold leading-tight">{title}</DrawerTitle>
-      {subtitle ? <div className="ui-meta mt-1">{subtitle}</div> : null}
-    </DrawerHeader>
-  ) : (
-    <DrawerHeader className="border-b">
-      <div className="mx-auto mb-1 h-1.5 w-10 rounded-full bg-muted" />
-    </DrawerHeader>
-  );
-
-  // ===================== DESKTOP (Dialog) =====================
-  if (isDesktop) {
-    return (
-      <Dialog {...(isControlled ? { open, onOpenChange } : {})}>
-        <DialogTrigger asChild>{trigger}</DialogTrigger>
-
-        <DialogContent
-          className={cn(
-            desktopMaxWidthClassName,
-            // ключевое: фиксируем высоту модалки и делаем внутренний layout скроллящимся
-            'flex max-h-[90dvh] flex-col overflow-hidden',
-            desktopFooter ? 'p-0' : '', // если есть футер — паддинги берём на себя
-            className,
-          )}
-        >
-          <VisuallyHidden>
-            <DialogTitle>{title ?? 'Dialog'}</DialogTitle>
-          </VisuallyHidden>
-
-          {/* Header */}
-          {DesktopHeader ? (
-            <div className={cn(desktopFooter ? 'px-6 pt-6' : '')}>{DesktopHeader}</div>
-          ) : null}
-
-          {/* Content (scroll area) */}
-          <div
-            className={cn(
-              desktopFooter ? 'px-6' : DesktopHeader ? 'mt-4' : '',
-              desktopFooter ? 'py-4' : '',
-              'min-h-0 flex-1 overflow-y-auto ui-scroll',
-              desktopContentClassName,
-            )}
-          >
-            {children}
-          </div>
-
-          {/* Footer */}
-          {desktopFooter ? (
-            <div
-              className={cn(
-                'border-t bg-background/80 backdrop-blur px-6 py-4',
-                desktopFooterClassName,
-              )}
-            >
-              {desktopFooter}
-            </div>
-          ) : null}
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
-  // ===================== MOBILE (Drawer) =====================
   return (
-    <Drawer {...(isControlled ? { open, onOpenChange } : {})}>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+    <Dialog {...(isControlled ? { open, onOpenChange } : {})}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
 
-      <DrawerContent
+      <DialogContent
+        showCloseButton={false}
         className={cn(
-          'rounded-t-[28px] pb-[env(safe-area-inset-bottom)]',
-          mobileHeightClassName,
-          mobileStickyFooter && 'flex flex-col',
+          // Desktop modal
+          'sm:max-h-[90dvh] sm:flex sm:flex-col sm:overflow-hidden sm:rounded-lg sm:border sm:p-0',
+          maxWidthClassName ?? 'sm:max-w-lg',
+
+          // Mobile fullscreen
+          'max-sm:inset-0 max-sm:left-0 max-sm:top-0 max-sm:h-[100dvh] max-sm:w-screen max-sm:max-w-none',
+          'max-sm:translate-x-0 max-sm:translate-y-0 max-sm:rounded-none max-sm:border-0 max-sm:p-0',
+
+          'flex flex-col overflow-hidden bg-background',
           className,
         )}
       >
         <VisuallyHidden>
-          <DrawerTitle>{title ?? 'Dialog'}</DrawerTitle>
+          <DialogTitle>{title}</DialogTitle>
         </VisuallyHidden>
 
-        {MobileHeader}
+        {/* HEADER */}
+        <div className="border-b bg-background/95 backdrop-blur">
+          {/* safe-area */}
+          <div className="pt-[env(safe-area-inset-top)]" />
 
+          {/* NAV BAR ROW */}
+          <div className="grid h-11 grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6">
+            {/* Left: Close (mobile) */}
+            <div className="justify-self-start">
+              <DialogClose
+                className={cn(
+                  'max-sm:inline-flex sm:hidden',
+                  'text-[15px] font-medium',
+                  'text-muted-foreground hover:text-foreground',
+                  '-ml-1 rounded-md px-1 py-1',
+                )}
+              >
+                Close
+              </DialogClose>
+            </div>
+
+            {/* Center: Title */}
+            <div className="justify-self-center">
+              <div className="text-[17px] font-semibold leading-tight">{title}</div>
+            </div>
+
+            {/* Right */}
+            <div className="justify-self-end">
+              {/* Mobile: right slot (например 1/2) */}
+              {right ? (
+                <div className="max-sm:block sm:hidden text-[13px] text-muted-foreground">
+                  {right}
+                </div>
+              ) : null}
+
+              {/* Desktop: X button */}
+              <DialogClose
+                className={cn(
+                  'hidden sm:inline-flex',
+                  'size-9 items-center justify-center rounded-full',
+                  'opacity-70 hover:opacity-100',
+                  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+                )}
+              >
+                <XIcon className="size-5" />
+                <span className="sr-only">Close</span>
+              </DialogClose>
+            </div>
+          </div>
+
+          {/* Optional второй ряд под navbar */}
+          {header ? <div className="px-4 pb-3 sm:px-6">{header}</div> : null}
+        </div>
+
+        {/* BODY (scroll) */}
         <div
           className={cn(
-            'px-4 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]',
-            mobileStickyFooter
-              ? 'flex-1 min-h-0 overflow-y-auto overscroll-contain ui-scroll'
-              : 'overflow-y-auto overscroll-contain ui-scroll',
-            mobileContentClassName,
+            'min-h-0 flex-1 overflow-y-auto overscroll-contain ui-scroll',
+            'px-4 py-4 sm:px-6 sm:py-4',
+            hasFooter
+              ? 'pb-[calc(16px+env(safe-area-inset-bottom)+76px)] sm:pb-4'
+              : 'pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-4',
           )}
         >
           {children}
         </div>
 
-        {mobileStickyFooter ? (
-          <div className="border-t bg-background/90 backdrop-blur px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))]">
-            {mobileStickyFooter}
+        {/* FOOTER (sticky bottom on mobile) */}
+        {footer ? (
+          <div
+            className={cn(
+              'border-t bg-background/90 backdrop-blur',
+              'px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4',
+              'max-sm:sticky max-sm:bottom-0',
+            )}
+          >
+            {footer}
           </div>
         ) : null}
-
-        <DrawerClose className="sr-only">Close</DrawerClose>
-      </DrawerContent>
-    </Drawer>
+      </DialogContent>
+    </Dialog>
   );
 }
