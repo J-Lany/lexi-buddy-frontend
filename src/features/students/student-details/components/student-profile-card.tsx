@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { formatDate, formatName } from '@/features/students/utils/helpers';
 import type { StudentDashboard } from '@/features/students/utils/types';
+import { AGE_LABELS, AGE_SHORT_LABELS } from '@/lib/consts';
 
 export default function StudentProfileCard({
   student,
@@ -23,7 +24,9 @@ export default function StudentProfileCard({
 
           <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             {student.level ? <Badge variant="secondary">Level: {student.level}</Badge> : null}
-            {student.ageGroup ? <Badge variant="outline">{student.ageGroup}</Badge> : null}
+            {student.ageGroup ? (
+              <Badge variant="outline">{AGE_LABELS[student.ageGroup]}</Badge>
+            ) : null}
           </div>
 
           <div className="mt-3 text-sm text-muted-foreground space-y-1">

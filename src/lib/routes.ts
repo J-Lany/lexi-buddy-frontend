@@ -1,6 +1,7 @@
 export enum EAppRoutes {
   LOGIN = '/login',
   REGISTRATION = '/register',
+  ACTIVATE = '/activate',
   GROUPS = '/groups',
   LESSONS = '/lessons',
   PROFILE = '/profile',
@@ -9,7 +10,7 @@ export enum EAppRoutes {
 }
 
 export const RouteAccess = {
-  public: [EAppRoutes.LOGIN, EAppRoutes.REGISTRATION],
+  public: [EAppRoutes.LOGIN, EAppRoutes.REGISTRATION, EAppRoutes.ACTIVATE],
   private: [EAppRoutes.GROUPS, EAppRoutes.LESSONS, EAppRoutes.PROFILE, EAppRoutes.STUDENTS],
 };
 
