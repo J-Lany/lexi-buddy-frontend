@@ -13,7 +13,6 @@ export function ActivationInfo() {
   const activate = useActivateMutation();
   const searchParams = useSearchParams();
   const router = useRouter();
-
   const token = searchParams.get('token') || '';
 
   useEffect(() => {
@@ -21,7 +20,7 @@ export function ActivationInfo() {
       onSuccess: () => {
         setTimeout(() => {
           setStatus(EActivationStatus.SUCCESS);
-        }, 2000);
+        }, 1000);
       },
       onError: () => {
         setStatus(EActivationStatus.ERROR);
@@ -30,39 +29,55 @@ export function ActivationInfo() {
   }, [token, activate]);
 
   return (
-    <div className="w-full max-w-md space-y-6 text-center">
+    <div className="mx-auto w-full max-w-[360px] text-center">
       {status === EActivationStatus.LOADING && (
-        <>
-          <Loader2 className="h-20 w-20 mx-auto animate-spin text-primary" />
-          <h2 className="text-2xl font-semibold">Validating activation link...</h2>
-        </>
+        <div className="space-y-4" aria-live="polite">
+          <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary/70" />
+          <h1 className="text-[22px] leading-tight font-semibold tracking-tight">Activating…</h1>
+          <p className="text-[13px] leading-snug text-muted-foreground">
+            Please keep this page open.
+          </p>
+        </div>
       )}
+
       {status === EActivationStatus.SUCCESS && (
-        <>
-          <CheckCircle className="h-20 w-20 mx-auto text-green-500" />
-          <h2 className="text-2xl font-semibold">Your account is activated</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Everything is ready — you can now sign in and start using the platform.
-          </p>
-          <Button onClick={() => router.push(EAppRoutes.LOGIN)} className="w-full h-11">
-            Go to Login
-          </Button>
-        </>
-      )}
-      {status === EActivationStatus.ERROR && (
-        <>
-          <XCircle className="h-20 w-20 mx-auto text-red-500" />
-          <h2 className="text-2xl font-semibold">We couldn’t activate your account</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            The activation link is invalid or has expired. You can request a new one or create a new
-            account.
-          </p>
-          <div className="space-y-6">
-            <Button onClick={() => router.push(EAppRoutes.REGISTRATION)} className="w-full h-11">
-              Register Again
+        <div className="space-y-4" aria-live="polite">
+          <CheckCircle className="mx-auto h-10 w-10 text-primary" />
+          <h1 className="text-[22px] leading-tight font-semibold tracking-tight">
+            Account activated
+          </h1>
+          <p className="text-[13px] leading-snug text-muted-foreground">You can sign in now.</p>
+
+          <div className="pt-2">
+            <Button
+              onClick={() => router.push(EAppRoutes.LOGIN)}
+              className="w-full h-11 rounded-2xl text-[15px] font-semibold"
+            >
+              Sign in
             </Button>
           </div>
-        </>
+        </div>
+      )}
+
+      {status === EActivationStatus.ERROR && (
+        <div className="space-y-4" aria-live="polite">
+          <XCircle className="mx-auto h-10 w-10 text-destructive/80" />
+          <h1 className="text-[22px] leading-tight font-semibold tracking-tight">
+            Activation failed
+          </h1>
+          <p className="text-[13px] leading-snug text-muted-foreground">
+            This link is invalid or expired. You can create {'a\u00A0new'} account to continue.
+          </p>
+
+          <div className="pt-2">
+            <Button
+              onClick={() => router.push(EAppRoutes.REGISTRATION)}
+              className="w-full h-11 rounded-2xl text-[15px] font-semibold"
+            >
+              Create account
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );

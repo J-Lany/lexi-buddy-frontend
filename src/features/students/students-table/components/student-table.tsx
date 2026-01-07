@@ -6,10 +6,8 @@ import { StudentRow } from '@/features/students/students-table/components/studen
 export function StudentTable({ students }: { students: Student[] }) {
   return (
     <div className="grid gap-3">
-      {/* Desktop table */}
       <div className="hidden sm:block">
         <div className="ui-panel overflow-hidden">
-          {/* Sticky header */}
           <div className="sticky top-0 z-10 border-b border-border/60 bg-background/80 backdrop-blur">
             <div className="px-6 py-3">
               <div className="grid items-center gap-4 grid-cols-[2fr_1.5fr_1.5fr_92px]">
@@ -21,7 +19,6 @@ export function StudentTable({ students }: { students: Student[] }) {
             </div>
           </div>
 
-          {/* Scrollable rows */}
           <div className="divide-y divide-border/60 overflow-y-auto ui-scroll sm:max-h-[calc(90dvh-220px)]">
             {students.map((student) => (
               <StudentRow key={student.id} student={student} variant="table" />
@@ -30,7 +27,6 @@ export function StudentTable({ students }: { students: Student[] }) {
         </div>
       </div>
 
-      {/* Mobile cards */}
       <div className="grid gap-4 sm:hidden">
         {students.map((student) => (
           <StudentRow key={student.id} student={student} variant="card" />
