@@ -250,11 +250,15 @@ export function CreateLessonModal() {
         if (!v) reset();
       }}
       trigger={
-        <Button type="button" variant="outline" className="w-48 rounded-full">
+        <Button
+          type="button"
+          variant="outline"
+          className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
+        >
           + New lesson
         </Button>
       }
-      maxWidthClassName="sm:max-w-[860px]"
+      maxWidthClassName="sm:max-w-[640px]"
       title={STEP_TITLES[step]}
       right={`${step} / 4`}
       footer={footer}

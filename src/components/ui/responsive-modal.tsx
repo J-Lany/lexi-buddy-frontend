@@ -18,13 +18,8 @@ type ResponsiveModalProps = {
   children: React.ReactNode;
 
   title: string;
-
-  /** Optional второй ряд под navbar (например мелкий текст/подсказка) */
   header?: React.ReactNode;
-
-  /** Right slot в navbar (на мобилке): например "1 / 2" */
   right?: React.ReactNode;
-
   footer?: React.ReactNode;
 
   maxWidthClassName?: string;
@@ -53,13 +48,12 @@ export function ResponsiveModal({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
 
       <DialogContent
-        onOpenAutoFocus={(e) => {
-          e.preventDefault();
-        }}
+        onOpenAutoFocus={(e) => e.preventDefault()}
         showCloseButton={false}
         className={cn(
-          // Desktop modal
-          'sm:max-h-[90dvh] sm:flex sm:flex-col sm:overflow-hidden sm:rounded-lg sm:p-0',
+          // Desktop modal (macOS-like sheet)
+          'sm:max-h-[90dvh] sm:flex sm:flex-col sm:overflow-hidden sm:p-0',
+          'sm:rounded-3xl sm:border sm:shadow-xl',
           maxWidthClassName ?? 'sm:max-w-lg',
 
           // Mobile fullscreen
@@ -75,13 +69,11 @@ export function ResponsiveModal({
         </VisuallyHidden>
 
         {/* HEADER */}
-        <div className="bg-background/95 backdrop-blur">
-          {/* safe-area */}
+        <div className="bg-background/95 backdrop-blur sm:border-b sm:border-border/60">
           <div className="pt-[env(safe-area-inset-top)]" />
 
-          {/* NAV BAR ROW */}
           <div className="grid h-11 grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6">
-            {/* Left: Close (mobile) */}
+            {/* Left */}
             <div className="justify-self-start">
               <DialogClose
                 className={cn(
@@ -93,23 +85,26 @@ export function ResponsiveModal({
               >
                 Close
               </DialogClose>
+
+              {/* Desktop: steps on the left */}
+              {right ? <div className="hidden sm:block ui-meta">{right}</div> : null}
             </div>
 
-            {/* Center: Title */}
+            {/* Center */}
             <div className="justify-self-center">
               <div className="text-[17px] font-semibold leading-tight">{title}</div>
             </div>
 
             {/* Right */}
             <div className="justify-self-end">
-              {/* Mobile: right slot (например 1/2) */}
+              {/* Mobile: steps on the right */}
               {right ? (
                 <div className="max-sm:block sm:hidden text-[13px] text-muted-foreground">
                   {right}
                 </div>
               ) : null}
 
-              {/* Desktop: X button */}
+              {/* Desktop: X */}
               <DialogClose
                 className={cn(
                   'hidden sm:inline-flex',
@@ -124,26 +119,26 @@ export function ResponsiveModal({
             </div>
           </div>
 
-          {/* Optional второй ряд под navbar */}
           {header ? <div className="px-4 pb-3 sm:px-6">{header}</div> : null}
         </div>
 
-        {/* BODY (scroll) */}
+        {/* BODY */}
         <div
           className={cn(
             'min-h-0 flex-1 overflow-y-auto overscroll-contain ui-scroll',
-            'px-4 py-4 sm:px-6 sm:py-4',
-            'pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-4',
+            'px-4 py-4 sm:px-10 sm:py-8',
+            'sm:bg-[var(--surface)]',
+            'pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-8',
           )}
         >
           {children}
         </div>
 
-        {/* FOOTER (sticky bottom on mobile) */}
+        {/* FOOTER */}
         {footer ? (
           <div
             className={cn(
-              'bg-background/90 backdrop-blur',
+              'bg-background/90 backdrop-blur sm:border-t sm:border-border/60',
               'px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4',
               'max-sm:sticky max-sm:bottom-0',
             )}
