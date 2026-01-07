@@ -88,9 +88,7 @@ export function StepAssignments({
                   disabled={!canShow && !isExpanded}
                   className={cn(
                     'h-9 rounded-full px-3',
-                    canShow
-                      ? 'text-muted-foreground hover:text-foreground'
-                      : 'text-muted-foreground/50',
+                    canShow ? 'text-primary hover:text-foreground' : 'text-muted-foreground/50',
                   )}
                 >
                   {isExpanded ? 'Hide' : 'Show'}

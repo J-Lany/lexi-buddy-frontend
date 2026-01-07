@@ -6,6 +6,8 @@ import { LessonTable } from '@/features/lessons/lessons-table/components/lesson-
 import { CreateLessonModal } from '@/features/lessons/create-lesson-modal/create-lesson-modal';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetLessons } from '@/features/lessons/create-lesson-modal/hooks/use-get-lessons';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { EStudentsTab, STUDENTS_TABS } from '@/features/students/utils/consts';
 
 export function LessonsFragment() {
   const { data, isLoading, isError } = useGetLessons();
@@ -26,16 +28,22 @@ export function LessonsFragment() {
 
   return (
     <section className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <CreateLessonModal />
+      <div className="ui-panel ui-radius-card p-4 sm:p-5">
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap items-stretch sm:items-center gap-3 min-w-0">
+            <Input
+              placeholder="Search lessons"
+              className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto sm:max-w-[clamp(320px,40vw,560px)]"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="w-full sm:w-auto shrink-0">
+              {' '}
+              <CreateLessonModal />
+            </div>
+          </div>
+        </div>
       </div>
-
-      <Input
-        placeholder="Search lessons"
-        className="w-full md:w-[384px]"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
 
       {isLoading && (
         <div className="space-y-3">
