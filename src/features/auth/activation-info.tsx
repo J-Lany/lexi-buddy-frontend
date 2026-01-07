@@ -1,36 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle, Loader2, XCircle } from 'lucide-react';
-import { EActivationStatus } from '@/features/auth/utils/types';
-import { EAppRoutes } from '@/lib/routes';
 import { Button } from '@/components/ui/button';
+import { EAppRoutes } from '@/lib/routes';
 import { useActivateMutation } from '@/features/auth/hooks/use-activate';
 
 export function ActivationInfo() {
-  const [status, setStatus] = useState(EActivationStatus.LOADING);
-  const activate = useActivateMutation();
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const token = searchParams.get('token') || '';
+  const searchParams = useSearchParams();
+  const token = useMemo(() => searchParams.get('token') ?? '', [searchParams]);
+
+  const { mutate, isPending, isSuccess, isError } = useActivateMutation();
+
+  const firedForTokenRef = useRef<string | null>(null);
 
   useEffect(() => {
-    activate.mutate(token, {
-      onSuccess: () => {
-        setTimeout(() => {
-          setStatus(EActivationStatus.SUCCESS);
-        }, 1000);
-      },
-      onError: () => {
-        setStatus(EActivationStatus.ERROR);
-      },
-    });
-  }, [token, activate]);
+    if (!token) return;
+
+    if (firedForTokenRef.current === token) return;
+    firedForTokenRef.current = token;
+
+    mutate(token);
+  }, [token, mutate]);
 
   return (
     <div className="mx-auto w-full max-w-[360px] text-center">
-      {status === EActivationStatus.LOADING && (
+      {isPending && (
         <div className="space-y-4" aria-live="polite">
           <Loader2 className="mx-auto h-10 w-10 animate-spin text-primary/70" />
           <h1 className="text-[22px] leading-tight font-semibold tracking-tight">Activating…</h1>
@@ -40,7 +37,7 @@ export function ActivationInfo() {
         </div>
       )}
 
-      {status === EActivationStatus.SUCCESS && (
+      {isSuccess && (
         <div className="space-y-4" aria-live="polite">
           <CheckCircle className="mx-auto h-10 w-10 text-primary" />
           <h1 className="text-[22px] leading-tight font-semibold tracking-tight">
@@ -59,7 +56,7 @@ export function ActivationInfo() {
         </div>
       )}
 
-      {status === EActivationStatus.ERROR && (
+      {isError && (
         <div className="space-y-4" aria-live="polite">
           <XCircle className="mx-auto h-10 w-10 text-destructive/80" />
           <h1 className="text-[22px] leading-tight font-semibold tracking-tight">
