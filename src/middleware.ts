@@ -12,7 +12,7 @@ async function tryRefresh(request: NextRequest) {
         cookie: request.headers.get('cookie') ?? '',
       },
     });
-
+    console.log('FERRESH', refreshResponse);
     if (!refreshResponse.ok) {
       return null;
     }

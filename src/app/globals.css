@@ -523,6 +523,13 @@ a {
     box-shadow: none;
   }
 
+  .ui-card-static {
+    @apply border;
+    background: var(--surface);
+    border-color: var(--border-soft);
+    box-shadow: var(--shadow-card);
+  }
+
   /* =========================================================
      SEGMENTED CONTROL
      ========================================================= */

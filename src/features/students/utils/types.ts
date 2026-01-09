@@ -7,6 +7,7 @@ export type StudentDashboard = {
     level: string | null;
     ageGroup: string | null;
     lastVisit: string | null;
+    avatarUrl: string | null;
     createdAt: string;
     telegramValue: string | null;
   };

@@ -11,7 +11,7 @@ import { AGE_LABELS } from '@/lib/consts';
 
 export type Lesson = LessonSummary;
 
-const LEVEL_ICONS: Record<ELevel, LucideIcon> = {
+export const LEVEL_ICONS: Record<ELevel, LucideIcon> = {
   [ELevel.A1]: BookOpen,
   [ELevel.A2]: BookOpenText,
   [ELevel.B1]: GraduationCap,

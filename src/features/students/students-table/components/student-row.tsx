@@ -22,7 +22,7 @@ export type Student = {
   ageGroup: EAgeGroup;
 };
 
-const AGE_ICONS: Record<EAgeGroup, LucideIcon> = {
+export const AGE_ICONS: Record<EAgeGroup, LucideIcon> = {
   UNDER_18: Baby,
   BETWEEN_18_35: Users,
   OVER_35: User,
