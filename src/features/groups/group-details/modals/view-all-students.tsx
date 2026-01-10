@@ -28,7 +28,7 @@ export function ViewAllStudentsDialog({
     });
   }, [q, students]);
 
-  if (students.length <= 2) return null;
+  if (students.length <= 5) return null;
 
   return (
     <ResponsiveModal

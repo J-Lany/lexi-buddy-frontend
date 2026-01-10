@@ -38,7 +38,7 @@ const initialDraft: CreateLessonDraft = {
   title: '',
   level: ELevel.A1,
   topic: '',
-  ageGroup: EAgeGroup.UNDER_18,
+  ageGroup: EAgeGroup.TEENAGER,
   description: '',
   vocabItems: [] as VocabItem[],
   assignments: [] as Assigment[],

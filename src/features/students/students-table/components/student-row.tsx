@@ -23,9 +23,9 @@ export type Student = {
 };
 
 export const AGE_ICONS: Record<EAgeGroup, LucideIcon> = {
-  UNDER_18: Baby,
-  BETWEEN_18_35: Users,
-  OVER_35: User,
+  [EAgeGroup.CHILD]: Baby,
+  [EAgeGroup.TEENAGER]: Users,
+  [EAgeGroup.ADULT]: User,
 };
 
 type Props = {
@@ -66,13 +66,10 @@ export function StudentRow({ student, variant = 'card' }: Props) {
             </div>
           </div>
 
-          {/* Telegram */}
           <div className="ui-meta truncate">{telegram}</div>
 
-          {/* Group */}
           <div className="ui-meta truncate">{group}</div>
 
-          {/* Level */}
           <div className="flex justify-end">
             <span className={cn('ui-pill', level === '—' && 'opacity-70')}>{level}</span>
           </div>

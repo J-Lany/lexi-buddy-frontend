@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { StatTile } from '@/features/lessons/lesson-details/components/lesson-header/components/stat-title';
 import { LessonDetails } from '@/features/lessons/create-lesson-modal/types';
-import { AGE_SHORT_LABELS } from '@/lib/consts';
+import { AGE_LABELS } from '@/lib/consts';
 
 export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) {
   const vocabCount = lesson.vocab.length;
@@ -26,7 +26,7 @@ export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) 
             ) : null}
             {lesson.ageCategory ? (
               <Badge variant="outline" className="rounded-full">
-                {AGE_SHORT_LABELS[lesson.ageCategory]}
+                {AGE_LABELS[lesson.ageCategory]}
               </Badge>
             ) : null}
           </div>
