@@ -6,6 +6,8 @@ import { Baby, Users, User } from 'lucide-react';
 import { EAgeGroup } from '@/lib/enums';
 import { cn } from '@/lib/utils';
 import { StudentAvatar } from '@/features/students/students-table/components/student-avatar';
+import { useMergedQuery } from '@/lib/hooks/use-merged-query';
+import { EAppRoutes } from '@/lib/routes';
 
 type Group = {
   id: number;
@@ -35,6 +37,10 @@ type Props = {
 };
 
 export function StudentRow({ student, variant = 'card' }: Props) {
+  const { searchParams } = useMergedQuery();
+  const qs = searchParams.toString();
+  const hrefToStudent = `${EAppRoutes.STUDENTS}/${student.id}${qs ? `?${qs}` : ''}`;
+
   const AgeIcon = AGE_ICONS[student.ageGroup] ?? User;
 
   const telegram = student.username?.trim() ? `@${student.username}` : '—';
@@ -44,7 +50,7 @@ export function StudentRow({ student, variant = 'card' }: Props) {
   if (variant === 'table') {
     return (
       <Link
-        href={`/students/${student.id}`}
+        href={hrefToStudent}
         className={cn(
           'block px-6 py-4',
           'transition-colors',
@@ -81,7 +87,7 @@ export function StudentRow({ student, variant = 'card' }: Props) {
   // Mobile card
   return (
     <Link
-      href={`/students/${student.id}`}
+      href={hrefToStudent}
       className="ui-card ui-radius-card ui-focus block px-5 sm:px-6 py-4 cursor-pointer"
     >
       <div className="flex items-start gap-3 sm:gap-4">

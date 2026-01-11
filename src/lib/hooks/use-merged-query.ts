@@ -47,10 +47,10 @@ export function useMergedQuery() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const get = useCallback((key: string) => searchParams.get(key), [searchParams]);
+  const get = useCallback((key: string) => searchParams.get(key) as string, [searchParams]);
 
   const getOr = useCallback(
-    (key: string, fallback: string) => searchParams.get(key) ?? fallback,
+    (key: string, fallback: string) => (searchParams.get(key) as string) ?? fallback,
     [searchParams],
   );
 

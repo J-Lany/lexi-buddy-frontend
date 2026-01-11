@@ -6,6 +6,7 @@ import { StudentTable } from '@/features/students/students-table/components/stud
 import { EmptyStateCard } from '@/components/ui/empty-state-card';
 import { InviteStudentModal } from '@/features/students/add-student-modal/add-student-modal';
 import { Student } from '@/features/groups/create-group-modal/types';
+import { User } from 'lucide-react';
 
 export function StudentsFragment({ query }: { query: string }) {
   const { data } = useGetStudents();
@@ -22,13 +23,17 @@ export function StudentsFragment({ query }: { query: string }) {
 
   if (data && data.length === 0) {
     return (
-      <section className="flex flex-col gap-4">
-        <EmptyStateCard
-          title="No students yet"
-          description="Invite your first student to start assigning lessons."
-          action={<InviteStudentModal />}
-        />
-      </section>
+      <EmptyStateCard
+        icon={
+          <User
+            className="h-5 w-5 sm:h-6 sm:w-6 text-[color:color-mix(in_oklch,var(--primary)_55%,black_45%)]"
+            aria-hidden
+          />
+        }
+        title="No students yet"
+        description="Invite your first student to start assigning lessons."
+        hint="Tap “Add a student” above"
+      />
     );
   }
 
@@ -38,6 +43,7 @@ export function StudentsFragment({ query }: { query: string }) {
 
       {data && data.length > 0 && filtered.length === 0 && (
         <EmptyStateCard
+          surface="canvas"
           title="No results"
           description="Check the spelling or try another keyword."
         />

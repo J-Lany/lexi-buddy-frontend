@@ -3,19 +3,39 @@
 import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
+import { useMergedQuery } from '@/lib/hooks/use-merged-query';
 
 function canGoBack() {
   if (typeof window === 'undefined') return false;
   return window.history.length > 1;
 }
 
-export function NavBack({ href, label }: { href: string; label: string }) {
+type Props = {
+  href: string;
+  label: string;
+  preserveQuery?: boolean;
+};
+
+export function NavBack({ href, label, preserveQuery = true }: Props) {
   const router = useRouter();
+  const { searchParams } = useMergedQuery();
+
+  const finalHref = React.useMemo(() => {
+    if (!preserveQuery) return href;
+
+    const qs = searchParams.toString();
+    if (!qs) return href;
+
+    return `${href}?${qs}`;
+  }, [href, preserveQuery, searchParams]);
 
   const onClick = React.useCallback(() => {
-    if (canGoBack()) router.back();
-    else router.push(href);
-  }, [router, href]);
+    if (canGoBack()) {
+      router.back();
+    } else {
+      router.push(finalHref);
+    }
+  }, [router, finalHref]);
 
   return (
     <button

@@ -8,6 +8,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { useGetLessons } from '@/features/lessons/create-lesson-modal/hooks/use-get-lessons';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { EStudentsTab, STUDENTS_TABS } from '@/features/students/utils/consts';
+import { EmptyStateCard } from '@/components/ui/empty-state-card';
+import { BookOpen } from 'lucide-react';
 
 export function LessonsFragment() {
   const { data, isLoading, isError } = useGetLessons();
@@ -53,10 +55,35 @@ export function LessonsFragment() {
         </div>
       )}
 
-      {isError && !isLoading && <div className="text-sm text-red-600">Failed to load lessons</div>}
+      {isError && !isLoading && (
+        <EmptyStateCard
+          surface="canvas"
+          icon={<BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-destructive" aria-hidden />}
+          title="Couldn’t load lessons"
+          description="Please try again or check your connection."
+        />
+      )}
 
-      {data && !isLoading && filtered.length === 0 && (
-        <div className="text-sm text-muted-foreground">No lessons found</div>
+      {data && !isLoading && data.length === 0 && (
+        <EmptyStateCard
+          icon={
+            <BookOpen
+              className="h-5 w-5 sm:h-6 sm:w-6 text-[color:color-mix(in_oklch,var(--primary)_55%,black_45%)]"
+              aria-hidden
+            />
+          }
+          title="No lessons yet"
+          description="Create your first lesson to start teaching."
+          hint="Tap “Create lesson” above"
+        />
+      )}
+
+      {data && !isLoading && data.length > 0 && filtered.length === 0 && (
+        <EmptyStateCard
+          surface="canvas"
+          title="No results"
+          description="Check the spelling or try another keyword."
+        />
       )}
 
       {filtered.length > 0 && <LessonTable lessons={filtered} />}
