@@ -12,7 +12,6 @@ import GroupLessonsList from './components/group-lessons-list';
 
 import { GroupStudentsTable } from '@/features/groups/group-details/components/group-students-table';
 import { useRemoveStudent } from '@/features/groups/hooks/use-remove-student';
-import { AddStudentToGroupDialog } from '@/features/groups/group-details/modals/add-student-to-group-dialog';
 
 export default function GroupDetailsPage({ groupId }: { groupId: string }) {
   const { data, isLoading, isError } = useGetGroupDashboard(groupId);

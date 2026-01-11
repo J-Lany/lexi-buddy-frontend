@@ -32,6 +32,7 @@ export function ViewAllStudentsDialog({
 
   return (
     <ResponsiveModal
+      maxWidthClassName="sm:max-w-[560px]"
       trigger={
         <Button variant="ghost" className="ml-auto">
           View all

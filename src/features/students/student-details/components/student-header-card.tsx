@@ -4,8 +4,8 @@ import React from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { formatDate, formatName } from '@/features/students/utils/helpers';
 import type { StudentDashboard } from '@/features/students/utils/types';
-import { AGE_LABELS } from '@/lib/consts';
-import { ChevronRight, Lock, Pencil, User } from 'lucide-react';
+import { AGE_SELECTORS, LEVELS } from '@/lib/consts';
+import { Lock, Pencil, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Row,
@@ -15,6 +15,10 @@ import { Divider } from '@/components/ui/divider';
 import { StudentAvatar } from '@/features/students/students-table/components/student-avatar';
 import { AGE_ICONS } from '@/features/students/students-table/components/student-row';
 import { useMediaQuery } from '@/lib/hooks/use-media-query';
+import { useUpdateStudentProfile } from '@/features/students/hooks/use-update-student-profile';
+import { EAgeGroup, ELevel } from '@/lib/enums';
+import { EditStudentNameModal } from '@/features/students/student-details/components/edit-student-name-modal';
+import { ResponsiveSelect } from '@/components/ui/responsive-select';
 
 type EditField = 'name' | 'level' | 'ageGroup';
 
@@ -30,12 +34,25 @@ export default function StudentHeaderCard({
   lessonsTotal: number;
 }) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
+  const [editField, setEditField] = React.useState<EditField | null>(null);
+
   const title = formatName(student);
   const AgeIcon = AGE_ICONS[student.ageGroup] ?? User;
+  const updateMutation = useUpdateStudentProfile(student.id);
 
-  const onEdit = (field: EditField) => {
-    // TODO open dialog/sheet
-    // field: 'name' | 'level' | 'ageGroup'
+  const levelValue = student.level ?? '';
+  const ageGroupValue = student.ageGroup ?? '';
+
+  const onEdit = (field: EditField) => setEditField(field);
+  const closeEdit = () => setEditField(null);
+
+  const saveName = async (firstName: string, lastName: string) => {
+    await updateMutation.mutateAsync({
+      studentId: student.id,
+      firstName,
+      lastName,
+    });
+    closeEdit();
   };
 
   const hasAnyActivity =
@@ -96,22 +113,52 @@ export default function StudentHeaderCard({
               <SectionLabel>About</SectionLabel>
 
               <div className={groupSurface}>
-                <Row
-                  label="Level"
-                  value={student.level ?? '—'}
-                  icon={<ChevronRight className="h-4 w-4" />}
-                  interactive
-                  onClick={() => onEdit('level')}
-                />
+                <div className="flex items-center justify-between gap-3 px-4 py-3">
+                  <div className="text-[13px] text-muted-foreground">Level</div>
+
+                  <div className="min-w-[170px] max-w-[220px]">
+                    <ResponsiveSelect
+                      value={levelValue}
+                      onValueChange={(v) => {
+                        if (v === levelValue) {
+                          return;
+                        }
+                        updateMutation.mutate({
+                          studentId: student.id,
+                          level: v as ELevel,
+                        });
+                      }}
+                      placeholder="—"
+                      title="Choose level"
+                      options={LEVELS}
+                      triggerClassName="h-9 rounded-xl px-3"
+                    />
+                  </div>
+                </div>
                 <Divider />
 
-                <Row
-                  label="Age group"
-                  value={student.ageGroup ? AGE_LABELS[student.ageGroup] : '—'}
-                  icon={<ChevronRight className="h-4 w-4" />}
-                  interactive
-                  onClick={() => onEdit('ageGroup')}
-                />
+                <div className="flex items-center justify-between gap-3 px-4 py-3">
+                  <div className="text-[13px] text-muted-foreground">Age group</div>
+
+                  <div className="min-w-[170px] max-w-[260px]">
+                    <ResponsiveSelect
+                      value={ageGroupValue}
+                      onValueChange={(v) => {
+                        if (v === ageGroupValue) {
+                          return;
+                        }
+                        updateMutation.mutate({
+                          studentId: student.id,
+                          ageGroup: v as EAgeGroup,
+                        });
+                      }}
+                      placeholder="—"
+                      title="Choose age group"
+                      options={AGE_SELECTORS}
+                      triggerClassName="h-9 rounded-xl px-3"
+                    />
+                  </div>
+                </div>
                 <Divider />
 
                 <Row
@@ -178,6 +225,16 @@ export default function StudentHeaderCard({
           ) : null}
         </div>
       </CardContent>
+      <EditStudentNameModal
+        open={editField === 'name'}
+        onOpenChange={(open) => setEditField(open ? 'name' : null)}
+        initial={{
+          firstName: student.firstName,
+          lastName: student.lastName,
+        }}
+        saving={updateMutation.isPending}
+        onSave={({ firstName, lastName }) => saveName(firstName, lastName)}
+      />
     </Card>
   );
 }
