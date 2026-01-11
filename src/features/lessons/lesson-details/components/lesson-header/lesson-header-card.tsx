@@ -1,10 +1,17 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { StatTile } from '@/features/lessons/lesson-details/components/lesson-header/components/stat-title';
 import { LessonDetails } from '@/features/lessons/create-lesson-modal/types';
 import { AGE_LABELS } from '@/lib/consts';
+
+function StatCell({ label, value }: { label: string; value: number | string }) {
+  return (
+    <div className="ui-row rounded-2xl px-4 py-3">
+      <div className="ui-meta">{label}</div>
+      <div className="mt-1 text-2xl font-semibold leading-none tabular-nums">{value}</div>
+    </div>
+  );
+}
 
 export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) {
   const vocabCount = lesson.vocab.length;
@@ -13,40 +20,40 @@ export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) 
   const studentsCount = lesson.students?.length ?? 0;
 
   return (
-    <Card className="rounded-3xl border border-sky-100/70 bg-white/95 shadow-[0_10px_32px_rgba(15,116,143,0.10)]">
-      <CardHeader className="space-y-3">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <CardTitle className="truncate text-xl sm:text-2xl">{lesson.title}</CardTitle>
+    <Card className="ui-card ui-radius-card">
+      <CardHeader className="space-y-2">
+        <div className="flex items-start justify-between gap-4">
+          <CardTitle className="truncate text-xl sm:text-2xl tracking-tight">
+            {lesson.title}
+          </CardTitle>
 
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            {lesson.level ? (
-              <Badge variant="secondary" className="rounded-full">
-                {lesson.level}
-              </Badge>
-            ) : null}
+          {/* Apple-like: pills, тихо и компактно */}
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            {lesson.level ? <span className="ui-pill">{lesson.level}</span> : null}
             {lesson.ageCategory ? (
-              <Badge variant="outline" className="rounded-full">
-                {AGE_LABELS[lesson.ageCategory]}
-              </Badge>
+              <span className="ui-pill">{AGE_LABELS[lesson.ageCategory]}</span>
             ) : null}
           </div>
-          {lesson.topic ? (
-            <div className="text-sm text-muted-foreground truncate" title={lesson.topic}>
-              Topic: <span className="text-foreground/80">{lesson.topic}</span>
-            </div>
-          ) : null}
         </div>
+
+        {/* Одна мета-строка */}
+        {lesson.topic ? (
+          <div className="ui-meta truncate" title={lesson.topic}>
+            Topic: <span className="text-foreground/80">{lesson.topic}</span>
+          </div>
+        ) : null}
+
         {lesson.description ? (
-          <p className="text-sm text-muted-foreground whitespace-pre-line">{lesson.description}</p>
+          <p className="ui-meta whitespace-pre-line">{lesson.description}</p>
         ) : null}
       </CardHeader>
 
       <CardContent>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <StatTile label="Words" value={vocabCount} />
-          <StatTile label="Assignments" value={assignmentsCount} />
-          <StatTile label="Groups" value={groupsCount} />
-          <StatTile label="Students" value={studentsCount} />
+          <StatCell label="Words" value={vocabCount} />
+          <StatCell label="Assignments" value={assignmentsCount} />
+          <StatCell label="Groups" value={groupsCount} />
+          <StatCell label="Students" value={studentsCount} />
         </div>
       </CardContent>
     </Card>

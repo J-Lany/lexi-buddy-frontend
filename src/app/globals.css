@@ -573,6 +573,17 @@ a {
     }
   }
 
+  .ui-seg--flush {
+    padding: 0; /* override ui-seg p-1 */
+  }
+
+  .ui-seg--flush .ui-seg-indicator {
+    inset: 0; /* вместо inset-y-1/left-1 */
+    width: calc(100% / var(--seg-count)); /* вместо (100% - 0.5rem) */
+    transform: translateX(calc(var(--seg-index) * 100%));
+    border-radius: 999px;
+  }
+
   /* =========================================================
    ROWS / LIST ITEMS (iOS inset-grouped vibe)
    ========================================================= */

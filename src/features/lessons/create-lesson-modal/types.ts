@@ -80,6 +80,10 @@ export type LessonDetails = {
   students: {
     id: number;
     username: string | null;
+    avatarUrl: string | null;
+    firstName: string | null;
+    lastName: string | null;
+    lastVisit: Date | null;
     status: LessonStudentStatus;
     completedAssignments: number;
     totalAssignments: number;

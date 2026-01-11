@@ -32,7 +32,7 @@ export default function LessonAssignmentsCard({ assignments }: Props) {
   const activeAssignments = activeType != null ? (grouped.get(activeType) ?? []) : [];
 
   return (
-    <Card className="rounded-3xl border border-sky-100/70 bg-white/95 shadow-[0_8px_24px_rgba(15,116,143,0.06)]">
+    <Card className="ui-panel ui-radius-card">
       <CardHeader>
         <CardTitle>Assignments</CardTitle>
       </CardHeader>
