@@ -37,7 +37,7 @@ export default function StudentHeaderCard({
   const [editField, setEditField] = React.useState<EditField | null>(null);
 
   const title = formatName(student);
-  const AgeIcon = AGE_ICONS[student.ageGroup] ?? User;
+  const AgeIcon = student.ageGroup ? AGE_ICONS[student.ageGroup as EAgeGroup] : User;
   const updateMutation = useUpdateStudentProfile(student.id);
 
   const levelValue = student.level ?? '';

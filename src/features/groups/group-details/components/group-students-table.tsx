@@ -10,16 +10,7 @@ import { EAgeGroup } from '@/lib/enums';
 import { ViewAllStudentsDialog } from '@/features/groups/group-details/modals/view-all-students';
 import { GroupStudentRow } from '@/features/groups/group-details/components/group-students-row';
 import { AddStudentToGroupDialog } from '@/features/groups/group-details/modals/add-student-to-group-dialog';
-
-export type GroupStudent = {
-  id: number;
-  name: string;
-  username: string | null;
-  avatarUrl: string | null;
-  level: string | null;
-  ageGroup: EAgeGroup;
-  telegramValue?: string | null;
-};
+import { GroupStudent } from '@/features/groups/utils/types';
 
 const PREVIEW_LIMIT = 5;
 

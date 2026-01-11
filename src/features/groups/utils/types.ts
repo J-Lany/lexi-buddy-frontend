@@ -1,3 +1,5 @@
+import { EAgeGroup } from '@/lib/enums';
+
 export type GroupDashboard = {
   group: {
     id: number;
@@ -16,8 +18,10 @@ export type GroupStudent = {
   id: number;
   name: string;
   username: string | null;
+  avatarUrl: string | null;
   level: string | null;
-  telegramValue: string | null;
+  ageGroup: EAgeGroup;
+  telegramValue?: string | null;
 };
 
 export type GroupLesson = {

@@ -41,7 +41,7 @@ export function StudentRow({ student, variant = 'card' }: Props) {
   const qs = searchParams.toString();
   const hrefToStudent = `${EAppRoutes.STUDENTS}/${student.id}${qs ? `?${qs}` : ''}`;
 
-  const AgeIcon = AGE_ICONS[student.ageGroup] ?? User;
+  const AgeIcon = student.ageGroup ? AGE_ICONS[student.ageGroup as EAgeGroup] : User;
 
   const telegram = student.username?.trim() ? `@${student.username}` : '—';
   const group = student.groups?.[0]?.name?.trim() ? student.groups[0].name.trim() : '—';

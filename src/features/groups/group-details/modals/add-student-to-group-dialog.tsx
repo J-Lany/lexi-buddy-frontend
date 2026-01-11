@@ -6,12 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { StudentAvatar } from '@/features/students/students-table/components/student-avatar';
-import { AGE_ICONS, Student } from '@/features/students/students-table/components/student-row';
+import { AGE_ICONS } from '@/features/students/students-table/components/student-row';
 import { User, Plus } from 'lucide-react';
 
 import { useGetStudents } from '@/features/students/hooks/use-get-students';
 import { useAddStudent } from '@/features/groups/hooks/use-add-student';
-import { GroupStudent } from '@/features/groups/group-details/components/group-students-table';
+import { GroupStudent } from '@/features/groups/utils/types';
 
 export function AddStudentToGroupDialog({
   groupId,

@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LessonDetails } from '@/features/lessons/create-lesson-modal/types';
 import { AGE_LABELS } from '@/lib/consts';
+import { EAgeGroup } from '@/lib/enums';
 
 function StatCell({ label, value }: { label: string; value: number | string }) {
   return (
@@ -27,16 +28,14 @@ export default function LessonHeaderCard({ lesson }: { lesson: LessonDetails }) 
             {lesson.title}
           </CardTitle>
 
-          {/* Apple-like: pills, тихо и компактно */}
           <div className="flex flex-wrap items-center justify-end gap-2">
             {lesson.level ? <span className="ui-pill">{lesson.level}</span> : null}
             {lesson.ageCategory ? (
-              <span className="ui-pill">{AGE_LABELS[lesson.ageCategory]}</span>
+              <span className="ui-pill">{AGE_LABELS[lesson.ageCategory as EAgeGroup]}</span>
             ) : null}
           </div>
         </div>
 
-        {/* Одна мета-строка */}
         {lesson.topic ? (
           <div className="ui-meta truncate" title={lesson.topic}>
             Topic: <span className="text-foreground/80">{lesson.topic}</span>
