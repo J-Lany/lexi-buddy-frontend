@@ -6,6 +6,7 @@ import { GroupTable } from '@/features/groups/group-table/components/group-table
 import { EmptyStateCard } from '@/components/ui/empty-state-card';
 import { CreateGroupModal } from '@/features/groups/create-group-modal/create-group-modal';
 import { Group } from '@/features/groups/group-table/components/group-row';
+import { Users } from 'lucide-react';
 
 export function GroupsFragment({ query }: { query: string }) {
   const { data } = useGetGroups();
@@ -22,13 +23,17 @@ export function GroupsFragment({ query }: { query: string }) {
 
   if (data && data.length === 0) {
     return (
-      <section className="flex flex-col gap-4">
-        <EmptyStateCard
-          title="No groups yet"
-          description="Create a group to organize students and lessons."
-          action={<CreateGroupModal />}
-        />
-      </section>
+      <EmptyStateCard
+        icon={
+          <Users
+            className="h-5 w-5 sm:h-6 sm:w-6 text-[color:color-mix(in_oklch,var(--primary)_55%,black_45%)]"
+            aria-hidden
+          />
+        }
+        title="No groups yet"
+        description="Create a group to organize students and lessons."
+        hint="Tap “Create a group” above"
+      />
     );
   }
 

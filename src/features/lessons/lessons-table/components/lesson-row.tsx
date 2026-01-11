@@ -6,12 +6,12 @@ import { BookOpen, BookOpenText, GraduationCap, Brain, Sparkles, Star } from 'lu
 
 import { LessonSummary } from '@/features/lessons/create-lesson-modal/types';
 import { EAppRoutes } from '@/lib/routes';
-import { ELevel } from '@/lib/enums';
+import { EAgeGroup, ELevel } from '@/lib/enums';
 import { AGE_LABELS } from '@/lib/consts';
 
 export type Lesson = LessonSummary;
 
-const LEVEL_ICONS: Record<ELevel, LucideIcon> = {
+export const LEVEL_ICONS: Record<ELevel, LucideIcon> = {
   [ELevel.A1]: BookOpen,
   [ELevel.A2]: BookOpenText,
   [ELevel.B1]: GraduationCap,
@@ -25,7 +25,7 @@ export function LessonRow({ lesson }: { lesson: Lesson }) {
 
   const stats = `${lesson.vocabCount} words · ${lesson.assignmentsCount} tasks`;
   const ageLabel = lesson.ageCategory
-    ? (AGE_LABELS[lesson.ageCategory] ?? lesson.ageCategory)
+    ? (AGE_LABELS[lesson.ageCategory as EAgeGroup] ?? lesson.ageCategory)
     : null;
 
   const meta = [lesson.topic || null, lesson.level || null, ageLabel].filter(Boolean).join(' · ');

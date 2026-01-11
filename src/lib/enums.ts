@@ -1,7 +1,7 @@
 export enum EAgeGroup {
-  UNDER_18 = 'UNDER_18',
-  BETWEEN_18_35 = 'BETWEEN_18_35',
-  OVER_35 = 'OVER_35',
+  CHILD = 'child',
+  TEENAGER = 'teenager',
+  ADULT = 'adult',
 }
 
 export enum ELevel {

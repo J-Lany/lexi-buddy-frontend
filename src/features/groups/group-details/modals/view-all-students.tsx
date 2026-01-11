@@ -28,10 +28,11 @@ export function ViewAllStudentsDialog({
     });
   }, [q, students]);
 
-  if (students.length <= 2) return null;
+  if (students.length <= 5) return null;
 
   return (
     <ResponsiveModal
+      maxWidthClassName="sm:max-w-[560px]"
       trigger={
         <Button variant="ghost" className="ml-auto">
           View all

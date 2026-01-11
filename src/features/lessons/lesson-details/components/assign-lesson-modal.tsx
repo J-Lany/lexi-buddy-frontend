@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ResponsiveModal } from '@/components/ui/responsive-modal';
 import { useAssignLesson } from '@/features/lessons/create-lesson-modal/hooks/use-assign-lesson';
 import { StudentsGroupsSelector } from '@/features/lessons/lesson-details/components/students-groups-selector';
+import { SlidersHorizontal } from 'lucide-react';
 
 type Props = {
   lessonId: number;
@@ -50,7 +51,8 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
     <ResponsiveModal
       trigger={
         <Button variant="outline" size="sm">
-          Assign to students
+          <SlidersHorizontal className="h-4 w-4" />
+          Assign
         </Button>
       }
       title="Assign lesson"

@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useMergedQuery } from '@/lib/hooks/use-merged-query';
+import { EAppRoutes } from '@/lib/routes';
 
 export type Group = {
   id: number;
@@ -23,13 +25,17 @@ type Props = {
 };
 
 export function GroupRow({ group, variant = 'card', showIcon = true }: Props) {
+  const { searchParams } = useMergedQuery();
+  const qs = searchParams.toString();
+  const hrefToGroup = `${EAppRoutes.GROUPS}/${group.id}${qs ? `?${qs}` : ''}`;
+
   const level = group.level?.trim() ? group.level : '—';
   const studentsCount = group.students?.length ?? 0;
 
   if (variant === 'table') {
     return (
       <Link
-        href={`/groups/${group.id}`}
+        href={hrefToGroup}
         className={cn(
           'block px-6 py-4',
           'transition-colors',
@@ -64,10 +70,7 @@ export function GroupRow({ group, variant = 'card', showIcon = true }: Props) {
   const meta = [`Level ${level}`, `${studentsCount} students`].join(' · ');
 
   return (
-    <Link
-      href={`/groups/${group.id}`}
-      className="ui-card ui-radius-card ui-focus block px-5 sm:px-6 py-4"
-    >
+    <Link href={hrefToGroup} className="ui-card ui-radius-card ui-focus block px-5 sm:px-6 py-4">
       <div className="flex items-start gap-3 sm:gap-4">
         {showIcon ? (
           <div className="ui-thumb h-9 w-9">

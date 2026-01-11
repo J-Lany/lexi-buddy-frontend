@@ -1,27 +1,25 @@
 import { LessonDetails } from '@/features/lessons/create-lesson-modal/types';
-import { Badge } from '@/components/ui/badge';
-import { SectionLabel } from '@/features/lessons/lesson-details/components/lesson-assignees/components/section-label';
+import Link from 'next/link';
+import { EAppRoutes } from '@/lib/routes';
 
 type GroupsSectionProps = {
   groups: LessonDetails['groups'];
 };
 
 export function GroupsSection({ groups }: GroupsSectionProps) {
-  return (
-    <section className="space-y-2">
-      <SectionLabel>Groups</SectionLabel>
+  if (!groups || groups.length === 0) return <span className="ui-meta">No groups</span>;
 
-      {groups.length === 0 ? (
-        <p className="text-xs text-muted-foreground">No groups</p>
-      ) : (
-        <div className="flex flex-wrap gap-2">
-          {groups.map((g) => (
-            <Badge key={g.id} variant="outline" className="max-w-full truncate rounded-full">
-              {g.name}
-            </Badge>
-          ))}
-        </div>
-      )}
-    </section>
+  return (
+    <div className="flex flex-wrap gap-2">
+      {groups.map((g) => (
+        <Link
+          key={g.id}
+          href={`${EAppRoutes.GROUPS}/${g.id}`}
+          className="ui-pill max-w-full truncate"
+        >
+          {g.name}
+        </Link>
+      ))}
+    </div>
   );
 }
