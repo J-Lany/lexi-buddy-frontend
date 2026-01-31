@@ -1,8 +1,0 @@
-node_modules
-.next
-out
-dist
-.husky
-.env
-.git
-package-lock.json
