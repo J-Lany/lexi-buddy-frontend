@@ -1,25 +1,21 @@
-import { AGE_ICONS } from '@/features/students/students-table/components/student-row';
-import { cn } from '@/lib/utils';
-import { StudentAvatar } from '@/features/students/students-table/components/student-avatar';
-import * as React from 'react';
-import Link from 'next/link';
 import { User } from 'lucide-react';
+import Link from 'next/link';
+import * as React from 'react';
+
 import { RemoveStudentConfirm } from '@/features/groups/group-details/components/remove-student-confirm';
 import { GroupStudent } from '@/features/groups/utils/types';
-import { EAgeGroup } from '@/lib/enums';
+import { StudentAvatar } from '@/features/students/students-table/components/student-avatar';
+import { AGE_ICONS } from '@/features/students/students-table/components/student-row';
+import { cn } from '@/lib/utils';
 
-export function GroupStudentRow({
-  student,
-  variant,
-  onRemove,
-  removing,
-}: {
+type Props = {
   student: GroupStudent;
   variant: 'card' | 'table';
   onRemove: () => void;
   removing?: boolean;
-}) {
-  const AgeIcon = student.ageGroup ? AGE_ICONS[student.ageGroup as EAgeGroup] : User;
+};
+export function GroupStudentRow({ student, variant, onRemove, removing }: Props) {
+  const AgeIcon = student.ageGroup ? AGE_ICONS[student.ageGroup] : User;
 
   const telegram = student.username?.trim() ? `@${student.username.trim()}` : '—';
   const level = student.level?.trim() ? student.level.trim() : '—';

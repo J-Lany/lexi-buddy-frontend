@@ -49,7 +49,7 @@ api.interceptors.response.use(
 
       try {
         await refreshPromise;
-        return api(originalConfig as AxiosRequestConfig);
+        return api(originalConfig satisfies AxiosRequestConfig);
       } catch {}
     }
 
