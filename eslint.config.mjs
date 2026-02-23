@@ -2,8 +2,9 @@ import storybook from 'eslint-plugin-storybook';
 import tseslint from 'typescript-eslint';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { FlatCompat } from '@eslint/eslintrc';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,7 +20,7 @@ const eslintConfig = [
   {
     languageOptions: {
       parserOptions: {
-        project: true,
+        project: [path.join(__dirname, 'tsconfig.eslint.json')],
         tsconfigRootDir: __dirname,
       },
     },
@@ -35,8 +36,22 @@ const eslintConfig = [
       'build/**',
       'next-env.d.ts',
       'package-lock.json',
-      'jest.config.js',
+
+      'eslint.config.mjs',
+      'postcss.config.mjs',
+      '**/*.config.js',
+      '**/*.config.mjs',
+      '**/*.config.cjs',
     ],
+  },
+
+  {
+    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
+    languageOptions: {
+      parserOptions: {
+        project: null,
+      },
+    },
   },
 
   {
@@ -46,7 +61,6 @@ const eslintConfig = [
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
-
       '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: false }],
     },
   },
