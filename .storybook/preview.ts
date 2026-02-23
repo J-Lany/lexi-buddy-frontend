@@ -1,5 +1,6 @@
-import type { Preview } from '@storybook/nextjs';
 import './preview.css';
+
+import type { Preview } from '@storybook/nextjs';
 
 export const parameters = {
   layout: 'centered',

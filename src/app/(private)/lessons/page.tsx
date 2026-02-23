@@ -1,9 +1,11 @@
-import { LessonsFragment } from '@/features/lessons/lessons-table/components/lessons-fragment';
+import { Suspense } from 'react';
+
+import LessonsPageClient from '@/app/(private)/lessons/lessons-page-client';
 
 export default function LessonsPage() {
   return (
-    <div className="max-w-5xl flex flex-col gap-4">
-      <LessonsFragment />
-    </div>
+    <Suspense fallback={null}>
+      <LessonsPageClient />
+    </Suspense>
   );
 }

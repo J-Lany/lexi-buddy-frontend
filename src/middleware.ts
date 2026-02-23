@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { EAppRoutes, RouteAccess } from '@/lib/routes';
+
+import { routeAccess } from '@/shared/router/access';
+import { routes } from '@/shared/router/routes';
 
 async function tryRefresh(request: NextRequest) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -25,7 +27,7 @@ async function tryRefresh(request: NextRequest) {
     }
 
     return res;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -33,7 +35,7 @@ async function tryRefresh(request: NextRequest) {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const isPublic = RouteAccess.public.some((route) => pathname.startsWith(route));
+  const isPublic = routeAccess.public.some((route) => pathname.startsWith(route));
 
   if (isPublic) {
     return NextResponse.next();
@@ -53,7 +55,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(new URL(EAppRoutes.LOGIN, request.url));
+  return NextResponse.redirect(new URL(routes.login, request.url));
 }
 
 export const config = {

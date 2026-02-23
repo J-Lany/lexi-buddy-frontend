@@ -1,7 +1,8 @@
 import React from 'react';
-import { Header } from '@/components/ui/header';
-import { Sidebar } from '@/components/ui/sidebar';
-import { MobileFooter } from '@/components/ui/mobile-footer';
+
+import { Header } from '@/shared/ui/header';
+import { MobileFooter } from '@/shared/ui/mobile-footer';
+import { Sidebar } from '@/shared/ui/sidebar';
 
 export default function PrivateLayout({ children }: { children: React.ReactNode }) {
   return (

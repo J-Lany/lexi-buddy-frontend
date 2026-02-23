@@ -1,11 +1,12 @@
 import { Suspense } from 'react';
-import LessonDetailsPage from '@/features/lessons/lesson-details/components/lesson-details-page';
+
+import { LessonDetailsWidget } from '@/features/lessons/widgets/lesson-details/lesson-details-widget';
 
 export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   return (
     <Suspense fallback={null}>
-      <LessonDetailsPage lessonId={id} />;
+      <LessonDetailsWidget lessonId={Number(id)} />;
     </Suspense>
   );
 }

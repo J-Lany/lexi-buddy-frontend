@@ -1,9 +1,9 @@
-import { SigninForm } from '@/features/auth/signin-form';
+import SignInForm from '@/features/auth/ui/sign-in/sign-in-form';
 
 export default function LoginPage() {
   return (
     <main className="ui-auth-center">
-      <SigninForm />
+      <SignInForm />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
-import { EAppRoutes } from '@/lib/routes';
+
+import { routes } from '@/shared/router/routes';
 
 export default function Home() {
-  return redirect(EAppRoutes.STUDENTS);
+  return redirect(routes.login);
 }

@@ -1,15 +1,19 @@
-import { Suspense } from 'react';
-import { ActivationInfo } from '@/features/auth/activation-info';
+import { ActivateAccountView } from '@/features/auth/ui/activate/activate-account-view';
 
-export default function ActivatePage() {
+type Props = {
+  searchParams: { token?: string | string[] };
+};
+
+export default function ActivatePage({ searchParams }: Props) {
+  const tokenRaw = searchParams.token;
+  const token = Array.isArray(tokenRaw) ? tokenRaw[0] : (tokenRaw ?? '');
+
   return (
     <main className="ui-auth-shell">
       <div className="ui-auth-scroll">
         <div className="ui-auth-center">
           <section className="w-full p-6 sm:p-8 md:p-10">
-            <Suspense fallback={null}>
-              <ActivationInfo />
-            </Suspense>
+            <ActivateAccountView token={token} />
           </section>
         </div>
       </div>
