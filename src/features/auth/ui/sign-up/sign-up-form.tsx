@@ -7,13 +7,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { SignUpFormValues, signupSchema } from '@/features/auth/lib/schemas';
 import { useSignupMutation } from '@/features/auth/model/use-signup';
 import { AuthCard } from '@/features/auth/ui/shared/auth-card';
-import { EAppRoutes } from '@/lib/routes';
+import { getErrorMessage } from '@/shared/lib/get-error-message';
+import { routes } from '@/shared/router/routes';
+import { Button } from '@/shared/ui/button';
+import { Field, FieldDescription, FieldLabel } from '@/shared/ui/field';
+import { Input } from '@/shared/ui/input';
 
 export default function SignUpForm() {
   const {
@@ -34,10 +35,10 @@ export default function SignUpForm() {
         toast.success('Account created 🎉', {
           description: 'Check your email to activate your account.',
         });
-        router.push(EAppRoutes.LOGIN);
+        router.push(routes.login);
       },
       onError: (error) => {
-        toast.error('Something went wrong', { description: error.message });
+        toast.error('Something went wrong', { description: getErrorMessage(error) });
       },
     });
   };
@@ -107,7 +108,7 @@ export default function SignUpForm() {
 
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}
-          <Link href={EAppRoutes.LOGIN} className="underline font-medium text-primary">
+          <Link href={routes.login} className="underline font-medium text-primary">
             Sign in
           </Link>
         </p>

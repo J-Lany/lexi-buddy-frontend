@@ -1,4 +1,4 @@
-import { api } from '@/lib/api-client';
+import { api } from '@/shared/api';
 
 export type RegisterParams = {
   email: string;

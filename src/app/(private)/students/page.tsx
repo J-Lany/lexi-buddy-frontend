@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
-import StudentsPageClient from '@/features/students/students-page-client';
+
+import StudentsPageClient from '@/app/(private)/students/students-page-client';
 
 export default function StudentsPage() {
   return (

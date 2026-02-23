@@ -1,0 +1,23 @@
+'use client';
+
+import { LessonSummaryDto } from '@/entities/lessons/api/get-my-lessons';
+
+import { LessonRow } from './lesson-row';
+export function LessonList({ lessons }: { lessons: LessonSummaryDto[] }) {
+  return (
+    <div className="w-full flex">
+      <div
+        className="
+          grid gap-4
+          w-full max-w-6xl
+          grid-cols-1
+          xl:grid-cols-2
+        "
+      >
+        {lessons.map((lesson) => (
+          <LessonRow key={lesson.id} lesson={lesson} />
+        ))}
+      </div>
+    </div>
+  );
+}

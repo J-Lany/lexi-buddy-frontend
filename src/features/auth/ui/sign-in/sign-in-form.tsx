@@ -7,13 +7,14 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { loginSchema, SignInFormValues } from '@/features/auth/lib/schemas';
 import { useSignInMutation } from '@/features/auth/model/use-sigin';
 import { AuthCard } from '@/features/auth/ui/shared/auth-card';
-import { EAppRoutes } from '@/lib/routes';
+import { getErrorMessage } from '@/shared/lib/get-error-message';
+import { routes } from '@/shared/router/routes';
+import { Button } from '@/shared/ui/button';
+import { Field, FieldDescription, FieldLabel } from '@/shared/ui/field';
+import { Input } from '@/shared/ui/input';
 
 export default function SignInForm() {
   const router = useRouter();
@@ -30,9 +31,9 @@ export default function SignInForm() {
 
   const onSubmit = (data: SignInFormValues) => {
     mutate(data, {
-      onSuccess: () => router.push(EAppRoutes.STUDENTS),
+      onSuccess: () => router.push(routes.students),
       onError: (error) => {
-        toast.error('Couldn’t sign in', { description: error.message });
+        toast.error('Couldn’t sign in', { description: getErrorMessage(error) });
       },
     });
   };
@@ -91,7 +92,7 @@ export default function SignInForm() {
 
         <p className="text-center text-sm text-muted-foreground">
           Don’t have an account?{' '}
-          <Link href={EAppRoutes.REGISTRATION} className="underline font-semibold text-primary">
+          <Link href={routes.register} className="underline font-semibold text-primary">
             Sign up
           </Link>
         </p>

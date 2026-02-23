@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@tailwind base;
 @import 'tw-animate-css';
 
 /* 1) Box sizing */
@@ -14,7 +13,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-
 }
 
 html,
@@ -24,7 +22,6 @@ body {
   overscroll-behavior: none;
   overflow-x: hidden;
 }
-
 
 /* 5) Better text rendering */
 body {
@@ -95,9 +92,9 @@ a {
   --foreground: oklch(0.145 0 0);
 
   --gradient: linear-gradient(
-          90deg,
-          color-mix(in oklch, white 92%, var(--primary-foreground) 8%) 0%,
-          var(--primary-foreground) 100%
+    90deg,
+    color-mix(in oklch, white 92%, var(--primary-foreground) 8%) 0%,
+    var(--primary-foreground) 100%
   );
 
   --card: var(--background);
@@ -150,7 +147,7 @@ a {
 
   /* Shadows (one family across the app) */
   --shadow-card: 0 10px 30px rgba(15, 116, 143, 0.08);
-  --shadow-card-hover: 0 14px 40px rgba(15, 116, 143, 0.10);
+  --shadow-card-hover: 0 14px 40px rgba(15, 116, 143, 0.1);
 
   /* Apple-like focus halo */
   --focus-halo: 0 0 0 4px color-mix(in oklch, var(--primary) 22%, white 78%);
@@ -237,7 +234,6 @@ a {
 
     /* fallback-и */
     min-height: 100vh;
-    min-height: 100svh;
 
     overflow: hidden;
     background: var(--background);
@@ -268,10 +264,6 @@ a {
 
     min-height: 100%;
   }
-
-
-
-
 
   /* macOS/iOS-like "sheet" */
   .ui-auth-sheet {
@@ -393,10 +385,10 @@ a {
     padding: 10px 16px 10px 28px; /* extra space for rail */
     color: color-mix(in oklch, var(--foreground) 65%, var(--muted));
     transition:
-            background-color 160ms ease-out,
-            box-shadow 160ms ease-out,
-            border-color 160ms ease-out,
-            color 120ms ease-out;
+      background-color 160ms ease-out,
+      box-shadow 160ms ease-out,
+      border-color 160ms ease-out,
+      color 120ms ease-out;
   }
 
   /* Hover fog (desktop only) */
@@ -445,7 +437,7 @@ a {
 
   /* Base card surface */
   .ui-card {
-    @apply border transition-colors transition-shadow duration-200 ease-out;
+    @apply border transition-shadow duration-200 ease-out;
     background: var(--surface);
     border-color: var(--border-soft);
     box-shadow: var(--shadow-card);
@@ -546,7 +538,9 @@ a {
     @apply absolute inset-y-1 left-1 rounded-full;
     width: calc((100% - 0.5rem) / var(--seg-count));
     transform: translateX(calc(var(--seg-index) * 100%));
-    transition: transform 180ms ease, width 180ms ease;
+    transition:
+      transform 180ms ease,
+      width 180ms ease;
     background: color-mix(in oklch, var(--background) 92%, white 8%);
     box-shadow: 0 10px 24px rgba(15, 116, 143, 0.12);
     border: 1px solid color-mix(in oklch, var(--border) 40%, white 60%);
@@ -601,9 +595,9 @@ a {
 
   /* Horizontal inset that still allows full-width highlight */
   .ui-inset-x {
-    margin-left: -0.5rem;  /* = -mx-2 */
+    margin-left: -0.5rem; /* = -mx-2 */
     margin-right: -0.5rem;
-    padding-left: 0.5rem;  /* = px-2 */
+    padding-left: 0.5rem; /* = px-2 */
     padding-right: 0.5rem;
   }
 
@@ -618,7 +612,7 @@ a {
     @apply flex items-center justify-between rounded-2xl transition-colors;
 
     /* hit target */
-    padding-top: 0.75rem;   /* py-3 */
+    padding-top: 0.75rem; /* py-3 */
     padding-bottom: 0.75rem;
 
     /* ui-focus */

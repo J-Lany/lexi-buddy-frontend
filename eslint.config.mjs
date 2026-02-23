@@ -47,10 +47,7 @@ const eslintConfig = [
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
 
-      '@typescript-eslint/no-floating-promises': [
-        'error',
-        { ignoreVoid: true, ignoreIIFE: false },
-      ],
+      '@typescript-eslint/no-floating-promises': ['error', { ignoreVoid: true, ignoreIIFE: false }],
     },
   },
 

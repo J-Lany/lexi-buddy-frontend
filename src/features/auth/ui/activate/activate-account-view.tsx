@@ -7,7 +7,7 @@ import { useActivateMutation } from '@/features/auth/model/use-activate';
 import { ActivationError } from '@/features/auth/ui/activate/components/activation-error';
 import { ActivationPending } from '@/features/auth/ui/activate/components/activation-pending';
 import { ActivationSuccess } from '@/features/auth/ui/activate/components/activation-success';
-import { EAppRoutes } from '@/lib/routes';
+import { routes } from '@/shared/router/routes';
 
 type Props = {
   token: string;
@@ -29,8 +29,8 @@ export function ActivateAccountView({ token }: Props) {
   return (
     <div className="mx-auto w-full max-w-[360px] text-center">
       {isPending && <ActivationPending />}
-      {isSuccess && <ActivationSuccess onClick={() => router.push(EAppRoutes.LOGIN)} />}
-      {isError && <ActivationError onClick={() => router.push(EAppRoutes.REGISTRATION)} />}
+      {isSuccess && <ActivationSuccess onClick={() => router.push(routes.login)} />}
+      {isError && <ActivationError onClick={() => router.push(routes.register)} />}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { CheckCircle } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
 import { ActivationCard } from '@/features/auth/ui/activate/components/activation-card';
+import { Button } from '@/shared/ui/button';
 
 type Props = {
   onClick: () => void;

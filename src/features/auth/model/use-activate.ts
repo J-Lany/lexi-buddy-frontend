@@ -5,7 +5,7 @@ import {
   ActivationParams,
   ActivationResponse,
 } from '@/features/auth/api/activate-account';
-import type { HttpError } from '@/lib/api-client';
+import { HttpError } from '@/shared/api';
 
 export function useActivateMutation() {
   return useMutation<ActivationResponse, HttpError, ActivationParams>({
