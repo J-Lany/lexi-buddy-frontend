@@ -12,11 +12,12 @@ import { RowLink } from '@/shared/ui/row-link';
 type Lesson = StudentDashboardDto['lessons'][number];
 
 type Props = {
+  studentId: number;
   lesson: Lesson;
   variant?: 'card' | 'table';
 };
 
-export function StudentLessonsListRow({ lesson, variant = 'card' }: Props) {
+export function StudentLessonsListRow({ lesson, variant = 'card', studentId }: Props) {
   const title = lesson.title?.trim() || 'Untitled lesson';
   const topic = lesson.topic?.trim() || '—';
 
@@ -28,8 +29,7 @@ export function StudentLessonsListRow({ lesson, variant = 'card' }: Props) {
   const total = lesson.progress?.assignmentsTotal ?? 0;
   const doneLabel = `${done}/${total}`;
 
-  // Пока без query params — вы потом централизованно поправите routes.
-  const href = `${routes.lessons}/${lesson.id}`;
+  const href = `${routes.students}/${studentId}/lessons/${lesson.id}/progress`;
 
   if (variant === 'table') {
     return (

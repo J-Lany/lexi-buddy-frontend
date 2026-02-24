@@ -35,13 +35,9 @@ export function StepVocab({ draft, onChange }: Props) {
     setTermsRaw(nextTerms);
   }, [draft.vocabItems]);
 
-  const setVocabItemsSafe = (updater: (prev: VocabItemDto[]) => VocabItemDto[]) => {
-    setVocabItems((prev) => {
-      const next = updater(prev);
-      onChange({ vocabItems: next });
-      return next;
-    });
-  };
+  useEffect(() => {
+    onChange({ vocabItems });
+  }, [vocabItems, onChange]);
 
   const { terms, normalized } = useMemo(() => parseVocabTerms(termsRaw), [termsRaw]);
 
@@ -50,7 +46,7 @@ export function StepVocab({ draft, onChange }: Props) {
   };
 
   const handleTranslate = () => {
-    setVocabItemsSafe(() => []);
+    setVocabItems([]);
 
     mutate(
       {
@@ -61,14 +57,14 @@ export function StepVocab({ draft, onChange }: Props) {
       },
       {
         onSuccess: (items) => {
-          setVocabItemsSafe(() => items);
+          setVocabItems(items);
         },
       },
     );
   };
 
   const handleChangeTranslation = (index: number, value: string) => {
-    setVocabItemsSafe((prev) => {
+    setVocabItems((prev) => {
       const next = [...prev];
       next[index] = { ...next[index], translation: value.trim() ? value : null };
       return next;
@@ -76,7 +72,7 @@ export function StepVocab({ draft, onChange }: Props) {
   };
 
   const handleChangeSynonym = (index: number, synonymIndex: number, value: string) => {
-    setVocabItemsSafe((prev) => {
+    setVocabItems((prev) => {
       const next = [...prev];
       const current = next[index];
       const synonyms = [...(current.synonyms ?? [])];
@@ -87,11 +83,11 @@ export function StepVocab({ draft, onChange }: Props) {
   };
 
   const handleRemoveItem = (index: number) => {
-    setVocabItemsSafe((prev) => prev.filter((_, i) => i !== index));
+    setVocabItems((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleRemoveSynonym = (index: number, synonymIndex: number) => {
-    setVocabItemsSafe((prev) => {
+    setVocabItems((prev) => {
       const next = [...prev];
       const current = next[index];
       const synonyms = (current.synonyms ?? []).filter((_, si) => si !== synonymIndex);

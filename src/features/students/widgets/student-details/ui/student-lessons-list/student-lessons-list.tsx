@@ -12,10 +12,11 @@ import {
 } from './student-lessons-list.columns';
 
 type Props = {
+  studentId: number;
   lessons: StudentDashboardDto['lessons'];
 };
 
-export function StudentLessonsList({ lessons }: Props) {
+export function StudentLessonsList({ lessons, studentId }: Props) {
   const isEmpty = lessons.length === 0;
 
   const empty = (
@@ -36,14 +37,24 @@ export function StudentLessonsList({ lessons }: Props) {
         isEmpty
           ? empty
           : lessons.map((lesson) => (
-              <StudentLessonsListRow key={lesson.id} lesson={lesson} variant="table" />
+              <StudentLessonsListRow
+                key={lesson.id}
+                studentId={studentId}
+                lesson={lesson}
+                variant="table"
+              />
             ))
       }
       mobileBody={
         isEmpty
           ? empty
           : lessons.map((lesson) => (
-              <StudentLessonsListRow key={lesson.id} lesson={lesson} variant="card" />
+              <StudentLessonsListRow
+                key={lesson.id}
+                studentId={studentId}
+                lesson={lesson}
+                variant="card"
+              />
             ))
       }
     />

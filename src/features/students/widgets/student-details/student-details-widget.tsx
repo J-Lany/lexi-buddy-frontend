@@ -37,7 +37,7 @@ export default function StudentDetailsWidget({ studentId }: { studentId: number 
         stats={stats}
         lessonsTotal={lessons.length}
       />
-      <StudentLessonsList lessons={lessons} />
+      <StudentLessonsList lessons={lessons} studentId={student.id} />
     </div>
   );
 }
