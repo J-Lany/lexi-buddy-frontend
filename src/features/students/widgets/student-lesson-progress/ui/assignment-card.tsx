@@ -32,16 +32,13 @@ export function AssignmentCard({ assignment }: { assignment: StudentLessonProgre
   if (attemptNos.length === 0 || !activeAttempt) {
     return (
       <Card className="ui-card ui-radius-card px-5 sm:px-6 py-5">
-        <div className="ui-title">{assignment.type.name}</div>
         <div className="ui-meta mt-2">No attempts yet</div>
       </Card>
     );
   }
 
   return (
-    <Card className="ui-card ui-radius-card px-5 sm:px-6 py-5">
-      <div className="ui-title">{assignment.type.name}</div>
-
+    <Card className="ui-card-static ui-radius-card px-5 sm:px-6 py-5">
       {attemptNos.length > 1 ? (
         <div className="mt-4">
           <AttemptSegmented

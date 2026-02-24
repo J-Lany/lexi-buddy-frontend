@@ -12,7 +12,7 @@ export function LessonSummary({ lesson }: { lesson: LessonDashboardDto }) {
   const studentsCount = lesson.students?.length ?? 0;
 
   return (
-    <Card className="ui-card ui-radius-card">
+    <Card className="ui-card-static ui-radius-card">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between gap-4">
           <CardTitle className="truncate text-xl sm:text-2xl tracking-tight">

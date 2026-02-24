@@ -14,6 +14,7 @@ import DetailsLayoutSkeleton from '@/shared/ui/details/details-layout-skeleton';
 import { NavBack } from '@/shared/ui/nav-back';
 
 import { AssignmentCard } from './ui/assignment-card';
+import { ResultsHeader } from './ui/results-header';
 import { SummaryCard } from './ui/summary-card';
 
 type Props = {
@@ -26,11 +27,9 @@ export default function StudentLessonProgressWidget({ studentId, lessonId }: Pro
 
   const assignments = useMemo(() => data?.assignments ?? [], [data?.assignments]);
   const grouped = useMemo(() => groupBy(assignments, (a) => a.type.name), [assignments]);
-
   const types = useMemo(() => Array.from(grouped.keys()), [grouped]);
 
   const { active: activeType, setActive: setActiveType } = useActiveTab<AssignmentType>(types);
-
   const activeAssignments = activeType ? (grouped.get(activeType) ?? []) : [];
 
   if (isLoading) return <DetailsLayoutSkeleton />;
@@ -47,30 +46,37 @@ export default function StudentLessonProgressWidget({ studentId, lessonId }: Pro
   }
 
   return (
-    <div className="max-w-5xl flex flex-col gap-6">
+    <div className="max-w-5xl flex flex-col gap-6 md:gap-8">
       <div className="pt-1">
-        <NavBack href={`${routes.students}/${studentId}`} label="Student" />
+        <NavBack
+          href={`${routes.students}/${studentId}`}
+          label={`Back to ${data.student.username}`}
+        />
       </div>
 
       <SummaryCard lessonTitle={data.lesson.title} student={data.student} overall={data.overall} />
 
-      {activeType ? (
-        <AssignmentTabs types={types} activeType={activeType} onChange={setActiveType} />
-      ) : null}
+      <ResultsHeader lessonId={lessonId} />
 
-      <section className="flex flex-col gap-4">
-        {assignments.length === 0 ? (
-          <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
-            <div className="ui-meta">No assignments in this lesson yet</div>
-          </Card>
-        ) : activeAssignments.length === 0 ? (
-          <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
-            <div className="ui-meta">No assignments of this type</div>
-          </Card>
-        ) : (
-          activeAssignments.map((a) => <AssignmentCard key={a.id} assignment={a} />)
-        )}
-      </section>
+      <div className="flex flex-col gap-1 md:gap-2">
+        {activeType ? (
+          <AssignmentTabs types={types} activeType={activeType} onChange={setActiveType} />
+        ) : null}
+
+        <section className="flex flex-col gap-4 md:gap-6">
+          {assignments.length === 0 ? (
+            <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
+              <div className="ui-meta">No assignments in this lesson yet</div>
+            </Card>
+          ) : activeAssignments.length === 0 ? (
+            <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
+              <div className="ui-meta">No assignments of this type</div>
+            </Card>
+          ) : (
+            activeAssignments.map((a) => <AssignmentCard key={a.id} assignment={a} />)
+          )}
+        </section>
+      </div>
     </div>
   );
 }
