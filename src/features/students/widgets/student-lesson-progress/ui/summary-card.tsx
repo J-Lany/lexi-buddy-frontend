@@ -1,5 +1,7 @@
 import { formatDate } from '@/features/students/lib/helpers';
 import { Card } from '@/shared/ui/card';
+import { Dot } from '@/shared/ui/dot';
+import { MetaPair } from '@/shared/ui/meta-pair';
 import { StudentAvatar } from '@/shared/ui/student-avatar';
 
 export function SummaryCard({
@@ -47,18 +49,5 @@ export function SummaryCard({
         />
       </div>
     </Card>
-  );
-}
-
-function Dot() {
-  return <span className="text-muted-foreground/60">•</span>;
-}
-
-function MetaPair({ label, value }: { label: string; value: string }) {
-  return (
-    <span className="tabular-nums">
-      <span className="ui-meta">{label}:</span>{' '}
-      <span className="ui-meta !text-foreground">{value}</span>
-    </span>
   );
 }

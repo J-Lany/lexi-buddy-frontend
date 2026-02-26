@@ -55,27 +55,28 @@ export default function StudentLessonProgressWidget({ studentId, lessonId }: Pro
       </div>
 
       <SummaryCard lessonTitle={data.lesson.title} student={data.student} overall={data.overall} />
+      <div className="ui-card-static ui-radius-card px-5 sm:px-6 py-4 flex gap-4 md:gap-6 flex-col">
+        <ResultsHeader lessonId={lessonId} />
 
-      <ResultsHeader lessonId={lessonId} />
+        <div className="flex flex-col gap-1 md:gap-2">
+          {activeType ? (
+            <AssignmentTabs types={types} activeType={activeType} onChange={setActiveType} />
+          ) : null}
 
-      <div className="flex flex-col gap-1 md:gap-2">
-        {activeType ? (
-          <AssignmentTabs types={types} activeType={activeType} onChange={setActiveType} />
-        ) : null}
-
-        <section className="flex flex-col gap-4 md:gap-6">
-          {assignments.length === 0 ? (
-            <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
-              <div className="ui-meta">No assignments in this lesson yet</div>
-            </Card>
-          ) : activeAssignments.length === 0 ? (
-            <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
-              <div className="ui-meta">No assignments of this type</div>
-            </Card>
-          ) : (
-            activeAssignments.map((a) => <AssignmentCard key={a.id} assignment={a} />)
-          )}
-        </section>
+          <section className="flex flex-col gap-4 md:gap-6">
+            {assignments.length === 0 ? (
+              <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
+                <div className="ui-meta">No assignments in this lesson yet</div>
+              </Card>
+            ) : activeAssignments.length === 0 ? (
+              <Card className="ui-card-static ui-radius-card px-5 sm:px-6 py-4">
+                <div className="ui-meta">No assignments of this type</div>
+              </Card>
+            ) : (
+              activeAssignments.map((a) => <AssignmentCard key={a.id} assignment={a} />)
+            )}
+          </section>
+        </div>
       </div>
     </div>
   );
