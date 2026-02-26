@@ -1,9 +1,10 @@
 'use client';
 
 import { LessonDashboardDto } from '@/entities/lessons/api/get-lesson-dashboard';
-import { StatCell } from '@/features/lessons/widgets/lesson-details/ui/lesson-summary/ui/stat-cell';
 import { AGE_GROUP_LABELS } from '@/shared/catalogs/age';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Dot } from '@/shared/ui/dot';
+import { MetaPair } from '@/shared/ui/meta-pair';
 
 export function LessonSummary({ lesson }: { lesson: LessonDashboardDto }) {
   const vocabCount = lesson.vocab.length;
@@ -12,7 +13,7 @@ export function LessonSummary({ lesson }: { lesson: LessonDashboardDto }) {
   const studentsCount = lesson.students?.length ?? 0;
 
   return (
-    <Card className="ui-card ui-radius-card">
+    <Card className="ui-card-static ui-radius-card">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between gap-4">
           <CardTitle className="truncate text-xl sm:text-2xl tracking-tight">
@@ -41,11 +42,23 @@ export function LessonSummary({ lesson }: { lesson: LessonDashboardDto }) {
       </CardHeader>
 
       <CardContent>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <StatCell label="Words" value={vocabCount} />
-          <StatCell label="Assignments" value={assignmentsCount} />
-          <StatCell label="Groups" value={groupsCount} />
-          <StatCell label="Students" value={studentsCount} />
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-3 gap-y-2 text-[12px] sm:text-[13px]">
+          <MetaPair label="Words" value={vocabCount} />
+          <div className="hidden sm:block">
+            <Dot />
+          </div>
+
+          <MetaPair label="Assignments" value={assignmentsCount} />
+          <div className="hidden sm:block">
+            <Dot />
+          </div>
+
+          <MetaPair label="Groups" value={groupsCount} />
+          <div className="hidden sm:block">
+            <Dot />
+          </div>
+
+          <MetaPair label="Students" value={studentsCount} />
         </div>
       </CardContent>
     </Card>

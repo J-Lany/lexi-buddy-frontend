@@ -48,7 +48,9 @@ export function CreateLessonModal() {
   const [step, setStep] = React.useState<Steps>(1);
   const [draft, setDraft] = React.useState(initialDraft);
 
-  const patchDraft = (patch: DraftPatch) => setDraft((d) => ({ ...d, ...patch }));
+  const patchDraft = React.useCallback((patch: DraftPatch) => {
+    setDraft((d) => ({ ...d, ...patch }));
+  }, []);
 
   const [generatedAssignments, dispatch] = React.useReducer(assignmentReducer, {});
   const [expandedTypes, setExpandedTypes] = React.useState<Record<AssignmentType, boolean>>(() =>

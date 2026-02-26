@@ -173,25 +173,25 @@ a {
   /* Primary title text for list rows, cards, and main labels */
   .ui-title {
     @apply font-semibold leading-snug truncate;
-    font-size: 15px; /* mobile default */
+    font-size: 16px; /* mobile default */
   }
 
   @media (min-width: 640px) {
     .ui-title {
-      font-size: 16px; /* desktop */
+      font-size: 18px; /* desktop */
     }
   }
 
   /* Secondary / meta text under titles */
   .ui-meta {
     @apply text-muted-foreground leading-snug truncate;
-    font-size: 11px; /* mobile */
+    font-size: 14px; /* mobile */
     opacity: 0.85; /* quieter than main text */
   }
 
   @media (min-width: 640px) {
     .ui-meta {
-      font-size: 12px; /* desktop */
+      font-size: 16px; /* desktop */
     }
   }
 
