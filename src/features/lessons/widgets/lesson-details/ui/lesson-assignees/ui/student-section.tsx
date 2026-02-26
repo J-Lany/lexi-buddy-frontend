@@ -20,7 +20,7 @@ export function StudentsSection({ students }: StudentsSectionProps) {
   return (
     <div
       className={cn(
-        'grid gap-3 lg:grid-cols-2',
+        'grid grid-cols-1 gap-3 lg:grid-cols-2 w-full',
         shouldScroll && 'max-h-96 overflow-y-auto pr-1 ui-scroll',
       )}
     >
@@ -36,7 +36,7 @@ export function StudentsSection({ students }: StudentsSectionProps) {
           <Link
             key={s.id}
             type="button"
-            className="ui-row w-full rounded-3xl px-4 py-3 text-left transition-colors"
+            className="ui-row w-full min-w-0 rounded-3xl px-4 py-3 text-left transition-colors"
             href={`${routes.students}/${s.id}`}
           >
             <div className="flex items-start gap-3">
