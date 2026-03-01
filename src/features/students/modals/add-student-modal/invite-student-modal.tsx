@@ -96,6 +96,7 @@ export function InviteStudentModal() {
 
         <Textarea
           placeholder="Message (optional)"
+          minRows={5}
           value={state.message}
           onChange={(e) => setState((s) => ({ ...s, message: e.target.value }))}
         />

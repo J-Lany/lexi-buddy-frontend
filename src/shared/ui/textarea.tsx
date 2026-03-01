@@ -1,13 +1,15 @@
 import * as React from 'react';
+import TextareaAutosize, { TextareaAutosizeProps } from 'react-textarea-autosize';
 
 import { cn } from '@/shared/lib/cn';
 
-function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
-  return (
-    <textarea
-      data-slot="textarea"
-      className={cn(
-        [
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaAutosizeProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <TextareaAutosize
+        ref={ref}
+        data-slot="textarea"
+        className={cn(
           'w-full rounded-xl px-3 py-2 text-[15px] md:text-[14px]',
           'bg-background',
           'border border-border/60',
@@ -16,12 +18,15 @@ function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
           'focus-visible:border-[var(--focus-border)] focus-visible:shadow-[var(--focus-halo)]',
           'disabled:pointer-events-none disabled:opacity-50',
           'aria-invalid:border-destructive aria-invalid:shadow-[0_0_0_4px_color-mix(in_oklch,var(--destructive)_22%,white_78%)]',
-        ].join(' '),
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+          'resize-none',
+          className,
+        )}
+        {...props}
+      />
+    );
+  },
+);
+
+Textarea.displayName = 'Textarea';
 
 export { Textarea };

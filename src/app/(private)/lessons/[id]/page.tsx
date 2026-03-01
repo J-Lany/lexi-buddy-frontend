@@ -6,7 +6,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
   const { id } = await params;
   return (
     <Suspense fallback={null}>
-      <LessonDetailsWidget lessonId={Number(id)} />;
+      <LessonDetailsWidget lessonId={Number(id)} />
     </Suspense>
   );
 }

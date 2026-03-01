@@ -22,7 +22,7 @@ export default function LessonsPageClient() {
               value={query}
               onChange={(e) => navigateWith({ [queryKeys.q]: e.target.value })}
               placeholder="Search lessons"
-              className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto sm:max-w-[clamp(320px,40vw,560px)]"
+              className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto"
             />
             <div className="w-full sm:w-auto shrink-0">
               <CreateLessonModal />

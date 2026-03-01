@@ -22,7 +22,7 @@ export function StudentSearchPicker({ value, onChange }: Props) {
   const { data = [], isFetching, isError, error } = useSearchStudentsQuery(normalized);
 
   return (
-    <div className="rounded-2xl border border-border/30 bg-muted/[0.15] overflow-hidden">
+    <div className="rounded-2xl border border-border/30 overflow-hidden">
       <Command shouldFilter={false}>
         <div className="relative">
           <CommandInput
