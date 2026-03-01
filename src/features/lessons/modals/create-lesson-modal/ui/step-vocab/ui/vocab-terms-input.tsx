@@ -32,7 +32,8 @@ export function VocabTermsInput({
     <div className="grid gap-3">
       <Textarea
         name="vocab"
-        className="min-h-[110px] rounded-3xl"
+        className="rounded-3xl"
+        minRows={5}
         placeholder={`Enter up to ${maxTerms} words separated by dots.`}
         value={value}
         onChange={(e) => onChange(e.target.value)}

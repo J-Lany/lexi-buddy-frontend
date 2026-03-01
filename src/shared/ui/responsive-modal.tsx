@@ -132,7 +132,7 @@ export function ResponsiveModal({
         {footer ? (
           <div
             className={cn(
-              'bg-background/90 backdrop-blur sm:border-t sm:border-border/60',
+              'bg-background/90 backdrop-blur',
               'px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4',
               'max-sm:sticky max-sm:bottom-0',
             )}

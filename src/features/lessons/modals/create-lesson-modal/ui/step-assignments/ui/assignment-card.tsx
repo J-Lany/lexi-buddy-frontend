@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { AnswerDto, AssignmentPreviewDto } from '@/entities/lessons/api/create-assignments-preview';
 import { cn } from '@/shared/lib/cn';
 import { Checkbox } from '@/shared/ui/checkbox';
-import { Input } from '@/shared/ui/input';
 import { Textarea } from '@/shared/ui/textarea';
 
 type AssignmentCardProps = {
@@ -61,7 +60,7 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
           value={question}
           onChange={handleQuestionChange}
           placeholder="Enter question"
-          className="rounded-2xl h-auto"
+          className="rounded-2xl"
         />
       </div>
 
@@ -73,14 +72,10 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
           </div>
         </div>
 
-        <div className="ui-panel overflow-hidden rounded-3xl">
+        <div className=" overflow-hidden rounded-3xl">
           {answers.map((answer, idx) => {
-            const isFirst = idx === 0;
-
             return (
               <div key={idx} className="px-4 py-3.5">
-                {!isFirst ? <div className="-mx-4 mb-3.5 h-px bg-border/60" /> : null}
-
                 <div className="flex items-center gap-3">
                   <Checkbox
                     checked={Boolean(answer.isCorrect)}
@@ -92,14 +87,12 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
                     )}
                   />
 
-                  <Input
+                  <Textarea
                     value={answer.text}
                     onChange={(e) => handleAnswerTextChange(idx, e.target.value)}
                     placeholder={`Answer ${idx + 1}`}
                     className="rounded-2xl"
                   />
-
-                  <div className="ui-meta shrink-0">{answer.isCorrect ? 'Correct' : ''}</div>
                 </div>
               </div>
             );
@@ -114,7 +107,7 @@ export function AssignmentCard({ assignment, onChange }: AssignmentCardProps) {
           onChange={handleExplanationChange}
           rows={3}
           placeholder="Explanation for student"
-          className="rounded-3xl"
+          className="rounded-2xl"
         />
       </div>
     </div>
