@@ -66,7 +66,9 @@ export function StudentLessonsListRow({ lesson, variant = 'card', studentId }: P
 
         <div className="flex-1 min-w-0">
           <div className="ui-title">{title}</div>
-          <div className="mt-1 ui-meta !whitespace-normal break-words line-clamp-2">{topic}</div>
+          <div className="mt-1 ui-meta whitespace-normal! wrap-break-word line-clamp-2">
+            {topic}
+          </div>
         </div>
 
         <div className="flex flex-col items-end gap-1 pl-2">
