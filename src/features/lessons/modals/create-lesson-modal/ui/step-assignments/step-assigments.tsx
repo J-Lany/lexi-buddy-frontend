@@ -62,7 +62,7 @@ export function StepAssignments({
         const primaryLabel = count > 0 ? 'Regenerate' : 'Generate';
 
         return (
-          <Panel key={type} className="ui-radius-card">
+          <Panel key={type} className={cn('ui-radius-card', canShow && 'bg-info-soft')}>
             <div className="px-4 py-4 flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <div className="ui-title">{ASSIGNMENT_TYPE_LABELS[type]}</div>

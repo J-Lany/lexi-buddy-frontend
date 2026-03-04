@@ -41,7 +41,7 @@ export function VocabTermsInput({
       />
 
       <Button type="button" onClick={onTranslate} disabled={translateDisabled}>
-        {isPending ? 'Translating...' : 'Translate'}
+        {isPending ? 'Translating...' : 'Provide translations and definitions'}
       </Button>
 
       {errorMessage ? <div className="text-red-500 mt-1">{errorMessage}</div> : null}

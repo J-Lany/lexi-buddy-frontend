@@ -4,6 +4,7 @@ import { Search } from 'lucide-react';
 
 import { AssigneesFilterKey } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignees/lib/filter-assignees-students';
 import { SegmentedControl } from '@/shared/ui/segmented-control';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
 
 export const STUDENT_FILTERS = [
   { value: 'ALL', label: 'All' },
@@ -29,22 +30,27 @@ export function AssigneesStudentsToolbar({
   onFilterChange,
   options,
 }: Props) {
+  const activeLabel = options.find((o) => o.value === filter)?.label ?? 'All';
+
   return (
     <div
-      className="rounded-2xl py-2"
+      className="rounded-2xl p-3"
       style={{ background: 'color-mix(in oklch, var(--background) 92%, white 8%)' }}
     >
       <div className="flex flex-col gap-3 lg:hidden">
-        <div className="overflow-x-auto ui-scroll">
-          <div className="min-w-max">
-            <SegmentedControl<AssigneesFilterKey>
-              value={filter}
-              onChange={onFilterChange}
-              options={options}
-              className="w-auto ui-seg--flush"
-            />
-          </div>
-        </div>
+        <Select value={filter} onValueChange={(v) => onFilterChange(v as AssigneesFilterKey)}>
+          <SelectTrigger aria-label="Student status filter" className="h-10 rounded-2xl">
+            <SelectValue placeholder="Filter">{activeLabel}</SelectValue>
+          </SelectTrigger>
+
+          <SelectContent>
+            {options.map((o) => (
+              <SelectItem key={o.value} value={o.value}>
+                {o.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         <SearchInput value={query} onChange={onQueryChange} />
       </div>
