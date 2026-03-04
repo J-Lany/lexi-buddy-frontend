@@ -37,10 +37,10 @@ export function StudentLessonsListRow({ lesson, variant = 'card', studentId }: P
         <div className={cn('grid items-center gap-4', STUDENT_LESSONS_TABLE_COLS)}>
           <div className="flex items-center gap-3 min-w-0">
             <LevelIcon className="h-5 w-5 text-muted-foreground shrink-0" aria-hidden />
-            <div className="ui-title truncate">{title}</div>
+            <div className="ui-title">{title}</div>
           </div>
 
-          <div className="ui-meta truncate">{topic}</div>
+          <div className="ui-meta">{topic}</div>
 
           <div className="flex justify-end">
             <span className={cn('ui-pill', levelLabel === '—' && 'opacity-70')}>{levelLabel}</span>
@@ -55,18 +55,23 @@ export function StudentLessonsListRow({ lesson, variant = 'card', studentId }: P
   }
 
   return (
-    <RowLink href={href} className="ui-card ui-radius-card ui-focus px-5 sm:px-6 py-4">
+    <RowLink
+      href={href}
+      className="ui-card ui-radius-card ui-focus px-5 sm:px-6 py-4 overflow-hidden"
+    >
       <div className="flex items-start gap-3">
         <div className="shrink-0 pt-0.5">
           <LevelIcon className="h-6 w-6 text-muted-foreground" aria-hidden />
         </div>
 
         <div className="flex-1 min-w-0">
-          <div className="ui-title truncate">{title}</div>
-          <div className="mt-1 ui-meta truncate">{topic}</div>
+          <div className="ui-title">{title}</div>
+          <div className="mt-1 ui-meta whitespace-normal! wrap-break-word line-clamp-2">
+            {topic}
+          </div>
         </div>
 
-        <div className="shrink-0 flex flex-col items-end gap-1 pl-2">
+        <div className="flex flex-col items-end gap-1 pl-2">
           <span className={cn('ui-pill', levelLabel === '—' && 'opacity-70')}>{levelLabel}</span>
           <span className="ui-meta tabular-nums">{doneLabel}</span>
         </div>

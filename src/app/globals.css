@@ -83,6 +83,14 @@ a {
 
   --color-gradient: linear-gradient(90deg, var(--primary) 0%, var(--primary) 100%);
   --color-table-header: var(--table-header);
+
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+
+  --color-info-soft: var(--info-soft);
 }
 
 :root {
@@ -136,6 +144,14 @@ a {
   --sidebar-border: oklch(0.88 0.07 210);
   --sidebar-ring: oklch(0.88 0.07 210);
 
+  --success: #2dc75c;
+  --success-soft: #edfcf3;
+
+  --danger: #ff6464;
+  --danger-soft: #fcefef;
+
+  --info-soft: #f5fcfd;
+
   --table-header: oklch(0.87 0 0);
 
   /* Surfaces */
@@ -166,6 +182,39 @@ a {
 }
 
 @layer utilities {
+  .ui-status {
+    @apply inline-flex items-center justify-center rounded-full;
+    padding-top: 4px;
+  }
+
+  .ui-status--success {
+    background: var(--success-soft);
+    border-color: color-mix(in oklch, var(--success) 25%, white 75%);
+    color: var(--success);
+  }
+
+  .ui-status--danger {
+    background: var(--danger-soft);
+    border-color: color-mix(in oklch, var(--danger) 25%, white 75%);
+    color: var(--danger);
+  }
+
+  .ui-status--neutral {
+    background: color-mix(in oklch, var(--muted) 55%, white 45%);
+    border-color: var(--border-soft);
+    color: color-mix(in oklch, var(--muted-foreground) 80%, black 20%);
+  }
+
+  .ui-surface-success {
+    background: var(--success-soft);
+    border-color: color-mix(in oklch, var(--success) 18%, white 82%);
+  }
+
+  .ui-surface-danger {
+    background: var(--danger-soft);
+    border-color: color-mix(in oklch, var(--danger) 18%, white 82%);
+  }
+
   /* =========================================================
      TYPOGRAPHY
      ========================================================= */
