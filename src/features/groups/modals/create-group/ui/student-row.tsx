@@ -1,15 +1,18 @@
 import { Check } from 'lucide-react';
 
 import { cn } from '@/shared/lib/cn';
+import { StudentAvatar } from '@/shared/ui/student-avatar';
 
 export function StudentRow({
   selected,
   primary,
   secondary,
+  icon,
 }: {
   selected: boolean;
   primary: string;
   secondary?: string;
+  icon: string | null;
 }) {
   return (
     <div
@@ -22,6 +25,7 @@ export function StudentRow({
         selected ? 'bg-muted/40' : 'hover:bg-muted/30',
       )}
     >
+      <StudentAvatar username={primary} avatarUrl={icon} />
       <div className="min-w-0 flex-1">
         <div className="text-[15px] font-medium leading-snug truncate">{primary}</div>
         {secondary ? (

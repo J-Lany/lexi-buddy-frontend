@@ -15,7 +15,7 @@ type Props = {
 
 export function StepDetails({ draft, onChange }: Props) {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-5">
       <Input
         name="name"
         placeholder="Group title*"
@@ -35,6 +35,7 @@ export function StepDetails({ draft, onChange }: Props) {
         name="description"
         placeholder="Group description"
         value={draft.description}
+        minRows={2}
         onChange={(e) => onChange({ description: e.target.value })}
       />
     </div>

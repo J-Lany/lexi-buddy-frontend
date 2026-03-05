@@ -37,7 +37,7 @@ export function StudentsPicker({ students, value, onChange }: Props) {
           <CommandInput placeholder="Search students" className="h-11" />
         </div>
 
-        <CommandList className="max-h-[320px] p-2">
+        <CommandList className="max-h-80 p-2">
           <CommandEmpty>No students found.</CommandEmpty>
 
           <CommandGroup
@@ -59,7 +59,12 @@ export function StudentsPicker({ students, value, onChange }: Props) {
                     onSelect={() => toggle(s.id)}
                     className="p-0 aria-selected:bg-transparent data-[selected=true]:bg-transparent"
                   >
-                    <StudentRow selected={isSelected} primary={s.username} secondary={s.name} />
+                    <StudentRow
+                      icon={s.avatarUrl}
+                      selected={isSelected}
+                      primary={s.username}
+                      secondary={s.name}
+                    />
                   </CommandItem>
                 );
               })}

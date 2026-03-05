@@ -18,7 +18,7 @@ export function StepStudents({ draft, onChange }: Props) {
 
   if (isLoading) {
     return (
-      <div className="space-y-2">
+      <div className="space-y-5">
         <Skeleton className="h-40 rounded-2xl" />
         <Skeleton className="h-40 rounded-2xl" />
       </div>

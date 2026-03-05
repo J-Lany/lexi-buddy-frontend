@@ -76,19 +76,14 @@ export function InviteStudentModal() {
       open={open}
       onOpenChange={setOpen}
       footer={
-        <div className="flex justify-end gap-2 pt-2">
-          <Button
-            type="button"
-            className="w-full sm:w-auto"
-            onClick={handleSend}
-            disabled={!canSend}
-          >
+        <div className="flex justify-center">
+          <Button type="button" className="w-full sm:w-52" onClick={handleSend} disabled={!canSend}>
             {invite.isPending ? 'Sending…' : 'Send request'}
           </Button>
         </div>
       }
     >
-      <div className="grid gap-4">
+      <div className="grid gap-5">
         <StudentSearchPicker
           value={state.student}
           onChange={(student) => setState((s) => ({ ...s, student }))}

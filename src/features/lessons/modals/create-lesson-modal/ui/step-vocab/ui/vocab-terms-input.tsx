@@ -29,7 +29,7 @@ export function VocabTermsInput({
   errorMessage,
 }: Props) {
   return (
-    <div className="grid gap-3">
+    <div className="grid gap-5">
       <Textarea
         name="vocab"
         className="rounded-3xl"

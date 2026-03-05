@@ -15,7 +15,7 @@ type Props = {
 
 export function StepLessonMeta({ draft, onChange }: Props) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <Input
         name="title"
         placeholder="Lesson title*"
