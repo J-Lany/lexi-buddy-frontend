@@ -40,8 +40,8 @@ export function CreateLessonFooter({
 }: Props) {
   if (step === 1) {
     return (
-      <div className="flex justify-end">
-        <Button type="button" onClick={onNext} disabled={!canNextMeta} className="w-full sm:w-auto">
+      <div className="flex justify-center">
+        <Button type="button" onClick={onNext} disabled={!canNextMeta} className="w-full sm:w-52">
           Next
         </Button>
       </div>
@@ -50,7 +50,7 @@ export function CreateLessonFooter({
 
   if (step === 2) {
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-3.5">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1 min-w-0">
           Back
         </Button>
@@ -64,7 +64,7 @@ export function CreateLessonFooter({
 
   if (step === 3) {
     return (
-      <div className="flex gap-2">
+      <div className="flex gap-3.5">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1 min-w-0">
           Back
         </Button>
@@ -82,7 +82,7 @@ export function CreateLessonFooter({
   }
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-3.5">
       <Button
         type="button"
         variant="outline"

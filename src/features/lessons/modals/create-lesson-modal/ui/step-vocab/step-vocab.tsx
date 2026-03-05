@@ -99,7 +99,7 @@ export function StepVocab({ draft, onChange }: Props) {
   const canTranslate = !isPending && terms.length > 0;
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-5">
       <VocabTermsInput
         value={termsRaw}
         maxTerms={VOCAB_MAX_TERMS}

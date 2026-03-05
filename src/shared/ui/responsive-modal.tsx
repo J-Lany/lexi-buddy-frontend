@@ -66,7 +66,7 @@ export function ResponsiveModal({
         <div className="bg-background/95 backdrop-blur sm:border-b sm:border-border/60">
           <div className="pt-[env(safe-area-inset-top)]" />
 
-          <div className="grid h-11 grid-cols-[1fr_auto_1fr] items-center px-4 sm:px-6">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center px-4 py-4 sm:px-6">
             {/* Left */}
             <div className="justify-self-start">
               <DialogClose
@@ -104,7 +104,6 @@ export function ResponsiveModal({
                   'hidden sm:inline-flex',
                   'size-9 items-center justify-center rounded-full',
                   'opacity-70 hover:opacity-100',
-                  'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
                 )}
               >
                 <XIcon className="size-5" />
@@ -120,9 +119,8 @@ export function ResponsiveModal({
         <div
           className={cn(
             'min-h-0 flex-1 overflow-y-auto overscroll-contain ui-scroll',
-            'px-4 py-4 sm:px-10 sm:py-8',
+            'px-4 sm:px-10',
             'sm:bg-(--surface)',
-            'pb-[calc(16px+env(safe-area-inset-bottom))] sm:pb-8',
           )}
         >
           {children}
@@ -133,7 +131,7 @@ export function ResponsiveModal({
           <div
             className={cn(
               'bg-background/90 backdrop-blur',
-              'px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))] sm:px-6 sm:py-4 sm:pb-4',
+              'px-4 py-3 pb-[calc(12px+env(safe-area-inset-bottom))] sm:px-6 sm:py-5 s',
               'max-sm:sticky max-sm:bottom-0',
             )}
           >

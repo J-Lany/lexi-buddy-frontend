@@ -44,7 +44,7 @@ export function StepAssignments({
   errorMessage,
 }: Props) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {errorMessage ? (
         <div className="ui-panel rounded-3xl px-4 py-3 text-sm text-destructive">
           {errorMessage}
@@ -62,7 +62,7 @@ export function StepAssignments({
         const primaryLabel = count > 0 ? 'Regenerate' : 'Generate';
 
         return (
-          <Panel key={type} className={cn('ui-radius-card', canShow && 'bg-info-soft')}>
+          <Panel key={type} className={cn('ui-radius-card', canShow && 'bg-info-soft!')}>
             <div className="px-4 py-4 flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <div className="ui-title">{ASSIGNMENT_TYPE_LABELS[type]}</div>

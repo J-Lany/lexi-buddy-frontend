@@ -14,7 +14,7 @@ export function Header() {
     <header className="h-full flex items-center justify-between ui-content-pad">
       <div className="flex items-center gap-3">
         <Image
-          src="/icon.png"
+          src="/icon.webp"
           alt="Lexi buddy"
           width={36}
           height={36}
