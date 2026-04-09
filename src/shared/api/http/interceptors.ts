@@ -4,6 +4,8 @@ import { HttpError } from '@/shared/api/errors/http-error';
 import { refreshAccessToken } from '@/shared/api/http/refresh';
 import type { ApiErrorResponse } from '@/shared/api/http/types';
 
+import { getRequestId } from './request-id';
+
 function toHttpError(error: AxiosError<ApiErrorResponse>): HttpError {
   const message = error.response?.data?.message ?? error.message ?? 'Something went wrong';
 
@@ -40,4 +42,18 @@ export function attachAuthRefreshInterceptor(apiInstance: AxiosInstance) {
       }
     },
   );
+}
+
+export function attachRequestIdInterceptor(apiInstance: AxiosInstance) {
+  apiInstance.interceptors.request.use((config) => {
+    config.headers = config.headers ?? {};
+
+    const has = 'X-Request-Id' in config.headers || 'x-request-id' in config.headers;
+
+    if (!has) {
+      (config.headers as Record<string, string>)['X-Request-Id'] = getRequestId();
+    }
+
+    return config;
+  });
 }
