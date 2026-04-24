@@ -254,6 +254,7 @@ export function CreateLessonModal() {
         </Button>
       }
       maxWidthClassName="sm:max-w-[640px]"
+      className="sm:h-[90dvh]"
       title={STEP_TITLES[step]}
       right={`${step} / 4`}
       footer={footer}

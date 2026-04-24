@@ -7,6 +7,8 @@ import { Level } from '@/shared/domain/common';
 export type StudentAssigneeOption = {
   id: number;
   username: string;
+  name: string | null;
+  avatarUrl: string | null;
   level: Level | null;
 };
 
@@ -23,12 +25,13 @@ type Options = {
 export function useAssigneesOptionsQuery(options?: Options) {
   const studentsQuery = useMyStudentsQuery({ enabled: options?.enabled });
   const groupsQuery = useMyGroupsQuery({ enabled: options?.enabled });
-
   const students = useMemo<StudentAssigneeOption[]>(
     () =>
       (studentsQuery.data ?? []).map((s) => ({
         id: s.id,
         username: s.username,
+        name: s.name,
+        avatarUrl: s.avatarUrl,
         level: s.level,
       })),
     [studentsQuery.data],

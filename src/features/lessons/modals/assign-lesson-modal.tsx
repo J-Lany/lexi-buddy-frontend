@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 
 import { useAssignLessonMutation } from '@/entities/lessons/model/mutation/assign-lesson';
 import { useAssigneesOptionsQuery } from '@/entities/lessons/model/query/assignees-options';
-import { StudentsGroupsSelector } from '@/features/lessons/ui/students-groups-selector';
+import { StudentsGroupsSelector } from '@/features/lessons/ui/students-groups-selector/students-groups-selector';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -63,10 +63,34 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
       }
       title="Assign lesson"
       open={open}
+      maxWidthClassName="sm:max-w-[640px]"
+      className="sm:h-[90dvh] sm:w-[640px]"
       onOpenChange={(v) => {
         setOpen(v);
         if (!v) reset();
       }}
+      footer={
+        <div className="flex gap-3.5">
+          <Button
+            variant="outline"
+            type="button"
+            className="flex-1 min-w-0"
+            onClick={() => setOpen(false)}
+            disabled={isPending}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            type="button"
+            className="flex-1 min-w-0"
+            onClick={handleAssign}
+            disabled={disabled || isLoading || isError}
+          >
+            {isPending ? 'Assigning...' : 'Assign'}
+          </Button>
+        </div>
+      }
     >
       <div className="space-y-4">
         {isLoading && (
@@ -94,21 +118,6 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
             excludeGroupIds={groupsIdsInLesson}
           />
         )}
-
-        <div className="flex justify-end gap-2 pt-2">
-          <Button
-            variant="outline"
-            type="button"
-            onClick={() => setOpen(false)}
-            disabled={isPending}
-          >
-            Cancel
-          </Button>
-
-          <Button type="button" onClick={handleAssign} disabled={disabled || isLoading || isError}>
-            {isPending ? 'Assigning...' : 'Assign'}
-          </Button>
-        </div>
       </div>
     </ResponsiveModal>
   );

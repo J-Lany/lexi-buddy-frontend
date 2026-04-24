@@ -39,6 +39,7 @@ export function StepLessonMeta({ draft, onChange }: Props) {
 
       <Textarea
         name="topic"
+        minRows={5}
         placeholder="Lesson topic"
         value={draft.topic}
         onChange={(e) => onChange({ topic: e.target.value })}

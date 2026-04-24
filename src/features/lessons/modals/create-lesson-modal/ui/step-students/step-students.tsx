@@ -5,7 +5,7 @@ import type {
   CreateLessonDraft,
   DraftPatch,
 } from '@/features/lessons/modals/create-lesson-modal/model/types';
-import { StudentsGroupsSelector } from '@/features/lessons/ui/students-groups-selector';
+import { StudentsGroupsSelector } from '@/features/lessons/ui/students-groups-selector/students-groups-selector';
 import { Skeleton } from '@/shared/ui/skeleton';
 
 type Props = {
