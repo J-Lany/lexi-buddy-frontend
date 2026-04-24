@@ -1,5 +1,7 @@
 'use client';
 
+import { Trash2 } from 'lucide-react';
+
 import { AssignmentPreviewDto } from '@/entities/lessons/api/create-assignments-preview';
 import type { CreateLessonDraft } from '@/features/lessons/modals/create-lesson-modal/model/types';
 import { AssignmentCard } from '@/features/lessons/modals/create-lesson-modal/ui/step-assignments/ui/assignment-card';
@@ -24,6 +26,7 @@ type Props = {
 
   errorMessage: string | null;
 
+  onDeleteAction: (type: AssignmentType) => void;
   onToggleExpandedAction: (type: AssignmentType) => void;
   onGenerateAction: (type: AssignmentType) => void;
   onAssignmentChangeAction: (
@@ -40,6 +43,7 @@ export function StepAssignments({
   isAnyLoading,
   onToggleExpandedAction,
   onGenerateAction,
+  onDeleteAction,
   onAssignmentChangeAction,
   errorMessage,
 }: Props) {
@@ -82,6 +86,20 @@ export function StepAssignments({
                 >
                   {isLoading ? 'Generating…' : primaryLabel}
                 </Button>
+
+                {count > 0 ? (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => onDeleteAction(type)}
+                    disabled={isAnyLoading}
+                    className="h-9 w-9 rounded-full p-0 text-muted-foreground hover:text-destructive"
+                    aria-label={`Delete ${ASSIGNMENT_TYPE_LABELS[type]} assignments`}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                ) : null}
 
                 <Button
                   type="button"
