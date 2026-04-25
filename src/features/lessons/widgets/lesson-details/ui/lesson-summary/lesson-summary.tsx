@@ -1,32 +1,44 @@
 'use client';
 
+import { ReactNode } from 'react';
+
 import { LessonDashboardDto } from '@/entities/lessons/api/get-lesson-dashboard';
 import { AGE_GROUP_LABELS } from '@/shared/catalogs/age';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 import { Dot } from '@/shared/ui/dot';
 import { MetaPair } from '@/shared/ui/meta-pair';
 
-export function LessonSummary({ lesson }: { lesson: LessonDashboardDto }) {
+type LessonSummaryProps = {
+  lesson: LessonDashboardDto;
+  actionSlot?: ReactNode;
+};
+
+export function LessonSummary({ lesson, actionSlot }: LessonSummaryProps) {
   const vocabCount = lesson.vocab.length;
   const assignmentsCount = lesson.assignments.length;
   const groupsCount = lesson.groups?.length ?? 0;
   const studentsCount = lesson.students?.length ?? 0;
 
   return (
-    <Card className="ui-card-static ui-radius-card">
+    <Card className="ui-card-static ui-radius-card group">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between gap-4">
-          <CardTitle className="truncate text-xl sm:text-2xl tracking-tight">
+          <CardTitle className="min-w-0 truncate text-xl sm:text-2xl tracking-tight">
             {lesson.title}
           </CardTitle>
 
-          <div className="flex flex-wrap items-center justify-end gap-2">
-            {lesson.level ? <span className="ui-pill">{lesson.level}</span> : null}
-            {lesson.ageCategory ? (
-              <span className="ui-pill">
-                {AGE_GROUP_LABELS[lesson.ageCategory] ?? lesson.ageCategory}
-              </span>
-            ) : null}
+          <div className="flex shrink-0 items-start gap-3">
+            <div className="flex flex-wrap items-center justify-end gap-2">
+              {lesson.level ? <span className="ui-pill">{lesson.level}</span> : null}
+
+              {lesson.ageCategory ? (
+                <span className="ui-pill">
+                  {AGE_GROUP_LABELS[lesson.ageCategory] ?? lesson.ageCategory}
+                </span>
+              ) : null}
+            </div>
+
+            {actionSlot ? <div className="shrink-0">{actionSlot}</div> : null}
           </div>
         </div>
 
