@@ -148,6 +148,18 @@ export function CreateLessonModal() {
     });
   };
 
+  const handleDeleteAssignments = (assignmentType: AssignmentType) => {
+    dispatch({
+      type: 'CLEAR_ASSIGNMENTS',
+      payload: { typeKey: assignmentType },
+    });
+
+    setExpandedTypes((prev) => ({
+      ...prev,
+      [assignmentType]: false,
+    }));
+  };
+
   const toggleExpanded = (type: AssignmentType) => {
     setExpandedTypes((prev) => ({ ...prev, [type]: !prev[type] }));
   };
@@ -242,6 +254,7 @@ export function CreateLessonModal() {
         </Button>
       }
       maxWidthClassName="sm:max-w-[640px]"
+      className="sm:h-[90dvh]"
       title={STEP_TITLES[step]}
       right={`${step} / 4`}
       footer={footer}
@@ -259,6 +272,7 @@ export function CreateLessonModal() {
           isAnyLoading={loadingType !== null}
           onToggleExpandedAction={toggleExpanded}
           onGenerateAction={handleGenerateAssignments}
+          onDeleteAction={handleDeleteAssignments}
           onAssignmentChangeAction={handleAssignmentChange}
           errorMessage={
             isGenError && genError

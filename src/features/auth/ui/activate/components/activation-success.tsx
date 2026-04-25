@@ -14,7 +14,7 @@ export const ActivationSuccess = ({ onClick }: Props) => (
     subtitle="You can sign in now."
   >
     <div className="pt-2">
-      <Button onClick={onClick} className="w-full h-11 rounded-2xl text-[15px] font-semibold">
+      <Button onClick={onClick} className="w-full h-11 text-[15px] font-semibold">
         Sign in
       </Button>
     </div>

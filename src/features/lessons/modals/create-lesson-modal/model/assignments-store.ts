@@ -5,6 +5,7 @@ export type AssignmentState = Partial<Record<AssignmentType, AssignmentPreviewDt
 
 export type AssignmentAction =
   | { type: 'SET_ASSIGNMENTS'; payload: { typeKey: AssignmentType; data: AssignmentPreviewDto[] } }
+  | { type: 'CLEAR_ASSIGNMENTS'; payload: { typeKey: AssignmentType } }
   | { type: 'RESET_ASSIGNMENTS' };
 
 export const assignmentReducer = (
@@ -17,6 +18,13 @@ export const assignmentReducer = (
         ...state,
         [action.payload.typeKey]: action.payload.data,
       };
+
+    case 'CLEAR_ASSIGNMENTS': {
+      const next = { ...state };
+      delete next[action.payload.typeKey];
+      return next;
+    }
+
     case 'RESET_ASSIGNMENTS':
       return {};
     default:

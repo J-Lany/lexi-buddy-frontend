@@ -38,12 +38,12 @@ function SelectTrigger({
           'border border-border/60',
           'text-[15px] md:text-[14px]',
           'outline-none transition-[border-color,box-shadow,background-color] duration-150',
-          'focus-visible:border-[var(--focus-border)] focus-visible:shadow-[var(--focus-halo)]',
+          'focus-visible:border-(--focus-border) focus-visible:shadow-(--focus-halo)',
           'disabled:pointer-events-none disabled:opacity-50',
-          'data-[placeholder]:text-muted-foreground',
-          '[&_[data-slot=select-value]]:flex-1',
-          '[&_[data-slot=select-value]]:text-left',
-          '[&_[data-slot=select-value]]:min-w-0',
+          'data-placeholder:text-muted-foreground',
+          '**:data-[slot=select-value]:flex-1',
+          '**:data-[slot=select-value]:text-left',
+          '**:data-[slot=select-value]:min-w-0',
         ].join(' '),
         className,
       )}
@@ -74,8 +74,8 @@ function SelectContent({
         className={cn(
           [
             // width = trigger width (Apple-like)
-            'w-[var(--radix-select-trigger-width)]',
-            'min-w-[var(--radix-select-trigger-width)]',
+            'w-(--radix-select-trigger-width)',
+            'min-w-(--radix-select-trigger-width)',
 
             // surface
             'bg-background text-foreground',
@@ -134,7 +134,7 @@ function SelectItem({
           'outline-none',
 
           // hover/focus
-          'data-[highlighted]:bg-muted/40',
+          'data-highlighted:bg-muted/40',
 
           // selected
           'data-[state=checked]:font-medium',

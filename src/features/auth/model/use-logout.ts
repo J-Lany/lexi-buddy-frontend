@@ -12,5 +12,9 @@ export function useLogoutMutation() {
       void queryClient.removeQueries();
       window.location.href = routes.login;
     },
+    onError: () => {
+      void queryClient.removeQueries();
+      window.location.href = routes.login;
+    },
   });
 }

@@ -1,3 +1,5 @@
-export default function ProfilePage() {
-  return <h1>QA Page</h1>;
+import { QaPageWidget } from '@/features/qa';
+
+export default function QaPage() {
+  return <QaPageWidget />;
 }

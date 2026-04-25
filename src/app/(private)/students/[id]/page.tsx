@@ -5,8 +5,9 @@ import { getStudentDashboard } from '@/entities/students/api/get-student-dashboa
 import StudentDetailsWidget from '@/features/students/widgets/student-details/student-details-widget';
 import { studentsKeys } from '@/shared/query';
 
-export default async function StudentPage({ params }: { params: { id: string } }) {
-  const studentId = Number(params.id);
+export default async function StudentPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const studentId = Number(id);
 
   const qc = new QueryClient();
   await qc.prefetchQuery({

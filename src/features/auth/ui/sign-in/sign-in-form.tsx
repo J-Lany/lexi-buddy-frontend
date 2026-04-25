@@ -55,7 +55,6 @@ export default function SignInForm() {
               inputMode="email"
               autoComplete="email"
               placeholder="name@example.com"
-              className="h-11 rounded-2xl"
             />
             {errors.email && (
               <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>
@@ -66,12 +65,7 @@ export default function SignInForm() {
             <FieldLabel className="text-[13px] font-medium text-muted-foreground">
               Password
             </FieldLabel>
-            <Input
-              {...register('password')}
-              type="password"
-              autoComplete="current-password"
-              className="h-11 rounded-2xl"
-            />
+            <Input {...register('password')} type="password" autoComplete="current-password" />
             {errors.password ? (
               <p className="mt-1 text-sm text-destructive">{errors.password.message}</p>
             ) : (
@@ -85,7 +79,7 @@ export default function SignInForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="h-11 w-full rounded-2xl text-[15px] font-semibold"
+          className="h-11 w-full text-[15px] font-semibold"
         >
           {isPending ? 'Signing in…' : 'Continue'}
         </Button>

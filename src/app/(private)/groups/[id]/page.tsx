@@ -4,8 +4,9 @@ import { getGroupDashboard } from '@/entities/groups/api/get-group-dashboard';
 import GroupDetailsWidget from '@/features/groups/widgets/group-details/group-details-widget';
 import { groupsKeys } from '@/shared/query';
 
-export default async function GroupPage({ params }: { params: { id: string } }) {
-  const groupId = Number(params.id);
+export default async function GroupPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const groupId = Number(id);
 
   const queryClient = new QueryClient();
 

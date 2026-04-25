@@ -1,14 +1,20 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import React from 'react';
+import { toast } from 'sonner';
 
 import { StudentDashboardDto } from '@/entities/students/api/get-student-dashboard';
+import { useRemoveStudentRelationshipMutation } from '@/entities/students/model/mutation/remove-student-relationship';
 import { useUpdateStudentProfileMutation } from '@/entities/students/model/mutation/update-student-profile';
 import { formatDate, formatName } from '@/features/students/lib/helpers';
+import { RemoveStudentRelationshipConfirm } from '@/features/students/modals/remove-student-relationship-confirm';
 import { EditStudentNameModal } from '@/features/students/widgets/student-details/ui/student-profile-summary/modals/edit-student-name-modal';
 import { AgeGroup, Level } from '@/shared/domain/common';
 import { useMediaQuery } from '@/shared/hooks/use-media-query';
 import { cn } from '@/shared/lib/cn';
+import { getErrorMessage } from '@/shared/lib/get-error-message';
+import { routes } from '@/shared/router/routes';
 import { Card, CardContent } from '@/shared/ui/card';
 
 import { AboutSection } from './sections/about-section';
@@ -29,6 +35,9 @@ export default function StudentProfileSummary({
 }) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const [isEditNameOpen, setIsEditNameOpen] = React.useState(false);
+
+  const removeRelationshipMutation = useRemoveStudentRelationshipMutation();
+  const router = useRouter();
 
   const title = formatName(student);
   const updateMutation = useUpdateStudentProfileMutation();
@@ -77,6 +86,29 @@ export default function StudentProfileSummary({
     });
   };
 
+  const handleRemoveStudent = async () => {
+    try {
+      const result = await removeRelationshipMutation.mutateAsync({
+        studentId: student.id,
+      });
+
+      toast.success('Student removed', {
+        description:
+          result.revokedAssignments > 0
+            ? `Revoked ${result.revokedAssignments} active assignments.`
+            : 'You no longer teach this student.',
+      });
+
+      router.push(routes.students);
+    } catch (error) {
+      toast.error('Failed to remove student', {
+        description: getErrorMessage(error),
+      });
+
+      throw error;
+    }
+  };
+
   return (
     <Card className={cn('ui-card-static ui-radius-card gap-0')}>
       <HeaderSection
@@ -113,6 +145,13 @@ export default function StudentProfileSummary({
           </div>
 
           <GroupsSection groups={groups} />
+          <div className="mt-6 flex justify-end border-t border-border/60 pt-4">
+            <RemoveStudentRelationshipConfirm
+              studentName={title}
+              pending={removeRelationshipMutation.isPending}
+              onConfirm={handleRemoveStudent}
+            />
+          </div>
         </div>
       </CardContent>
       <EditStudentNameModal

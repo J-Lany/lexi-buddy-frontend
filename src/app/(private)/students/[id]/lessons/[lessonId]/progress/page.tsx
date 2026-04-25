@@ -5,9 +5,14 @@ import { getStudentLessonProgress } from '@/entities/students/api/get-student-le
 import StudentLessonProgressWidget from '@/features/students/widgets/student-lesson-progress/student-lesson-progress-widget';
 import { studentsKeys } from '@/shared/query';
 
-export default async function Page({ params }: { params: { id: string; lessonId: string } }) {
-  const studentId = Number(params.id);
-  const lessonId = Number(params.lessonId);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string; lessonId: string }>;
+}) {
+  const { id, lessonId: lessonIdParam } = await params;
+  const studentId = Number(id);
+  const lessonId = Number(lessonIdParam);
 
   const queryClient = new QueryClient();
 

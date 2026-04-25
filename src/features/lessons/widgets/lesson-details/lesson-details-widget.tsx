@@ -1,6 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useLessonDashboardQuery } from '@/entities/lessons/model/query/get-lesson-dashboard';
+import { DeleteLessonButton } from '@/features/lessons/widgets/lesson-details/ui/delete-lesson-button';
 import { LessonAssignees } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignees/lesson-assignees';
 import { LessonAssignments } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignments/lesson-assignments';
 import { LessonSummary } from '@/features/lessons/widgets/lesson-details/ui/lesson-summary/lesson-summary';
@@ -16,6 +19,7 @@ type Props = {
 
 export function LessonDetailsWidget({ lessonId }: Props) {
   const { data, isLoading, isError } = useLessonDashboardQuery(lessonId);
+  const router = useRouter();
 
   if (isLoading) {
     return <DetailsLayoutSkeleton />;
@@ -39,7 +43,12 @@ export function LessonDetailsWidget({ lessonId }: Props) {
         <NavBack href={routes.lessons} label="Lessons" />
       </div>
 
-      <LessonSummary lesson={data} />
+      <LessonSummary
+        lesson={data}
+        actionSlot={
+          <DeleteLessonButton lessonId={data.id} onDeleted={() => router.push(routes.lessons)} />
+        }
+      />
       <LessonAssignees lesson={data} />
       <LessonVocab vocab={data.vocab} />
       <LessonAssignments assignments={data.assignments} />

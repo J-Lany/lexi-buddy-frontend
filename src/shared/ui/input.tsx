@@ -20,7 +20,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
           // motion
           'transition-[border-color,box-shadow,background-color] duration-150',
           // focus (Apple halo)
-          'outline-none focus-visible:border-[var(--focus-border)] focus-visible:shadow-[var(--focus-halo)]',
+          'outline-none focus-visible:border-(--focus-border) focus-visible:shadow-(--focus-halo)',
           // disabled
           'disabled:pointer-events-none disabled:opacity-50',
           // invalid

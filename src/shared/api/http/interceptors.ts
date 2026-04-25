@@ -3,6 +3,7 @@ import type { AxiosError, AxiosInstance } from 'axios';
 import { HttpError } from '@/shared/api/errors/http-error';
 import { refreshAccessToken } from '@/shared/api/http/refresh';
 import type { ApiErrorResponse } from '@/shared/api/http/types';
+import { routes } from '@/shared/router/routes';
 
 import { getRequestId } from './request-id';
 
@@ -38,6 +39,7 @@ export function attachAuthRefreshInterceptor(apiInstance: AxiosInstance) {
         await refreshAccessToken();
         return apiInstance.request(originalConfig);
       } catch {
+        window.location.href = routes.login;
         return Promise.reject(toHttpError(error));
       }
     },
