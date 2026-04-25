@@ -2,6 +2,8 @@
 
 import './qa-page.css';
 
+import { HelpCircle } from 'lucide-react';
+
 import { useQaState } from '../../model/use-qa-state';
 
 export function QaPageWidget() {
@@ -21,7 +23,9 @@ export function QaPageWidget() {
     <main className="qa-page">
       <div className="qa-page-header">
         <div className="qa-page-title-row">
-          <div className="qa-page-logo">💬</div>
+          <div className="h-11 w-11 shrink-0">
+            <HelpCircle className="h-11 w-11 text-primary" aria-hidden />
+          </div>
 
           <div>
             <div className="qa-page-eyebrow">Lexi Buddy</div>

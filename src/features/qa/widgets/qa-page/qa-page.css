@@ -12,7 +12,7 @@
 }
 
 .qa-page-header {
-    max-width: 720px;
+    max-width: 900px;
 }
 
 .qa-page-title-row {
@@ -23,24 +23,9 @@
     margin-bottom: 8px;
 }
 
-.qa-page-logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-
-    background: linear-gradient(135deg, #4eb8c8, #2a9db0);
-
-    font-size: 22px;
-
-    box-shadow: 0 4px 12px rgba(78, 184, 200, 0.35);
-}
 
 .qa-page-eyebrow {
-    color: #4eb8c8;
+    color: var(--primary);
 
     font-size: 11px;
     font-weight: 700;
@@ -51,24 +36,29 @@
 .qa-page-title {
     margin: 0;
 
-    color: #1a3a3f;
+    color: var(--foreground);
 
-    font-family: var(--font-dm-serif-display), 'DM Serif Display', serif;
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+@media (min-width: 640px) {
+    .qa-page-title {
+        font-size: 26px;
+    }
 }
 
 .qa-page-subtitle {
-    margin: 0 0 0 58px;
+    margin: 0 0 0 55px;
 
-    color: #5a9aa3;
+    color: var(--muted-foreground);
 
     font-size: 14px;
 }
 
 .qa-page-content {
-    max-width: 720px;
+    max-width: 900px;
 }
 
 .qa-card {
