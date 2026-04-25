@@ -1,24 +1,46 @@
 import './globals.css';
 
 import type { Metadata, Viewport } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { DM_Sans, DM_Serif_Display, Plus_Jakarta_Sans, Space_Mono } from 'next/font/google';
+import React from 'react';
 
 import { ReactQueryProvider } from '@/shared/providers/react-query-provider';
 import { Toaster } from '@/shared/ui/sonner';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: '--font-plus-jakarta-sans',
   subsets: ['latin'],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const spaceMono = Space_Mono({
+  variable: '--font-space-mono',
   subsets: ['latin'],
+  weight: ['400', '700'],
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const dmSerifDisplay = DM_Serif_Display({
+  variable: '--font-dm-serif-display',
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: 'Lexi buddy',
-  description: 'English platform',
+  title: 'Lexi Buddy',
+  description: 'AI-powered lesson builder for English teachers',
+  icons: {
+    icon: '/icon.webp',
+    shortcut: '/icon.webp',
+    apple: '/icon.webp',
+  },
 };
 
 export const viewport: Viewport = {
@@ -34,8 +56,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`
+        ${plusJakartaSans.variable}
+        ${spaceMono.variable}
+        ${dmSans.variable}
+        ${dmSerifDisplay.variable}
+      `}
+    >
+      <body className="font-sans">
         <ReactQueryProvider>
           <Toaster />
           {children}

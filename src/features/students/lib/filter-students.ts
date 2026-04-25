@@ -9,6 +9,6 @@ export function filterStudentsByQuery(students: StudentDto[], query: string): St
     const groups = s.groups.map((group) => group.name).join(' ');
     const haystack = `${s.name} ${s.username} ${s.level} ${groups}`.toLowerCase();
 
-    return haystack.includes(haystack);
+    return haystack.includes(q);
   });
 }

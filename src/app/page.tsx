@@ -1,7 +1,5 @@
-import { redirect } from 'next/navigation';
+import { LandingPageWidget } from '@/features/landing';
 
-import { routes } from '@/shared/router/routes';
-
-export default function Home() {
-  return redirect(routes.login);
+export default function HomePage() {
+  return <LandingPageWidget />;
 }
