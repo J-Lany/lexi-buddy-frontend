@@ -5,8 +5,9 @@ import { getLessonDashboard } from '@/entities/lessons/api/get-lesson-dashboard'
 import { LessonDetailsWidget } from '@/features/lessons/widgets/lesson-details/lesson-details-widget';
 import { lessonsKeys } from '@/shared/query';
 
-export default async function LessonPage({ params }: { params: { id: string } }) {
-  const lessonId = Number(params.id);
+export default async function LessonPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const lessonId = Number(id);
 
   const queryClient = new QueryClient();
 
