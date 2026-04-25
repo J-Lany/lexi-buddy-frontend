@@ -52,12 +52,7 @@ export default function SignUpForm() {
         <div className="flex flex-col gap-4">
           <Field>
             <FieldLabel className="text-[13px] font-medium text-muted-foreground">Email</FieldLabel>
-            <Input
-              {...register('email')}
-              placeholder="m@example.com"
-              autoComplete="email"
-              className="h-11 rounded-2xl"
-            />
+            <Input {...register('email')} placeholder="m@example.com" autoComplete="email" />
             {errors.email && (
               <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
             )}
@@ -67,12 +62,7 @@ export default function SignUpForm() {
             <FieldLabel className="text-[13px] font-medium text-muted-foreground">
               Password
             </FieldLabel>
-            <Input
-              {...register('password')}
-              type="password"
-              autoComplete="new-password"
-              className="h-11 rounded-2xl"
-            />
+            <Input {...register('password')} type="password" autoComplete="new-password" />
             {errors.password ? (
               <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
             ) : (
@@ -86,12 +76,7 @@ export default function SignUpForm() {
             <FieldLabel className="text-[13px] font-medium text-muted-foreground">
               Confirm Password
             </FieldLabel>
-            <Input
-              {...register('confirmPassword')}
-              type="password"
-              autoComplete="new-password"
-              className="h-11 rounded-2xl"
-            />
+            <Input {...register('confirmPassword')} type="password" autoComplete="new-password" />
             {errors.confirmPassword && (
               <p className="text-sm text-destructive mt-1">{errors.confirmPassword.message}</p>
             )}
@@ -101,7 +86,7 @@ export default function SignUpForm() {
         <Button
           type="submit"
           disabled={isPending}
-          className="h-11 w-full rounded-2xl text-[15px] font-semibold"
+          className="h-11 w-full text-[15px] font-semibold"
         >
           {isPending ? 'Creating…' : 'Create Account'}
         </Button>

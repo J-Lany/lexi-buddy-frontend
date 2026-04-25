@@ -80,7 +80,7 @@ export function DeleteLessonModal({
               size="lg"
               onClick={() => void handleDelete(DeleteLessonScope.ME)}
               disabled={deleteLessonMutation.isPending}
-              className="h-12 rounded-2xl text-[15px] font-semibold active:scale-[0.98]"
+              className="h-12 text-[15px] font-semibold active:scale-[0.98]"
             >
               {isDeletingForMe ? <Loader2 className="size-4 animate-spin" /> : null}
               Delete for me
@@ -92,7 +92,7 @@ export function DeleteLessonModal({
               size="lg"
               onClick={() => void handleDelete(DeleteLessonScope.ALL)}
               disabled={deleteLessonMutation.isPending}
-              className="h-12 rounded-2xl text-[15px] font-semibold active:scale-[0.98]"
+              className="h-12 text-[15px] font-semibold active:scale-[0.98]"
             >
               {isDeletingForAll ? <Loader2 className="size-4 animate-spin" /> : null}
               Delete for everyone
@@ -104,7 +104,7 @@ export function DeleteLessonModal({
               size="lg"
               onClick={() => onOpenChange(false)}
               disabled={deleteLessonMutation.isPending}
-              className="h-11 rounded-2xl text-[15px] font-medium text-muted-foreground hover:text-foreground active:scale-[0.98]"
+              className="h-11 text-[15px] font-medium text-muted-foreground hover:text-foreground active:scale-[0.98]"
             >
               Cancel
             </Button>

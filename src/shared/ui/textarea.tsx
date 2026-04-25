@@ -15,7 +15,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaAutosizeProps>(
           'border border-border/60',
           'placeholder:text-muted-foreground',
           'outline-none transition-[border-color,box-shadow,background-color] duration-150',
-          'focus-visible:border-[var(--focus-border)] focus-visible:shadow-[var(--focus-halo)]',
+          'focus-visible:border-(--focus-border) focus-visible:shadow-(--focus-halo)',
           'disabled:pointer-events-none disabled:opacity-50',
           'aria-invalid:border-destructive aria-invalid:shadow-[0_0_0_4px_color-mix(in_oklch,var(--destructive)_22%,white_78%)]',
           'resize-none',

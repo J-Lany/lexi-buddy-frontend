@@ -14,7 +14,7 @@ export const ActivationError = ({ onClick }: Props) => (
     subtitle="This link is invalid or expired. You can create {'a\u00A0new'} account to continue."
   >
     <div className="pt-2">
-      <Button onClick={onClick} className="w-full h-11 rounded-2xl text-[15px] font-semibold">
+      <Button onClick={onClick} className="w-full h-11 text-[15px] font-semibold">
         Create account
       </Button>
     </div>

@@ -119,7 +119,7 @@ export function ResponsiveModal({
         <div
           className={cn(
             'min-h-0 flex-1 overflow-y-auto overscroll-contain ui-scroll',
-            'px-4 sm:px-10',
+            'px-4 py-3 sm:px-10 sm:py-3',
             'sm:bg-(--surface)',
           )}
         >

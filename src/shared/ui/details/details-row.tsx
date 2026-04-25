@@ -30,7 +30,7 @@ export function DetailsRow({
         interactive && 'ui-focus',
       )}
     >
-      <div className="ui-meta">{label}</div>
+      <div className="text-[13px] text-muted-foreground">{label}</div>
 
       <div className="flex items-center gap-2 min-w-0">
         <div className={cn(valueClass, 'min-w-0')}>
