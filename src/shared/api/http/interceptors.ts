@@ -29,6 +29,10 @@ export function attachAuthRefreshInterceptor(apiInstance: AxiosInstance) {
         return Promise.reject(toHttpError(error));
       }
 
+      if (typeof window === 'undefined') {
+        return Promise.reject(toHttpError(error));
+      }
+
       if (retriedConfigs.has(originalConfig)) {
         return Promise.reject(toHttpError(error));
       }
