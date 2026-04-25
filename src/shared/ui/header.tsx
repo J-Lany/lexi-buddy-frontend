@@ -22,7 +22,7 @@ export function Header() {
           unoptimized
           className="w-8 h-8 sm:w-9 sm:h-9 rounded-full"
         />
-        <Link href={routes.students} className="ui-brand">
+        <Link href={routes.main} className="ui-brand">
           Lexi buddy
         </Link>
       </div>
