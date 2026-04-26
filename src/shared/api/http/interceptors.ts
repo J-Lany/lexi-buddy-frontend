@@ -43,7 +43,7 @@ export function attachAuthRefreshInterceptor(apiInstance: AxiosInstance) {
         await refreshAccessToken();
         return apiInstance.request(originalConfig);
       } catch {
-        window.location.href = routes.login;
+        window.location.href = routes.main;
         return Promise.reject(toHttpError(error));
       }
     },
