@@ -1,5 +1,3 @@
-// src/features/students/widgets/student-details/ui/student-profile-summary/modals/remove-student-relationship-confirm.tsx
-
 'use client';
 
 import * as React from 'react';
@@ -13,47 +11,36 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/shared/ui/alert-dialog';
-import { Button } from '@/shared/ui/button';
 
 type Props = {
   studentName: string;
   pending?: boolean;
   onConfirm: () => Promise<void>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
 export function RemoveStudentRelationshipConfirm({
   studentName,
   pending = false,
   onConfirm,
+  open,
+  onOpenChange,
 }: Props) {
-  const [open, setOpen] = React.useState(false);
-
   const handleConfirm = async () => {
     await onConfirm();
-    setOpen(false);
+    onOpenChange(false);
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          disabled={pending}
-          className="rounded-full border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
-        >
-          Remove student
-        </Button>
-      </AlertDialogTrigger>
-
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Remove student?</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to remove {studentName}? You’ll stop teaching this student.
-            They’ll be removed from your groups and active assignments will be revoked. Past
+            Are you sure you want to remove {studentName}? You&apos;ll stop teaching this student.
+            They&apos;ll be removed from your groups and active assignments will be revoked. Past
             progress will be kept.
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -65,7 +52,6 @@ export function RemoveStudentRelationshipConfirm({
             disabled={pending}
             onClick={(event) => {
               event.preventDefault();
-
               void handleConfirm().catch(() => {});
             }}
             className="bg-destructive text-white hover:bg-destructive/90"

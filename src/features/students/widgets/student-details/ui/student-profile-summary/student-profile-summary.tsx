@@ -35,6 +35,7 @@ export default function StudentProfileSummary({
 }) {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const [isEditNameOpen, setIsEditNameOpen] = React.useState(false);
+  const [isRemoveOpen, setIsRemoveOpen] = React.useState(false);
 
   const removeRelationshipMutation = useRemoveStudentRelationshipMutation();
   const router = useRouter();
@@ -116,9 +117,10 @@ export default function StudentProfileSummary({
         avatar={{
           username: student.username ?? null,
           avatarUrl: student.avatarUrl ?? null,
-          size: isDesktop ? 44 : 32,
+          size: isDesktop ? 64 : 52,
         }}
         onEditName={() => setIsEditNameOpen(true)}
+        onRemove={() => setIsRemoveOpen(true)}
       />
 
       <CardContent className="!p-0">
@@ -145,15 +147,16 @@ export default function StudentProfileSummary({
           </div>
 
           <GroupsSection groups={groups} />
-          <div className="mt-6 flex justify-end border-t border-border/60 pt-4">
-            <RemoveStudentRelationshipConfirm
-              studentName={title}
-              pending={removeRelationshipMutation.isPending}
-              onConfirm={handleRemoveStudent}
-            />
-          </div>
         </div>
       </CardContent>
+      <RemoveStudentRelationshipConfirm
+        studentName={title}
+        pending={removeRelationshipMutation.isPending}
+        onConfirm={handleRemoveStudent}
+        open={isRemoveOpen}
+        onOpenChange={setIsRemoveOpen}
+      />
+
       <EditStudentNameModal
         open={isEditNameOpen}
         onOpenChange={setIsEditNameOpen}
