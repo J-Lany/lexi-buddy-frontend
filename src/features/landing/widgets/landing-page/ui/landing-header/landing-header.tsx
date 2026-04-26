@@ -9,9 +9,7 @@ export function LandingHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
       <Link href={routes.main} className="nav-logo">
         <Image src="/icon.webp" alt="Lexi Buddy" width={38} height={38} priority unoptimized />
 
-        <span className="nav-logo-wordmark">
-          Lexi <b>Buddy</b>
-        </span>
+        <span className="ui-brand">Lexi buddy</span>
       </Link>
 
       <div className="nav-center">
