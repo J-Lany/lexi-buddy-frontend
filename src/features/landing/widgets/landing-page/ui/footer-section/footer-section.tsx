@@ -42,6 +42,11 @@ export function FooterSection() {
             @lexi_buddy_bot
           </a>
         </div>
+
+        <div className="footer-col">
+          <h4>Support</h4>
+          <Link href={routes.help}>Help &amp; Q&amp;A</Link>
+        </div>
       </div>
 
       <div className="footer-bottom">

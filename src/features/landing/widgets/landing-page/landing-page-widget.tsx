@@ -14,12 +14,12 @@ import { TasksSection } from './ui/tasks-section/tasks-section';
 import { TelegramComboSection } from './ui/telegram-combo-section/telegram-combo-section';
 import { TestimonialsSection } from './ui/testimonials-section/testimonials-section';
 
-export function LandingPageWidget() {
+export function LandingPageWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
   useLandingEffects();
 
   return (
     <main className="landing-page">
-      <LandingHeader />
+      <LandingHeader isLoggedIn={isLoggedIn} />
       <HeroSection />
       <TelegramComboSection />
       <HowItWorksSection />
