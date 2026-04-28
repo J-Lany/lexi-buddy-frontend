@@ -2,9 +2,14 @@
 
 import * as React from 'react';
 
-import { QA_DATA } from '../data/qa-data';
+import { useI18n } from '@/shared/i18n';
+
+import { getQaData } from '../data/qa-data';
 
 export function useQaState() {
+  const { locale } = useI18n();
+  const data = React.useMemo(() => getQaData(locale), [locale]);
+
   const [openCategory, setOpenCategory] = React.useState<string | null>(null);
   const [openItem, setOpenItem] = React.useState<string | null>(null);
   const [search, setSearch] = React.useState('');
@@ -12,20 +17,22 @@ export function useQaState() {
   const filtered = React.useMemo(() => {
     const normalizedSearch = search.toLowerCase();
 
-    return QA_DATA.map((cat) => ({
-      ...cat,
-      items: cat.items.filter((item) => {
-        return (
-          item.q.toLowerCase().includes(normalizedSearch) ||
-          item.a.toLowerCase().includes(normalizedSearch)
-        );
-      }),
-    })).filter((cat) => cat.items.length > 0);
-  }, [search]);
+    return data
+      .map((cat) => ({
+        ...cat,
+        items: cat.items.filter(
+          (item) =>
+            item.q.toLowerCase().includes(normalizedSearch) ||
+            item.a.toLowerCase().includes(normalizedSearch),
+        ),
+      }))
+      .filter((cat) => cat.items.length > 0);
+  }, [search, data]);
 
-  const totalQuestions = React.useMemo(() => {
-    return QA_DATA.reduce((sum, category) => sum + category.items.length, 0);
-  }, []);
+  const totalQuestions = React.useMemo(
+    () => data.reduce((sum, category) => sum + category.items.length, 0),
+    [data],
+  );
 
   const handleSearchChange = (nextSearch: string) => {
     setSearch(nextSearch);
@@ -48,7 +55,7 @@ export function useQaState() {
     openCategory,
     openItem,
     totalQuestions,
-    totalCategories: QA_DATA.length,
+    totalCategories: data.length,
     handleSearchChange,
     toggleCategory,
     toggleItem,

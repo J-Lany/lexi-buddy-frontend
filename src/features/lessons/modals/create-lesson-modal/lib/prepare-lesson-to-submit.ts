@@ -32,6 +32,9 @@ export function prepareLessonToSubmit(
     ageCategory: draft.ageCategory,
     topic: draft.topic || undefined,
     description: draft.description || undefined,
+    targetLanguage: draft.targetLanguage,
+    nativeLanguage: draft.nativeLanguage,
+    instructionLanguage: draft.instructionLanguage,
     vocabItems: draft.vocabItems,
     assignments: assignments.length > 0 ? assignments : undefined,
   };

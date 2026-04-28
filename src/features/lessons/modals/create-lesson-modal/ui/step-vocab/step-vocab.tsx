@@ -50,10 +50,13 @@ export function StepVocab({ draft, onChange }: Props) {
 
     mutate(
       {
-        level: draft.level,
-        topic: draft.topic,
-        ageGroup: draft.ageCategory,
         terms,
+        topic: draft.topic,
+        targetLanguage: draft.targetLanguage,
+        nativeLanguage: draft.nativeLanguage,
+        instructionLanguage: draft.instructionLanguage,
+        level: draft.level,
+        ageGroup: draft.ageCategory,
       },
       {
         onSuccess: (items) => {

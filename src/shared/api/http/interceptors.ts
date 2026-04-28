@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosInstance } from 'axios';
 
 import { HttpError } from '@/shared/api/errors/http-error';
+import { authApi } from '@/shared/api/http/auth-api';
 import { refreshAccessToken } from '@/shared/api/http/refresh';
 import type { ApiErrorResponse } from '@/shared/api/http/types';
 import { routes } from '@/shared/router/routes';
@@ -17,6 +18,7 @@ function toHttpError(error: AxiosError<ApiErrorResponse>): HttpError {
 }
 
 const retriedConfigs = new WeakSet<object>();
+let isRedirectingToLogin = false;
 
 export function attachAuthRefreshInterceptor(apiInstance: AxiosInstance) {
   apiInstance.interceptors.response.use(
@@ -41,11 +43,19 @@ export function attachAuthRefreshInterceptor(apiInstance: AxiosInstance) {
 
       try {
         await refreshAccessToken();
-        return apiInstance.request(originalConfig);
       } catch {
-        window.location.href = routes.main;
+        // Only one concurrent 401 handler should trigger logout + redirect.
+        if (!isRedirectingToLogin) {
+          isRedirectingToLogin = true;
+          await authApi.post('/auth/logout').catch(() => {});
+          window.location.replace(routes.login);
+        }
         return Promise.reject(toHttpError(error));
       }
+
+      // Retry is intentionally outside the try block: if the retry itself
+      // fails, it should propagate as a regular error — not trigger logout.
+      return apiInstance.request(originalConfig);
     },
   );
 }

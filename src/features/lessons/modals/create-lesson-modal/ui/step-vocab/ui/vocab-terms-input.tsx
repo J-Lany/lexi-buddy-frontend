@@ -2,6 +2,7 @@
 
 import { Loader } from 'lucide-react';
 
+import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import { Textarea } from '@/shared/ui/textarea';
 
@@ -28,20 +29,22 @@ export function VocabTermsInput({
   isPending,
   errorMessage,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="grid gap-5">
       <Textarea
         name="vocab"
         className="rounded-3xl"
         minRows={5}
-        placeholder={`Enter up to ${maxTerms} words separated by dots.`}
+        placeholder={t('lessons.vocab.inputHint').replace('{max}', String(maxTerms))}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlurNormalize}
       />
 
       <Button type="button" onClick={onTranslate} disabled={translateDisabled}>
-        {isPending ? 'Translating...' : 'Provide translations and definitions'}
+        {isPending ? t('lessons.vocab.translating') : t('lessons.vocab.translateBtn')}
       </Button>
 
       {errorMessage ? <div className="text-red-500 mt-1">{errorMessage}</div> : null}

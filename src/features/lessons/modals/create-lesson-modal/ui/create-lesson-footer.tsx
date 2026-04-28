@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 
 type Props = {
@@ -38,6 +39,8 @@ export function CreateLessonFooter({
   onFinishAssign,
   onSkipFinish,
 }: Props) {
+  const { t } = useI18n();
+
   if (step === 1) {
     return (
       <Button
@@ -46,7 +49,7 @@ export function CreateLessonFooter({
         disabled={!canNextMeta}
         className="w-full h-11 font-semibold"
       >
-        Next
+        {t('lessons.footer.next')}
       </Button>
     );
   }
@@ -55,7 +58,7 @@ export function CreateLessonFooter({
     return (
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1 h-11">
-          Back
+          {t('lessons.footer.back')}
         </Button>
 
         <Button
@@ -64,7 +67,7 @@ export function CreateLessonFooter({
           disabled={!canNextVocab}
           className="flex-1 h-11 font-semibold"
         >
-          Next
+          {t('lessons.footer.next')}
         </Button>
       </div>
     );
@@ -74,7 +77,7 @@ export function CreateLessonFooter({
     return (
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1 h-11">
-          Back
+          {t('lessons.footer.back')}
         </Button>
 
         <Button
@@ -83,7 +86,7 @@ export function CreateLessonFooter({
           disabled={!canSaveAssignments || isCreatingLesson}
           className="flex-1 h-11 font-semibold"
         >
-          {isCreatingLesson ? 'Saving…' : 'Save & continue'}
+          {isCreatingLesson ? t('lessons.footer.saving') : t('lessons.footer.saveAndContinue')}
         </Button>
       </div>
     );
@@ -98,7 +101,7 @@ export function CreateLessonFooter({
         disabled={isAssigning}
         className="flex-1 h-11"
       >
-        Back
+        {t('lessons.footer.back')}
       </Button>
 
       {nothingSelected ? (
@@ -108,7 +111,7 @@ export function CreateLessonFooter({
           disabled={isAssigning}
           className="flex-1 h-11 font-semibold"
         >
-          Skip & finish
+          {t('lessons.footer.skipAndFinish')}
         </Button>
       ) : (
         <Button
@@ -117,7 +120,7 @@ export function CreateLessonFooter({
           disabled={isAssigning}
           className="flex-1 h-11 font-semibold"
         >
-          {isAssigning ? 'Assigning…' : 'Assign & finish'}
+          {isAssigning ? t('lessons.footer.assigning') : t('lessons.footer.assignAndFinish')}
         </Button>
       )}
     </div>

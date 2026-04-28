@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useI18n } from '@/shared/i18n';
 import { routes } from '@/shared/router/routes';
 
 export function LandingHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const { t } = useI18n();
+
   return (
     <nav id="nav">
       <Link href={routes.main} className="nav-logo">
@@ -14,33 +19,33 @@ export function LandingHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
 
       <div className="nav-center">
         <Link href="#telegram">Telegram</Link>
-        <Link href="#how">How it works</Link>
-        <Link href="#features">Features</Link>
-        <Link href="#tasks">Exercise types</Link>
-        <Link href="#testimonials">Reviews</Link>
+        <Link href="#how">{t('landing.nav.how')}</Link>
+        <Link href="#features">{t('landing.nav.features')}</Link>
+        <Link href="#tasks">{t('landing.nav.tasks')}</Link>
+        <Link href="#testimonials">{t('landing.nav.testimonials')}</Link>
         <span className="nav-sep" aria-hidden />
         <Link href={routes.help} className="nav-help">
-          Help &amp; Q&amp;A
+          {t('landing.nav.help')}
         </Link>
       </div>
 
       <div className="nav-right">
         <Link href={routes.help} className="nav-help-mobile">
-          Help
+          {t('landing.nav.helpMobile')}
         </Link>
 
         {isLoggedIn ? (
           <Link href={routes.students} className="nav-cta">
-            Open app
+            {t('landing.nav.openApp')}
           </Link>
         ) : (
           <>
             <Link href={routes.login} className="nav-login">
-              Log in
+              {t('landing.nav.login')}
             </Link>
 
             <Link href={routes.register} className="nav-cta">
-              Get started
+              {t('landing.nav.getStarted')}
             </Link>
           </>
         )}

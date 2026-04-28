@@ -9,7 +9,7 @@ import { routes } from '@/shared/router/routes';
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
-  const isLoggedIn = cookieStore.has('refresh_token');
+  const isLoggedIn = cookieStore.has('access_token');
 
   return (
     <div className="min-h-dvh flex flex-col" style={{ background: '#f4fcfd' }}>

@@ -2,13 +2,7 @@
 
 import { useEffect } from 'react';
 
-const TYPING_PHRASES = [
-  'Hi! How can I help you today?',
-  'Let me build your next lesson ✨',
-  'Vocabulary → drills in 2 minutes!',
-] as const;
-
-export function useLandingEffects() {
+export function useLandingEffects(phrases: readonly string[]) {
   useEffect(() => {
     const nav = document.getElementById('nav');
 
@@ -30,7 +24,7 @@ export function useLandingEffects() {
     const type = () => {
       if (!typedEl || cancelled) return;
 
-      const phrase = TYPING_PHRASES[phraseIndex];
+      const phrase = phrases[phraseIndex];
 
       if (!deleting) {
         charIndex += 1;
@@ -51,7 +45,7 @@ export function useLandingEffects() {
 
       if (charIndex === 0) {
         deleting = false;
-        phraseIndex = (phraseIndex + 1) % TYPING_PHRASES.length;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
         typingTimer = setTimeout(type, 380);
         return;
       }
@@ -104,5 +98,5 @@ export function useLandingEffects() {
 
       observer.disconnect();
     };
-  }, []);
+  }, [phrases]);
 }

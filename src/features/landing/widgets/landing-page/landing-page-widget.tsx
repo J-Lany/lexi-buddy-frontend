@@ -2,6 +2,8 @@
 
 import './landing-page.css';
 
+import { useI18n } from '@/shared/i18n';
+
 import { useLandingEffects } from './model/use-landing-effects';
 import { CtaSection } from './ui/cta-section/cta-section';
 import { FeaturesSection } from './ui/features-section/features-section';
@@ -15,7 +17,11 @@ import { TelegramComboSection } from './ui/telegram-combo-section/telegram-combo
 import { TestimonialsSection } from './ui/testimonials-section/testimonials-section';
 
 export function LandingPageWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
-  useLandingEffects();
+  const { t } = useI18n();
+
+  const typingPhrases = [t('landing.typing.p1'), t('landing.typing.p2'), t('landing.typing.p3')];
+
+  useLandingEffects(typingPhrases);
 
   return (
     <main className="landing-page">

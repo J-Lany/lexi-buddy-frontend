@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useI18n } from '@/shared/i18n';
 import { routes } from '@/shared/router/routes';
 
 export function FooterSection() {
+  const { t } = useI18n();
+
   return (
     <footer>
       <div className="footer-top">
@@ -16,42 +21,39 @@ export function FooterSection() {
             </span>
           </Link>
 
-          <p className="footer-tagline">
-            AI-powered lesson builder for English teachers and Telegram-native practice for
-            students.
-          </p>
+          <p className="footer-tagline">{t('landing.footer.tagline')}</p>
         </div>
 
         <div className="footer-col">
-          <h4>Product</h4>
-          <Link href="#telegram">Telegram bot</Link>
-          <Link href="#how">How it works</Link>
-          <Link href="#features">Features</Link>
-          <Link href="#tasks">Exercise types</Link>
+          <h4>{t('landing.footer.product')}</h4>
+          <Link href="#telegram">{t('landing.footer.telegramBot')}</Link>
+          <Link href="#how">{t('landing.footer.howItWorks')}</Link>
+          <Link href="#features">{t('landing.footer.features')}</Link>
+          <Link href="#tasks">{t('landing.footer.exerciseTypes')}</Link>
         </div>
 
         <div className="footer-col">
-          <h4>Account</h4>
-          <Link href={routes.login}>Log in</Link>
-          <Link href={routes.register}>Get started</Link>
+          <h4>{t('landing.footer.account')}</h4>
+          <Link href={routes.login}>{t('landing.footer.login')}</Link>
+          <Link href={routes.register}>{t('landing.footer.getStarted')}</Link>
         </div>
 
         <div className="footer-col">
-          <h4>Students</h4>
+          <h4>{t('landing.footer.students')}</h4>
           <a href="https://t.me/lexi_buddy_bot" target="_blank">
             @lexi_buddy_bot
           </a>
         </div>
 
         <div className="footer-col">
-          <h4>Support</h4>
-          <Link href={routes.help}>Help &amp; Q&amp;A</Link>
+          <h4>{t('landing.footer.support')}</h4>
+          <Link href={routes.help}>{t('landing.footer.helpQa')}</Link>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <span>© 2026 Lexi Buddy</span>
-        <span>Built for English teachers</span>
+        <span>{t('landing.footer.copyright')}</span>
+        <span>{t('landing.footer.builtFor')}</span>
       </div>
     </footer>
   );

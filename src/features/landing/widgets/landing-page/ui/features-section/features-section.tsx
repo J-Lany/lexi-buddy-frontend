@@ -1,76 +1,61 @@
+'use client';
+
+import { useI18n } from '@/shared/i18n';
+
 export function FeaturesSection() {
+  const { t } = useI18n();
+
   return (
     <section className="section features-section" id="features">
       <div className="reveal">
-        <span className="eyebrow">Platform features</span>
+        <span className="eyebrow">{t('landing.features.eyebrow')}</span>
 
         <h2 className="section-h">
-          Everything a language teacher
+          {t('landing.features.h2a')}
           <br />
-          actually needs
+          {t('landing.features.h2b')}
         </h2>
 
-        <p className="section-sub">
-          Built around your real workflow — not a generic one-size-fits-all tool.
-        </p>
+        <p className="section-sub">{t('landing.features.sub')}</p>
       </div>
 
       <div className="features-grid">
         <div className="feat wide reveal">
           <div className="feat-ico">🤖</div>
           <div className="feat-body">
-            <h3>AI lesson builder</h3>
-            <p>
-              Paste a word list, pick your settings — and watch Lexi generate a complete,
-              contextually appropriate lesson in seconds. Every translation, synonym, and exercise
-              is tailored to your level and age group. Edit anything with a click.
-            </p>
+            <h3>{t('landing.features.aiBuilder')}</h3>
+            <p>{t('landing.features.aiBuilderDesc')}</p>
           </div>
         </div>
 
         <div className="feat reveal">
           <div className="feat-ico">📱</div>
-          <h3>Telegram-native learning</h3>
-          <p>
-            Students do all their exercises inside Telegram — no new app, no login. They get
-            notified when a new lesson is ready and start immediately.
-          </p>
+          <h3>{t('landing.features.telegram')}</h3>
+          <p>{t('landing.features.telegramDesc')}</p>
         </div>
 
         <div className="feat reveal">
           <div className="feat-ico">👥</div>
-          <h3>Student &amp; group management</h3>
-          <p>
-            Invite students by Telegram username. Create groups for your classes. Assign the same
-            lesson to everyone in one click.
-          </p>
+          <h3>{t('landing.features.students')}</h3>
+          <p>{t('landing.features.studentsDesc')}</p>
         </div>
 
         <div className="feat reveal">
           <div className="feat-ico">📊</div>
-          <h3>Progress tracking</h3>
-          <p>
-            See each student&apos;s completion status, average score, and last activity at a glance.
-            Drill into per-task-type results when you need detail.
-          </p>
+          <h3>{t('landing.features.progress')}</h3>
+          <p>{t('landing.features.progressDesc')}</p>
         </div>
 
         <div className="feat reveal">
           <div className="feat-ico">🔁</div>
-          <h3>Reusable lesson library</h3>
-          <p>
-            Every lesson is saved permanently. Reassign it to new students or groups anytime —
-            perfect for teachers who run the same course repeatedly.
-          </p>
+          <h3>{t('landing.features.library')}</h3>
+          <p>{t('landing.features.libraryDesc')}</p>
         </div>
 
         <div className="feat reveal">
           <div className="feat-ico">🌍</div>
-          <h3>More languages coming soon</h3>
-          <p>
-            Currently for English teachers with Russian-speaking students. Expanding to many more
-            language pairs — stay tuned.
-          </p>
+          <h3>{t('landing.features.more')}</h3>
+          <p>{t('landing.features.moreDesc')}</p>
         </div>
       </div>
     </section>

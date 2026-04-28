@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { TeacherProfileInitializer } from '@/features/teacher/ui/teacher-profile-initializer';
 import { Header } from '@/shared/ui/header';
 import { MobileFooter } from '@/shared/ui/mobile-footer';
 import { Sidebar } from '@/shared/ui/sidebar';
@@ -7,6 +8,7 @@ import { Sidebar } from '@/shared/ui/sidebar';
 export default function PrivateLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-dvh flex-col">
+      <TeacherProfileInitializer />
       <div className="sticky top-0 z-50 ui-topbar ui-topbar-surface max-sm:backdrop-blur-xl max-sm:bg-background/80">
         <Header />
       </div>

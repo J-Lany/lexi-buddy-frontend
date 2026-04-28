@@ -1,14 +1,19 @@
 import { api } from '@/shared/api';
 import type { AssignmentType, QuestionType } from '@/shared/domain/assignment';
 import type { AgeGroup, Level } from '@/shared/domain/common';
+import type { InstructionLanguage } from '@/shared/domain/instruction-language';
+import type { Language } from '@/shared/domain/language';
 
 export type CreateAssignmentsPayload = {
-  level: Level;
-  topic: string;
-  ageGroup: AgeGroup;
-  terms: string[];
-  questionsCount: number;
   type: AssignmentType;
+  questionsCount: number;
+  terms: string[];
+  topic: string;
+  targetLanguage: Language;
+  nativeLanguage: Language;
+  instructionLanguage: InstructionLanguage;
+  level: Level;
+  ageGroup: AgeGroup;
 };
 
 export type AnswerDto = {

@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { mainNav } from '@/shared/catalogs/navigation/main-nav';
+import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { routes } from '@/shared/router/routes';
 
 export function MobileFooter() {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   return (
     <footer
@@ -32,7 +34,7 @@ export function MobileFooter() {
             <Link
               key={item.href}
               href={item.href}
-              aria-label={item.label}
+              aria-label={t(item.labelKey) || item.label}
               aria-current={isActive ? 'page' : undefined}
               className={cn(
                 'group relative flex h-11 w-16 items-center justify-center rounded-2xl',

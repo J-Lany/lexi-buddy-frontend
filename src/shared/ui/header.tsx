@@ -5,10 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useLogoutMutation } from '@/features/auth/model/use-logout';
+import { useI18n } from '@/shared/i18n';
 import { routes } from '@/shared/router/routes';
 
 export function Header() {
   const { mutate: logout } = useLogoutMutation();
+  const { t } = useI18n();
 
   return (
     <header className="h-full flex items-center justify-between ui-content-pad">
@@ -19,7 +21,7 @@ export function Header() {
       </Link>
 
       <button onClick={() => logout()} className="ui-topbar-action group">
-        <span className="hidden sm:block text-sm font-medium">Log out</span>
+        <span className="hidden sm:block text-sm font-medium">{t('nav.logout')}</span>
         <LogOut className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
       </button>
     </header>
