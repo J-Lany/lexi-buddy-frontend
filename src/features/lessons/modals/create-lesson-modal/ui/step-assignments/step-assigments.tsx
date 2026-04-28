@@ -11,6 +11,7 @@ import {
 } from '@/features/lessons/modals/create-lesson-modal/ui/step-assignments/ui/panels';
 import { ASSIGNMENT_TYPE_LABELS } from '@/shared/catalogs/assignment';
 import { ALL_ASSIGNMENT_TYPES, AssignmentType } from '@/shared/domain/assignment';
+import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { Button } from '@/shared/ui/button';
 import { Divider } from '@/shared/ui/divider';
@@ -47,6 +48,8 @@ export function StepAssignments({
   onAssignmentChangeAction,
   errorMessage,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="space-y-5">
       {errorMessage ? (
@@ -63,14 +66,19 @@ export function StepAssignments({
         const isLoading = loadingType === type;
 
         const canShow = count > 0;
-        const primaryLabel = count > 0 ? 'Regenerate' : 'Generate';
+        const primaryLabel =
+          count > 0 ? t('lessons.assignments.regenerate') : t('lessons.assignments.generate');
 
         return (
           <Panel key={type} className={cn('ui-radius-card', canShow && 'bg-info-soft!')}>
             <div className="px-4 py-4 flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <div className="ui-title">{ASSIGNMENT_TYPE_LABELS[type]}</div>
-                <div className="ui-meta">{count > 0 ? 'Ready to review' : 'Not generated'}</div>
+                <div className="ui-meta">
+                  {count > 0
+                    ? t('lessons.assignments.readyToReview')
+                    : t('lessons.assignments.notGenerated')}
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -84,7 +92,7 @@ export function StepAssignments({
                   disabled={isAnyLoading}
                   className="h-9 rounded-full px-4"
                 >
-                  {isLoading ? 'Generating…' : primaryLabel}
+                  {isLoading ? t('lessons.assignments.generating') : primaryLabel}
                 </Button>
 
                 {count > 0 ? (
@@ -112,7 +120,7 @@ export function StepAssignments({
                     canShow ? 'text-primary hover:text-foreground' : 'text-muted-foreground/50',
                   )}
                 >
-                  {isExpanded ? 'Hide' : 'Show'}
+                  {isExpanded ? t('lessons.assignments.hide') : t('lessons.assignments.show')}
                 </Button>
               </div>
             </div>
@@ -132,13 +140,15 @@ export function StepAssignments({
                       </div>
                     ))
                   ) : (
-                    <div className="ui-meta">Generate tasks first, then review them here.</div>
+                    <div className="ui-meta">{t('lessons.assignments.reviewHint')}</div>
                   )}
                 </div>
               ) : (
                 <div className="flex items-center justify-between">
                   <div className="ui-meta">
-                    {count > 0 ? 'Tap Show to edit tasks.' : 'Tap Generate to create tasks.'}
+                    {count > 0
+                      ? t('lessons.assignments.editHint')
+                      : t('lessons.assignments.generateHint')}
                   </div>
                   {count > 0 ? <div className="ui-stat">{count}</div> : null}
                 </div>

@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import type { StudentBySearchDto } from '@/entities/students/api/search-students';
 import { useInviteStudentMutation } from '@/entities/students/model/mutation/invite-student';
+import { useI18n } from '@/shared/i18n';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -24,6 +25,7 @@ const initialState: FormState = {
 };
 
 export function InviteStudentModal() {
+  const { t } = useI18n();
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState<FormState>(initialState);
 
@@ -47,13 +49,13 @@ export function InviteStudentModal() {
       { studentId, message },
       {
         onSuccess: () => {
-          toast.success('Request sent ✉️', {
-            description: 'The student will receive your invitation.',
+          toast.success(t('students.invite.successTitle'), {
+            description: t('students.invite.successDesc'),
           });
           setOpen(false);
         },
         onError: (e) => {
-          toast.error('Failed to send request', {
+          toast.error(t('students.invite.errorTitle'), {
             description: getErrorMessage(e),
           });
         },
@@ -69,16 +71,16 @@ export function InviteStudentModal() {
           variant="outline"
           className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
         >
-          + Add a student
+          {t('students.invite.triggerBtn')}
         </Button>
       }
-      title="Invite a student"
+      title={t('students.invite.title')}
       open={open}
       onOpenChange={setOpen}
       footer={
         <div className="flex justify-center">
           <Button type="button" className="w-full sm:w-52" onClick={handleSend} disabled={!canSend}>
-            {invite.isPending ? 'Sending…' : 'Send request'}
+            {invite.isPending ? t('students.invite.sending') : t('students.invite.send')}
           </Button>
         </div>
       }
@@ -90,7 +92,7 @@ export function InviteStudentModal() {
         />
 
         <Textarea
-          placeholder="Message (optional)"
+          placeholder={t('students.invite.messagePlaceholder')}
           minRows={5}
           value={state.message}
           onChange={(e) => setState((s) => ({ ...s, message: e.target.value }))}

@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { useAssignLessonMutation } from '@/entities/lessons/model/mutation/assign-lesson';
 import { useAssigneesOptionsQuery } from '@/entities/lessons/model/query/assignees-options';
 import { StudentsGroupsSelector } from '@/features/lessons/ui/students-groups-selector/students-groups-selector';
+import { useI18n } from '@/shared/i18n';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -19,6 +20,7 @@ type Props = {
 };
 
 export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLesson }: Props) {
+  const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const [studentIds, setStudentIds] = useState<number[]>([]);
   const [groupIds, setGroupIds] = useState<number[]>([]);
@@ -37,14 +39,14 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
       { lessonId, studentIds, groupIds },
       {
         onSuccess: () => {
-          toast.success('Lesson assigned 🎉', {
-            description: 'The lesson has been added to the selected students and groups.',
+          toast.success(t('lessons.assignModal.successTitle'), {
+            description: t('lessons.assignModal.successDesc'),
           });
           setOpen(false);
           reset();
         },
         onError: (e) => {
-          toast.error('Failed to assign lesson', { description: getErrorMessage(e) });
+          toast.error(t('lessons.assignModal.errorTitle'), { description: getErrorMessage(e) });
         },
       },
     );
@@ -58,10 +60,10 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
       trigger={
         <Button variant="outline" size="sm">
           <SlidersHorizontal className="h-4 w-4" />
-          Assign
+          {t('lessons.assignModal.trigger')}
         </Button>
       }
-      title="Assign lesson"
+      title={t('lessons.assignModal.title')}
       open={open}
       maxWidthClassName="sm:max-w-[640px]"
       className="sm:h-[90dvh] sm:w-[640px]"
@@ -78,7 +80,7 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
             onClick={() => setOpen(false)}
             disabled={isPending}
           >
-            Cancel
+            {t('lessons.assignModal.cancel')}
           </Button>
 
           <Button
@@ -87,7 +89,7 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
             onClick={handleAssign}
             disabled={disabled || isLoading || isError}
           >
-            {isPending ? 'Assigning...' : 'Assign'}
+            {isPending ? t('lessons.assignModal.assigning') : t('lessons.assignModal.assign')}
           </Button>
         </div>
       }
@@ -101,9 +103,7 @@ export function AssignLessonModal({ lessonId, groupsIdsInLesson, studentIdsInLes
         )}
 
         {isError && !isLoading && (
-          <div className="text-sm text-destructive">
-            Failed to load students/groups. Please try again.
-          </div>
+          <div className="text-sm text-destructive">{t('lessons.assignModal.errorLoad')}</div>
         )}
 
         {!isLoading && !isError && (

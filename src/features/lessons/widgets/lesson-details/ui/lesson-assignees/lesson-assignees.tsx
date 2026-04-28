@@ -15,6 +15,7 @@ import {
   AssigneesStudentsToolbar,
   STUDENT_FILTERS,
 } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignees/ui/students-toolbar';
+import { useI18n } from '@/shared/i18n';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 
 type Props = {
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export function LessonAssignees({ lesson }: Props) {
+  const { t } = useI18n();
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<AssigneesFilterKey>('ALL');
 
@@ -41,7 +43,9 @@ export function LessonAssignees({ lesson }: Props) {
     <Card className="ui-panel ui-radius-card">
       <CardHeader className="space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <CardTitle className="text-base sm:text-lg">Assigned</CardTitle>
+          <CardTitle className="text-base sm:text-lg">
+            {t('lessons.details.assignedTitle')}
+          </CardTitle>
           <div className="shrink-0">
             <AssignLessonModal
               lessonId={lesson.id}
@@ -52,7 +56,8 @@ export function LessonAssignees({ lesson }: Props) {
         </div>
 
         <div className="ui-meta">
-          {studentsCount} students · {groupsCount} groups
+          {studentsCount} {t('lessons.details.studentsLabel')} · {groupsCount}{' '}
+          {t('lessons.details.groupsLabel')}
         </div>
       </CardHeader>
 
@@ -62,7 +67,7 @@ export function LessonAssignees({ lesson }: Props) {
         <CardContent>
           <div className="w-full max-w-4xl space-y-6">
             <div className="space-y-3">
-              <div className="ui-meta uppercase tracking-wide">Students</div>
+              <div className="ui-meta uppercase tracking-wide">{t('lessons.details.students')}</div>
 
               <AssigneesStudentsToolbar
                 query={query}
@@ -78,7 +83,7 @@ export function LessonAssignees({ lesson }: Props) {
             <div className="border-t" style={{ borderColor: 'var(--border-soft)' }} />
 
             <div className="space-y-3">
-              <div className="ui-meta uppercase tracking-wide">Groups</div>
+              <div className="ui-meta uppercase tracking-wide">{t('lessons.details.groups')}</div>
               <GroupsSection groups={lesson.groups ?? []} />
             </div>
           </div>

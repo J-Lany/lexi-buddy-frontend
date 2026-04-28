@@ -1,63 +1,54 @@
+'use client';
+
+import { useI18n } from '@/shared/i18n';
+
 export function TasksSection() {
+  const { t } = useI18n();
+
   return (
     <section className="section tasks-section" id="tasks">
       <div className="reveal">
-        <span className="eyebrow">Exercise types</span>
+        <span className="eyebrow">{t('landing.tasks.eyebrow')}</span>
 
         <h2 className="section-h">
-          4 proven formats,
+          {t('landing.tasks.h2a')}
           <br />
-          all AI-generated
+          {t('landing.tasks.h2b')}
         </h2>
 
-        <p className="section-sub">
-          Each task type targets a different aspect of vocabulary acquisition — from recall to
-          real-world usage.
-        </p>
+        <p className="section-sub">{t('landing.tasks.sub')}</p>
       </div>
 
       <div className="tasks-grid">
         <div className="task reveal">
           <div className="task-n">01</div>
           <div>
-            <h3>Definition quiz</h3>
-            <p>
-              Students choose the correct meaning from 3 options. Tests recognition and
-              comprehension. Each question includes an explanation.
-            </p>
+            <h3>{t('landing.tasks.quiz')}</h3>
+            <p>{t('landing.tasks.quizDesc')}</p>
           </div>
         </div>
 
         <div className="task reveal">
           <div className="task-n">02</div>
           <div>
-            <h3>Gap filling</h3>
-            <p>
-              Students complete a sentence by filling in the missing word. Tests active recall and
-              contextual understanding.
-            </p>
+            <h3>{t('landing.tasks.gap')}</h3>
+            <p>{t('landing.tasks.gapDesc')}</p>
           </div>
         </div>
 
         <div className="task reveal">
           <div className="task-n">03</div>
           <div>
-            <h3>Phrase fail</h3>
-            <p>
-              Students identify which sentence uses a word incorrectly. Builds awareness of meaning
-              boundaries and common misuse patterns.
-            </p>
+            <h3>{t('landing.tasks.phrase')}</h3>
+            <p>{t('landing.tasks.phraseDesc')}</p>
           </div>
         </div>
 
         <div className="task reveal">
           <div className="task-n">04</div>
           <div>
-            <h3>Collocation check</h3>
-            <p>
-              Students pick the word that fits correctly across multiple sentences — the most
-              advanced format, training natural collocational fluency.
-            </p>
+            <h3>{t('landing.tasks.collocation')}</h3>
+            <p>{t('landing.tasks.collocationDesc')}</p>
           </div>
         </div>
       </div>

@@ -2,6 +2,8 @@
 
 import './landing-page.css';
 
+import { useI18n } from '@/shared/i18n';
+
 import { useLandingEffects } from './model/use-landing-effects';
 import { CtaSection } from './ui/cta-section/cta-section';
 import { FeaturesSection } from './ui/features-section/features-section';
@@ -14,12 +16,16 @@ import { TasksSection } from './ui/tasks-section/tasks-section';
 import { TelegramComboSection } from './ui/telegram-combo-section/telegram-combo-section';
 import { TestimonialsSection } from './ui/testimonials-section/testimonials-section';
 
-export function LandingPageWidget() {
-  useLandingEffects();
+export function LandingPageWidget({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const { t } = useI18n();
+
+  const typingPhrases = [t('landing.typing.p1'), t('landing.typing.p2'), t('landing.typing.p3')];
+
+  useLandingEffects(typingPhrases);
 
   return (
     <main className="landing-page">
-      <LandingHeader />
+      <LandingHeader isLoggedIn={isLoggedIn} />
       <HeroSection />
       <TelegramComboSection />
       <HowItWorksSection />

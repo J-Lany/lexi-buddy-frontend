@@ -10,11 +10,11 @@ export function useLogoutMutation() {
     mutationFn: logout,
     onSuccess: () => {
       void queryClient.removeQueries();
-      window.location.href = routes.login;
+      window.location.href = routes.main;
     },
     onError: () => {
       void queryClient.removeQueries();
-      window.location.href = routes.login;
+      window.location.href = routes.main;
     },
   });
 }

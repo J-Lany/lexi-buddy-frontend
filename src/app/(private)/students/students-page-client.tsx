@@ -10,6 +10,7 @@ import { CreateGroupModal } from '@/features/groups/modals/create-group/create-g
 import { GroupsListWidget } from '@/features/groups/widgets/groups-list/groups-list-widget';
 import { InviteStudentModal, StudentsListWidget } from '@/features/students';
 import { useMergedQuery } from '@/shared/hooks/use-merged-query';
+import { useI18n } from '@/shared/i18n';
 import { Input } from '@/shared/ui/input';
 import { SegmentedControl } from '@/shared/ui/segmented-control';
 
@@ -19,6 +20,7 @@ const queryKeys = {
 } as const;
 
 export default function StudentsPageClient() {
+  const { t } = useI18n();
   const { get, getOr, navigateWith } = useMergedQuery();
 
   const tab = normalizeStudentsTab(get(queryKeys.tab));
@@ -43,7 +45,11 @@ export default function StudentsPageClient() {
             <Input
               value={query}
               onChange={(e) => navigateWith({ [queryKeys.q]: e.target.value })}
-              placeholder={tab === studentsTabs.students ? 'Search students' : 'Search groups'}
+              placeholder={
+                tab === studentsTabs.students
+                  ? t('students.page.searchStudents')
+                  : t('students.page.searchGroups')
+              }
               className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto"
             />
 

@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from 'next';
 import { DM_Sans, DM_Serif_Display, Plus_Jakarta_Sans, Space_Mono } from 'next/font/google';
 import React from 'react';
 
+import { I18nProvider } from '@/shared/i18n';
 import { ReactQueryProvider } from '@/shared/providers/react-query-provider';
 import { Toaster } from '@/shared/ui/sonner';
 
@@ -67,8 +68,10 @@ export default function RootLayout({
     >
       <body className="font-sans">
         <ReactQueryProvider>
-          <Toaster />
-          {children}
+          <I18nProvider>
+            <Toaster />
+            {children}
+          </I18nProvider>
         </ReactQueryProvider>
       </body>
     </html>

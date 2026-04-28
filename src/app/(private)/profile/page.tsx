@@ -1,3 +1,5 @@
+import { SettingsPageWidget } from '@/features/settings/widgets/settings-page/settings-page-widget';
+
 export default function ProfilePage() {
-  return <h1>Profile Page</h1>;
+  return <SettingsPageWidget />;
 }

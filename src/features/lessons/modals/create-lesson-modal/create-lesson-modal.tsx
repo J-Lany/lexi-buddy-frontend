@@ -7,9 +7,9 @@ import { AssignmentPreviewDto } from '@/entities/lessons/api/create-assignments-
 import { useAssignLessonMutation } from '@/entities/lessons/model/mutation/assign-lesson';
 import { useCreateAssignmentsPreviewMutation } from '@/entities/lessons/model/mutation/create-assignments-preview';
 import { useCreateLessonMutation } from '@/entities/lessons/model/mutation/create-lesson';
+import { useTeacherProfileQuery } from '@/entities/teacher';
 import { initExpandedTypes } from '@/features/lessons/modals/create-lesson-modal/lib/init-expanded-types';
 import { prepareLessonToSubmit } from '@/features/lessons/modals/create-lesson-modal/lib/prepare-lesson-to-submit';
-import { STEP_TITLES } from '@/features/lessons/modals/create-lesson-modal/lib/step-titles';
 import {
   AssignmentAction,
   assignmentReducer,
@@ -25,6 +25,9 @@ import { StepStudents } from '@/features/lessons/modals/create-lesson-modal/ui/s
 import { StepVocab } from '@/features/lessons/modals/create-lesson-modal/ui/step-vocab/step-vocab';
 import { AssignmentType } from '@/shared/domain/assignment';
 import { ageGroup, level } from '@/shared/domain/common';
+import { instructionLanguage } from '@/shared/domain/instruction-language';
+import { language } from '@/shared/domain/language';
+import { useI18n } from '@/shared/i18n';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -35,6 +38,9 @@ const initialDraft: CreateLessonDraft = {
   topic: '',
   ageCategory: ageGroup.ADULT,
   description: '',
+  targetLanguage: language.english,
+  nativeLanguage: language.russian,
+  instructionLanguage: instructionLanguage.native,
   vocabItems: [],
   assignments: [],
   studentIds: [],
@@ -44,9 +50,17 @@ const initialDraft: CreateLessonDraft = {
 type Steps = 1 | 2 | 3 | 4;
 
 export function CreateLessonModal() {
+  const { t } = useI18n();
+  const { data: teacherProfile } = useTeacherProfileQuery();
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<Steps>(1);
   const [draft, setDraft] = React.useState(initialDraft);
+
+  React.useEffect(() => {
+    if (teacherProfile && !open) {
+      setDraft((d) => ({ ...d, targetLanguage: teacherProfile.defaultLanguage }));
+    }
+  }, [teacherProfile, open]);
 
   const patchDraft = React.useCallback((patch: DraftPatch) => {
     setDraft((d) => ({ ...d, ...patch }));
@@ -69,7 +83,10 @@ export function CreateLessonModal() {
 
   const reset = () => {
     setStep(1);
-    setDraft(initialDraft);
+    setDraft({
+      ...initialDraft,
+      targetLanguage: teacherProfile?.defaultLanguage ?? language.english,
+    });
     dispatch({ type: 'RESET_ASSIGNMENTS' });
     setLoadingType(null);
     setExpandedTypes(initExpandedTypes());
@@ -99,12 +116,15 @@ export function CreateLessonModal() {
 
     generateAssignments(
       {
-        level: draft.level,
-        topic: draft.topic,
-        ageGroup: draft.ageCategory,
-        terms: (draft.vocabItems ?? []).map((t) => t.term),
-        questionsCount: (draft.vocabItems ?? []).length,
         type: assignmentType,
+        questionsCount: (draft.vocabItems ?? []).length,
+        terms: (draft.vocabItems ?? []).map((term) => term.term),
+        topic: draft.topic,
+        targetLanguage: draft.targetLanguage,
+        nativeLanguage: draft.nativeLanguage,
+        instructionLanguage: draft.instructionLanguage,
+        level: draft.level,
+        ageGroup: draft.ageCategory,
       },
       {
         onSuccess: (data) => {
@@ -122,7 +142,7 @@ export function CreateLessonModal() {
           } as AssignmentAction);
         },
         onError: (e) => {
-          toast.error('Failed to generate assignments', {
+          toast.error(t('lessons.createToasts.generatedError'), {
             description: e instanceof Error ? e.message : 'An error occurred.',
           });
         },
@@ -169,14 +189,16 @@ export function CreateLessonModal() {
 
     createLesson(finalLesson, {
       onSuccess: (data) => {
-        toast.success('Lesson created 🎉', {
-          description: 'The lesson has been added to your list.',
+        toast.success(t('lessons.createToasts.created'), {
+          description: t('lessons.createToasts.createdDesc'),
         });
         patchDraft({ lessonId: data.lessonId });
         setStep(4);
       },
       onError: (error) => {
-        toast.error('Failed to create lesson', { description: getErrorMessage(error) });
+        toast.error(t('lessons.createToasts.createdError'), {
+          description: getErrorMessage(error),
+        });
       },
     });
   };
@@ -202,12 +224,14 @@ export function CreateLessonModal() {
       },
       {
         onSuccess: () => {
-          toast.success('Lesson assigned 🎉', {
-            description: 'The lesson has been added to students list.',
+          toast.success(t('lessons.createToasts.assigned'), {
+            description: t('lessons.createToasts.assignedDesc'),
           });
         },
         onError: (error) => {
-          toast.error('Failed to assign lesson', { description: getErrorMessage(error) });
+          toast.error(t('lessons.createToasts.assignedError'), {
+            description: getErrorMessage(error),
+          });
         },
         onSettled: () => {
           setOpen(false);
@@ -215,6 +239,13 @@ export function CreateLessonModal() {
         },
       },
     );
+  };
+
+  const stepTitles: Record<Steps, string> = {
+    1: t('lessons.steps.step1'),
+    2: t('lessons.steps.step2'),
+    3: t('lessons.steps.step3'),
+    4: t('lessons.steps.step4'),
   };
 
   const footer = (
@@ -250,12 +281,12 @@ export function CreateLessonModal() {
           variant="outline"
           className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
         >
-          + New lesson
+          {t('lessons.page.newLesson')}
         </Button>
       }
       maxWidthClassName="sm:max-w-[640px]"
       className="sm:h-[90dvh]"
-      title={STEP_TITLES[step]}
+      title={stepTitles[step]}
       right={`${step} / 4`}
       footer={footer}
     >

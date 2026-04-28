@@ -1,6 +1,8 @@
 import { api, GroupPreviewDto, IsoDateString, StudentIdentityDto } from '@/shared/api';
 import { AssignmentType } from '@/shared/domain/assignment';
 import type { AgeGroup, Level } from '@/shared/domain/common';
+import type { InstructionLanguage } from '@/shared/domain/instruction-language';
+import type { Language } from '@/shared/domain/language';
 
 export type LessonStudentStatus = 'NOT_STARTED' | 'PENDING' | 'COMPLETED';
 
@@ -50,6 +52,9 @@ export type LessonDashboardDto = {
   description: string | null;
   level: Level | null;
   ageCategory: AgeGroup | null;
+  targetLanguage: Language | null;
+  nativeLanguage: Language | null;
+  instructionLanguage: InstructionLanguage | null;
 
   vocab: LessonVocabDto[];
   assignments: LessonAssignmentDto[];

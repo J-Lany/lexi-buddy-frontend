@@ -6,6 +6,7 @@ import type { LessonDashboardDto } from '@/entities/lessons/api/get-lesson-dashb
 import { AssignmentBlock } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignments/ui/assignment-block';
 import type { AssignmentType } from '@/shared/domain/assignment/assignment-type';
 import { useActiveTab } from '@/shared/hooks/use-active-tab';
+import { useI18n } from '@/shared/i18n';
 import { groupBy } from '@/shared/lib/group-by';
 import { AssignmentTabs } from '@/shared/ui/assignment-tabs';
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export function LessonAssignments({ assignments }: Props) {
+  const { t } = useI18n();
   const grouped = useMemo(() => groupBy(assignments, (a) => a.type.name), [assignments]);
   const types = useMemo(() => Array.from(grouped.keys()), [grouped]);
 
@@ -25,12 +27,12 @@ export function LessonAssignments({ assignments }: Props) {
   return (
     <Card className="ui-panel ui-radius-card">
       <CardHeader>
-        <CardTitle>Assignments</CardTitle>
+        <CardTitle>{t('lessons.details.assignmentsTitle')}</CardTitle>
       </CardHeader>
 
       <CardContent className="text-sm">
         {assignments.length === 0 ? (
-          <div className="text-muted-foreground">No assignments</div>
+          <div className="text-muted-foreground">{t('lessons.details.noAssignments')}</div>
         ) : (
           <>
             {activeType ? (
@@ -38,7 +40,9 @@ export function LessonAssignments({ assignments }: Props) {
             ) : null}
 
             {activeAssignments.length === 0 ? (
-              <div className="mt-4 text-xs text-muted-foreground">No assignments of this type</div>
+              <div className="mt-4 text-xs text-muted-foreground">
+                {t('lessons.details.noAssignmentsOfType')}
+              </div>
             ) : (
               <div className="mt-4 space-y-3">
                 {activeAssignments.map((assignment) => (

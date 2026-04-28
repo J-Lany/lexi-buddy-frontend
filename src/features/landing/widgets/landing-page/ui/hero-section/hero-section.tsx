@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useI18n } from '@/shared/i18n';
 import { routes } from '@/shared/router/routes';
 
 export function HeroSection() {
+  const { t } = useI18n();
+
   return (
     <section className="hero" id="home">
       <div className="hero-bg-glow" />
@@ -12,7 +17,7 @@ export function HeroSection() {
       <div className="hero-left">
         <div className="hero-badge">
           <span className="badge-dot" />
-          AI-Powered · Built for English teachers
+          {t('landing.hero.badge')}
         </div>
 
         <div className="typing-wrap">
@@ -24,20 +29,19 @@ export function HeroSection() {
         </div>
 
         <h1>
-          Teach smarter.
+          {t('landing.hero.h1a')}
           <br />
-          Let <span className="accent">AI</span> handle
+          {t('landing.hero.h1b')} <span className="accent">{t('landing.hero.h1aiLabel')}</span>{' '}
+          {t('landing.hero.h1c')}
           <br />
-          the drills.
+          {t('landing.hero.h1d')}
         </h1>
 
-        <p className="hero-sub">
-          Lexi Buddy turns active vocabulary into super interactive drills in under 2&nbsp;minutes.
-        </p>
+        <p className="hero-sub">{t('landing.hero.sub')}</p>
 
         <div className="hero-ctas">
           <Link href={routes.register} className="btn-primary">
-            Get started FREE
+            {t('landing.hero.ctaPrimary')}
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden>
               <path
                 d="M3 8h10M9 4l4 4-4 4"
@@ -50,7 +54,7 @@ export function HeroSection() {
           </Link>
 
           <Link href="#telegram" className="btn-ghost">
-            See how it works
+            {t('landing.hero.ctaSecondary')}
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden>
               <path
                 d="M8 3v10M4 9l4 4 4-4"
@@ -71,11 +75,7 @@ export function HeroSection() {
             <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--teal-dark)' }}>+</span>
           </div>
 
-          <p className="trust-text">
-            Trusted by English teachers
-            <br />
-            worldwide
-          </p>
+          <p className="trust-text">{t('landing.hero.trust')}</p>
         </div>
       </div>
 

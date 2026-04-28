@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { useMyLessonsQuery } from '@/entities/lessons/model/query/get-my-lessons';
 import { filterLessonsByQuery } from '@/features/lessons/widgets/lessons-list/lib/filter-lessons';
 import { LessonList } from '@/features/lessons/widgets/lessons-list/ui/lesson-list';
+import { useI18n } from '@/shared/i18n';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
 import { Skeleton } from '@/shared/ui/skeleton';
 
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function LessonsListWidget({ query }: Props) {
+  const { t } = useI18n();
   const { data, isLoading, isError } = useMyLessonsQuery();
 
   const filtered = useMemo(() => {
@@ -44,25 +46,25 @@ export function LessonsListWidget({ query }: Props) {
         <EmptyStateCard
           surface="canvas"
           icon={<BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-destructive" aria-hidden />}
-          title="Couldn’t load lessons"
-          description="Please try again or check your connection."
+          title={t('lessons.list.error')}
+          description={t('lessons.list.errorDesc')}
         />
       )}
 
       {showEmpty && (
         <EmptyStateCard
           icon={<BookOpen className="h-5 w-5 sm:h-6 sm:w-6" aria-hidden />}
-          title="No lessons yet"
-          description="Create your first lesson to start teaching."
-          hint="Tap “Create lesson” above"
+          title={t('lessons.list.empty')}
+          description={t('lessons.list.emptyDesc')}
+          hint={t('lessons.list.emptyHint')}
         />
       )}
 
       {showNoResults && (
         <EmptyStateCard
           surface="canvas"
-          title="No results"
-          description="Check the spelling or try another keyword."
+          title={t('lessons.list.noResults')}
+          description={t('lessons.list.noResultsDesc')}
         />
       )}
     </section>

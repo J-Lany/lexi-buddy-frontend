@@ -4,9 +4,12 @@ import './qa-page.css';
 
 import { HelpCircle } from 'lucide-react';
 
+import { useI18n } from '@/shared/i18n';
+
 import { useQaState } from '../../model/use-qa-state';
 
 export function QaPageWidget() {
+  const { t } = useI18n();
   const {
     search,
     filtered,
@@ -28,13 +31,13 @@ export function QaPageWidget() {
           </div>
 
           <div>
-            <div className="qa-page-eyebrow">Lexi Buddy</div>
-            <h1 className="qa-page-title">Help &amp; Q&amp;A</h1>
+            <div className="qa-page-eyebrow">{t('qa.eyebrow')}</div>
+            <h1 className="qa-page-title">{t('qa.title')}</h1>
           </div>
         </div>
 
         <p className="qa-page-subtitle">
-          {totalQuestions} answers across {totalCategories} topics — for teachers
+          {totalQuestions} {t('qa.subtitleCount')} {totalCategories} {t('qa.subtitleTopics')}
         </p>
       </div>
 
@@ -45,7 +48,7 @@ export function QaPageWidget() {
           <input
             className="search-input"
             type="text"
-            placeholder="Search questions..."
+            placeholder={t('qa.searchPlaceholder')}
             value={search}
             onChange={(event) => handleSearchChange(event.target.value)}
           />
@@ -55,9 +58,9 @@ export function QaPageWidget() {
           <div className="no-results">
             <div className="no-results-icon">🔎</div>
             <div>
-              No results found for <strong>&quot;{search}&quot;</strong>
+              {t('qa.noResults')} <strong>&quot;{search}&quot;</strong>
             </div>
-            <div className="no-results-hint">Try different keywords</div>
+            <div className="no-results-hint">{t('qa.noResultsHint')}</div>
           </div>
         ) : (
           filtered.map((cat) => {
@@ -74,7 +77,10 @@ export function QaPageWidget() {
                   <span className="cat-title">
                     <span className="cat-icon">{cat.icon}</span>
                     {cat.category}
-                    <span className="cat-count">{cat.items.length}q</span>
+                    <span className="cat-count">
+                      {cat.items.length}
+                      {t('qa.countSuffix')}
+                    </span>
                   </span>
 
                   <span className={`cat-chevron ${isCatOpen ? 'open' : ''}`}>▾</span>

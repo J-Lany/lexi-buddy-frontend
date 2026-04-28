@@ -12,6 +12,7 @@ import { RemoveStudentRelationshipConfirm } from '@/features/students/modals/rem
 import { EditStudentNameModal } from '@/features/students/widgets/student-details/ui/student-profile-summary/modals/edit-student-name-modal';
 import { AgeGroup, Level } from '@/shared/domain/common';
 import { useMediaQuery } from '@/shared/hooks/use-media-query';
+import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { routes } from '@/shared/router/routes';
@@ -33,8 +34,10 @@ export default function StudentProfileSummary({
   stats: StudentDashboardDto['stats'];
   lessonsTotal: number;
 }) {
+  const { t } = useI18n();
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const [isEditNameOpen, setIsEditNameOpen] = React.useState(false);
+  const [isRemoveOpen, setIsRemoveOpen] = React.useState(false);
 
   const removeRelationshipMutation = useRemoveStudentRelationshipMutation();
   const router = useRouter();
@@ -92,16 +95,19 @@ export default function StudentProfileSummary({
         studentId: student.id,
       });
 
-      toast.success('Student removed', {
+      toast.success(t('students.toasts.removed'), {
         description:
           result.revokedAssignments > 0
-            ? `Revoked ${result.revokedAssignments} active assignments.`
-            : 'You no longer teach this student.',
+            ? t('students.toasts.revokedAssignments').replace(
+                '{count}',
+                String(result.revokedAssignments),
+              )
+            : t('students.toasts.noLongerTeaching'),
       });
 
       router.push(routes.students);
     } catch (error) {
-      toast.error('Failed to remove student', {
+      toast.error(t('students.toasts.failedRemove'), {
         description: getErrorMessage(error),
       });
 
@@ -116,9 +122,10 @@ export default function StudentProfileSummary({
         avatar={{
           username: student.username ?? null,
           avatarUrl: student.avatarUrl ?? null,
-          size: isDesktop ? 44 : 32,
+          size: isDesktop ? 64 : 52,
         }}
         onEditName={() => setIsEditNameOpen(true)}
+        onRemove={() => setIsRemoveOpen(true)}
       />
 
       <CardContent className="!p-0">
@@ -145,15 +152,16 @@ export default function StudentProfileSummary({
           </div>
 
           <GroupsSection groups={groups} />
-          <div className="mt-6 flex justify-end border-t border-border/60 pt-4">
-            <RemoveStudentRelationshipConfirm
-              studentName={title}
-              pending={removeRelationshipMutation.isPending}
-              onConfirm={handleRemoveStudent}
-            />
-          </div>
         </div>
       </CardContent>
+      <RemoveStudentRelationshipConfirm
+        studentName={title}
+        pending={removeRelationshipMutation.isPending}
+        onConfirm={handleRemoveStudent}
+        open={isRemoveOpen}
+        onOpenChange={setIsRemoveOpen}
+      />
+
       <EditStudentNameModal
         open={isEditNameOpen}
         onOpenChange={setIsEditNameOpen}

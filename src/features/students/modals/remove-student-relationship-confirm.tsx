@@ -1,9 +1,8 @@
-// src/features/students/widgets/student-details/ui/student-profile-summary/modals/remove-student-relationship-confirm.tsx
-
 'use client';
 
 import * as React from 'react';
 
+import { useI18n } from '@/shared/i18n';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,64 +12,52 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/shared/ui/alert-dialog';
-import { Button } from '@/shared/ui/button';
 
 type Props = {
   studentName: string;
   pending?: boolean;
   onConfirm: () => Promise<void>;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 };
 
 export function RemoveStudentRelationshipConfirm({
   studentName,
   pending = false,
   onConfirm,
+  open,
+  onOpenChange,
 }: Props) {
-  const [open, setOpen] = React.useState(false);
+  const { t } = useI18n();
 
   const handleConfirm = async () => {
     await onConfirm();
-    setOpen(false);
+    onOpenChange(false);
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          disabled={pending}
-          className="rounded-full border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
-        >
-          Remove student
-        </Button>
-      </AlertDialogTrigger>
-
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Remove student?</AlertDialogTitle>
+          <AlertDialogTitle>{t('students.remove.title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to remove {studentName}? You’ll stop teaching this student.
-            They’ll be removed from your groups and active assignments will be revoked. Past
-            progress will be kept.
+            {t('students.remove.desc').replace('{name}', studentName)}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={pending}>{t('students.remove.cancel')}</AlertDialogCancel>
 
           <AlertDialogAction
             disabled={pending}
             onClick={(event) => {
               event.preventDefault();
-
               void handleConfirm().catch(() => {});
             }}
             className="bg-destructive text-white hover:bg-destructive/90"
           >
-            {pending ? 'Removing…' : 'Remove'}
+            {pending ? t('students.remove.confirming') : t('students.remove.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

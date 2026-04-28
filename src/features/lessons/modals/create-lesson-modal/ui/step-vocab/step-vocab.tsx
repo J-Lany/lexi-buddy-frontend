@@ -50,10 +50,13 @@ export function StepVocab({ draft, onChange }: Props) {
 
     mutate(
       {
-        level: draft.level,
-        topic: draft.topic,
-        ageGroup: draft.ageCategory,
         terms,
+        topic: draft.topic,
+        targetLanguage: draft.targetLanguage,
+        nativeLanguage: draft.nativeLanguage,
+        instructionLanguage: draft.instructionLanguage,
+        level: draft.level,
+        ageGroup: draft.ageCategory,
       },
       {
         onSuccess: (items) => {
@@ -96,6 +99,23 @@ export function StepVocab({ draft, onChange }: Props) {
     });
   };
 
+  const handleRemoveTranslation = (index: number) => {
+    setVocabItems((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], translation: null };
+      return next;
+    });
+  };
+
+  const handleAddSynonym = (index: number) => {
+    setVocabItems((prev) => {
+      const next = [...prev];
+      const current = next[index];
+      next[index] = { ...current, synonyms: [...(current.synonyms ?? []), ''] };
+      return next;
+    });
+  };
+
   const canTranslate = !isPending && terms.length > 0;
 
   return (
@@ -116,8 +136,10 @@ export function StepVocab({ draft, onChange }: Props) {
           items={vocabItems}
           onRemoveItem={handleRemoveItem}
           onChangeTranslation={handleChangeTranslation}
+          onRemoveTranslation={handleRemoveTranslation}
           onChangeSynonym={handleChangeSynonym}
           onRemoveSynonym={handleRemoveSynonym}
+          onAddSynonym={handleAddSynonym}
         />
       ) : null}
     </div>

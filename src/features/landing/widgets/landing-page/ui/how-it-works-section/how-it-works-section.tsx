@@ -1,19 +1,22 @@
+'use client';
+
+import { useI18n } from '@/shared/i18n';
+
 export function HowItWorksSection() {
+  const { t } = useI18n();
+
   return (
     <section className="section how-section" id="how">
       <div className="reveal">
-        <span className="eyebrow">How it works</span>
+        <span className="eyebrow">{t('landing.howItWorks.eyebrow')}</span>
 
         <h2 className="section-h">
-          From word list to full lesson
+          {t('landing.howItWorks.h2a')}
           <br />
-          in 4 simple steps
+          {t('landing.howItWorks.h2b')}
         </h2>
 
-        <p className="section-sub">
-          No more hours spent creating home tasks and drills. Lexi Buddy does the heavy lifting so
-          you can focus on teaching.
-        </p>
+        <p className="section-sub">{t('landing.howItWorks.sub')}</p>
       </div>
 
       <div className="steps-wrap">
@@ -21,41 +24,29 @@ export function HowItWorksSection() {
           <div className="step">
             <div className="step-n">01</div>
             <div className="step-ico">📝</div>
-            <h3>Add lesson details</h3>
-            <p>
-              Set the name, level (A1–C2), age group, and topic. This context shapes every exercise
-              the AI creates.
-            </p>
+            <h3>{t('landing.howItWorks.step1title')}</h3>
+            <p>{t('landing.howItWorks.step1desc')}</p>
           </div>
 
           <div className="step">
             <div className="step-n">02</div>
             <div className="step-ico">📋</div>
-            <h3>Paste your word list</h3>
-            <p>
-              Add up to 15 words or phrases. Hit the button — AI adds Russian translations and
-              English synonyms instantly, creating a handy Glossary.
-            </p>
+            <h3>{t('landing.howItWorks.step2title')}</h3>
+            <p>{t('landing.howItWorks.step2desc')}</p>
           </div>
 
           <div className="step">
             <div className="step-n">03</div>
             <div className="step-ico">⚡</div>
-            <h3>Generate and review exercises</h3>
-            <p>
-              Choose 1 to 4 task types. AI creates questions, distractors and explanations. Review
-              and edit anything you like.
-            </p>
+            <h3>{t('landing.howItWorks.step3title')}</h3>
+            <p>{t('landing.howItWorks.step3desc')}</p>
           </div>
 
           <div className="step">
             <div className="step-n">04</div>
             <div className="step-ico">🚀</div>
-            <h3>Assign and track progress</h3>
-            <p>
-              Send the lesson to individual students or groups. They get a Telegram notification and
-              complete it right in the bot — no app needed.
-            </p>
+            <h3>{t('landing.howItWorks.step4title')}</h3>
+            <p>{t('landing.howItWorks.step4desc')}</p>
           </div>
         </div>
       </div>

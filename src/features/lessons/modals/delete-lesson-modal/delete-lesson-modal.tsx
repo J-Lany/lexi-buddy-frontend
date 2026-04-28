@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 import { useDeleteLesson } from '@/entities/lessons/model/mutation/delete-lesson';
 import { DeleteLessonScope } from '@/shared/api/contracts/lesson';
+import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import {
   Dialog,
@@ -27,6 +28,7 @@ export function DeleteLessonModal({
   onOpenChange,
   onDeleted,
 }: DeleteLessonModalProps) {
+  const { t } = useI18n();
   const deleteLessonMutation = useDeleteLesson();
 
   const isDeletingForMe =
@@ -43,14 +45,14 @@ export function DeleteLessonModal({
 
       toast.success(
         scope === DeleteLessonScope.ALL
-          ? 'Lesson deleted for everyone'
-          : 'Lesson removed from your lessons',
+          ? t('lessons.deleteModal.deletedAll')
+          : t('lessons.deleteModal.deletedMe'),
       );
 
       onOpenChange(false);
       onDeleted?.(scope);
     } catch {
-      toast.error('Failed to delete lesson');
+      toast.error(t('lessons.deleteModal.errorTitle'));
     }
   };
 
@@ -64,12 +66,11 @@ export function DeleteLessonModal({
             </div>
 
             <DialogTitle className="text-[22px] font-semibold tracking-tight">
-              Delete lesson?
+              {t('lessons.deleteModal.title')}
             </DialogTitle>
 
             <DialogDescription className="max-w-[360px] pt-2 text-[14px] leading-6 text-muted-foreground">
-              Delete this lesson only from your workspace, or remove it for everyone with assignment
-              results.
+              {t('lessons.deleteModal.desc')}
             </DialogDescription>
           </DialogHeader>
 
@@ -83,7 +84,7 @@ export function DeleteLessonModal({
               className="h-12 text-[15px] font-semibold active:scale-[0.98]"
             >
               {isDeletingForMe ? <Loader2 className="size-4 animate-spin" /> : null}
-              Delete for me
+              {t('lessons.deleteModal.deleteForMe')}
             </Button>
 
             <Button
@@ -95,7 +96,7 @@ export function DeleteLessonModal({
               className="h-12 text-[15px] font-semibold active:scale-[0.98]"
             >
               {isDeletingForAll ? <Loader2 className="size-4 animate-spin" /> : null}
-              Delete for everyone
+              {t('lessons.deleteModal.deleteForAll')}
             </Button>
 
             <Button
@@ -106,7 +107,7 @@ export function DeleteLessonModal({
               disabled={deleteLessonMutation.isPending}
               className="h-11 text-[15px] font-medium text-muted-foreground hover:text-foreground active:scale-[0.98]"
             >
-              Cancel
+              {t('lessons.deleteModal.cancel')}
             </Button>
           </div>
         </div>
