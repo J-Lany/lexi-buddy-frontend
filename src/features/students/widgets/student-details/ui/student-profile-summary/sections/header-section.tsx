@@ -1,6 +1,9 @@
+'use client';
+
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react';
 import * as React from 'react';
 
+import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { CardHeader } from '@/shared/ui/card';
 import {
@@ -24,13 +27,10 @@ type Props = {
   onRemove: () => void;
 };
 
-export function HeaderSection({
-  title,
-  subtitle = 'Student profile',
-  avatar,
-  onEditName,
-  onRemove,
-}: Props) {
+export function HeaderSection({ title, subtitle, avatar, onEditName, onRemove }: Props) {
+  const { t } = useI18n();
+  const resolvedSubtitle = subtitle ?? t('students.details.studentProfile');
+
   return (
     <CardHeader className="pb-2">
       <div className="flex items-center justify-between gap-4">
@@ -48,7 +48,7 @@ export function HeaderSection({
                     'ui-focus shrink-0 inline-flex items-center justify-center rounded-full h-8 w-8',
                     'text-muted-foreground/60 hover:text-foreground hover:bg-accent transition-colors',
                   )}
-                  aria-label="More options"
+                  aria-label={t('students.header.moreOptions')}
                 >
                   <MoreHorizontal className="h-4 w-4" />
                 </button>
@@ -57,7 +57,7 @@ export function HeaderSection({
               <DropdownMenuContent align="start">
                 <DropdownMenuItem onClick={onEditName}>
                   <Pencil className="h-4 w-4" />
-                  Edit name
+                  {t('students.header.editName')}
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
@@ -67,13 +67,13 @@ export function HeaderSection({
                   className="text-destructive focus:text-destructive focus:bg-destructive/8"
                 >
                   <Trash2 className="h-4 w-4" />
-                  Remove student
+                  {t('students.header.removeStudent')}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
 
-          <div className="ui-meta mt-1">{subtitle}</div>
+          <div className="ui-meta mt-1">{resolvedSubtitle}</div>
         </div>
 
         <StudentAvatar username={avatar.username} avatarUrl={avatar.avatarUrl} size={avatar.size} />

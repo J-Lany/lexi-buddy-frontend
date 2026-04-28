@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { useI18n } from '@/shared/i18n';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,6 +29,8 @@ export function RemoveStudentRelationshipConfirm({
   open,
   onOpenChange,
 }: Props) {
+  const { t } = useI18n();
+
   const handleConfirm = async () => {
     await onConfirm();
     onOpenChange(false);
@@ -37,16 +40,14 @@ export function RemoveStudentRelationshipConfirm({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Remove student?</AlertDialogTitle>
+          <AlertDialogTitle>{t('students.remove.title')}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to remove {studentName}? You&apos;ll stop teaching this student.
-            They&apos;ll be removed from your groups and active assignments will be revoked. Past
-            progress will be kept.
+            {t('students.remove.desc').replace('{name}', studentName)}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={pending}>{t('students.remove.cancel')}</AlertDialogCancel>
 
           <AlertDialogAction
             disabled={pending}
@@ -56,7 +57,7 @@ export function RemoveStudentRelationshipConfirm({
             }}
             className="bg-destructive text-white hover:bg-destructive/90"
           >
-            {pending ? 'Removing…' : 'Remove'}
+            {pending ? t('students.remove.confirming') : t('students.remove.confirm')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

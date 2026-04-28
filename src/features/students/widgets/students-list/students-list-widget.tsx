@@ -7,9 +7,11 @@ import { useMyStudentsQuery } from '@/entities/students/model/queries/get-my-stu
 import { filterStudentsByQuery } from '@/features/students/lib/filter-students';
 import { StudentsTable } from '@/features/students/widgets/students-list/ui/students-table/students-table';
 import { StudentsTableSkeleton } from '@/features/students/widgets/students-list/ui/students-table/students-table-skeleton';
+import { useI18n } from '@/shared/i18n';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
 
 export function StudentsListWidget({ query }: { query: string }) {
+  const { t } = useI18n();
   const { data, isLoading, isError } = useMyStudentsQuery();
 
   const filtered = useMemo(() => {
@@ -31,8 +33,8 @@ export function StudentsListWidget({ query }: { query: string }) {
       {showError && (
         <EmptyStateCard
           surface="canvas"
-          title="Something went wrong"
-          description="Try refreshing the page."
+          title={t('students.list.error')}
+          description={t('students.list.errorDesc')}
         />
       )}
       {showEmpty && (
@@ -43,16 +45,16 @@ export function StudentsListWidget({ query }: { query: string }) {
               aria-hidden
             />
           }
-          title="No students yet"
-          description="Invite your first student to start assigning lessons."
-          hint="Tap “Add a student” above"
+          title={t('students.list.empty')}
+          description={t('students.list.emptyDesc')}
+          hint={t('students.list.emptyHint')}
         />
       )}
       {showNoResults && (
         <EmptyStateCard
           surface="canvas"
-          title="No results"
-          description="Check the spelling or try another keyword."
+          title={t('students.list.noResults')}
+          description={t('students.list.noResultsDesc')}
         />
       )}
     </section>

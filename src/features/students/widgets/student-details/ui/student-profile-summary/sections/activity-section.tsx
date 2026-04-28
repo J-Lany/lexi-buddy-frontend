@@ -1,3 +1,6 @@
+'use client';
+
+import { useI18n } from '@/shared/i18n';
 import { DetailsRow } from '@/shared/ui/details/details-row';
 import { detailsSectionSurface } from '@/shared/ui/details/details-section-surface';
 import { SectionLabel } from '@/shared/ui/details/section-label';
@@ -22,31 +25,42 @@ export function ActivitySection({
   progressLabel,
   hasAnyActivity,
 }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="min-w-0 mt-6 md:mt-0">
-      <SectionLabel>Activity</SectionLabel>
+      <SectionLabel>{t('students.activity.title')}</SectionLabel>
 
       <div className={detailsSectionSurface}>
-        <DetailsRow label="Lessons" value={lessonsTotal} />
+        <DetailsRow label={t('students.activity.lessons')} value={lessonsTotal} />
         <Divider />
 
-        <DetailsRow label="Assignments" value={`${assignmentsDone}/${assignmentsTotal}`} />
+        <DetailsRow
+          label={t('students.activity.assignments')}
+          value={`${assignmentsDone}/${assignmentsTotal}`}
+        />
         <Divider />
 
-        <DetailsRow label="Avg score" value={avgScoreLabel} />
+        <DetailsRow label={t('students.activity.avgScore')} value={avgScoreLabel} />
         <Divider />
 
-        <DetailsRow label="Last submission" value={lastSubmissionLabel} />
+        <DetailsRow label={t('students.activity.lastSubmission')} value={lastSubmissionLabel} />
 
         {progressLabel ? (
           <>
             <Divider />
-            <DetailsRow label="Progress" value={progressLabel} valueTone="muted" />
+            <DetailsRow
+              label={t('students.activity.progress')}
+              value={progressLabel}
+              valueTone="muted"
+            />
           </>
         ) : null}
       </div>
 
-      {!hasAnyActivity ? <div className="ui-meta px-1 pt-3">No activity yet</div> : null}
+      {!hasAnyActivity ? (
+        <div className="ui-meta px-1 pt-3">{t('students.activity.noActivity')}</div>
+      ) : null}
     </div>
   );
 }
