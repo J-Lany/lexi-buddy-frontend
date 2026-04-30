@@ -224,6 +224,28 @@ a {
      TYPOGRAPHY
      ========================================================= */
 
+  .ui-page-title {
+    @apply font-semibold tracking-tight leading-tight;
+    font-size: 28px;
+  }
+
+  @media (min-width: 640px) {
+    .ui-page-title {
+      font-size: 34px;
+    }
+  }
+
+  .ui-card-title {
+    @apply font-semibold tracking-tight;
+    font-size: 22px;
+  }
+
+  @media (min-width: 640px) {
+    .ui-card-title {
+      font-size: 24px;
+    }
+  }
+
   /* Primary title text for list rows, cards, and main labels */
   .ui-title {
     @apply font-semibold leading-snug truncate;

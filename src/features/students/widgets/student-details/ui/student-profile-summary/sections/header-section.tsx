@@ -36,9 +36,7 @@ export function HeaderSection({ title, subtitle, avatar, onEditName, onRemove }:
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1 min-w-0">
-            <div className="text-[22px] sm:text-[24px] font-semibold tracking-tight truncate">
-              {title}
-            </div>
+            <div className="ui-card-title truncate">{title}</div>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

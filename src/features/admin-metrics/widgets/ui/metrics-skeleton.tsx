@@ -3,20 +3,25 @@ import { Skeleton } from '@/shared/ui/skeleton';
 export function MetricsSkeleton() {
   return (
     <div className="space-y-4">
-      <Skeleton className="h-10 w-48" />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-        <Skeleton className="h-[92px]" />
-        <Skeleton className="h-[92px]" />
-        <Skeleton className="h-[92px]" />
+      {/* Hero KPI row */}
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Skeleton className="h-[104px]" />
+        <Skeleton className="h-[104px]" />
+        <Skeleton className="h-[104px]" />
+        <Skeleton className="h-[104px]" />
       </div>
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
-        <Skeleton className="h-[92px]" />
-        <Skeleton className="h-[92px]" />
-        <Skeleton className="h-[92px]" />
-        <Skeleton className="h-[92px]" />
+
+      {/* Activity chart + engagement panel */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <Skeleton className="lg:col-span-2 h-[268px]" />
+        <Skeleton className="h-[268px]" />
       </div>
-      <Skeleton className="h-40" />
-      <Skeleton className="h-[220px]" />
+
+      {/* Teacher strip */}
+      <Skeleton className="h-14" />
+
+      {/* Breakdown table */}
+      <Skeleton className="h-60" />
     </div>
   );
 }

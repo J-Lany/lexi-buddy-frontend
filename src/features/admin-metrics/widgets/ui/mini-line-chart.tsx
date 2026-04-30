@@ -22,7 +22,7 @@ export function MiniLineChart({ points, height = 110 }: { points: number[]; heig
 
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-auto">
-      <path d={d} fill="none" stroke="currentColor" strokeWidth="2" />
+      <path d={d} fill="none" stroke="var(--primary)" strokeWidth="2" />
     </svg>
   );
 }

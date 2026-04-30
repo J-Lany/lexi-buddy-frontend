@@ -31,7 +31,7 @@ export function LessonSummaryStatGrid({ lesson }: Props) {
         return (
           <div
             key={stat.label}
-            className="rounded-2xl border border-border/60 bg-background/60 px-4 py-3"
+            className="rounded-2xl border border-(--border-soft) bg-(--surface) px-4 py-3"
           >
             <div className="flex items-center justify-between gap-3">
               <span className="text-xs font-medium text-muted-foreground">{stat.label}</span>
