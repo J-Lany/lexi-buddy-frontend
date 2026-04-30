@@ -84,6 +84,9 @@ export const kz: Translations = {
       successTitle: 'Сұраныс жіберілді ✉️',
       successDesc: 'Оқушы шақыруыңызды алады.',
       errorTitle: 'Сұраныс жіберу сәтсіз аяқталды',
+      findStudent: 'Оқушыны табу',
+      messageLabel: 'Жеке хабарлама',
+      messageLabelOptional: '(міндетті емес)',
     },
     remove: {
       title: 'Оқушыны жою?',

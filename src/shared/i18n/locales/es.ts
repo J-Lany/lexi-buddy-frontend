@@ -84,6 +84,9 @@ export const es: Translations = {
       successTitle: 'Solicitud enviada ✉️',
       successDesc: 'El alumno recibirá tu invitación.',
       errorTitle: 'Error al enviar la solicitud',
+      findStudent: 'Buscar alumno',
+      messageLabel: 'Mensaje personal',
+      messageLabelOptional: '(opcional)',
     },
     remove: {
       title: '¿Eliminar alumno?',

@@ -46,7 +46,7 @@ export function AboutSection({
               placeholder="—"
               title={t('students.about.chooseLevel')}
               options={LEVEL_OPTIONS}
-              triggerClassName="h-9 rounded-xl px-3"
+              triggerClassName="h-9 rounded-2xl px-3"
             />
           </div>
         </div>
@@ -62,7 +62,7 @@ export function AboutSection({
               placeholder="—"
               title={t('students.about.chooseAgeGroup')}
               options={AGE_GROUP_OPTIONS}
-              triggerClassName="h-9 rounded-xl px-3"
+              triggerClassName="h-9 rounded-2xl px-3"
             />
           </div>
         </div>

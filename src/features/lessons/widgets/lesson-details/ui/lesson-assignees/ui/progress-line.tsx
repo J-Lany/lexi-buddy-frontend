@@ -3,18 +3,16 @@ export function ProgressLine({ value }: { value: number }) {
 
   return (
     <div
-      className="mt-2 h-1.5 w-full rounded-full border"
-      style={{
-        background: 'color-mix(in oklch, var(--background) 92%, white 8%)',
-        borderColor: 'var(--border-soft)',
-      }}
+      className="mt-2 h-1 w-full rounded-full overflow-hidden"
+      style={{ background: 'color-mix(in oklch, var(--primary) 12%, white 88%)' }}
       aria-label={`Progress ${v}%`}
     >
       <div
-        className="h-full rounded-full"
+        className="h-full rounded-full transition-all duration-300"
         style={{
           width: `${v}%`,
-          background: 'color-mix(in oklch, var(--primary) 60%, white 40%)',
+          background:
+            v === 0 ? 'transparent' : 'color-mix(in oklch, var(--primary) 75%, white 25%)',
         }}
       />
     </div>

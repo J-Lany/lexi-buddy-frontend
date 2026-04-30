@@ -1,5 +1,6 @@
 'use client';
 
+import { Send } from 'lucide-react';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { toast } from 'sonner';
@@ -78,25 +79,37 @@ export function InviteStudentModal() {
       open={open}
       onOpenChange={setOpen}
       footer={
-        <div className="flex justify-center">
-          <Button type="button" className="w-full sm:w-52" onClick={handleSend} disabled={!canSend}>
-            {invite.isPending ? t('students.invite.sending') : t('students.invite.send')}
-          </Button>
-        </div>
+        <Button type="button" size="lg" className="w-full" onClick={handleSend} disabled={!canSend}>
+          <Send className="h-4 w-4" />
+          {invite.isPending ? t('students.invite.sending') : t('students.invite.send')}
+        </Button>
       }
     >
-      <div className="grid gap-5">
-        <StudentSearchPicker
-          value={state.student}
-          onChange={(student) => setState((s) => ({ ...s, student }))}
-        />
+      <div className="space-y-5 py-3">
+        {/* Section 1: Find student */}
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-foreground">{t('students.invite.findStudent')}</p>
+          <StudentSearchPicker
+            value={state.student}
+            onChange={(student) => setState((s) => ({ ...s, student }))}
+          />
+        </div>
 
-        <Textarea
-          placeholder={t('students.invite.messagePlaceholder')}
-          minRows={5}
-          value={state.message}
-          onChange={(e) => setState((s) => ({ ...s, message: e.target.value }))}
-        />
+        {/* Section 2: Personal message */}
+        <div className="space-y-2">
+          <p className="text-sm font-medium text-foreground">
+            {t('students.invite.messageLabel')}{' '}
+            <span className="font-normal text-muted-foreground">
+              {t('students.invite.messageLabelOptional')}
+            </span>
+          </p>
+          <Textarea
+            placeholder={t('students.invite.messagePlaceholder')}
+            minRows={4}
+            value={state.message}
+            onChange={(e) => setState((s) => ({ ...s, message: e.target.value }))}
+          />
+        </div>
       </div>
     </ResponsiveModal>
   );

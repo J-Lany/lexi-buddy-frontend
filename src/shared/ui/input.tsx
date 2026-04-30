@@ -10,7 +10,7 @@ function Input({ className, type, ...props }: React.ComponentProps<'input'>) {
       className={cn(
         [
           // size / shape
-          'h-11 w-full min-w-0 rounded-xl px-3 text-[15px] md:text-[14px]',
+          'h-11 w-full min-w-0 rounded-2xl px-4 text-sm',
           // surface
           'bg-background',
           // border

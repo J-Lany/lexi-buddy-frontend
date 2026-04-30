@@ -34,7 +34,7 @@ export function LessonSummaryStatGrid({ lesson }: Props) {
             className="rounded-2xl border border-(--border-soft) bg-(--surface) px-4 py-3"
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="text-xs font-medium text-muted-foreground">{stat.label}</span>
+              <span className="ui-stat">{stat.label}</span>
               <Icon className="h-4 w-4 text-primary/80" />
             </div>
 
