@@ -25,9 +25,7 @@ export function SummaryCard({
     <Card className="ui-card-static ui-radius-card px-5 sm:px-6 py-5">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <div className="text-[18px] sm:text-[22px] font-semibold tracking-tight leading-tight truncate">
-            {lessonTitle}
-          </div>
+          <div className="ui-card-title truncate">{lessonTitle}</div>
 
           <div className="mt-1 ui-meta truncate">
             {student.username ? `@${student.username}` : 'Student'}

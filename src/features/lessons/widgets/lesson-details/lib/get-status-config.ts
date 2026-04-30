@@ -7,9 +7,11 @@ export function getStatusConfig(status: Student['status']) {
     case 'COMPLETED':
       return {
         label: 'Completed',
-        className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+        className:
+          'bg-[var(--success-soft)] text-[var(--success)] border-[color-mix(in_oklch,var(--success)_25%,white_75%)]',
       };
     case 'PENDING':
+      // amber kept intentionally — no --warning token yet
       return {
         label: 'In progress',
         className: 'bg-amber-50 text-amber-700 border-amber-200',
@@ -18,7 +20,7 @@ export function getStatusConfig(status: Student['status']) {
     default:
       return {
         label: 'Not started',
-        className: 'bg-slate-50 text-slate-600 border-slate-200',
+        className: 'bg-[var(--muted)] text-muted-foreground border-[var(--border-soft)]',
       };
   }
 }

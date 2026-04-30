@@ -7,8 +7,8 @@ type Props = {
 
 export function QuestionBlock({ question }: Props) {
   return (
-    <div className="space-y-2 rounded-xl bg-sky-50/60 px-3 py-2">
-      <div className="font-medium">{question.text}</div>
+    <div className="space-y-2 rounded-xl bg-(--surface) px-3 py-2">
+      <div className="ui-title">{question.text}</div>
 
       <div className="space-y-1">
         {question.answers.map((a) => (
@@ -28,9 +28,7 @@ export function QuestionBlock({ question }: Props) {
       </div>
 
       {question.explanation && (
-        <div className="mt-1 text-xs text-muted-foreground">
-          Explanation: {question.explanation}
-        </div>
+        <div className="mt-1 ui-stat">Explanation: {question.explanation}</div>
       )}
     </div>
   );

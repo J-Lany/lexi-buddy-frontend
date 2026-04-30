@@ -7,7 +7,7 @@ import type { StudentBySearchDto } from '@/entities/students/api/search-students
 import { useSearchStudentsQuery } from '@/entities/students/model/queries/search-students';
 import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
-import { Command, CommandGroup, CommandInput, CommandItem, CommandList } from '@/shared/ui/command';
+import { Command, CommandInput, CommandItem, CommandList } from '@/shared/ui/command';
 
 import { normalizeQuery } from '../lib/normalize-search-query';
 
@@ -15,6 +15,15 @@ type Props = {
   value: StudentBySearchDto | null;
   onChange: (v: StudentBySearchDto | null) => void;
 };
+
+function StudentInitials({ name }: { name: string }) {
+  const letter = (name?.[0] ?? '?').toUpperCase();
+  return (
+    <div className="h-8 w-8 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
+      <span className="text-xs font-semibold text-primary">{letter}</span>
+    </div>
+  );
+}
 
 export function StudentSearchPicker({ value, onChange }: Props) {
   const { t } = useI18n();
@@ -24,7 +33,7 @@ export function StudentSearchPicker({ value, onChange }: Props) {
   const { data = [], isFetching, isError, error } = useSearchStudentsQuery(normalized);
 
   return (
-    <div className="rounded-2xl border border-border/30 overflow-hidden">
+    <div className="rounded-2xl border border-(--border-soft) overflow-hidden bg-background shadow-(--shadow-card)">
       <Command shouldFilter={false}>
         <div className="relative">
           <CommandInput
@@ -49,49 +58,75 @@ export function StudentSearchPicker({ value, onChange }: Props) {
 
         <CommandList className="h-auto overflow-y-auto">
           {normalized.length < 2 ? (
-            <div className="h-full flex items-center justify-center p-3 text-xs text-muted-foreground">
-              {t('students.search.typeMore')}
-            </div>
+            value ? (
+              <div className="flex items-center gap-3 px-4 py-3">
+                <StudentInitials name={value.firstName || value.username || '?'} />
+                <div className="flex flex-col min-w-0 flex-1">
+                  <span className="ui-title truncate">{value.firstName || value.username}</span>
+                  {value.username && (
+                    <span className="ui-stat text-muted-foreground">@{value.username}</span>
+                  )}
+                </div>
+                <Check className="h-4 w-4 text-primary shrink-0" />
+              </div>
+            ) : (
+              <div className="flex items-center justify-center p-4 text-sm text-muted-foreground">
+                {t('students.search.typeMore')}
+              </div>
+            )
           ) : isFetching ? (
-            <div className="h-full flex items-center justify-center gap-2 p-3 text-xs text-muted-foreground">
+            <div className="flex items-center justify-center gap-2 p-4 text-sm text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" />
               {t('students.search.searching')}
             </div>
           ) : isError ? (
-            <div className="h-full flex items-center justify-center p-3 text-xs text-destructive">
+            <div className="flex items-center justify-center p-4 text-sm text-destructive">
               {error?.message || t('students.search.failed')}
             </div>
           ) : data.length === 0 ? (
-            <div className="h-full flex items-center justify-center p-3 text-sm text-muted-foreground">
+            <div className="flex items-center justify-center p-4 text-sm text-muted-foreground">
               {t('students.search.notFound')}
             </div>
           ) : (
-            <CommandGroup heading={t('students.search.groupHeading')}>
+            <div className="py-1">
               {data.map((s) => {
                 const selected = value?.id === s.id;
+                const displayName = s.firstName || s.username || '?';
 
                 return (
                   <CommandItem
                     key={s.id}
                     value={`${s.username ?? ''} ${s.firstName} ${s.id}`}
-                    onSelect={() => onChange(selected ? null : s)}
-                    className="flex items-center gap-3"
+                    onSelect={() => {
+                      if (!selected) setQ('');
+                      onChange(selected ? null : s);
+                    }}
+                    className="flex items-center gap-3 px-3 py-2.5 mx-1 rounded-xl cursor-pointer"
                   >
-                    <div className="flex flex-col">
-                      <span className="text-sm">
-                        {s.username ? `@${s.username}` : t('students.search.noUsername')}
-                        {s.level ? (
-                          <span className="ml-2 text-xs text-muted-foreground">{s.level}</span>
-                        ) : null}
-                      </span>
-                      <span className="text-xs text-muted-foreground">{s.firstName}</span>
+                    <StudentInitials name={displayName} />
+
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="ui-title truncate">{displayName}</span>
+                      <div className="flex items-center gap-1.5">
+                        {s.username && (
+                          <span className="ui-stat text-muted-foreground">@{s.username}</span>
+                        )}
+                        {s.level && (
+                          <>
+                            {s.username && (
+                              <span className="ui-stat text-muted-foreground/40">·</span>
+                            )}
+                            <span className="ui-stat text-muted-foreground">{s.level}</span>
+                          </>
+                        )}
+                      </div>
                     </div>
 
-                    {selected && <Check className="ml-auto h-4 w-4 opacity-70" />}
+                    {selected && <Check className="ml-auto h-4 w-4 text-primary shrink-0" />}
                   </CommandItem>
                 );
               })}
-            </CommandGroup>
+            </div>
           )}
         </CommandList>
       </Command>

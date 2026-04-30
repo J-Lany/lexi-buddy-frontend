@@ -52,10 +52,7 @@ export function AssigneesStudentsToolbar({
   const activeLabel = filterLabels[filter];
 
   return (
-    <div
-      className="rounded-2xl p-3"
-      style={{ background: 'color-mix(in oklch, var(--background) 92%, white 8%)' }}
-    >
+    <div>
       <div className="flex flex-col gap-3 lg:hidden">
         <Select value={filter} onValueChange={(v) => onFilterChange(v as AssigneesFilterKey)}>
           <SelectTrigger aria-label="Student status filter" className="h-10 rounded-2xl">
@@ -79,16 +76,15 @@ export function AssigneesStudentsToolbar({
       </div>
 
       <div className="hidden lg:flex lg:items-center lg:gap-3">
-        <div className="min-w-0 flex-1">
-          <SegmentedControl<AssigneesFilterKey>
-            value={filter}
-            onChange={onFilterChange}
-            options={translatedOptions}
-            className="w-full"
-          />
-        </div>
+        <SegmentedControl<AssigneesFilterKey>
+          value={filter}
+          onChange={onFilterChange}
+          options={translatedOptions}
+        />
 
-        <div className="w-[340px]">
+        <div className="h-5 w-px bg-border/60 shrink-0" />
+
+        <div className="flex-1 min-w-0">
           <SearchInput
             value={query}
             onChange={onQueryChange}
@@ -110,13 +106,7 @@ function SearchInput({
   placeholder: string;
 }) {
   return (
-    <div
-      className="flex items-center gap-2 rounded-2xl border px-3 py-2"
-      style={{
-        background: 'color-mix(in oklch, var(--background) 92%, white 8%)',
-        borderColor: 'var(--border-soft)',
-      }}
-    >
+    <div className="flex items-center gap-2 rounded-2xl border border-(--border-soft) bg-(--surface) px-3 py-2">
       <Search className="h-4 w-4 text-muted-foreground" />
       <input
         value={value}

@@ -150,3 +150,7 @@ Prefer passing URL-derived values from page.tsx (server) into client components 
 - Prefer model hooks over calling api directly from UI
 - Keep widgets inside features unless truly cross-domain reusable
 - Follow Apple-like UX principles: clarity over cleverness, simplicity over density
+
+## Design System
+
+See docs/design-system.md

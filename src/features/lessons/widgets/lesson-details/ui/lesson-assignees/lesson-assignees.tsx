@@ -43,9 +43,7 @@ export function LessonAssignees({ lesson }: Props) {
     <Card className="ui-panel ui-radius-card">
       <CardHeader className="space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <CardTitle className="text-base sm:text-lg">
-            {t('lessons.details.assignedTitle')}
-          </CardTitle>
+          <CardTitle>{t('lessons.details.assignedTitle')}</CardTitle>
           <div className="shrink-0">
             <AssignLessonModal
               lessonId={lesson.id}
@@ -54,20 +52,18 @@ export function LessonAssignees({ lesson }: Props) {
             />
           </div>
         </div>
-
-        <div className="ui-meta">
-          {studentsCount} {t('lessons.details.studentsLabel')} · {groupsCount}{' '}
-          {t('lessons.details.groupsLabel')}
-        </div>
       </CardHeader>
 
       {!hasAnything ? (
         <EmptyState />
       ) : (
-        <CardContent>
-          <div className="w-full max-w-4xl space-y-6">
+        <CardContent className="!pt-0">
+          <div className="space-y-4 w-full">
             <div className="space-y-3">
-              <div className="ui-meta uppercase tracking-wide">{t('lessons.details.students')}</div>
+              <div className="flex items-center justify-between">
+                <span className="ui-stat font-medium">{t('lessons.details.students')}</span>
+                <span className="ui-stat text-muted-foreground">{studentsCount}</span>
+              </div>
 
               <AssigneesStudentsToolbar
                 query={query}
@@ -80,10 +76,13 @@ export function LessonAssignees({ lesson }: Props) {
               <StudentsSection students={filteredStudents} />
             </div>
 
-            <div className="border-t" style={{ borderColor: 'var(--border-soft)' }} />
+            <div className="border-t border-(--border-soft)" />
 
             <div className="space-y-3">
-              <div className="ui-meta uppercase tracking-wide">{t('lessons.details.groups')}</div>
+              <div className="flex items-center justify-between">
+                <span className="ui-stat font-medium">{t('lessons.details.groups')}</span>
+                <span className="ui-stat text-muted-foreground">{groupsCount}</span>
+              </div>
               <GroupsSection groups={lesson.groups ?? []} />
             </div>
           </div>
