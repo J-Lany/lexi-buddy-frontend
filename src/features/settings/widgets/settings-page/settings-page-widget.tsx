@@ -1,9 +1,11 @@
 'use client';
 
-import { ShieldCheck } from 'lucide-react';
+import { BarChart2, ChevronRight, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 
 import { useTeacherProfileQuery } from '@/entities/teacher';
 import { useI18n } from '@/shared/i18n';
+import { routes } from '@/shared/router/routes';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
 
 import { PasswordSection } from './ui/password-section';
@@ -41,6 +43,22 @@ export function SettingsPageWidget() {
           description={t('settings.errorDesc')}
         />
       )}
+      {profile?.isAdmin && (
+        <Link
+          href={routes.adminMetrics}
+          className="flex items-center gap-4 rounded-2xl border border-primary/30 bg-primary/5 px-5 py-4 transition-colors hover:bg-primary/10"
+        >
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15">
+            <BarChart2 className="h-5 w-5 text-primary" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="font-medium text-foreground">Platform metrics</div>
+            <div className="ui-meta">Admin only</div>
+          </div>
+          <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+        </Link>
+      )}
+
       {profile && (
         <div className="grid gap-4 lg:grid-cols-[1.25fr_0.75fr]">
           <ProfileSection profile={profile} />

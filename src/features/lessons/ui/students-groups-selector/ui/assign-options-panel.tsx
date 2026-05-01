@@ -14,7 +14,7 @@ export function AssignOptionsPanel({ title, selectedCount, children }: Props) {
         <div className="ui-pill tabular-nums">{selectedCount} selected</div>
       </div>
 
-      <div className="max-h-[360px] overflow-y-auto ui-scroll">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }

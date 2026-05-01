@@ -210,8 +210,24 @@ export const es: Translations = {
       instructionLanguage: 'Idioma de las tareas',
       instructionLanguageHint: 'Idioma usado en las preguntas de las tareas',
       topicPlaceholder: 'Tema de la lección',
+      tooltips: {
+        title: 'El nombre de la lección que los alumnos ven en el bot. No se envía a la IA.',
+        level:
+          'Nivel de dificultad (A1–C2). La IA lo usa para calibrar el vocabulario y las tareas.',
+        ageGroup: 'La IA selecciona vocabulario y ejemplos apropiados para la edad.',
+        targetLanguage:
+          'El idioma que practican los alumnos. La IA genera las tareas en este idioma.',
+        nativeLanguage:
+          'Se usa para las traducciones y pistas de vocabulario que se muestran a los alumnos.',
+        instructionLanguage: 'El idioma de las instrucciones y preguntas de las tareas.',
+        topic:
+          'Se envía directamente a la IA como contexto de la lección — cuanto más específico, mejores tareas.',
+      },
     },
     vocab: {
+      label: 'Vocabulario de la lección',
+      labelTooltip:
+        'Escribe las palabras separadas por puntos (máximo {max}), pulsa el botón y la IA añadirá las traducciones. Revisa y edita antes de continuar.',
       inputHint: 'Introduce hasta {max} palabras separadas por puntos.',
       translating: 'Traduciendo…',
       translateBtn: 'Añadir traducciones y definiciones',

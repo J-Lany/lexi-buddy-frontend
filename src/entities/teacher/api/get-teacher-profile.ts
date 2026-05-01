@@ -8,6 +8,7 @@ export type TeacherProfileDto = {
   username: string | null;
   avatarUrl: string | null;
   defaultLanguage: Language;
+  isAdmin: boolean;
 };
 
 export async function getTeacherProfile(): Promise<TeacherProfileDto> {
