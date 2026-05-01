@@ -225,6 +225,9 @@ export const es: Translations = {
       },
     },
     vocab: {
+      label: 'Vocabulario de la lección',
+      labelTooltip:
+        'Escribe las palabras separadas por puntos (máximo {max}), pulsa el botón y la IA añadirá las traducciones. Revisa y edita antes de continuar.',
       inputHint: 'Introduce hasta {max} palabras separadas por puntos.',
       translating: 'Traduciendo…',
       translateBtn: 'Añadir traducciones y definiciones',

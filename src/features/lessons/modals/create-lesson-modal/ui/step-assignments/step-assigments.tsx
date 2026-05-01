@@ -70,7 +70,14 @@ export function StepAssignments({
           count > 0 ? t('lessons.assignments.regenerate') : t('lessons.assignments.generate');
 
         return (
-          <Panel key={type} className={cn('ui-radius-card', canShow && 'bg-info-soft!')}>
+          <Panel
+            key={type}
+            className={cn(
+              'ui-radius-card',
+              canShow && 'bg-info-soft!',
+              isLoading && 'ring-2 ring-primary/40 animate-pulse',
+            )}
+          >
             <div className="px-4 py-4 flex items-center justify-between gap-3">
               <div className="min-w-0">
                 <div className="ui-title">{ASSIGNMENT_TYPE_LABELS[type]}</div>

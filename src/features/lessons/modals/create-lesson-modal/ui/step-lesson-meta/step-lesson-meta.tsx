@@ -83,7 +83,6 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           title={t('lessons.meta.targetLanguage')}
           options={LANGUAGE_OPTIONS}
         />
-        <p className="text-xs text-muted-foreground px-1">{t('lessons.meta.targetLanguageHint')}</p>
       </div>
 
       <div className="space-y-1.5">
@@ -98,7 +97,6 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           title={t('lessons.meta.nativeLanguage')}
           options={LANGUAGE_OPTIONS}
         />
-        <p className="text-xs text-muted-foreground px-1">{t('lessons.meta.nativeLanguageHint')}</p>
       </div>
 
       <div className="space-y-1.5">
@@ -113,9 +111,6 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           title={t('lessons.meta.instructionLanguage')}
           options={INSTRUCTION_LANGUAGE_OPTIONS}
         />
-        <p className="text-xs text-muted-foreground px-1">
-          {t('lessons.meta.instructionLanguageHint')}
-        </p>
       </div>
 
       <div className="space-y-1.5">

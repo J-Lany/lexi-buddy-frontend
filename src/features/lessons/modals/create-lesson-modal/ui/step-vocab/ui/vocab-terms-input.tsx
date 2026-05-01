@@ -4,6 +4,7 @@ import { Loader } from 'lucide-react';
 
 import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
+import { FieldTooltip } from '@/shared/ui/field-tooltip';
 import { Textarea } from '@/shared/ui/textarea';
 
 type Props = {
@@ -31,8 +32,14 @@ export function VocabTermsInput({
 }: Props) {
   const { t } = useI18n();
 
+  const labelTooltip = t('lessons.vocab.labelTooltip').replace('{max}', String(maxTerms));
+
   return (
     <div className="grid gap-5">
+      <div className="flex items-center gap-1.5 px-1">
+        <span className="text-xs text-muted-foreground">{t('lessons.vocab.label')}</span>
+        <FieldTooltip content={labelTooltip} />
+      </div>
       <Textarea
         name="vocab"
         className="rounded-3xl"
