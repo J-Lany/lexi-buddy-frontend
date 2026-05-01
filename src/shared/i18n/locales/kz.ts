@@ -207,6 +207,16 @@ export const kz: Translations = {
       instructionLanguage: 'Assignment language',
       instructionLanguageHint: 'Language used in assignment questions',
       topicPlaceholder: 'Lesson topic',
+      tooltips: {
+        title: 'Оқушылар ботта көретін сабақ атауы. ЖИ-ге жіберілмейді.',
+        level: 'Қиындық деңгейі (A1–C2). ЖИ лексиканы және тапсырмаларды осыған сай таңдайды.',
+        ageGroup: 'ЖИ жасқа сай мысалдар мен лексиканы іріктейді.',
+        targetLanguage: 'Оқушылар үйренетін тіл. ЖИ тапсырмаларды осы тілде жасайды.',
+        nativeLanguage: 'Аударма мен сөздік кеңестер үшін пайдаланылады.',
+        instructionLanguage: 'Тапсырмалардағы сұрақтар мен нұсқаулар тілі.',
+        topic:
+          'ЖИ-ге сабақ контексті ретінде жіберіледі — неғұрлым нақты болса, соғұрлым жақсы нәтиже.',
+      },
     },
     vocab: {
       inputHint: 'Enter up to {max} words separated by dots.',

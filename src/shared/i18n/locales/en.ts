@@ -205,6 +205,17 @@ export const en = {
       instructionLanguage: 'Assignment language',
       instructionLanguageHint: 'Language used in assignment questions',
       topicPlaceholder: 'Lesson topic',
+      tooltips: {
+        title: 'The lesson name shown to students in the bot. Not passed to the AI.',
+        level: 'Difficulty level (A1–C2). AI uses it to calibrate task complexity and vocabulary.',
+        ageGroup: 'AI picks age-appropriate vocabulary and examples based on this.',
+        targetLanguage:
+          'The language students are practising. AI generates tasks in this language.',
+        nativeLanguage: 'Used for translations and vocabulary hints shown to students.',
+        instructionLanguage: 'The language of task instructions and questions.',
+        topic:
+          'Sent directly to the AI as lesson context — the more specific, the better the tasks.',
+      },
     },
     vocab: {
       inputHint: 'Enter up to {max} words separated by dots.',

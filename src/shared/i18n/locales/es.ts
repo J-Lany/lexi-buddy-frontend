@@ -207,6 +207,19 @@ export const es: Translations = {
       instructionLanguage: 'Assignment language',
       instructionLanguageHint: 'Language used in assignment questions',
       topicPlaceholder: 'Lesson topic',
+      tooltips: {
+        title: 'El nombre de la lección que los alumnos ven en el bot. No se envía a la IA.',
+        level:
+          'Nivel de dificultad (A1–C2). La IA lo usa para calibrar el vocabulario y las tareas.',
+        ageGroup: 'La IA selecciona vocabulario y ejemplos apropiados para la edad.',
+        targetLanguage:
+          'El idioma que practican los alumnos. La IA genera las tareas en este idioma.',
+        nativeLanguage:
+          'Se usa para las traducciones y pistas de vocabulario que se muestran a los alumnos.',
+        instructionLanguage: 'El idioma de las instrucciones y preguntas de las tareas.',
+        topic:
+          'Se envía directamente a la IA como contexto de la lección — cuanto más específico, mejores tareas.',
+      },
     },
     vocab: {
       inputHint: 'Enter up to {max} words separated by dots.',
