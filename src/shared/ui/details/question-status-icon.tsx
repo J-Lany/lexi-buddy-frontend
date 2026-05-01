@@ -32,9 +32,5 @@ export function StatusIcon({ variant, size = 'md' }: Props) {
     );
   }
 
-  return (
-    <span className="ui-status ui-status--neutral">
-      <Circle className={iconClass} />
-    </span>
-  );
+  return <Circle className={`${iconClass} text-muted-foreground/40`} />;
 }

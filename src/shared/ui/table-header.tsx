@@ -18,7 +18,7 @@ export function TableHeader({ colsClassName, columns }: Props) {
       {columns.map((col) => (
         <div
           key={col.label}
-          className={cn('ui-meta tracking-wide uppercase', col.align === 'right' && 'text-right')}
+          className={cn('ui-stat font-medium', col.align === 'right' && 'text-right')}
         >
           {col.label}
         </div>

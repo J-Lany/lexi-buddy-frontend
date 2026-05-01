@@ -84,6 +84,9 @@ export const ru: Translations = {
       successTitle: 'Запрос отправлен ✉️',
       successDesc: 'Ученик получит ваше приглашение.',
       errorTitle: 'Не удалось отправить запрос',
+      findStudent: 'Найти ученика',
+      messageLabel: 'Личное сообщение',
+      messageLabelOptional: '(необязательно)',
     },
     remove: {
       title: 'Удалить ученика?',

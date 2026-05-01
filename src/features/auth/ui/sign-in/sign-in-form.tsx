@@ -49,7 +49,7 @@ export default function SignInForm() {
       >
         <div className="flex flex-col gap-4">
           <Field>
-            <FieldLabel className="text-[13px] font-medium text-muted-foreground">Email</FieldLabel>
+            <FieldLabel>Email</FieldLabel>
             <Input
               {...register('email')}
               inputMode="email"
@@ -62,31 +62,26 @@ export default function SignInForm() {
           </Field>
 
           <Field>
-            <FieldLabel className="text-[13px] font-medium text-muted-foreground">
-              Password
-            </FieldLabel>
+            <FieldLabel>Password</FieldLabel>
             <Input {...register('password')} type="password" autoComplete="current-password" />
             {errors.password ? (
               <p className="mt-1 text-sm text-destructive">{errors.password.message}</p>
             ) : (
-              <FieldDescription className="text-xs text-muted-foreground">
-                Must be at least 8 characters.
-              </FieldDescription>
+              <FieldDescription>Must be at least 8 characters.</FieldDescription>
             )}
           </Field>
         </div>
 
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="h-11 w-full text-[15px] font-semibold"
-        >
+        <Button type="submit" disabled={isPending} size="lg" className="w-full">
           {isPending ? 'Signing in…' : 'Continue'}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground">
           Don’t have an account?{' '}
-          <Link href={routes.register} className="underline font-semibold text-primary">
+          <Link
+            href={routes.register}
+            className="font-semibold text-primary hover:underline transition-colors"
+          >
             Sign up
           </Link>
         </p>

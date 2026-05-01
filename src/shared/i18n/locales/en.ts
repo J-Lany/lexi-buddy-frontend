@@ -82,6 +82,9 @@ export const en = {
       successTitle: 'Request sent ✉️',
       successDesc: 'The student will receive your invitation.',
       errorTitle: 'Failed to send request',
+      findStudent: 'Find student',
+      messageLabel: 'Personal message',
+      messageLabelOptional: '(optional)',
     },
     remove: {
       title: 'Remove student?',

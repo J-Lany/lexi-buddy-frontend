@@ -1,25 +1,19 @@
 import { LessonDashboardDto } from '@/entities/lessons/api/get-lesson-dashboard';
-import { Badge } from '@/shared/ui/badge';
 
 export function VocabItem({ item }: { item: LessonDashboardDto['vocab'][number] }) {
   return (
-    <div
-      className="
-        rounded-2xl border border-sky-100 bg-white px-4 py-2.5
-        flex flex-col gap-1
-      "
-    >
+    <div className="ui-card-static rounded-2xl px-4 py-3 flex flex-col gap-1.5">
       <div>
-        <div className="font-medium">{item.term}</div>
-        <div className="text-muted-foreground">{item.translation || '—'}</div>
+        <div className="ui-title">{item.term}</div>
+        <div className="ui-meta">{item.translation || '—'}</div>
       </div>
 
       {item.synonyms?.length ? (
-        <div className="flex flex-wrap gap-1 mt-1">
+        <div className="flex flex-wrap gap-1.5 mt-0.5">
           {item.synonyms.map((syn) => (
-            <Badge key={syn} variant="outline" className="rounded-full text-xs">
+            <span key={syn} className="ui-pill">
               {syn}
-            </Badge>
+            </span>
           ))}
         </div>
       ) : null}

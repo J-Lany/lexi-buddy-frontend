@@ -16,9 +16,7 @@ export function HeaderSection({ title, levelLabel, studentsCount }: Props) {
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="text-[22px] sm:text-[24px] font-semibold tracking-tight truncate">
-              {title}
-            </div>
+            <div className="ui-card-title truncate">{title}</div>
 
             {levelLabel ? (
               <span className="ui-pill !h-7 !px-3 opacity-90 shrink-0">{levelLabel}</span>

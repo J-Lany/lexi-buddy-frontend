@@ -51,7 +51,7 @@ export default function SignUpForm() {
       <form className="flex w-full flex-col gap-6" onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
         <div className="flex flex-col gap-4">
           <Field>
-            <FieldLabel className="text-[13px] font-medium text-muted-foreground">Email</FieldLabel>
+            <FieldLabel>Email</FieldLabel>
             <Input {...register('email')} placeholder="m@example.com" autoComplete="email" />
             {errors.email && (
               <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
@@ -59,23 +59,17 @@ export default function SignUpForm() {
           </Field>
 
           <Field>
-            <FieldLabel className="text-[13px] font-medium text-muted-foreground">
-              Password
-            </FieldLabel>
+            <FieldLabel>Password</FieldLabel>
             <Input {...register('password')} type="password" autoComplete="new-password" />
             {errors.password ? (
               <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
             ) : (
-              <FieldDescription className="text-xs text-muted-foreground">
-                Must be at least 8 characters long.
-              </FieldDescription>
+              <FieldDescription>Must be at least 8 characters long.</FieldDescription>
             )}
           </Field>
 
           <Field>
-            <FieldLabel className="text-[13px] font-medium text-muted-foreground">
-              Confirm Password
-            </FieldLabel>
+            <FieldLabel>Confirm Password</FieldLabel>
             <Input {...register('confirmPassword')} type="password" autoComplete="new-password" />
             {errors.confirmPassword && (
               <p className="text-sm text-destructive mt-1">{errors.confirmPassword.message}</p>
@@ -83,17 +77,16 @@ export default function SignUpForm() {
           </Field>
         </div>
 
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="h-11 w-full text-[15px] font-semibold"
-        >
+        <Button type="submit" disabled={isPending} size="lg" className="w-full">
           {isPending ? 'Creating…' : 'Create Account'}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}
-          <Link href={routes.login} className="underline font-medium text-primary">
+          <Link
+            href={routes.login}
+            className="font-semibold text-primary hover:underline transition-colors"
+          >
             Sign in
           </Link>
         </p>

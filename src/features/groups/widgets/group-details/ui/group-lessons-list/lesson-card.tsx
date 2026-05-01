@@ -6,7 +6,7 @@ export function LessonCard({ lesson }: { lesson: GroupLesson }) {
     <div
       className="
         ui-card ui-radius-card
-        p-4
+        px-5 py-4
         cursor-pointer
         transition
         active:scale-[0.99]
