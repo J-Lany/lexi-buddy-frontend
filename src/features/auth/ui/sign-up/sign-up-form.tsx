@@ -1,9 +1,10 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -13,10 +14,14 @@ import { AuthCard } from '@/features/auth/ui/shared/auth-card';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
-import { Field, FieldDescription, FieldLabel } from '@/shared/ui/field';
+import { Field, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
 
 export default function SignUpForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -28,31 +33,40 @@ export default function SignUpForm() {
   const { mutate, isPending } = useSignupMutation();
 
   const onSubmit = (data: SignUpFormValues) => {
+    setAuthError(null);
     const { email, password } = data;
-    const payload = { email, password };
-    mutate(payload, {
-      onSuccess: () => {
-        toast.success('Account created 🎉', {
-          description: 'Check your email to activate your account.',
-        });
-        router.push(routes.login);
+    mutate(
+      { email, password },
+      {
+        onSuccess: () => {
+          toast.success('Account created', {
+            description: 'Check your email to activate your account.',
+          });
+          router.push(routes.login);
+        },
+        onError: (error) => {
+          setAuthError(getErrorMessage(error));
+        },
       },
-      onError: (error) => {
-        toast.error('Something went wrong', { description: getErrorMessage(error) });
-      },
-    });
+    );
   };
 
   return (
-    <AuthCard
-      title="Create an account"
-      subtitle="Enter your information below to create your account."
-    >
-      <form className="flex w-full flex-col gap-6" onSubmit={(e) => void handleSubmit(onSubmit)(e)}>
+    <AuthCard title="Create an account" subtitle="Enter your details to create a free account.">
+      <form
+        className="flex w-full flex-col gap-6"
+        onSubmit={(e) => void handleSubmit(onSubmit)(e)}
+        noValidate
+      >
         <div className="flex flex-col gap-4">
           <Field>
             <FieldLabel>Email</FieldLabel>
-            <Input {...register('email')} placeholder="m@example.com" autoComplete="email" />
+            <Input
+              {...register('email')}
+              placeholder="name@example.com"
+              autoComplete="email"
+              inputMode="email"
+            />
             {errors.email && (
               <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
             )}
@@ -60,25 +74,68 @@ export default function SignUpForm() {
 
           <Field>
             <FieldLabel>Password</FieldLabel>
-            <Input {...register('password')} type="password" autoComplete="new-password" />
-            {errors.password ? (
+            <div className="relative">
+              <Input
+                {...register('password')}
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="new-password"
+                className="pr-10"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setShowPassword((v) => !v)}
+                tabIndex={-1}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+            {errors.password && (
               <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
-            ) : (
-              <FieldDescription>Must be at least 8 characters long.</FieldDescription>
             )}
           </Field>
 
           <Field>
             <FieldLabel>Confirm Password</FieldLabel>
-            <Input {...register('confirmPassword')} type="password" autoComplete="new-password" />
+            <div className="relative">
+              <Input
+                {...register('confirmPassword')}
+                type={showConfirm ? 'text' : 'password'}
+                autoComplete="new-password"
+                className="pr-10"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setShowConfirm((v) => !v)}
+                tabIndex={-1}
+                aria-label={showConfirm ? 'Hide password' : 'Show password'}
+              >
+                {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
             {errors.confirmPassword && (
               <p className="text-sm text-destructive mt-1">{errors.confirmPassword.message}</p>
             )}
           </Field>
         </div>
 
+        {authError && (
+          <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+            {authError}
+          </p>
+        )}
+
         <Button type="submit" disabled={isPending} size="lg" className="w-full">
-          {isPending ? 'Creating…' : 'Create Account'}
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Creating…
+            </>
+          ) : (
+            'Create Account'
+          )}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground">

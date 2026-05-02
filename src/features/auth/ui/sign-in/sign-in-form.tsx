@@ -1,11 +1,11 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 import { loginSchema, SignInFormValues } from '@/features/auth/lib/schemas';
 import { useSignInMutation } from '@/features/auth/model/use-sigin';
@@ -13,12 +13,14 @@ import { AuthCard } from '@/features/auth/ui/shared/auth-card';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
-import { Field, FieldDescription, FieldLabel } from '@/shared/ui/field';
+import { Field, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
 
 export default function SignInForm() {
   const router = useRouter();
   const { mutate, isPending } = useSignInMutation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const {
     register,
@@ -30,10 +32,11 @@ export default function SignInForm() {
   });
 
   const onSubmit = (data: SignInFormValues) => {
+    setAuthError(null);
     mutate(data, {
       onSuccess: () => router.push(routes.students),
       onError: (error) => {
-        toast.error('Couldn’t sign in', { description: getErrorMessage(error) });
+        setAuthError(getErrorMessage(error));
       },
     });
   };
@@ -63,21 +66,48 @@ export default function SignInForm() {
 
           <Field>
             <FieldLabel>Password</FieldLabel>
-            <Input {...register('password')} type="password" autoComplete="current-password" />
-            {errors.password ? (
+            <div className="relative">
+              <Input
+                {...register('password')}
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                className="pr-10"
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setShowPassword((v) => !v)}
+                tabIndex={-1}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
+            </div>
+            {errors.password && (
               <p className="mt-1 text-sm text-destructive">{errors.password.message}</p>
-            ) : (
-              <FieldDescription>Must be at least 8 characters.</FieldDescription>
             )}
           </Field>
         </div>
 
+        {authError && (
+          <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">
+            {authError}
+          </p>
+        )}
+
         <Button type="submit" disabled={isPending} size="lg" className="w-full">
-          {isPending ? 'Signing in…' : 'Continue'}
+          {isPending ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Signing in…
+            </>
+          ) : (
+            'Continue'
+          )}
         </Button>
 
         <p className="text-center text-sm text-muted-foreground">
-          Don’t have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link
             href={routes.register}
             className="font-semibold text-primary hover:underline transition-colors"
