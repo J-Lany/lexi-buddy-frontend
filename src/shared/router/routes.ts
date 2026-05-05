@@ -10,6 +10,7 @@ export const routes = {
   students: '/students',
   qa: '/qa',
   adminMetrics: '/admin/metrics',
+  confirmPasswordChange: '/confirm-password-change',
 } as const;
 
 export type AppRoutes = (typeof routes)[keyof typeof routes];
