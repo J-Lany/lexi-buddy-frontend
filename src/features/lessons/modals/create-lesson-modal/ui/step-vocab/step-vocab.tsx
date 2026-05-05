@@ -51,7 +51,7 @@ export function StepVocab({ draft, onChange }: Props) {
     mutate(
       {
         terms,
-        topic: draft.topic,
+        topic: draft.topic ?? '',
         targetLanguage: draft.targetLanguage,
         nativeLanguage: draft.nativeLanguage,
         instructionLanguage: draft.instructionLanguage,

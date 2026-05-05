@@ -90,30 +90,144 @@ export function HeroSection() {
             unoptimized
           />
 
-          <div className="fc fc1">
-            <div className="fc-label">AI glossary</div>
-            <div className="fc-row">
-              <span className="fc-dot" /> boiled → <b>сваренный</b>
-            </div>
-            <div className="fc-row" style={{ marginTop: 4 }}>
-              <span className="fc-dot or" /> fried → <b>жареный</b>
+          {/* Card 1: Teacher Dashboard */}
+          <div className="fc fc1" style={{ top: '8%', left: '-40%' }}>
+            <div className="fc-label">Teacher dashboard</div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {(
+                [
+                  { num: '5', lbl: 'Students' },
+                  { num: '3', lbl: 'Lessons' },
+                  { num: '87%', lbl: 'Avg progress' },
+                  { num: '4.8', lbl: 'Avg score' },
+                ] as const
+              ).map(({ num, lbl }) => (
+                <div
+                  key={lbl}
+                  style={{ background: '#e0f7f9', borderRadius: 10, padding: '8px 10px' }}
+                >
+                  <div
+                    style={{
+                      fontFamily: 'var(--mono)',
+                      fontSize: 18,
+                      fontWeight: 700,
+                      color: '#1a9fac',
+                      lineHeight: 1,
+                    }}
+                  >
+                    {num}
+                  </div>
+                  <div style={{ fontSize: 10, color: '#627e82', marginTop: 3, fontWeight: 500 }}>
+                    {lbl}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="fc fc2">
-            <div className="fc-label">Student progress</div>
-            <div className="fc-row">
-              <span className="fc-dot gr" /> <b>12 / 15</b> tasks done
+          {/* Card 2: Student receives in Telegram */}
+          <div className="fc fc2" style={{ top: '55%', right: '-28%' }}>
+            <div className="fc-label">
+              <svg viewBox="0 0 24 24" width="11" height="11" fill="#2dbfcc" aria-hidden>
+                <path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm5.78 8.25-2.01 9.49c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.722z" />
+              </svg>
+              Student receives in Telegram
             </div>
-            <div className="fc-prog">
-              <div className="fc-prog-bar" />
+            <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+              <div
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: 9,
+                  background: '#2dbfcc',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}
+              >
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="white" aria-hidden>
+                  <path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm5.78 8.25-2.01 9.49c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.722z" />
+                </svg>
+              </div>
+              <div>
+                <div style={{ fontSize: 13, fontWeight: 700, color: '#0d2b2e', lineHeight: 1.3 }}>
+                  📚 New lesson assigned!
+                </div>
+                <div style={{ fontSize: 11.5, color: '#627e82', marginTop: 3, lineHeight: 1.5 }}>
+                  Food &amp; Cooking · B1
+                  <br />4 exercises ready for you
+                </div>
+                <div
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 4,
+                    marginTop: 6,
+                    background: 'rgba(45,191,204,0.12)',
+                    color: '#1a9fac',
+                    fontFamily: 'var(--mono)',
+                    fontSize: 10.5,
+                    fontWeight: 700,
+                    padding: '2px 8px',
+                    borderRadius: 100,
+                    border: '1px solid rgba(45,191,204,0.25)',
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor" aria-hidden>
+                    <path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm5.78 8.25-2.01 9.49c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.722z" />
+                  </svg>
+                  @lexi_buddy_bot
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="fc fc3">
-            <div className="fc-label">New lesson ready ⚡</div>
-            <div className="fc-row">
-              <b>Food &amp; Cooking</b> · B1 · Adults
+          {/* Card 3: Lesson completed */}
+          <div className="fc fc3" style={{ bottom: '2%', left: '-32%' }}>
+            <div className="fc-label">Lesson completed ✓</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+              <div
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: 9,
+                  background: '#e0f7f9',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 17,
+                  flexShrink: 0,
+                }}
+              >
+                ⚡
+              </div>
+              <div>
+                <div style={{ fontSize: 13.5, fontWeight: 700, color: '#0d2b2e' }}>
+                  Food &amp; Cooking
+                </div>
+                <div style={{ fontSize: 11.5, color: '#627e82', marginTop: 2, fontWeight: 400 }}>
+                  Anna · B1 · 3 of 4 done
+                </div>
+              </div>
+            </div>
+            <div style={{ height: 5, borderRadius: 4, overflow: 'hidden', background: '#e0f7f9' }}>
+              <div
+                style={{ width: '75%', height: '100%', background: '#2dbfcc', borderRadius: 4 }}
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: 5,
+                fontSize: 10.5,
+                fontWeight: 600,
+                color: '#627e82',
+              }}
+            >
+              <span>Progress</span>
+              <span>75%</span>
             </div>
           </div>
         </div>

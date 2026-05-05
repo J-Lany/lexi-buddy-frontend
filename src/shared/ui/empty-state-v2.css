@@ -1,0 +1,84 @@
+.es-v2-glyph {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 280px;
+  border-radius: 36px;
+  border: 1px solid color-mix(in oklch, var(--primary) 14%, white 86%);
+  background:
+    radial-gradient(
+      circle at 30% 22%,
+      color-mix(in oklch, var(--primary) 38%, white 62%) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 78% 82%,
+      color-mix(in oklch, var(--primary) 22%, white 78%) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      160deg,
+      color-mix(in oklch, var(--primary) 14%, white 86%),
+      color-mix(in oklch, var(--primary) 4%, white 96%)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 30px 60px rgba(15, 116, 143, 0.18),
+    0 4px 12px rgba(15, 116, 143, 0.06);
+  display: grid;
+  place-items: center;
+}
+
+.es-v2-glyph svg {
+  width: 56%;
+  height: 56%;
+  color: color-mix(in oklch, var(--primary) 60%, black 40%);
+  stroke-width: 1.4;
+}
+
+.es-v2-pin {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--background);
+  border: 1px solid var(--border-soft);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 8px 18px rgba(15, 116, 143, 0.12);
+  white-space: nowrap;
+}
+
+.es-v2-pin .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.es-v2-pin.tl {
+  top: 18px;
+  left: -18px;
+}
+
+.es-v2-pin.br {
+  bottom: 24px;
+  right: -22px;
+}
+
+@media (max-width: 639px) {
+  .es-v2-glyph {
+    max-width: 180px;
+  }
+
+  .es-v2-glyph svg {
+    width: 50%;
+    height: 50%;
+  }
+
+  .es-v2-pin {
+    display: none;
+  }
+}

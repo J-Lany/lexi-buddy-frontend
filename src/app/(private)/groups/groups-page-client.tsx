@@ -1,8 +1,8 @@
 'use client';
 
-import { useMyLessonsQuery } from '@/entities/lessons/model/query/get-my-lessons';
-import { CreateLessonModal } from '@/features/lessons/modals/create-lesson-modal/create-lesson-modal';
-import { LessonsListWidget } from '@/features/lessons/widgets/lessons-list/lessons-list-widget';
+import { useMyGroupsQuery } from '@/entities/groups/model/query/get-my-groups';
+import { CreateGroupModal } from '@/features/groups/modals/create-group/create-group-modal';
+import { GroupsListWidget } from '@/features/groups/widgets/groups-list/groups-list-widget';
 import { useMergedQuery } from '@/shared/hooks/use-merged-query';
 import { useI18n } from '@/shared/i18n';
 import { Input } from '@/shared/ui/input';
@@ -11,13 +11,13 @@ const queryKeys = {
   q: 'q',
 } as const;
 
-export default function LessonsPageClient() {
+export default function GroupsPageClient() {
   const { t } = useI18n();
   const { getOr, navigateWith } = useMergedQuery();
   const query = getOr(queryKeys.q, '');
 
-  const { data, isLoading, isError } = useMyLessonsQuery();
-  const lessonsEmpty = !isLoading && !isError && (data?.length ?? 0) === 0 && !query;
+  const { data, isLoading, isError } = useMyGroupsQuery();
+  const groupsEmpty = !isLoading && !isError && (data?.length ?? 0) === 0 && !query;
 
   return (
     <main>
@@ -27,18 +27,18 @@ export default function LessonsPageClient() {
             <Input
               value={query}
               onChange={(e) => navigateWith({ [queryKeys.q]: e.target.value })}
-              placeholder={t('lessons.page.search')}
+              placeholder={t('students.page.searchGroups')}
               className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto"
             />
-            {!lessonsEmpty && (
+            {!groupsEmpty && (
               <div className="w-full sm:w-auto shrink-0">
-                <CreateLessonModal />
+                <CreateGroupModal />
               </div>
             )}
           </div>
         </div>
 
-        <LessonsListWidget query={query} />
+        <GroupsListWidget query={query} />
       </section>
     </main>
   );

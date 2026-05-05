@@ -28,6 +28,7 @@ import { ageGroup, level } from '@/shared/domain/common';
 import { instructionLanguage } from '@/shared/domain/instruction-language';
 import { language } from '@/shared/domain/language';
 import { useI18n } from '@/shared/i18n';
+import { cn } from '@/shared/lib/cn';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -49,8 +50,11 @@ const initialDraft: CreateLessonDraft = {
 
 type Steps = 1 | 2 | 3 | 4;
 
-export function CreateLessonModal() {
+type TriggerProps = Omit<React.ComponentProps<typeof Button>, 'type' | 'children'>;
+
+export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProps } = {}) {
   const { t } = useI18n();
+  const { className: triggerClassName, ...restTriggerProps } = triggerProps ?? {};
   const { data: teacherProfile } = useTeacherProfileQuery();
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<Steps>(1);
@@ -93,10 +97,7 @@ export function CreateLessonModal() {
   };
 
   const canNextMeta =
-    draft.title.trim().length > 0 &&
-    Boolean(draft.level) &&
-    draft.topic.trim().length > 0 &&
-    Boolean(draft.ageCategory);
+    draft.title.trim().length > 0 && Boolean(draft.level) && Boolean(draft.ageCategory);
 
   const canNextVocab = canNextMeta && (draft.vocabItems?.length ?? 0) > 0;
 
@@ -119,7 +120,7 @@ export function CreateLessonModal() {
         type: assignmentType,
         questionsCount: (draft.vocabItems ?? []).length,
         terms: (draft.vocabItems ?? []).map((term) => term.term),
-        topic: draft.topic,
+        topic: draft.topic ?? '',
         targetLanguage: draft.targetLanguage,
         nativeLanguage: draft.nativeLanguage,
         instructionLanguage: draft.instructionLanguage,
@@ -279,7 +280,8 @@ export function CreateLessonModal() {
         <Button
           type="button"
           variant="outline"
-          className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
+          className={cn('rounded-full whitespace-nowrap px-5 w-full sm:w-auto', triggerClassName)}
+          {...restTriggerProps}
         >
           {t('lessons.page.newLesson')}
         </Button>
