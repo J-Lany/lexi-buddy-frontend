@@ -8,7 +8,7 @@ import type { Language } from '@/shared/domain/language';
 export type CreateLessonDraft = {
   title: string;
   level: Level;
-  topic: string;
+  topic?: string;
   ageCategory: AgeGroup;
   description: string;
   targetLanguage: Language;

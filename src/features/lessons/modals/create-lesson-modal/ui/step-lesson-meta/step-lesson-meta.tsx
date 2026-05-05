@@ -122,7 +122,7 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           name="topic"
           minRows={5}
           placeholder={t('lessons.meta.topicPlaceholder')}
-          value={draft.topic}
+          value={draft.topic ?? ''}
           onChange={(e) => onChange({ topic: e.target.value })}
         />
       </div>

@@ -93,10 +93,7 @@ export function CreateLessonModal() {
   };
 
   const canNextMeta =
-    draft.title.trim().length > 0 &&
-    Boolean(draft.level) &&
-    draft.topic.trim().length > 0 &&
-    Boolean(draft.ageCategory);
+    draft.title.trim().length > 0 && Boolean(draft.level) && Boolean(draft.ageCategory);
 
   const canNextVocab = canNextMeta && (draft.vocabItems?.length ?? 0) > 0;
 
@@ -119,7 +116,7 @@ export function CreateLessonModal() {
         type: assignmentType,
         questionsCount: (draft.vocabItems ?? []).length,
         terms: (draft.vocabItems ?? []).map((term) => term.term),
-        topic: draft.topic,
+        topic: draft.topic ?? '',
         targetLanguage: draft.targetLanguage,
         nativeLanguage: draft.nativeLanguage,
         instructionLanguage: draft.instructionLanguage,
