@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import { mainNav } from '@/shared/catalogs/navigation/main-nav';
 import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
-import { routes } from '@/shared/router/routes';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -15,9 +14,8 @@ export function Sidebar() {
   return (
     <nav className="ui-sidebar-nav">
       <div className="ui-sidebar-list">
-        {mainNav.map(({ label, labelKey, href }) => {
-          const isGroupPage = pathname?.startsWith('/groups') && href === routes.students;
-          const isActive = pathname?.startsWith(href) || isGroupPage;
+        {mainNav.map(({ label, labelKey, href, icon: Icon }) => {
+          const isActive = pathname?.startsWith(href);
 
           return (
             <Link
@@ -26,7 +24,17 @@ export function Sidebar() {
               aria-current={isActive ? 'page' : undefined}
               className={cn('ui-sidebar-item ui-focus', isActive && 'ui-sidebar-item-active')}
             >
-              {t(labelKey) || label}
+              <span className="flex items-center gap-3">
+                {Icon && (
+                  <Icon
+                    aria-hidden
+                    className="shrink-0"
+                    style={{ width: 16, height: 16, opacity: isActive ? 1 : 0.65 }}
+                    strokeWidth={isActive ? 2 : 1.75}
+                  />
+                )}
+                {t(labelKey) || label}
+              </span>
             </Link>
           );
         })}

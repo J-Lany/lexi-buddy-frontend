@@ -3,6 +3,7 @@ import type { Translations } from './en';
 export const ru: Translations = {
   nav: {
     students: 'Ученики',
+    groups: 'Группы',
     lessons: 'Уроки',
     settings: 'Настройки',
     qa: 'Вопросы',

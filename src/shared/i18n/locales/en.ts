@@ -1,6 +1,7 @@
 export const en = {
   nav: {
     students: 'Students',
+    groups: 'Groups',
     lessons: 'Lessons',
     settings: 'Settings',
     qa: 'Q&A',

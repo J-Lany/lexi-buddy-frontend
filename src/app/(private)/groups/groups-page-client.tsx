@@ -1,7 +1,8 @@
 'use client';
 
-import { useMyStudentsQuery } from '@/entities/students/model/queries/get-my-students';
-import { InviteStudentModal, StudentsListWidget } from '@/features/students';
+import { useMyGroupsQuery } from '@/entities/groups/model/query/get-my-groups';
+import { CreateGroupModal } from '@/features/groups/modals/create-group/create-group-modal';
+import { GroupsListWidget } from '@/features/groups/widgets/groups-list/groups-list-widget';
 import { useMergedQuery } from '@/shared/hooks/use-merged-query';
 import { useI18n } from '@/shared/i18n';
 import { Input } from '@/shared/ui/input';
@@ -10,13 +11,13 @@ const queryKeys = {
   q: 'q',
 } as const;
 
-export default function StudentsPageClient() {
+export default function GroupsPageClient() {
   const { t } = useI18n();
   const { getOr, navigateWith } = useMergedQuery();
   const query = getOr(queryKeys.q, '');
 
-  const { data, isLoading, isError } = useMyStudentsQuery();
-  const studentsEmpty = !isLoading && !isError && (data?.length ?? 0) === 0 && !query;
+  const { data, isLoading, isError } = useMyGroupsQuery();
+  const groupsEmpty = !isLoading && !isError && (data?.length ?? 0) === 0 && !query;
 
   return (
     <main>
@@ -26,18 +27,18 @@ export default function StudentsPageClient() {
             <Input
               value={query}
               onChange={(e) => navigateWith({ [queryKeys.q]: e.target.value })}
-              placeholder={t('students.page.searchStudents')}
+              placeholder={t('students.page.searchGroups')}
               className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto"
             />
-            {!studentsEmpty && (
+            {!groupsEmpty && (
               <div className="w-full sm:w-auto shrink-0">
-                <InviteStudentModal />
+                <CreateGroupModal />
               </div>
             )}
           </div>
         </div>
 
-        <StudentsListWidget query={query} />
+        <GroupsListWidget query={query} />
       </section>
     </main>
   );

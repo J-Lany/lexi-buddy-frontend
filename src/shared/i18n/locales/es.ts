@@ -3,6 +3,7 @@ import type { Translations } from './en';
 export const es: Translations = {
   nav: {
     students: 'Alumnos',
+    groups: 'Grupos',
     lessons: 'Lecciones',
     settings: 'Configuración',
     qa: 'Preguntas',

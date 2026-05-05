@@ -3,6 +3,7 @@ import type { Translations } from './en';
 export const kz: Translations = {
   nav: {
     students: 'Оқушылар',
+    groups: 'Топтар',
     lessons: 'Сабақтар',
     settings: 'Параметрлер',
     qa: 'Сұрақтар',
