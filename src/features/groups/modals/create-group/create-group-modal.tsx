@@ -9,6 +9,7 @@ import { StepDetails } from '@/features/groups/modals/create-group/ui/step-detai
 import { StepStudents } from '@/features/groups/modals/create-group/ui/step-students';
 import { useMyStudentsQuery } from '@/features/students';
 import { level } from '@/shared/domain/common';
+import { cn } from '@/shared/lib/cn';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -22,7 +23,10 @@ const initialDraft: CreateGroupDraft = {
   studentIds: [],
 };
 
-export function CreateGroupModal() {
+type TriggerProps = Omit<React.ComponentProps<typeof Button>, 'type' | 'children'>;
+
+export function CreateGroupModal({ triggerProps }: { triggerProps?: TriggerProps } = {}) {
+  const { className: triggerClassName, ...restTriggerProps } = triggerProps ?? {};
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<1 | 2>(1);
   const [draft, setDraft] = React.useState<CreateGroupDraft>(initialDraft);
@@ -76,7 +80,8 @@ export function CreateGroupModal() {
         <Button
           type="button"
           variant="outline"
-          className="w-full whitespace-nowrap rounded-full px-5 sm:w-auto"
+          className={cn('w-full whitespace-nowrap rounded-full px-5 sm:w-auto', triggerClassName)}
+          {...restTriggerProps}
         >
           + Create a new group
         </Button>

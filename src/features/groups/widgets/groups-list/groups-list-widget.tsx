@@ -5,27 +5,30 @@ import { useMemo } from 'react';
 
 import { useMyGroupsQuery } from '@/entities/groups/model/query/get-my-groups';
 import { filterGroupsByQuery } from '@/features/groups/lib/filter-groups';
+import { CreateGroupModal } from '@/features/groups/modals/create-group/create-group-modal';
 import { GroupsTable } from '@/features/groups/widgets/groups-list/ui/ groups-table/group-table';
 import { GroupsTableSkeleton } from '@/features/groups/widgets/groups-list/ui/groups-table-skeleton';
+import { useI18n } from '@/shared/i18n';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
+import { EmptyStateV2 } from '@/shared/ui/empty-state-v2';
 
 type Props = {
   query: string;
 };
 
 export function GroupsListWidget({ query }: Props) {
+  const { t } = useI18n();
   const { data, isLoading, isError } = useMyGroupsQuery();
 
   const filtered = useMemo(() => {
     return filterGroupsByQuery(data ?? [], query);
   }, [data, query]);
 
-  const showSkeleton = isLoading;
-  const showError = isError;
-
   const groupsCount = data?.length ?? 0;
 
-  const showEmpty = !isLoading && !isError && groupsCount === 0;
+  const showSkeleton = isLoading;
+  const showError = isError;
+  const showEmpty = !isLoading && !isError && groupsCount === 0 && !query;
   const showNoResults = !isLoading && !isError && groupsCount > 0 && filtered.length === 0;
   const showTable = !isLoading && !isError && filtered.length > 0;
 
@@ -38,30 +41,41 @@ export function GroupsListWidget({ query }: Props) {
       {showError && (
         <EmptyStateCard
           surface="canvas"
-          title="Something went wrong"
-          description="Try refreshing the page."
+          title={t('groups.list.error')}
+          description={t('groups.list.errorDesc')}
         />
       )}
 
       {showEmpty && (
-        <EmptyStateCard
-          icon={
-            <Users
-              className="h-5 w-5 sm:h-6 sm:w-6 text-[color:color-mix(in_oklch,var(--primary)_55%,black_45%)]"
-              aria-hidden
+        <EmptyStateV2
+          icon={<Users strokeWidth={1.4} />}
+          title={t('groups.list.empty')}
+          description={t('groups.list.emptyDesc')}
+          steps={[
+            { title: t('groups.list.emptyStep1Title'), desc: t('groups.list.emptyStep1Desc') },
+            { title: t('groups.list.emptyStep2Title'), desc: t('groups.list.emptyStep2Desc') },
+            { title: t('groups.list.emptyStep3Title'), desc: t('groups.list.emptyStep3Desc') },
+          ]}
+          primaryAction={
+            <CreateGroupModal
+              triggerProps={{
+                variant: 'default',
+                size: 'lg',
+                className:
+                  'h-11 w-full rounded-2xl px-6 text-[15px] font-semibold shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:h-12 sm:w-56',
+              }}
             />
           }
-          title="No groups yet"
-          description="Create a group to organize students and lessons."
-          hint="Tap “Create a group” above"
+          pinTopLeft="9-Б"
+          pinBottomRight="3 ученика"
         />
       )}
 
       {showNoResults && (
         <EmptyStateCard
           surface="canvas"
-          title="No results"
-          description="Check the spelling or try another keyword."
+          title={t('groups.list.noResults')}
+          description={t('groups.list.noResultsDesc')}
         />
       )}
     </section>

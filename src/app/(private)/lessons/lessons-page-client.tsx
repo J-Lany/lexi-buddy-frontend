@@ -1,5 +1,6 @@
 'use client';
 
+import { useMyLessonsQuery } from '@/entities/lessons/model/query/get-my-lessons';
 import { CreateLessonModal } from '@/features/lessons/modals/create-lesson-modal/create-lesson-modal';
 import { LessonsListWidget } from '@/features/lessons/widgets/lessons-list/lessons-list-widget';
 import { useMergedQuery } from '@/shared/hooks/use-merged-query';
@@ -15,6 +16,9 @@ export default function LessonsPageClient() {
   const { getOr, navigateWith } = useMergedQuery();
   const query = getOr(queryKeys.q, '');
 
+  const { data, isLoading, isError } = useMyLessonsQuery();
+  const lessonsEmpty = !isLoading && !isError && (data?.length ?? 0) === 0 && !query;
+
   return (
     <main>
       <section className="max-w-5xl flex flex-col gap-6">
@@ -26,9 +30,11 @@ export default function LessonsPageClient() {
               placeholder={t('lessons.page.search')}
               className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto"
             />
-            <div className="w-full sm:w-auto shrink-0">
-              <CreateLessonModal />
-            </div>
+            {!lessonsEmpty && (
+              <div className="w-full sm:w-auto shrink-0">
+                <CreateLessonModal />
+              </div>
+            )}
           </div>
         </div>
 

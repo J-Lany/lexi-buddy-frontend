@@ -6,6 +6,8 @@ import {
   StudentsTab,
   studentsTabs,
 } from '@/app/(private)/students/_config/students-tabs';
+import { useMyGroupsQuery } from '@/entities/groups/model/query/get-my-groups';
+import { useMyStudentsQuery } from '@/entities/students/model/queries/get-my-students';
 import { CreateGroupModal } from '@/features/groups/modals/create-group/create-group-modal';
 import { GroupsListWidget } from '@/features/groups/widgets/groups-list/groups-list-widget';
 import { InviteStudentModal, StudentsListWidget } from '@/features/students';
@@ -25,6 +27,13 @@ export default function StudentsPageClient() {
 
   const tab = normalizeStudentsTab(get(queryKeys.tab));
   const query = getOr(queryKeys.q, '');
+
+  const { data: studentsData, isLoading: sLoading, isError: sError } = useMyStudentsQuery();
+  const { data: groupsData, isLoading: gLoading, isError: gError } = useMyGroupsQuery();
+
+  const studentsEmpty = !sLoading && !sError && (studentsData?.length ?? 0) === 0 && !query;
+  const groupsEmpty = !gLoading && !gError && (groupsData?.length ?? 0) === 0 && !query;
+  const showAction = tab === studentsTabs.students ? !studentsEmpty : !groupsEmpty;
 
   const action = tab === studentsTabs.students ? <InviteStudentModal /> : <CreateGroupModal />;
 
@@ -53,7 +62,7 @@ export default function StudentsPageClient() {
               className="w-full sm:flex-1 sm:min-w-[260px] sm:w-auto"
             />
 
-            <div className="w-full sm:w-auto shrink-0">{action}</div>
+            {showAction && <div className="w-full sm:w-auto shrink-0">{action}</div>}
           </div>
         </div>
 

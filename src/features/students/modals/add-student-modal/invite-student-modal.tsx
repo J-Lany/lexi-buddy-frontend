@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import type { StudentBySearchDto } from '@/entities/students/api/search-students';
 import { useInviteStudentMutation } from '@/entities/students/model/mutation/invite-student';
 import { useI18n } from '@/shared/i18n';
+import { cn } from '@/shared/lib/cn';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
@@ -25,8 +26,11 @@ const initialState: FormState = {
   message: '',
 };
 
-export function InviteStudentModal() {
+type TriggerProps = Omit<React.ComponentProps<typeof Button>, 'type' | 'children'>;
+
+export function InviteStudentModal({ triggerProps }: { triggerProps?: TriggerProps } = {}) {
   const { t } = useI18n();
+  const { className: triggerClassName, ...restTriggerProps } = triggerProps ?? {};
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState<FormState>(initialState);
 
@@ -70,7 +74,8 @@ export function InviteStudentModal() {
         <Button
           type="button"
           variant="outline"
-          className="rounded-full whitespace-nowrap px-5 w-full sm:w-auto"
+          className={cn('rounded-full whitespace-nowrap px-5 w-full sm:w-auto', triggerClassName)}
+          {...restTriggerProps}
         >
           {t('students.invite.triggerBtn')}
         </Button>
