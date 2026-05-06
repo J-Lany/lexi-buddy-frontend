@@ -8,6 +8,7 @@ export const ru: Translations = {
     settings: 'Настройки',
     qa: 'Вопросы',
     logout: 'Выйти',
+    user: 'Пользователь',
   },
   settings: {
     title: 'Настройки',
@@ -171,6 +172,18 @@ export const ru: Translations = {
       emptyStep3Desc: 'Один клик — у всех новое задание в Telegram',
       noResults: 'Ничего не найдено',
       noResultsDesc: 'Проверьте написание или попробуйте другое слово.',
+    },
+    create: {
+      trigger: '+ Создать новую группу',
+      titleStep1: 'Детали группы',
+      titleStep2: 'Добавить учеников',
+      next: 'Далее',
+      back: 'Назад',
+      creating: 'Создание…',
+      create: 'Создать',
+      successTitle: 'Группа создана 🎉',
+      successDesc: 'Группа добавлена в ваш список.',
+      errorTitle: 'Не удалось создать группу',
     },
   },
   lessons: {
@@ -465,6 +478,19 @@ export const ru: Translations = {
       helpQa: 'Помощь и вопросы',
       copyright: '© 2026 Lexi Buddy',
       builtFor: 'Для преподавателей английского',
+    },
+  },
+  table: {
+    columns: {
+      name: 'Имя',
+      telegram: 'Telegram',
+      group: 'Группа',
+      level: 'Уровень',
+      students: 'Ученики',
+      lesson: 'Урок',
+      topic: 'Тема',
+      done: 'Выполнено',
+      actions: 'Действия',
     },
   },
   qa: {

@@ -6,6 +6,7 @@ export const en = {
     settings: 'Settings',
     qa: 'Q&A',
     logout: 'Log out',
+    user: 'User',
   },
   settings: {
     title: 'Settings',
@@ -169,6 +170,18 @@ export const en = {
       emptyStep3Desc: 'One tap — everyone gets it in Telegram',
       noResults: 'No results',
       noResultsDesc: 'Check the spelling or try another keyword.',
+    },
+    create: {
+      trigger: '+ Create a new group',
+      titleStep1: 'Group details',
+      titleStep2: 'Add students',
+      next: 'Next',
+      back: 'Back',
+      creating: 'Creating…',
+      create: 'Create',
+      successTitle: 'Group created 🎉',
+      successDesc: 'The group has been added to your list.',
+      errorTitle: 'Failed to create group',
     },
   },
   lessons: {
@@ -465,6 +478,19 @@ export const en = {
       helpQa: 'Help & Q&A',
       copyright: '© 2026 Lexi Buddy',
       builtFor: 'Built for English teachers',
+    },
+  },
+  table: {
+    columns: {
+      name: 'Name',
+      telegram: 'Telegram',
+      group: 'Group',
+      level: 'Level',
+      students: 'Students',
+      lesson: 'Lesson',
+      topic: 'Topic',
+      done: 'Done',
+      actions: 'Actions',
     },
   },
   qa: {
