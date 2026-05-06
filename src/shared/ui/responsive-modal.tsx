@@ -18,6 +18,7 @@ type ResponsiveModalProps = {
 
   maxWidthClassName?: string;
   className?: string;
+  scrollKey?: React.Key;
 
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -32,6 +33,7 @@ export function ResponsiveModal({
   footer,
   maxWidthClassName,
   className,
+  scrollKey,
   open,
   onOpenChange,
 }: ResponsiveModalProps) {
@@ -117,6 +119,7 @@ export function ResponsiveModal({
 
         {/* BODY */}
         <div
+          key={scrollKey}
           className={cn(
             'min-h-0 flex-1 overflow-y-auto overscroll-contain ui-scroll',
             'px-4 py-3 sm:px-10 sm:py-3',

@@ -288,6 +288,7 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
       }
       maxWidthClassName="sm:max-w-[640px]"
       className="sm:h-[90dvh]"
+      scrollKey={step}
       title={stepTitles[step]}
       right={`${step} / 4`}
       footer={footer}
