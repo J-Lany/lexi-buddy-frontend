@@ -25,7 +25,7 @@ export const QA_DATA_ES: QaCategory[] = [
     items: [
       {
         q: '¿Cómo añado a un nuevo alumno?',
-        a: 'Haz clic en «+ Añadir un alumno» en la parte superior derecha de la página de Alumnos. Busca al alumno por su nombre de usuario de Telegram (escribe al menos 2 caracteres), opcionalmente escribe un mensaje personal y luego pulsa «Enviar solicitud». El alumno recibe una invitación en el bot y, una vez que la acepte, aparecerá en tu lista. NOTA: el alumno debe estar registrado en el bot de Telegram de Lexi Buddy (@lexi_buddy_bot) antes de que puedas encontrarlo.',
+        a: 'Haz clic en «+ Añadir un alumno» en la parte superior derecha de la página de Alumnos. Busca al alumno por su nombre de usuario de Telegram (escribe al menos 2 caracteres), opcionalmente escribe un mensaje personal y luego pulsa «Enviar solicitud». El alumno recibe una invitación en el bot y, una vez que la acepte, aparecerá en tu lista y podrás asignarle lecciones. NOTA: el alumno debe estar registrado en el bot de Telegram de Lexi Buddy (@lexi_buddy_bot) antes de que puedas encontrarlo.',
       },
       {
         q: '¿Puedo añadir a un alumno que todavía no ha iniciado el bot?',
@@ -153,15 +153,15 @@ export const QA_DATA_ES: QaCategory[] = [
       },
       {
         q: '¿Dónde puedo ver el progreso de una lección específica?',
-        a: 'Abre la lección desde la lista de Lecciones. La sección Asignados muestra a todos los alumnos con una etiqueta de estado: No iniciado, En progreso o Completado. Haz clic en la fila de un alumno para ver sus resultados por tipo de tarea.',
+        a: 'Abre la lección desde la lista de Lecciones. La sección Asignados muestra a todos los alumnos con una etiqueta de estado: No iniciado, En progreso o Finalizado. Haz clic en la fila de un alumno para ver sus resultados por tipo de tarea.',
       },
       {
         q: '¿Qué muestra la página de resultados de la lección por alumno?',
-        a: 'Muestra el total de tareas realizadas, la puntuación media y la marca de tiempo de la última actividad. Los resultados están desglosados por tipo de tarea (Cuestionario de definición, Rellenar espacios, Error de frase, Comprobación de colocaciones) — cambia entre pestañas para ver el historial de intentos de cada uno.',
+        a: 'Muestra el total de tareas realizadas, la puntuación media y la marca de tiempo de la última actividad. Los resultados están desglosados por tipo de tarea (Cuestionario de definición, Rellenar espacios, Error de frase, Comprobación de colocaciones) — cambia entre pestañas para ver el historial de intentos de cada tipo de tarea.',
       },
       {
         q: '¿Qué significan las etiquetas de estado?',
-        a: '«No iniciado» — el alumno todavía no ha abierto la lección. «En progreso» — ha completado al menos un tipo de tarea. «Completado» — se han intentado todos los tipos de tareas asignados.',
+        a: '«No iniciado» — el alumno todavía no ha abierto la lección. «En progreso» — ha completado al menos un tipo de tarea. «Finalizado» — se han intentado todos los tipos de tareas asignados.',
       },
       {
         q: '¿Qué significa el porcentaje de progreso en el perfil de un alumno?',

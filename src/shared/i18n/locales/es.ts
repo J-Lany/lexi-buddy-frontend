@@ -59,7 +59,7 @@ export const es: Translations = {
       goToLogin: 'Ir al inicio de sesión',
       errorTitle: 'Enlace caducado',
       errorSubtitle: 'Este enlace ya no es válido. Por favor, solicita uno nuevo.',
-      goToSettings: 'Ir a ajustes',
+      goToSettings: 'Ir a configuración',
     },
   },
   common: {
@@ -211,17 +211,17 @@ export const es: Translations = {
       createdDesc: 'La lección se ha añadido a tu lista.',
       createdError: 'Error al crear la lección',
       assigned: 'Lección asignada 🎉',
-      assignedDesc: 'La lección se ha añadido a la lista de alumnos.',
+      assignedDesc: 'Los alumnos recibirán una notificación en Telegram.',
       assignedError: 'Error al asignar la lección',
     },
     deleteModal: {
       title: '¿Eliminar lección?',
-      desc: 'Elimina esta lección solo de tu espacio de trabajo, o elimínala para todos con los resultados de las asignaciones.',
+      desc: 'Puedes eliminar la lección solo para ti o para todos — junto con los resultados de las tareas.',
       deleteForMe: 'Eliminar para mí',
       deleteForAll: 'Eliminar para todos',
       cancel: 'Cancelar',
       deletedAll: 'Lección eliminada para todos',
-      deletedMe: 'Lección eliminada de tus lecciones',
+      deletedMe: 'Lección eliminada de tu lista',
       errorTitle: 'Error al eliminar la lección',
     },
     assignModal: {
@@ -313,7 +313,7 @@ export const es: Translations = {
       groups: 'Grupos',
       students: 'Alumnos',
       vocab: 'Vocabulario',
-      noVocab: 'Sin elementos de vocabulario',
+      noVocab: 'Sin vocabulario',
       assignmentsTitle: 'Tareas',
       noAssignments: 'Sin tareas',
       noAssignmentsOfType: 'Sin tareas de este tipo',
@@ -369,7 +369,7 @@ export const es: Translations = {
       eyebrow: 'Funciones de la plataforma',
       h2a: 'Todo lo que necesita',
       h2b: 'un profesor de idiomas',
-      sub: 'Diseñado para un flujo de trabajo real — no una herramienta de uso general.',
+      sub: 'Diseñado para un flujo de trabajo real — no una solución genérica para todos.',
       aiBuilder: 'Creador de lecciones con IA',
       aiBuilderDesc:
         'Pega tu lista de palabras, elige la configuración y Lexi creará al instante una lección completa y contextualmente adecuada. Cada traducción, sinónimo y ejercicio se adapta a tu nivel y grupo de edad. Edita todo con un clic.',
@@ -381,7 +381,7 @@ export const es: Translations = {
         'Invita a los alumnos por su nombre de usuario de Telegram. Crea grupos para las clases. Asigna una lección a todos con un solo clic.',
       progress: 'Seguimiento del progreso',
       progressDesc:
-        'Ves el estado de completado, la puntuación media y la última actividad de cada alumno. Profundiza en los resultados por tipo de ejercicio.',
+        'Ves el estado de avance, la puntuación media y la última actividad de cada alumno. Profundiza en los resultados por tipo de ejercicio.',
       library: 'Biblioteca de lecciones',
       libraryDesc:
         'Cada lección se guarda para siempre. Asígnala a nuevos alumnos o grupos en cualquier momento — ideal para quienes imparten los mismos cursos.',
@@ -393,7 +393,7 @@ export const es: Translations = {
       eyebrow: 'Cómo funciona',
       h2a: 'De la lista de palabras a la lección completa',
       h2b: 'en 4 sencillos pasos',
-      sub: 'No más horas preparando deberes. Lexi Buddy hace el trabajo pesado para que puedas centrarte en enseñar.',
+      sub: 'No más horas preparando ejercicios. Lexi Buddy hace el trabajo pesado para que puedas centrarte en enseñar.',
       step1title: 'Completa los detalles de la lección',
       step1desc:
         'Indica el título, el nivel (A1–C2), el grupo de edad y el tema. Este contexto determina todos los ejercicios que generará la IA.',
@@ -403,7 +403,7 @@ export const es: Translations = {
       step3title: 'Genera y revisa los ejercicios',
       step3desc:
         'Elige entre 1 y 4 tipos de ejercicios. La IA crea preguntas, opciones de respuesta y explicaciones. Edita lo que consideres necesario.',
-      step4title: 'Asigna y realiza el seguimiento del progreso',
+      step4title: 'Asigna y sigue el progreso',
       step4desc:
         'Envía la lección a alumnos individuales o grupos. Recibirán una notificación en Telegram y harán los ejercicios directamente en el bot, sin apps.',
     },
@@ -446,7 +446,7 @@ export const es: Translations = {
       eyebrow: 'Plataforma + bot de Telegram',
       h2a: 'Una plataforma.',
       h2b: 'Un bot.',
-      h2c: 'Nada superfluo.',
+      h2c: 'Sin fricciones.',
       body: 'Lexi Buddy es un dúo: una plataforma web para profesores donde se crean y gestionan las lecciones, y un bot de Telegram donde los alumnos hacen los ejercicios. Sin apps adicionales, sin inicios de sesión para los alumnos, sin complicaciones de configuración.',
       openPlatform: 'Abrir la plataforma para profesores',
       forTeachersTitle: 'Para profesores — plataforma web',
@@ -454,14 +454,14 @@ export const es: Translations = {
         'Crea lecciones con IA, gestiona alumnos y grupos, asigna tareas con un clic y realiza el seguimiento del progreso de cada alumno en tiempo real — todo en el navegador en lexi-buddy.com.',
       forStudentsTitle: 'Para alumnos — bot de Telegram',
       forStudentsDesc:
-        'Los alumnos inician @lexi_buddy_bot una sola vez. A partir de entonces, cada nueva lección llega como notificación en Telegram. Un toque y ya empezaron los ejercicios. Sin web, sin contraseña.',
+        'Los alumnos inician @lexi_buddy_bot una sola vez. A partir de entonces, cada nueva lección llega como notificación en Telegram. Un toque y empiezan de inmediato. Sin web, sin contraseña.',
       comboTitle: 'Por qué funciona tan bien',
       comboDesc:
         'Telegram se abre en casi el 100% de los casos. Los alumnos ya están allí. Las lecciones que llegan a Telegram se hacen, no se ignoran como los correos ni se olvidan como las apps.',
     },
     cta: {
-      pill: '✦ 100% GRATIS · Sin tarjeta',
-      h2: '¿Listo para recuperar tu tiempo?',
+      pill: '✦ 100% GRATIS · Sin tarjeta de crédito',
+      h2: '¿Listo para recuperar tu tiempo de preparación?',
       p: '¡Únete a los profesores de inglés que ya usan Lexi Buddy para crear mejores materiales didácticos, más rápido y sin coste!',
       btn: '¡Empezar — es GRATIS!',
       note: 'Los alumnos usan @lexi_buddy_bot en Telegram — sin configuración adicional',
