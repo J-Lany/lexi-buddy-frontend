@@ -9,6 +9,7 @@ import { StepDetails } from '@/features/groups/modals/create-group/ui/step-detai
 import { StepStudents } from '@/features/groups/modals/create-group/ui/step-students';
 import { useMyStudentsQuery } from '@/features/students';
 import { level } from '@/shared/domain/common';
+import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
@@ -26,6 +27,7 @@ const initialDraft: CreateGroupDraft = {
 type TriggerProps = Omit<React.ComponentProps<typeof Button>, 'type' | 'children'>;
 
 export function CreateGroupModal({ triggerProps }: { triggerProps?: TriggerProps } = {}) {
+  const { t } = useI18n();
   const { className: triggerClassName, ...restTriggerProps } = triggerProps ?? {};
   const [open, setOpen] = React.useState(false);
   const [step, setStep] = React.useState<1 | 2>(1);
@@ -56,14 +58,14 @@ export function CreateGroupModal({ triggerProps }: { triggerProps?: TriggerProps
       },
       {
         onSuccess: () => {
-          toast.success('Group created 🎉', {
-            description: 'The group has been added to your list.',
+          toast.success(t('groups.create.successTitle'), {
+            description: t('groups.create.successDesc'),
           });
           setOpen(false);
           reset();
         },
         onError: (e) => {
-          toast.error('Failed to create group', { description: getErrorMessage(e) });
+          toast.error(t('groups.create.errorTitle'), { description: getErrorMessage(e) });
         },
       },
     );
@@ -83,11 +85,11 @@ export function CreateGroupModal({ triggerProps }: { triggerProps?: TriggerProps
           className={cn('w-full whitespace-nowrap rounded-full px-5 sm:w-auto', triggerClassName)}
           {...restTriggerProps}
         >
-          + Create a new group
+          {t('groups.create.trigger')}
         </Button>
       }
       maxWidthClassName="sm:max-w-[560px]"
-      title={step === 1 ? 'Group details' : 'Add students'}
+      title={step === 1 ? t('groups.create.titleStep1') : t('groups.create.titleStep2')}
       right={<div className="text-[13px] text-muted-foreground">{step} / 2</div>}
       footer={
         <CreateGroupFooter

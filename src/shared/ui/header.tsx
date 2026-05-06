@@ -142,7 +142,7 @@ export function Header() {
               {initials ?? <User className="w-3 h-3" strokeWidth={1.75} />}
             </span>
             <span className="text-foreground font-semibold max-w-24 truncate">
-              {firstName ?? 'User'}
+              {firstName ?? t('nav.user')}
             </span>
             <ChevronDown
               className={cn(
