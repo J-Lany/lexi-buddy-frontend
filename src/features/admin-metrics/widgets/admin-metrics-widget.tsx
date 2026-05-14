@@ -10,6 +10,7 @@ import { ActivityChart } from './ui/activity-chart';
 import { HeroKpiCards } from './ui/hero-kpi-cards';
 import { MetricsHeader } from './ui/metrics-header';
 import { MetricsSkeleton } from './ui/metrics-skeleton';
+import { RegisteredUsersStrip } from './ui/registered-users-strip';
 import { StudentEngagementPanel } from './ui/student-engagement-panel';
 import { TeacherActivityStrip } from './ui/teacher-activity-strip';
 import { TypeBreakdownTable } from './ui/type-breakdown/type-breakdown-table';
@@ -45,6 +46,9 @@ function AdminMetricsWidget() {
         <>
           {/* Row 1: 4 primary KPIs */}
           <HeroKpiCards overview={overviewQ.data} daily={dailyQ.data ?? null} />
+
+          {/* Row 1.5: All-time registered users (date-range independent) */}
+          <RegisteredUsersStrip totals={overviewQ.data.totals} />
 
           {/* Row 2: Activity chart (2/3) + Student engagement panel (1/3) */}
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

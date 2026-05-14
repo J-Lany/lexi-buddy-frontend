@@ -16,6 +16,8 @@ export type AdminMetricsOverviewResponseDto = {
     assignmentAttemptsStarted: number;
     assignmentAttemptsCompleted: number;
     attemptCompletionRate: number;
+    totalRegisteredStudents: number;
+    totalRegisteredTeachers: number;
   };
   byAssignmentType: Array<{
     type: string;
