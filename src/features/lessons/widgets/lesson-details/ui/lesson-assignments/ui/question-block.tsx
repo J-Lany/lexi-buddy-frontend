@@ -28,7 +28,9 @@ export function QuestionBlock({ question }: Props) {
       </div>
 
       {question.explanation && (
-        <div className="mt-1 ui-stat">Explanation: {question.explanation}</div>
+        <div className="mt-1 text-[12px] font-medium text-muted-foreground sm:text-[14px]">
+          Explanation: {question.explanation}
+        </div>
       )}
     </div>
   );
