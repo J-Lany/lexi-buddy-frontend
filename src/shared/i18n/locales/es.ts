@@ -384,7 +384,7 @@ export const es: Translations = {
       sub: 'Lexi Buddy convierte el vocabulario activo en ejercicios interactivos en menos de 2 minutos.',
       ctaPrimary: 'Empezar GRATIS',
       ctaSecondary: 'Ver cómo funciona',
-      trust: 'Profesores de inglés de todo el mundo confían en nosotros',
+      trust: 'Ya lo usan profesores de inglés de todo el mundo',
     },
     stats: {
       timeLabel: 'Tiempo promedio de creación de lección',
@@ -394,7 +394,7 @@ export const es: Translations = {
     },
     features: {
       eyebrow: 'Funciones de la plataforma',
-      h2a: 'Todo lo que necesita',
+      h2a: 'Todo lo que de verdad necesita',
       h2b: 'un profesor de idiomas',
       sub: 'Diseñado para un flujo de trabajo real — no una solución genérica para todos.',
       aiBuilder: 'Creador de lecciones con IA',
@@ -420,7 +420,7 @@ export const es: Translations = {
       eyebrow: 'Cómo funciona',
       h2a: 'De la lista de palabras a la lección completa',
       h2b: 'en 4 sencillos pasos',
-      sub: 'No más horas preparando ejercicios. Lexi Buddy hace el trabajo pesado para que puedas centrarte en enseñar.',
+      sub: 'No más horas preparando ejercicios. Lexi Buddy se encarga de lo tedioso para que puedas centrarte en enseñar.',
       step1title: 'Completa los detalles de la lección',
       step1desc:
         'Indica el título, el nivel (A1–C2), el grupo de edad y el tema. Este contexto determina todos los ejercicios que generará la IA.',
@@ -473,7 +473,7 @@ export const es: Translations = {
       eyebrow: 'Plataforma + bot de Telegram',
       h2a: 'Una plataforma.',
       h2b: 'Un bot.',
-      h2c: 'Sin fricciones.',
+      h2c: 'Sin complicaciones.',
       body: 'Lexi Buddy es un dúo: una plataforma web para profesores donde se crean y gestionan las lecciones, y un bot de Telegram donde los alumnos hacen los ejercicios. Sin apps adicionales, sin inicios de sesión para los alumnos, sin complicaciones de configuración.',
       openPlatform: 'Abrir la plataforma para profesores',
       forTeachersTitle: 'Para profesores — plataforma web',
@@ -488,7 +488,7 @@ export const es: Translations = {
     },
     cta: {
       pill: '✦ 100% GRATIS · Sin tarjeta de crédito',
-      h2: '¿Listo para recuperar tu tiempo de preparación?',
+      h2: '¿Sigues preparando ejercicios a mano?',
       p: '¡Únete a los profesores de inglés que ya usan Lexi Buddy para crear mejores materiales didácticos, más rápido y sin coste!',
       btn: '¡Empezar — es GRATIS!',
       note: 'Los alumnos usan @lexi_buddy_bot en Telegram — sin configuración adicional',
