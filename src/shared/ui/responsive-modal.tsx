@@ -4,6 +4,7 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { XIcon } from 'lucide-react';
 import * as React from 'react';
 
+import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from '@/shared/ui/dialog';
 
@@ -17,6 +18,7 @@ type ResponsiveModalProps = {
   right?: React.ReactNode;
   footer?: React.ReactNode;
   hideFooterOnMobile?: boolean;
+  hideTitleOnMobile?: boolean;
   mobileCloseLabel?: string;
 
   maxWidthClassName?: string;
@@ -37,6 +39,7 @@ export function ResponsiveModal({
   children,
   footer,
   hideFooterOnMobile,
+  hideTitleOnMobile,
   mobileCloseLabel,
   maxWidthClassName,
   className,
@@ -45,6 +48,7 @@ export function ResponsiveModal({
   open,
   onOpenChange,
 }: ResponsiveModalProps) {
+  const { t } = useI18n();
   const isControlled = typeof open === 'boolean';
 
   return (
@@ -115,7 +119,7 @@ export function ResponsiveModal({
                   '-ml-1 rounded-md px-1 py-1',
                 )}
               >
-                {mobileCloseLabel ?? 'Close'}
+                {mobileCloseLabel ?? t('common.cancel')}
               </DialogClose>
 
               {/* Desktop: right (steps) on the left — headerLeft handled in its own flex row above */}
@@ -125,7 +129,11 @@ export function ResponsiveModal({
             {/* Center — hidden on desktop when headerLeft, hidden on mobile too when headerLeft */}
             <div className="justify-self-center">
               <div
-                className={cn('text-[17px] font-semibold leading-tight', headerLeft && 'hidden')}
+                className={cn(
+                  'text-[17px] font-semibold leading-tight',
+                  headerLeft && 'hidden',
+                  hideTitleOnMobile && 'max-sm:hidden',
+                )}
               >
                 {title}
               </div>

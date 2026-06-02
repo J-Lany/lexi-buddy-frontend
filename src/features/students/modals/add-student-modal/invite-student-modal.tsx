@@ -80,6 +80,7 @@ export function InviteStudentModal({ triggerProps }: { triggerProps?: TriggerPro
       open={open}
       onOpenChange={setOpen}
       hideFooterOnMobile
+      hideTitleOnMobile
       maxWidthClassName="sm:max-w-lg"
       right={
         <div className="sm:hidden">
