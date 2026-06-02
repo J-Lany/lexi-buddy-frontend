@@ -14,6 +14,8 @@ export type CreateLessonDraft = {
   targetLanguage: Language;
   nativeLanguage: Language;
   instructionLanguage: InstructionLanguage;
+  additionalInstructions: string;
+  materialLinks: string[];
 
   vocabItems: VocabItemDto[];
   assignments: AssignmentPreviewDto[];

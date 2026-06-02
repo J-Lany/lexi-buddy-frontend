@@ -35,6 +35,8 @@ export function prepareLessonToSubmit(
     targetLanguage: draft.targetLanguage,
     nativeLanguage: draft.nativeLanguage,
     instructionLanguage: draft.instructionLanguage,
+    additionalInstructions: draft.additionalInstructions || undefined,
+    materialLinks: draft.materialLinks.length > 0 ? draft.materialLinks : undefined,
     vocabItems: draft.vocabItems,
     assignments: assignments.length > 0 ? assignments : undefined,
   };

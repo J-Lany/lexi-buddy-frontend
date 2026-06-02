@@ -20,6 +20,7 @@ import {
 } from '@/features/lessons/modals/create-lesson-modal/model/types';
 import { CreateLessonFooter } from '@/features/lessons/modals/create-lesson-modal/ui/create-lesson-footer';
 import { StepAssignments } from '@/features/lessons/modals/create-lesson-modal/ui/step-assignments/step-assigments';
+import { StepLessonContext } from '@/features/lessons/modals/create-lesson-modal/ui/step-lesson-context/step-lesson-context';
 import { StepLessonMeta } from '@/features/lessons/modals/create-lesson-modal/ui/step-lesson-meta/step-lesson-meta';
 import { StepStudents } from '@/features/lessons/modals/create-lesson-modal/ui/step-students/step-students';
 import { StepVocab } from '@/features/lessons/modals/create-lesson-modal/ui/step-vocab/step-vocab';
@@ -42,13 +43,15 @@ const initialDraft: CreateLessonDraft = {
   targetLanguage: language.english,
   nativeLanguage: language.russian,
   instructionLanguage: instructionLanguage.native,
+  additionalInstructions: '',
+  materialLinks: [],
   vocabItems: [],
   assignments: [],
   studentIds: [],
   groupIds: [],
 };
 
-type Steps = 1 | 2 | 3 | 4;
+type Steps = 1 | 2 | 3 | 4 | 5;
 
 type TriggerProps = Omit<React.ComponentProps<typeof Button>, 'type' | 'children'>;
 
@@ -99,7 +102,7 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
   const canNextMeta =
     draft.title.trim().length > 0 && Boolean(draft.level) && Boolean(draft.ageCategory);
 
-  const canNextVocab = canNextMeta && (draft.vocabItems?.length ?? 0) > 0;
+  const canNextVocab = (draft.vocabItems?.length ?? 0) > 0;
 
   const canSaveAssignments = Object.values(generatedAssignments).some(
     (arr) => arr && arr.length > 0,
@@ -109,7 +112,7 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
   const groupIds = draft.groupIds ?? [];
   const nothingSelected = studentIds.length === 0 && groupIds.length === 0;
 
-  const goNext = () => setStep((s: Steps) => Math.min(4, s + 1) as Steps);
+  const goNext = () => setStep((s: Steps) => Math.min(5, s + 1) as Steps);
   const goBack = () => setStep((s: Steps) => Math.max(1, s - 1) as Steps);
 
   const handleGenerateAssignments = (assignmentType: AssignmentType) => {
@@ -194,7 +197,7 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
           description: t('lessons.createToasts.createdDesc'),
         });
         patchDraft({ lessonId: data.lessonId });
-        setStep(4);
+        setStep(5);
       },
       onError: (error) => {
         toast.error(t('lessons.createToasts.createdError'), {
@@ -247,6 +250,7 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
     2: t('lessons.steps.step2'),
     3: t('lessons.steps.step3'),
     4: t('lessons.steps.step4'),
+    5: t('lessons.steps.step5'),
   };
 
   const footer = (
@@ -290,14 +294,16 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
       className="sm:h-[90dvh]"
       scrollKey={step}
       title={stepTitles[step]}
-      right={`${step} / 4`}
+      right={`${step} / 5`}
       footer={footer}
     >
       {step === 1 ? (
         <StepLessonMeta draft={draft} onChange={patchDraft} />
       ) : step === 2 ? (
-        <StepVocab draft={draft} onChange={patchDraft} />
+        <StepLessonContext draft={draft} onChange={patchDraft} />
       ) : step === 3 ? (
+        <StepVocab draft={draft} onChange={patchDraft} />
+      ) : step === 4 ? (
         <StepAssignments
           draft={draft}
           generatedAssignments={generatedAssignments}

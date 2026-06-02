@@ -272,9 +272,10 @@ export const kz: Translations = {
     },
     steps: {
       step1: 'Сабақ мәліметтері',
-      step2: 'Лексика',
-      step3: 'Тапсырмалар',
-      step4: 'Сабақты тапсыру',
+      step2: 'Тілдер мен контекст',
+      step3: 'Лексика',
+      step4: 'Тапсырмалар',
+      step5: 'Сабақты тапсыру',
     },
     meta: {
       titlePlaceholder: 'Сабақ атауы*',
@@ -287,6 +288,10 @@ export const kz: Translations = {
       instructionLanguage: 'Тапсырма тілі',
       instructionLanguageHint: 'Тапсырма сұрақтарындағы тіл',
       topicPlaceholder: 'Сабақ тақырыбы',
+      additionalInstructions: 'Қосымша нұсқаулар (міндетті емес)',
+      additionalInstructionsPlaceholder: 'Мысалы: тек осы шақ, фразалық етістіктерсіз…',
+      materialLinks: 'Материал сілтемелері (міндетті емес)',
+      materialLinksPlaceholder: 'https://…',
       tooltips: {
         title: 'Оқушылар ботта көретін сабақ атауы. ЖИ-ге жіберілмейді.',
         level: 'Қиындық деңгейі (A1–C2). ЖИ лексиканы және тапсырмаларды осыған сай таңдайды.',
@@ -296,6 +301,9 @@ export const kz: Translations = {
         instructionLanguage: 'Тапсырмалардағы сұрақтар мен нұсқаулар тілі.',
         topic:
           'ЖИ-ге сабақ контексті ретінде жіберіледі — неғұрлым нақты болса, соғұрлым жақсы нәтиже.',
+        additionalInstructions:
+          'ЖИ үшін қосымша контекст — тақырыптан тыс нұсқаулар немесе шектеулер.',
+        materialLinks: 'Оқушылар сабақпен бірге көретін сыртқы сілтемелер.',
       },
     },
     vocab: {
@@ -337,6 +345,8 @@ export const kz: Translations = {
       students: 'Оқушылар',
       vocab: 'Лексика',
       noVocab: 'Сөздер жоқ',
+      additionalInstructions: 'Қосымша нұсқаулар',
+      materialLinks: 'Материалдар',
       assignmentsTitle: 'Тапсырмалар',
       noAssignments: 'Тапсырмалар жоқ',
       noAssignmentsOfType: 'Бұл түрдегі тапсырмалар жоқ',

@@ -273,9 +273,10 @@ export const es: Translations = {
     },
     steps: {
       step1: 'Detalles de la lección',
-      step2: 'Vocabulario',
-      step3: 'Tareas',
-      step4: 'Asignar lección',
+      step2: 'Idiomas y contexto',
+      step3: 'Vocabulario',
+      step4: 'Tareas',
+      step5: 'Asignar lección',
     },
     meta: {
       titlePlaceholder: 'Título de la lección*',
@@ -288,6 +289,10 @@ export const es: Translations = {
       instructionLanguage: 'Idioma de las tareas',
       instructionLanguageHint: 'Idioma usado en las preguntas de las tareas',
       topicPlaceholder: 'Tema de la lección',
+      additionalInstructions: 'Instrucciones adicionales (opcional)',
+      additionalInstructionsPlaceholder: 'Ej. Solo presente simple, sin verbos frasales…',
+      materialLinks: 'Enlaces de materiales (opcional)',
+      materialLinksPlaceholder: 'https://…',
       tooltips: {
         title: 'El nombre de la lección que los alumnos ven en el bot. No se envía a la IA.',
         level:
@@ -300,6 +305,9 @@ export const es: Translations = {
         instructionLanguage: 'El idioma de las instrucciones y preguntas de las tareas.',
         topic:
           'Se envía directamente a la IA como contexto de la lección — cuanto más específico, mejores tareas.',
+        additionalInstructions:
+          'Contexto extra para la IA — restricciones, énfasis o indicaciones más allá del tema.',
+        materialLinks: 'Enlaces externos que los alumnos ven junto a la lección.',
       },
     },
     vocab: {
@@ -341,6 +349,8 @@ export const es: Translations = {
       students: 'Alumnos',
       vocab: 'Vocabulario',
       noVocab: 'Sin vocabulario',
+      additionalInstructions: 'Instrucciones adicionales',
+      materialLinks: 'Materiales',
       assignmentsTitle: 'Tareas',
       noAssignments: 'Sin tareas',
       noAssignmentsOfType: 'Sin tareas de este tipo',

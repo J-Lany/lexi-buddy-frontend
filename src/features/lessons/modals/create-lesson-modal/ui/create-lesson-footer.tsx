@@ -6,7 +6,7 @@ import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 
 type Props = {
-  step: 1 | 2 | 3 | 4;
+  step: 1 | 2 | 3 | 4 | 5;
 
   canNextMeta: boolean;
   canNextVocab: boolean;
@@ -61,6 +61,20 @@ export function CreateLessonFooter({
           {t('lessons.footer.back')}
         </Button>
 
+        <Button type="button" onClick={onNext} className="flex-1 h-11 font-semibold">
+          {t('lessons.footer.next')}
+        </Button>
+      </div>
+    );
+  }
+
+  if (step === 3) {
+    return (
+      <div className="flex gap-3">
+        <Button type="button" variant="outline" onClick={onBack} className="flex-1 h-11">
+          {t('lessons.footer.back')}
+        </Button>
+
         <Button
           type="button"
           onClick={onNext}
@@ -73,7 +87,7 @@ export function CreateLessonFooter({
     );
   }
 
-  if (step === 3) {
+  if (step === 4) {
     return (
       <div className="flex gap-3">
         <Button type="button" variant="outline" onClick={onBack} className="flex-1 h-11">

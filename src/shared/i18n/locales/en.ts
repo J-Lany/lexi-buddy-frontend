@@ -271,9 +271,10 @@ export const en = {
     },
     steps: {
       step1: 'Lesson details',
-      step2: 'Vocabulary',
-      step3: 'Assignments',
-      step4: 'Assign lesson',
+      step2: 'Language & context',
+      step3: 'Vocabulary',
+      step4: 'Assignments',
+      step5: 'Assign lesson',
     },
     meta: {
       titlePlaceholder: 'Lesson title*',
@@ -286,6 +287,10 @@ export const en = {
       instructionLanguage: 'Assignment language',
       instructionLanguageHint: 'Language used in assignment questions',
       topicPlaceholder: 'Lesson topic',
+      additionalInstructions: 'Additional instructions (optional)',
+      additionalInstructionsPlaceholder: 'E.g. Focus on present tense only, avoid phrasal verbs…',
+      materialLinks: 'Material links (optional)',
+      materialLinksPlaceholder: 'https://…',
       tooltips: {
         title: 'The lesson name shown to students in the bot. Not passed to the AI.',
         level: 'Difficulty level (A1–C2). AI uses it to calibrate task complexity and vocabulary.',
@@ -296,6 +301,9 @@ export const en = {
         instructionLanguage: 'The language of task instructions and questions.',
         topic:
           'Sent directly to the AI as lesson context — the more specific, the better the tasks.',
+        additionalInstructions:
+          'Extra context for the AI — tips, constraints, or focus areas beyond the topic.',
+        materialLinks: 'External links shown to students alongside the lesson.',
       },
     },
     vocab: {
@@ -337,6 +345,8 @@ export const en = {
       students: 'Students',
       vocab: 'Vocabulary',
       noVocab: 'No vocabulary items',
+      additionalInstructions: 'Additional Instructions',
+      materialLinks: 'Materials',
       assignmentsTitle: 'Assignments',
       noAssignments: 'No assignments',
       noAssignmentsOfType: 'No assignments of this type',

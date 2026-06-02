@@ -5,8 +5,6 @@ import {
   DraftPatch,
 } from '@/features/lessons/modals/create-lesson-modal/model/types';
 import { AGE_GROUP_OPTIONS } from '@/shared/catalogs/age';
-import { INSTRUCTION_LANGUAGE_OPTIONS } from '@/shared/catalogs/instruction-language';
-import { LANGUAGE_OPTIONS } from '@/shared/catalogs/language';
 import { LEVEL_OPTIONS } from '@/shared/catalogs/levels';
 import { useI18n } from '@/shared/i18n';
 import { FieldTooltip } from '@/shared/ui/field-tooltip';
@@ -68,48 +66,6 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           placeholder={t('lessons.meta.ageGroup')}
           title={t('lessons.meta.ageGroup')}
           options={AGE_GROUP_OPTIONS}
-        />
-      </div>
-
-      <div className="space-y-1.5">
-        <FieldLabel
-          label={t('lessons.meta.targetLanguage')}
-          tooltip={t('lessons.meta.tooltips.targetLanguage')}
-        />
-        <ResponsiveSelect
-          value={draft.targetLanguage}
-          onValueChange={(v) => onChange({ targetLanguage: v })}
-          placeholder={t('lessons.meta.targetLanguage')}
-          title={t('lessons.meta.targetLanguage')}
-          options={LANGUAGE_OPTIONS}
-        />
-      </div>
-
-      <div className="space-y-1.5">
-        <FieldLabel
-          label={t('lessons.meta.nativeLanguage')}
-          tooltip={t('lessons.meta.tooltips.nativeLanguage')}
-        />
-        <ResponsiveSelect
-          value={draft.nativeLanguage}
-          onValueChange={(v) => onChange({ nativeLanguage: v })}
-          placeholder={t('lessons.meta.nativeLanguage')}
-          title={t('lessons.meta.nativeLanguage')}
-          options={LANGUAGE_OPTIONS}
-        />
-      </div>
-
-      <div className="space-y-1.5">
-        <FieldLabel
-          label={t('lessons.meta.instructionLanguage')}
-          tooltip={t('lessons.meta.tooltips.instructionLanguage')}
-        />
-        <ResponsiveSelect
-          value={draft.instructionLanguage}
-          onValueChange={(v) => onChange({ instructionLanguage: v })}
-          placeholder={t('lessons.meta.instructionLanguage')}
-          title={t('lessons.meta.instructionLanguage')}
-          options={INSTRUCTION_LANGUAGE_OPTIONS}
         />
       </div>
 

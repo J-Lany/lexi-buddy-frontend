@@ -56,6 +56,9 @@ export type LessonDashboardDto = {
   nativeLanguage: Language | null;
   instructionLanguage: InstructionLanguage | null;
 
+  additionalInstructions: string | null;
+  materialLinks: string[];
+
   vocab: LessonVocabDto[];
   assignments: LessonAssignmentDto[];
 

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { useLessonDashboardQuery } from '@/entities/lessons/model/query/get-lesson-dashboard';
 import { DeleteLessonButton } from '@/features/lessons/widgets/lesson-details/ui/delete-lesson-button';
+import { LessonAdditionalInfo } from '@/features/lessons/widgets/lesson-details/ui/lesson-additional-info';
 import { LessonAssignees } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignees/lesson-assignees';
 import { LessonAssignments } from '@/features/lessons/widgets/lesson-details/ui/lesson-assignments/lesson-assignments';
 import { LessonSummary } from '@/features/lessons/widgets/lesson-details/ui/lesson-summary/lesson-summary';
@@ -51,6 +52,10 @@ export function LessonDetailsWidget({ lessonId }: Props) {
       />
       <LessonAssignees lesson={data} />
       <LessonVocab vocab={data.vocab} />
+      <LessonAdditionalInfo
+        additionalInstructions={data.additionalInstructions}
+        materialLinks={data.materialLinks}
+      />
       <LessonAssignments assignments={data.assignments} />
     </div>
   );

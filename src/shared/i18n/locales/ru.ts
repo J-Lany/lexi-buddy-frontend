@@ -274,9 +274,10 @@ export const ru: Translations = {
     },
     steps: {
       step1: 'Детали урока',
-      step2: 'Лексика',
-      step3: 'Задания',
-      step4: 'Назначить урок',
+      step2: 'Языки и контекст',
+      step3: 'Лексика',
+      step4: 'Задания',
+      step5: 'Назначить урок',
     },
     meta: {
       titlePlaceholder: 'Название урока*',
@@ -289,6 +290,10 @@ export const ru: Translations = {
       instructionLanguage: 'Язык заданий',
       instructionLanguageHint: 'Язык вопросов в заданиях',
       topicPlaceholder: 'Тема урока',
+      additionalInstructions: 'Дополнительные инструкции (необязательно)',
+      additionalInstructionsPlaceholder: 'Например: только настоящее время, без фразовых глаголов…',
+      materialLinks: 'Ссылки на материалы (необязательно)',
+      materialLinksPlaceholder: 'https://…',
       tooltips: {
         title: 'Название урока, которое ученики видят в боте. В ИИ не передаётся.',
         level: 'Уровень сложности (A1–C2). ИИ использует его для подбора словаря и заданий.',
@@ -297,6 +302,9 @@ export const ru: Translations = {
         nativeLanguage: 'Используется для переводов и словарных подсказок для учеников.',
         instructionLanguage: 'Язык формулировок вопросов и инструкций в заданиях.',
         topic: 'Отправляется в ИИ как контекст урока — чем конкретнее, тем лучше задания.',
+        additionalInstructions:
+          'Дополнительный контекст для ИИ — акценты, ограничения или пожелания помимо темы.',
+        materialLinks: 'Внешние ссылки, которые ученики видят вместе с уроком.',
       },
     },
     vocab: {
@@ -338,6 +346,8 @@ export const ru: Translations = {
       students: 'Ученики',
       vocab: 'Лексика',
       noVocab: 'Словарь пуст',
+      additionalInstructions: 'Дополнительные инструкции',
+      materialLinks: 'Материалы',
       assignmentsTitle: 'Задания',
       noAssignments: 'Нет заданий',
       noAssignmentsOfType: 'Нет заданий этого типа',
