@@ -3,6 +3,7 @@ import { api } from '@/shared/api';
 export type RequestPasswordChangeParams = {
   password: string;
   confirmPassword: string;
+  email?: string;
 };
 
 export type RequestPasswordChangeResponse = {
