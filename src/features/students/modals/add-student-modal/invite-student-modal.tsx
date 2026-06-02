@@ -7,24 +7,23 @@ import { toast } from 'sonner';
 
 import type { StudentBySearchDto } from '@/entities/students/api/search-students';
 import { useInviteStudentMutation } from '@/entities/students/model/mutation/invite-student';
+import { useTeacherProfileQuery } from '@/entities/teacher/model/query/use-teacher-profile';
 import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
-import { Textarea } from '@/shared/ui/textarea';
 
+import { MessageTemplates } from './ui/message-templates';
 import { StudentSearchPicker } from './ui/student-search-picker';
+import { TelegramInvitePreview } from './ui/telegram-invite-preview';
 
 type FormState = {
   student: StudentBySearchDto | null;
   message: string;
 };
 
-const initialState: FormState = {
-  student: null,
-  message: '',
-};
+const initialState: FormState = { student: null, message: '' };
 
 type TriggerProps = Omit<React.ComponentProps<typeof Button>, 'type' | 'children'>;
 
@@ -35,23 +34,21 @@ export function InviteStudentModal({ triggerProps }: { triggerProps?: TriggerPro
   const [state, setState] = React.useState<FormState>(initialState);
 
   const invite = useInviteStudentMutation();
+  const { data: teacher } = useTeacherProfileQuery();
 
   const canSend = Boolean(state.student) && !invite.isPending;
+  const studentFirstName = state.student?.firstName || state.student?.username || '';
+  const studentUsername = state.student?.username ?? null;
 
   useEffect(() => {
-    if (!open) {
-      setState(initialState);
-    }
+    if (!open) setState(initialState);
   }, [open]);
 
   const handleSend = () => {
     const studentId = state.student?.id;
     if (!studentId) return;
-
-    const message = state.message.trim() || undefined;
-
     invite.mutate(
-      { studentId, message },
+      { studentId, message: state.message.trim() || undefined },
       {
         onSuccess: () => {
           toast.success(t('students.invite.successTitle'), {
@@ -60,9 +57,7 @@ export function InviteStudentModal({ triggerProps }: { triggerProps?: TriggerPro
           setOpen(false);
         },
         onError: (e) => {
-          toast.error(t('students.invite.errorTitle'), {
-            description: getErrorMessage(e),
-          });
+          toast.error(t('students.invite.errorTitle'), { description: getErrorMessage(e) });
         },
       },
     );
@@ -81,40 +76,69 @@ export function InviteStudentModal({ triggerProps }: { triggerProps?: TriggerPro
         </Button>
       }
       title={t('students.invite.title')}
+      mobileCloseLabel={t('common.cancel')}
       open={open}
       onOpenChange={setOpen}
+      hideFooterOnMobile
+      maxWidthClassName="sm:max-w-lg"
+      right={
+        <div className="sm:hidden">
+          <Button
+            type="button"
+            size="sm"
+            className="rounded-full px-4"
+            onClick={handleSend}
+            disabled={!canSend}
+          >
+            {invite.isPending ? t('students.invite.sending') : t('students.invite.sendShort')}
+          </Button>
+        </div>
+      }
       footer={
-        <Button type="button" size="lg" className="w-full" onClick={handleSend} disabled={!canSend}>
-          <Send className="h-4 w-4" />
-          {invite.isPending ? t('students.invite.sending') : t('students.invite.send')}
-        </Button>
+        <div className="space-y-1.5">
+          <Button
+            type="button"
+            size="lg"
+            className="w-full gap-2"
+            onClick={handleSend}
+            disabled={!canSend}
+          >
+            <Send className="h-4 w-4" />
+            {invite.isPending
+              ? t('students.invite.sending')
+              : canSend
+                ? t('students.invite.sendToTelegram').replace('{name}', studentFirstName)
+                : t('students.invite.sendDisabled')}
+          </Button>
+          <p className="text-center text-[11.5px] leading-tight text-muted-foreground">
+            {canSend
+              ? t('students.invite.sendNoteWithName').replace('{name}', studentFirstName)
+              : t('students.invite.sendNote')}
+          </p>
+        </div>
       }
     >
-      <div className="space-y-5 py-3">
-        {/* Section 1: Find student */}
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-foreground">{t('students.invite.findStudent')}</p>
-          <StudentSearchPicker
-            value={state.student}
-            onChange={(student) => setState((s) => ({ ...s, student }))}
-          />
-        </div>
+      <div className="space-y-4 sm:space-y-5">
+        <StudentSearchPicker
+          value={state.student}
+          onChange={(student) => setState((s) => ({ ...s, student }))}
+        />
 
-        {/* Section 2: Personal message */}
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-foreground">
-            {t('students.invite.messageLabel')}{' '}
-            <span className="font-normal text-muted-foreground">
-              {t('students.invite.messageLabelOptional')}
-            </span>
-          </p>
-          <Textarea
-            placeholder={t('students.invite.messagePlaceholder')}
-            minRows={4}
-            value={state.message}
-            onChange={(e) => setState((s) => ({ ...s, message: e.target.value }))}
-          />
-        </div>
+        <MessageTemplates
+          value={state.message}
+          onChange={(message) => setState((s) => ({ ...s, message }))}
+        />
+
+        <p className="text-[12.5px] leading-snug text-muted-foreground -mt-1">
+          {t('students.invite.subtitle')}
+        </p>
+
+        <TelegramInvitePreview
+          teacherFirstName={teacher?.firstName ?? null}
+          studentUsername={studentUsername}
+          message={state.message}
+          defaultOpen={false}
+        />
       </div>
     </ResponsiveModal>
   );

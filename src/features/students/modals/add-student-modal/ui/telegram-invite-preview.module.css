@@ -1,0 +1,134 @@
+.chatBg {
+  background-image:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.55) 0%, transparent 50%),
+    radial-gradient(circle at 82% 70%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+    linear-gradient(180deg, #f1f3f6, #e7ebf0);
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+.chatHeader {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.botAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: linear-gradient(160deg, #5dadec, #2aabee);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex: 0 0 36px;
+}
+
+.botName {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #000;
+  line-height: 1.2;
+}
+
+.botLabel {
+  font-size: 11.5px;
+  color: #2aabee;
+  line-height: 1.2;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 12px;
+  min-height: 160px;
+}
+
+.bubble {
+  align-self: flex-start;
+  max-width: 78%;
+  background: #ffffff;
+  border-radius: 14px 14px 14px 4px;
+  padding: 8px 10px 6px;
+  box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+  position: relative;
+}
+
+.sender {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e8728d;
+  line-height: 1.25;
+}
+
+.botMsg {
+  margin: 2px 0 0;
+  font-size: 14.5px;
+  line-height: 1.32;
+  color: #000;
+  white-space: pre-wrap;
+}
+
+.quote {
+  margin-top: 6px;
+  padding: 4px 8px;
+  border-left: 3px solid #2aabee;
+  background: rgba(42, 171, 238, 0.06);
+  border-radius: 2px;
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: #333;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: #8d97a0;
+  text-align: right;
+  margin-top: 4px;
+  line-height: 1;
+}
+
+.inlineKbd {
+  align-self: flex-start;
+  width: 78%;
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.inlineBtn {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.92);
+  color: #168acd;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 9px 6px;
+  text-align: center;
+  border-radius: 8px;
+  cursor: default;
+}
+
+.inlineBtnLeft {
+  border-top-left-radius: 4px;
+}
+
+.inlineBtnRight {
+  border-top-right-radius: 4px;
+}
+
+.footerNote {
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 11.5px;
+  color: #6b7480;
+  text-align: center;
+}
