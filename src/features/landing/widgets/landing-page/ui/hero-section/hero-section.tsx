@@ -67,6 +67,19 @@ export function HeroSection() {
           </Link>
         </div>
 
+        <a
+          href="https://t.me/lexi_buddy_bot"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hero-bot-pill"
+        >
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="#2dbfcc" aria-hidden>
+            <path d="M11.944 0A12 12 0 1 0 24 12 12 12 0 0 0 11.944 0zm5.78 8.25-2.01 9.49c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.873.722z" />
+          </svg>
+          <span>{t('landing.hero.botLabel')}</span>
+          <span className="hero-bot-handle">@lexi_buddy_bot</span>
+        </a>
+
         <div className="hero-trust">
           <div className="avatars">
             <span>👩‍🏫</span>

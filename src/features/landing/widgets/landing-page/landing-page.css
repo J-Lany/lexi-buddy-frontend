@@ -542,12 +542,45 @@
     color: var(--teal-dark);
 }
 
+.landing-page .hero-bot-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 16px;
+    padding: 9px 16px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--foreground);
+    text-decoration: none;
+
+    border: 1.5px solid color-mix(in oklch, var(--teal) 35%, transparent);
+    border-radius: 100px;
+    background: color-mix(in oklch, var(--teal) 6%, transparent);
+
+    transition: border-color 0.18s, background 0.18s;
+
+    animation: fadeUp 0.5s 0.32s ease both;
+}
+
+.landing-page .hero-bot-pill:hover {
+    border-color: color-mix(in oklch, var(--teal) 60%, transparent);
+    background: color-mix(in oklch, var(--teal) 10%, transparent);
+}
+
+.landing-page .hero-bot-handle {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--teal-dark);
+}
+
 .landing-page .hero-trust {
     display: flex;
     align-items: center;
     gap: 14px;
 
-    margin-top: 44px;
+    margin-top: 24px;
 
     animation: fadeUp 0.5s 0.34s ease both;
 }
@@ -1806,6 +1839,11 @@
 
     .landing-page .hero-ctas {
         justify-content: center;
+    }
+
+    .landing-page .hero-bot-pill {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .landing-page .hero-trust {

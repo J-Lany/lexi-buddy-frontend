@@ -380,6 +380,7 @@ export const en = {
       sub: 'Lexi Buddy turns active vocabulary into super interactive drills in under 2 minutes.',
       ctaPrimary: 'Get started FREE',
       ctaSecondary: 'See how it works',
+      botLabel: 'Student bot:',
       trust: 'Trusted by English teachers worldwide',
     },
     stats: {

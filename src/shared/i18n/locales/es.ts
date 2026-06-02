@@ -384,6 +384,7 @@ export const es: Translations = {
       sub: 'Lexi Buddy convierte el vocabulario activo en ejercicios interactivos en menos de 2 minutos.',
       ctaPrimary: 'Empezar GRATIS',
       ctaSecondary: 'Ver cómo funciona',
+      botLabel: 'Bot para alumnos:',
       trust: 'Ya lo usan profesores de inglés de todo el mundo',
     },
     stats: {
