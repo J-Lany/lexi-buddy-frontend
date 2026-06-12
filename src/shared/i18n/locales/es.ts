@@ -545,4 +545,10 @@ export const es: Translations = {
     noResultsHint: 'Prueba con otras palabras clave',
     countSuffix: 'p',
   },
+  cookies: {
+    title: 'Cookies en Lexi Buddy',
+    body: 'Solo usamos cookies esenciales para que el sitio funcione, como mantener tu sesión y recordar tu idioma. Sin rastreo ni publicidad. Consulta nuestra',
+    privacyPolicy: 'Política de privacidad',
+    accept: 'Aceptar y continuar',
+  },
 };

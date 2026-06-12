@@ -541,6 +541,12 @@ export const en = {
     noResultsHint: 'Try different keywords',
     countSuffix: 'q',
   },
+  cookies: {
+    title: 'Cookies on Lexi Buddy',
+    body: 'We only use essential cookies that keep the site working — like keeping you signed in and remembering your language. No tracking and no advertising. See our',
+    privacyPolicy: 'Privacy Policy',
+    accept: 'Accept & continue',
+  },
 } as const;
 
 type DeepString<T> = { [K in keyof T]: T[K] extends string ? string : DeepString<T[K]> };

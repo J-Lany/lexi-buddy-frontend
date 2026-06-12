@@ -1,11 +1,9 @@
 import '@/features/landing/widgets/landing-page/landing-page.css';
 
 import { cookies } from 'next/headers';
-import Image from 'next/image';
-import Link from 'next/link';
 import React from 'react';
 
-import { routes } from '@/shared/router/routes';
+import { LandingHeader } from '@/features/landing/widgets/landing-page/ui/landing-header/landing-header';
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies();
@@ -17,31 +15,7 @@ export default async function PublicLayout({ children }: { children: React.React
         className="landing-page"
         style={{ minHeight: 0, overflow: 'visible', background: 'transparent' }}
       >
-        <nav>
-          <Link href={routes.main} className="nav-logo">
-            <Image src="/icon.webp" alt="Lexi Buddy" width={38} height={38} priority unoptimized />
-            <span className="nav-logo-wordmark">
-              Lexi <b>Buddy</b>
-            </span>
-          </Link>
-
-          <div className="nav-right">
-            {isLoggedIn ? (
-              <Link href={routes.students} className="nav-cta">
-                Open app
-              </Link>
-            ) : (
-              <>
-                <Link href={routes.login} className="nav-login">
-                  Log in
-                </Link>
-                <Link href={routes.register} className="nav-cta">
-                  Get started
-                </Link>
-              </>
-            )}
-          </div>
-        </nav>
+        <LandingHeader isLoggedIn={isLoggedIn} />
       </div>
 
       <div style={{ height: 68, flexShrink: 0 }} aria-hidden />
