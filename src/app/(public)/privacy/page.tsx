@@ -143,7 +143,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   return (
     <section className="ui-card-static ui-radius-card p-5 sm:p-6 space-y-3">
       <h2 className="ui-title">{title}</h2>
-      <div className="ui-meta space-y-2">{children}</div>
+      <div className="ui-meta whitespace-normal! overflow-visible! space-y-2">{children}</div>
     </section>
   );
 }

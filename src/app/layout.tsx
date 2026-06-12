@@ -36,7 +36,11 @@ const dmSerifDisplay = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Lexi Buddy',
+  metadataBase: new URL('https://lexi-buddy.com'),
+  title: {
+    default: 'Lexi Buddy',
+    template: '%s | Lexi Buddy',
+  },
   description: 'AI-powered lesson builder for English teachers',
   icons: {
     icon: '/icon.webp',
@@ -50,6 +54,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  themeColor: '#2dbfcc',
 };
 
 export default function RootLayout({

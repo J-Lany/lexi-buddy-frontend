@@ -50,7 +50,7 @@ export function ViewAllStudentsDialog({
 
       <div className="flex flex-col gap-2">
         {filtered.map((s) => (
-          <div key={s.id} role="button" tabIndex={0} className="ui-inset-x ui-list-row">
+          <div key={s.id} className="ui-inset-x ui-list-row" style={{ cursor: 'default' }}>
             <div className="min-w-0">
               <div className="ui-title">{s.name}</div>
               {s.username ? (

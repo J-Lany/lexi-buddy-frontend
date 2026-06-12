@@ -11,8 +11,6 @@ export function LessonCard({ lesson }: { lesson: GroupLesson }) {
         transition
         active:scale-[0.99]
       "
-      role="button"
-      tabIndex={0}
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
