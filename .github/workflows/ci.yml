@@ -54,12 +54,14 @@ jobs:
       - name: Build Next.js
         run: npm run build
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}
+          NEXT_PUBLIC_API_URL: http://localhost:3000/api-proxy
+          BACKEND_URL: ${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}
 
       - name: Start Next.js production server
         run: npm run start &
         env:
           PORT: 3000
+          BACKEND_URL: ${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}
 
       - name: Wait for server to be ready
         run: |

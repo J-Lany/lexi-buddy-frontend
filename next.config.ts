@@ -10,6 +10,11 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   output: 'standalone',
   reactStrictMode: true,
+  rewrites() {
+    const backendUrl = process.env.BACKEND_URL;
+    if (!backendUrl) return Promise.resolve([]);
+    return Promise.resolve([{ source: '/api-proxy/:path*', destination: `${backendUrl}/:path*` }]);
+  },
   images: {
     remotePatterns: [
       {
