@@ -65,6 +65,15 @@ const submitButton = { role: 'button' as const, name: 'Continue' };
 test.describe('Login flow', () => {
   // Must start unauthenticated so middleware doesn't skip the login page.
   test.use({ storageState: { cookies: [], origins: [] } });
+  // Requires a running backend with valid credentials.
+  // In CI without backend these tests are skipped automatically.
+  // To enable: set E2E_USER_EMAIL + E2E_USER_PASSWORD environment variables.
+  test.beforeEach(({}, testInfo) => {
+    testInfo.skip(
+      !process.env.E2E_USER_EMAIL,
+      'Requires backend — set E2E_USER_EMAIL + E2E_USER_PASSWORD',
+    );
+  });
 
   test('valid credentials → redirects to /students', async ({ page }) => {
     await page.goto('/login');
