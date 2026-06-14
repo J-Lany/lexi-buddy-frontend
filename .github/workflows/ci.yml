@@ -74,6 +74,7 @@ jobs:
           CI: true
           E2E_USER_EMAIL: ${{ secrets.E2E_USER_EMAIL }}
           E2E_USER_PASSWORD: ${{ secrets.E2E_USER_PASSWORD }}
+          BACKEND_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_STAGING }}
 
       - name: Upload Playwright report
         if: failure()
