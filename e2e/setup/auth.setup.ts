@@ -5,7 +5,7 @@ const AUTH_FILE = path.join(__dirname, '../.auth/user.json');
 
 const EMAIL = process.env.E2E_USER_EMAIL ?? 'anna.ivanovna@example.com';
 const PASSWORD = process.env.E2E_USER_PASSWORD ?? 'Password123';
-const BACKEND_URL = process.env.BACKEND_API_URL;
+const BACKEND_URL = process.env.BACKEND_API_URL?.replace(/\/$/, '');
 
 setup('authenticate', async ({ page }) => {
   if (!BACKEND_URL) {
