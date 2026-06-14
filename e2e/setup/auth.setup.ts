@@ -17,6 +17,14 @@ setup('authenticate', async ({ page }) => {
     console.error('[request failed]', req.method(), req.url(), req.failure()?.errorText);
   });
 
+  // Pre-accept cookie consent so the modal doesn't block the login form.
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      'lexi.cookie-consent',
+      JSON.stringify({ accepted: true, version: 1, date: new Date().toISOString() }),
+    );
+  });
+
   await page.goto('/login');
 
   // Start listening for the login API response BEFORE clicking submit.
