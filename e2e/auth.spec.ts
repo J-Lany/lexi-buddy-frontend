@@ -75,6 +75,56 @@ test.describe('Login flow', () => {
     );
   });
 
+  // Pre-accept cookie consent and fix cookie domain issues caused by the API proxy.
+  // Next.js rewrites don't reliably forward Set-Cookie to the browser under localhost,
+  // so we intercept /auth/login, call the backend directly from Node.js, and inject
+  // the returned cookies into the browser context with domain=localhost.
+  test.beforeEach(async ({ page, context }) => {
+    await page.addInitScript(() => {
+      localStorage.setItem(
+        'lexi.cookie-consent',
+        JSON.stringify({ accepted: true, version: 1, date: new Date().toISOString() }),
+      );
+    });
+
+    const BACKEND = process.env.BACKEND_API_URL?.replace(/\/$/, '');
+    if (!BACKEND) return;
+
+    await page.route('**/api-proxy/auth/login', async (route) => {
+      if (route.request().method() !== 'POST') {
+        await route.continue();
+        return;
+      }
+      const reqData: unknown = route.request().postDataJSON();
+      const res = await fetch(`${BACKEND}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(reqData),
+      });
+      const body: unknown = await res.json().catch(() => ({}));
+      if (res.ok) {
+        const setCookies = (res.headers as Headers & { getSetCookie(): string[] }).getSetCookie();
+        for (const raw of setCookies) {
+          const [nameValue] = raw.split(';');
+          const eqIdx = nameValue.indexOf('=');
+          const name = nameValue.slice(0, eqIdx).trim();
+          const value = nameValue.slice(eqIdx + 1).trim();
+          await context.addCookies([{ name, value, domain: 'localhost', path: '/' }]);
+        }
+      }
+      await route.fulfill({
+        status: res.status,
+        contentType: 'application/json',
+        body: JSON.stringify(body),
+      });
+    });
+
+    await page.route('**/api-proxy/auth/logout', async (route) => {
+      await context.clearCookies();
+      await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+    });
+  });
+
   test('valid credentials → redirects to /students', async ({ page }) => {
     await page.goto('/login');
     await page.locator(emailInput).fill(EMAIL);
