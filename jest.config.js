@@ -15,6 +15,7 @@ const config = {
   snapshotFormat: {
     printBasicPrototype: false,
   },
+  testPathIgnorePatterns: ['/node_modules/', '<rootDir>/e2e/'],
 };
 
 module.exports = createJestConfig(config);

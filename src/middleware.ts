@@ -7,7 +7,9 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const refreshToken = request.cookies.get('refresh_token')?.value;
 
-  const isPublic = routeAccess.public.some((route) => pathname.startsWith(route));
+  const isPublic = routeAccess.public.some((route) =>
+    route === '/' ? pathname === '/' : pathname.startsWith(route),
+  );
 
   if (isPublic) {
     const isAuthRoute = pathname.startsWith(routes.login) || pathname.startsWith(routes.register);

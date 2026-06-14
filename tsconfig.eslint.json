@@ -13,7 +13,9 @@
     "jest.setup.ts",
     "vitest.config.ts",
     "vitest.shims.d.ts",
-    "next.config.ts"
+    "next.config.ts",
+    "playwright.config.ts",
+    "e2e/**/*.ts"
   ],
   "exclude": ["node_modules", ".next", "out", "build"]
 }

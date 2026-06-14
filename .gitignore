@@ -14,6 +14,13 @@
 # testing
 /coverage
 
+# playwright auth state (contains real session tokens)
+/e2e/.auth/
+
+# playwright test artifacts (generated on test run/failure)
+/test-results/
+/playwright-report/
+
 # next.js
 /.next/
 /out/
