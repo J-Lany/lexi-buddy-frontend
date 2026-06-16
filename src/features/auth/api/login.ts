@@ -1,4 +1,4 @@
-import { api } from '@/shared/api';
+import { authApi } from '@/shared/api/http/auth-api';
 
 export type LoginResponse = {
   firstName: string | null;
@@ -12,6 +12,6 @@ export type LoginParams = {
 };
 
 export const login = async (payload: LoginParams): Promise<LoginResponse> => {
-  const { data } = await api.post<LoginResponse>('/auth/login', payload);
+  const { data } = await authApi.post<LoginResponse>('/auth/login', payload);
   return data;
 };

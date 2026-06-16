@@ -90,6 +90,17 @@ test.describe('Login flow', () => {
     const BACKEND = process.env.BACKEND_API_URL?.replace(/\/$/, '');
     if (!BACKEND) return;
 
+    // Abort all API calls except auth/login and auth/logout. This prevents
+    // /auth/me refetches and /auth/refresh from triggering 401 → redirect cascade
+    // after cookies are cleared by the logout interceptor.
+    await page.route(
+      (url) =>
+        (url.port === '4000' || url.href.includes('/api-proxy/')) &&
+        !url.pathname.endsWith('/auth/login') &&
+        !url.pathname.endsWith('/auth/logout'),
+      (route) => route.abort(),
+    );
+
     await page.route('**/api-proxy/auth/login', async (route) => {
       if (route.request().method() !== 'POST') {
         await route.continue();
@@ -119,7 +130,8 @@ test.describe('Login flow', () => {
       });
     });
 
-    await page.route('**/api-proxy/auth/logout', async (route) => {
+    // '**/auth/logout' matches both local (localhost:4000/auth/logout) and CI proxy.
+    await page.route('**/auth/logout', async (route) => {
       await context.clearCookies();
       await route.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
     });
@@ -170,7 +182,13 @@ test.describe('Logout', () => {
     context,
     page,
   }) => {
-    // Mock backend logout endpoint so no real server is needed
+    // Abort all API calls (registered first = lower priority) so a fake token
+    // can't produce a 401 → redirect cascade that races with page.goto.
+    await page.route(
+      (url) => url.port === '4000' || url.href.includes('/api-proxy/'),
+      (route) => route.abort(),
+    );
+    // Mock logout (registered last = higher priority, overrides the abort above).
     await page.route('**/auth/logout', (route) =>
       route.fulfill({ status: 200, contentType: 'application/json', body: '{}' }),
     );
@@ -187,8 +205,7 @@ test.describe('Logout', () => {
     await context.clearCookies();
 
     // Now the private page must redirect.
-    // waitUntil:'commit' avoids ERR_ABORTED from pending fetches on the previous page.
-    await page.goto('/students', { waitUntil: 'commit' });
+    await page.goto('/students', { waitUntil: 'commit' }).catch(() => null);
     await expect(page).toHaveURL('/login');
   });
 });

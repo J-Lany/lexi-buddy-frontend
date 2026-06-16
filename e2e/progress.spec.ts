@@ -13,9 +13,13 @@ test.describe('Student lesson progress page', () => {
     await context.addCookies([
       { name: 'refresh_token', value: FAKE_TOKEN, domain: 'localhost', path: '/' },
     ]);
-    // Abort proxy API calls so a fake token doesn't trigger a 401 → redirect cascade.
+    // Abort API calls so a fake token doesn't trigger a 401 → redirect cascade.
     // The page will show its error state, which is what these tests verify.
     await page.route('**/api-proxy/**', (route) => route.abort());
+    await page.route(
+      (url) => url.port === '4000',
+      (route) => route.abort(),
+    );
   });
 
   test('does not redirect to /login with valid cookie', async ({ page }) => {
