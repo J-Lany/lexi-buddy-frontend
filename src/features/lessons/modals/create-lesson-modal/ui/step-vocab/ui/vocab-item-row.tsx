@@ -33,6 +33,18 @@ export function VocabItemRow({
   const [showTranslation, setShowTranslation] = React.useState(item.translation !== null);
   const synonymCount = item.synonyms?.length ?? 0;
 
+  const synonymInputRefs = React.useRef<Array<HTMLInputElement | null>>([]);
+  const prevSynonymCount = React.useRef(synonymCount);
+
+  React.useEffect(() => {
+    if (synonymCount > prevSynonymCount.current) {
+      synonymInputRefs.current[synonymCount - 1]?.focus();
+    }
+
+    synonymInputRefs.current = synonymInputRefs.current.slice(0, synonymCount);
+    prevSynonymCount.current = synonymCount;
+  }, [synonymCount]);
+
   return (
     <div className="grid gap-3">
       <div className="grid gap-1">
@@ -97,8 +109,11 @@ export function VocabItemRow({
 
             <div className="grid gap-2">
               {item.synonyms!.map((syn, si) => (
-                <div key={`${syn}-${si}`} className="relative">
+                <div key={si} className="relative">
                   <Input
+                    ref={(el) => {
+                      synonymInputRefs.current[si] = el;
+                    }}
                     value={syn}
                     onChange={(e) => onChangeSynonym(si, e.target.value)}
                     className="h-11 rounded-2xl pr-11"
