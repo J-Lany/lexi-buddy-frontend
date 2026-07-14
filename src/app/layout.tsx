@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     default: 'Lexi Buddy',
     template: '%s | Lexi Buddy',
   },
-  description: 'AI-powered lesson builder for English teachers',
+  description: 'AI-powered lesson builder for language teachers',
   icons: {
     icon: '/icon.webp',
     shortcut: '/icon.webp',

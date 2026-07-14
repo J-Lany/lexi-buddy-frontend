@@ -288,8 +288,9 @@ export const kz: Translations = {
       instructionLanguage: 'Тапсырма тілі',
       instructionLanguageHint: 'Тапсырма сұрақтарындағы тіл',
       topicPlaceholder: 'Сабақ тақырыбы',
-      additionalInstructions: 'Қосымша нұсқаулар (міндетті емес)',
-      additionalInstructionsPlaceholder: 'Мысалы: тек осы шақ, фразалық етістіктерсіз…',
+      additionalInstructions: 'Оқушыға арналған түсініктеме (міндетті емес)',
+      additionalInstructionsPlaceholder:
+        'Мысалы: «Тапсырманы орындамас бұрын төмендегі бейнені қара»',
       materialLinks: 'Материал сілтемелері (міндетті емес)',
       materialLinksPlaceholder: 'https://…',
       tooltips: {
@@ -302,7 +303,8 @@ export const kz: Translations = {
         topic:
           'ЖИ-ге сабақ контексті ретінде жіберіледі — неғұрлым нақты болса, соғұрлым жақсы нәтиже.',
         additionalInstructions:
-          'ЖИ үшін қосымша контекст — тақырыптан тыс нұсқаулар немесе шектеулер.',
+          'Оқушыға арналған қосымша контекст\nБұл мәтінді оқушы Telegram-да тапсырмамен бірге көреді. Мысалы: «Үй жұмысын орындамас бұрын төмендегі бейнені қара».',
+        additionalInstructionsAriaLabel: 'Толығырақ',
         materialLinks: 'Оқушылар сабақпен бірге көретін сыртқы сілтемелер.',
       },
     },
@@ -345,7 +347,7 @@ export const kz: Translations = {
       students: 'Оқушылар',
       vocab: 'Лексика',
       noVocab: 'Сөздер жоқ',
-      additionalInstructions: 'Қосымша нұсқаулар',
+      additionalInstructions: 'Оқушыға арналған түсініктеме',
       materialLinks: 'Материалдар',
       assignmentsTitle: 'Тапсырмалар',
       noAssignments: 'Тапсырмалар жоқ',
@@ -381,7 +383,7 @@ export const kz: Translations = {
       openApp: 'Қосымшаны ашу',
     },
     hero: {
-      badge: 'ЖИ негізінде · Ағылшын тілі мұғалімдеріне арналған',
+      badge: 'ЖИ негізінде · Тіл мұғалімдеріне арналған',
       h1a: 'Ақылдырақ оқытыңыз.',
       h1b: 'Жаттығуларды',
       h1aiLabel: 'ЖИ',
@@ -391,7 +393,7 @@ export const kz: Translations = {
       ctaPrimary: 'Бастау ТЕГІН',
       ctaSecondary: 'Қалай жұмыс істейді',
       botLabel: 'Оқушылар боты:',
-      trust: 'Бүкіл әлемдегі ағылшын тілі мұғалімдері сенеді',
+      trust: 'Бүкіл әлемдегі мұғалімдер сенеді',
     },
     stats: {
       timeLabel: 'Сабақ жасаудың орташа уақыты',
@@ -501,8 +503,7 @@ export const kz: Translations = {
       note: 'Оқушылар Telegram-да @lexi_buddy_bot қолданады — қосымша баптау жоқ',
     },
     footer: {
-      tagline:
-        'Ағылшын тілі мұғалімдеріне арналған ЖИ сабақ жасаушысы және оқушыларға Telegram-практикасы.',
+      tagline: 'Тіл мұғалімдеріне арналған ЖИ сабақ жасаушысы және оқушыларға Telegram-практикасы.',
       product: 'Өнім',
       telegramBot: 'Telegram-бот',
       howItWorks: 'Қалай жұмыс істейді',
@@ -514,8 +515,13 @@ export const kz: Translations = {
       students: 'Оқушылар',
       support: 'Қолдау',
       helpQa: 'Көмек және сұрақтар',
+      legal: 'Құжаттар',
+      terms: 'Пайдаланушы келісімі',
+      privacy: 'Құпиялылық саясаты',
+      cookiePolicy: 'Cookie саясаты',
+      pdnConsent: 'ПДн өңдеуге келісім',
       copyright: '© 2026 Lexi Buddy',
-      builtFor: 'Ағылшын тілі мұғалімдеріне арналған',
+      builtFor: 'Тіл мұғалімдері мен оқушыларға арналған',
     },
   },
   table: {
@@ -542,9 +548,23 @@ export const kz: Translations = {
     countSuffix: 'с',
   },
   cookies: {
-    title: 'Lexi Buddy-дегі cookie файлдары',
-    body: 'Біз сайттың жұмысына қажетті cookie файлдарын ғана қолданамыз — мысалы, аккаунтта қалуыңыз және таңдаған тіліңіз сақталуы үшін. Бақылау мен жарнама жоқ. Толығырақ —',
-    privacyPolicy: 'Құпиялылық саясатынан',
-    accept: 'Қабылдау',
+    bannerTitle: 'Lexi Buddy-дегі cookie файлдары',
+    bannerText: 'Біз сайттың жұмысы үшін cookie файлдарын қолданамыз.',
+    bannerLinkLead: 'Толығырақ мына жерден:',
+    acceptAll: 'Барлығын қабылдау',
+    necessaryOnly: 'Тек қажеттілерін',
+    settingsButton: 'Баптаулар',
+    manageLink: 'Cookie баптаулары',
+    cookiePolicyLink: 'Cookie саясаты',
+    saveError: 'Cookie баптауларын сақтау мүмкін болмады. Қайталап көріңіз.',
+    settingsTitle: 'Cookie баптаулары',
+    settingsDescription:
+      'Қандай cookie файлдарын қолдануға болатынын таңдаңыз. Қажетті cookie файлдары сайттың жұмысын қамтамасыз етеді және өшірілмейді.',
+    necessaryTitle: 'Қажетті',
+    necessaryDescription: 'Аутентификация және сайттың негізгі жұмысы үшін қажет.',
+    necessaryBadge: 'Әрқашан белсенді',
+    functionalTitle: 'Функционалды',
+    functionalDescription: 'Келесі сапарларда таңдалған интерфейс тілін есте сақтайды.',
+    save: 'Таңдауды сақтау',
   },
 };

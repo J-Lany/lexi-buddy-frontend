@@ -5,38 +5,57 @@ import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
-import { SignUpFormValues, signupSchema } from '@/features/auth/lib/schemas';
+import {
+  SignUpFormValues,
+  signupSchema,
+  TEACHER_CONSENT_VERSION,
+} from '@/features/auth/lib/schemas';
 import { useSignupMutation } from '@/features/auth/model/use-signup';
 import { AuthCard } from '@/features/auth/ui/shared/auth-card';
 import { EmailConfirmModal } from '@/features/auth/ui/sign-up/email-confirm-modal';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
+import { Checkbox } from '@/shared/ui/checkbox';
 import { Field, FieldLabel } from '@/shared/ui/field';
 import { Input } from '@/shared/ui/input';
+
+type PendingSignUp = {
+  email: string;
+  password: string;
+  consentAccepted: boolean;
+  consentVersion: number;
+};
 
 export default function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
-  const [pendingData, setPendingData] = useState<{ email: string; password: string } | null>(null);
+  const [pendingData, setPendingData] = useState<PendingSignUp | null>(null);
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signupSchema),
+    defaultValues: { consentAccepted: false },
   });
   const router = useRouter();
   const { mutate, isPending } = useSignupMutation();
 
   const onSubmit = (data: SignUpFormValues) => {
     setAuthError(null);
-    setPendingData({ email: data.email, password: data.password });
+    setPendingData({
+      email: data.email,
+      password: data.password,
+      consentAccepted: data.consentAccepted,
+      consentVersion: TEACHER_CONSENT_VERSION,
+    });
   };
 
   const handleConfirm = () => {
@@ -132,6 +151,61 @@ export default function SignUpForm() {
               )}
             </Field>
           </div>
+
+          <Controller
+            name="consentAccepted"
+            control={control}
+            render={({ field }) => (
+              <div>
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="consentAccepted"
+                    ref={field.ref}
+                    checked={field.value}
+                    onCheckedChange={(checked) => field.onChange(checked === true)}
+                    onBlur={field.onBlur}
+                    aria-invalid={!!errors.consentAccepted}
+                    aria-describedby={errors.consentAccepted ? 'consentAccepted-error' : undefined}
+                    className="mt-0.5"
+                  />
+                  <label htmlFor="consentAccepted" className="text-sm text-muted-foreground">
+                    Мне исполнилось 18 лет. Я ознакомлен(а) и согласен(на) с{' '}
+                    <Link
+                      href={routes.terms}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-primary hover:underline"
+                    >
+                      Пользовательским соглашением
+                    </Link>{' '}
+                    и{' '}
+                    <Link
+                      href={routes.privacy}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-primary hover:underline"
+                    >
+                      Политикой конфиденциальности
+                    </Link>{' '}
+                    и даю согласие на{' '}
+                    <Link
+                      href={routes.pdnConsent}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-primary hover:underline"
+                    >
+                      обработку моих персональных данных
+                    </Link>
+                  </label>
+                </div>
+                {errors.consentAccepted && (
+                  <p id="consentAccepted-error" className="text-sm text-destructive mt-1">
+                    {errors.consentAccepted.message}
+                  </p>
+                )}
+              </div>
+            )}
+          />
 
           {authError && (
             <p className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive">

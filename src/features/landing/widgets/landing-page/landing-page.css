@@ -1679,6 +1679,29 @@
     color: var(--teal);
 }
 
+.landing-page .footer-col button {
+    display: block;
+
+    margin-bottom: 11px;
+    padding: 0;
+
+    background: none;
+    border: none;
+
+    color: rgba(255, 255, 255, 0.58);
+
+    font-size: 13.5px;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: color 0.18s;
+}
+
+.landing-page .footer-col button:hover {
+    color: var(--teal);
+}
+
 .landing-page .footer-bottom {
     display: flex;
     flex-wrap: wrap;

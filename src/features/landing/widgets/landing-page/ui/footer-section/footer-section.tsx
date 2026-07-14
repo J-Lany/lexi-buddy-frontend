@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { useI18n } from '@/shared/i18n';
+import { requestOpenCookieSettings } from '@/shared/lib/cookie-consent';
 import { routes } from '@/shared/router/routes';
 
 export function FooterSection() {
@@ -48,6 +49,17 @@ export function FooterSection() {
         <div className="footer-col">
           <h4>{t('landing.footer.support')}</h4>
           <Link href={routes.help}>{t('landing.footer.helpQa')}</Link>
+        </div>
+
+        <div className="footer-col">
+          <h4>{t('landing.footer.legal')}</h4>
+          <Link href={routes.terms}>{t('landing.footer.terms')}</Link>
+          <Link href={routes.privacy}>{t('landing.footer.privacy')}</Link>
+          <Link href={routes.cookiePolicy}>{t('landing.footer.cookiePolicy')}</Link>
+          <Link href={routes.pdnConsent}>{t('landing.footer.pdnConsent')}</Link>
+          <button type="button" onClick={requestOpenCookieSettings}>
+            {t('cookies.manageLink')}
+          </button>
         </div>
       </div>
 

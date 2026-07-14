@@ -287,8 +287,8 @@ export const en = {
       instructionLanguage: 'Assignment language',
       instructionLanguageHint: 'Language used in assignment questions',
       topicPlaceholder: 'Lesson topic',
-      additionalInstructions: 'Additional instructions (optional)',
-      additionalInstructionsPlaceholder: 'E.g. Focus on present tense only, avoid phrasal verbs…',
+      additionalInstructions: 'Comment for the student (optional)',
+      additionalInstructionsPlaceholder: 'E.g. "Watch the video below before doing the task"',
       materialLinks: 'Material links (optional)',
       materialLinksPlaceholder: 'https://…',
       tooltips: {
@@ -302,7 +302,8 @@ export const en = {
         topic:
           'Sent directly to the AI as lesson context — the more specific, the better the tasks.',
         additionalInstructions:
-          'Extra context for the AI — tips, constraints, or focus areas beyond the topic.',
+          'Additional context for the student\nThe student will see this text in Telegram together with the assignment. For example: "Before doing the homework, watch the video below."',
+        additionalInstructionsAriaLabel: 'More information',
         materialLinks: 'External links shown to students alongside the lesson.',
       },
     },
@@ -345,7 +346,7 @@ export const en = {
       students: 'Students',
       vocab: 'Vocabulary',
       noVocab: 'No vocabulary items',
-      additionalInstructions: 'Additional Instructions',
+      additionalInstructions: 'Comment for the Student',
       materialLinks: 'Materials',
       assignmentsTitle: 'Assignments',
       noAssignments: 'No assignments',
@@ -381,7 +382,7 @@ export const en = {
       openApp: 'Open app',
     },
     hero: {
-      badge: 'AI-Powered · Built for English teachers',
+      badge: 'AI-Powered · Built for language teachers',
       h1a: 'Teach smarter.',
       h1b: 'Let',
       h1aiLabel: 'AI',
@@ -391,7 +392,7 @@ export const en = {
       ctaPrimary: 'Get started FREE',
       ctaSecondary: 'See how it works',
       botLabel: 'Student bot:',
-      trust: 'Trusted by English teachers worldwide',
+      trust: 'Trusted by teachers worldwide',
     },
     stats: {
       timeLabel: 'Average lesson creation time',
@@ -502,7 +503,7 @@ export const en = {
     },
     footer: {
       tagline:
-        'AI-powered lesson builder for English teachers and Telegram-native practice for students.',
+        'AI-powered lesson builder for language teachers and Telegram-based practice for students.',
       product: 'Product',
       telegramBot: 'Telegram bot',
       howItWorks: 'How it works',
@@ -514,8 +515,13 @@ export const en = {
       students: 'Students',
       support: 'Support',
       helpQa: 'Help & Q&A',
+      legal: 'Legal',
+      terms: 'Terms of Service',
+      privacy: 'Privacy Policy',
+      cookiePolicy: 'Cookie Policy',
+      pdnConsent: 'Data Processing Consent',
       copyright: '© 2026 Lexi Buddy',
-      builtFor: 'Built for English teachers',
+      builtFor: 'Built for language teachers and learners',
     },
   },
   table: {
@@ -542,10 +548,24 @@ export const en = {
     countSuffix: 'q',
   },
   cookies: {
-    title: 'Cookies on Lexi Buddy',
-    body: 'We only use essential cookies that keep the site working — like keeping you signed in and remembering your language. No tracking and no advertising. See our',
-    privacyPolicy: 'Privacy Policy',
-    accept: 'Accept & continue',
+    bannerTitle: 'Cookies on Lexi Buddy',
+    bannerText: 'We use cookies to make our site work.',
+    bannerLinkLead: 'Learn more in our',
+    acceptAll: 'Accept all',
+    necessaryOnly: 'Necessary only',
+    settingsButton: 'Settings',
+    manageLink: 'Cookie settings',
+    cookiePolicyLink: 'Cookie Policy',
+    saveError: 'Could not save your cookie preferences. Please try again.',
+    settingsTitle: 'Cookie settings',
+    settingsDescription:
+      'Choose which cookies we can use. Necessary cookies keep the site working and can’t be turned off.',
+    necessaryTitle: 'Necessary',
+    necessaryDescription: 'Required for authentication and core site functionality.',
+    necessaryBadge: 'Always active',
+    functionalTitle: 'Functional',
+    functionalDescription: 'Remembers your chosen interface language across visits.',
+    save: 'Save choices',
   },
 } as const;
 

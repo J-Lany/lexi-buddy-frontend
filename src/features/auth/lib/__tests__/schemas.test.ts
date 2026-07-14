@@ -53,6 +53,7 @@ describe('signupSchema', () => {
     email: 'teacher@example.com',
     password: 'password123',
     confirmPassword: 'password123',
+    consentAccepted: true,
   };
 
   it('accepts valid registration data', () => {
@@ -94,5 +95,17 @@ describe('signupSchema', () => {
 
   it('rejects missing all fields', () => {
     expect(signupSchema.safeParse({}).success).toBe(false);
+  });
+
+  it('rejects unchecked consent', () => {
+    const result = signupSchema.safeParse({ ...VALID, consentAccepted: false });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].path).toContain('consentAccepted');
+  });
+
+  it('rejects missing consent', () => {
+    const withoutConsent: Partial<typeof VALID> = { ...VALID };
+    delete withoutConsent.consentAccepted;
+    expect(signupSchema.safeParse(withoutConsent).success).toBe(false);
   });
 });

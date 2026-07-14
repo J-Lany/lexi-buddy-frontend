@@ -1,14 +1,22 @@
 import { z } from 'zod';
 
+// Keep in sync with the backend's expected consent version for teacher registration.
+export const TEACHER_CONSENT_VERSION = 1;
+
 export const signupSchema = z
   .object({
     email: z.email('Enter a valid email'),
     password: z.string().min(8, 'Password must be at least 8 characters long'),
     confirmPassword: z.string(),
+    consentAccepted: z.boolean(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
     path: ['confirmPassword'],
+  })
+  .refine((data) => data.consentAccepted === true, {
+    message: 'Необходимо принять условия, чтобы продолжить регистрацию',
+    path: ['consentAccepted'],
   });
 
 export const loginSchema = z.object({

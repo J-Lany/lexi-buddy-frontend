@@ -6,9 +6,13 @@ import * as React from 'react';
 
 import { cn } from '@/shared/lib/cn';
 
-function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
+const Checkbox = React.forwardRef<
+  React.ComponentRef<typeof CheckboxPrimitive.Root>,
+  React.ComponentProps<typeof CheckboxPrimitive.Root>
+>(function Checkbox({ className, ...props }, ref) {
   return (
     <CheckboxPrimitive.Root
+      ref={ref}
       data-slot="checkbox"
       className={cn(
         [
@@ -52,6 +56,6 @@ function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxP
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   );
-}
+});
 
 export { Checkbox };

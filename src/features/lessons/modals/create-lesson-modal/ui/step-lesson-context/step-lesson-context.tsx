@@ -104,7 +104,11 @@ export function StepLessonContext({ draft, onChange }: Props) {
             <span className="text-xs text-muted-foreground">
               {t('lessons.meta.additionalInstructions')}
             </span>
-            <FieldTooltip content={t('lessons.meta.tooltips.additionalInstructions')} />
+            <FieldTooltip
+              content={t('lessons.meta.tooltips.additionalInstructions')}
+              contentClassName="max-w-[280px]"
+              ariaLabel={t('lessons.meta.tooltips.additionalInstructionsAriaLabel')}
+            />
           </div>
           <span
             className={cn(

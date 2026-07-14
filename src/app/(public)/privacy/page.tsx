@@ -1,149 +1,169 @@
-// TODO (legal): Fill every [placeholder] with real ИП details before launch.
-// TODO (legal): Have a licensed attorney review this policy for RK Law No. 94-V compliance.
-// TODO (legal): Confirm data localization (Art. 16 of Law 94-V) — personal data of RK citizens
-//               must be stored in a database physically located in Kazakhstan. Verify your hosting.
-// TODO (ops): Keep CONSENT_VERSION in consent-storage.ts in sync with the Version field below.
-
 import type { Metadata } from 'next';
 
+import { routes } from '@/shared/router/routes';
+import { LegalDocsNav } from '@/shared/ui/legal/legal-docs-nav';
+import { LegalSection } from '@/shared/ui/legal/legal-section';
+
 export const metadata: Metadata = {
-  title: 'Privacy & Cookie Policy — Lexi Buddy',
+  title: 'Политика конфиденциальности — Lexi Buddy',
 };
 
-// TODO: Replace with real operator details.
-const OPERATOR_NAME = '[ИП Name]';
-const OPERATOR_BIN = '[БИН/ИИН]';
-const OPERATOR_ADDRESS = '[City, Kazakhstan]';
-const OPERATOR_EMAIL = '[contact@example.com]';
-const EFFECTIVE_DATE = '[DD.MM.YYYY]';
-const POLICY_VERSION = 1; // keep in sync with CONSENT_VERSION
+const EFFECTIVE_DATE = '06.07.2026';
+const CONTACT_EMAIL = 'lexi.buddy.help@gmail.com';
 
 export default function PrivacyPage() {
   return (
     <article className="max-w-[720px] mx-auto space-y-8">
-      <header className="space-y-2">
-        <h1 className="ui-page-title">Privacy &amp; Cookie Policy</h1>
-        <p className="ui-meta">
-          Effective date: {EFFECTIVE_DATE} · Version: {POLICY_VERSION}
-        </p>
+      <header className="space-y-3">
+        <h1 className="ui-page-title">
+          Политика конфиденциальности и обработки персональных данных
+        </h1>
+        <p className="ui-meta">Платформа Lexi Buddy · Редакция от {EFFECTIVE_DATE}</p>
+        <LegalDocsNav current={routes.privacy} />
       </header>
 
-      <Section title="1. Operator">
-        <p>The data operator is the sole proprietor (ИП):</p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Name: {OPERATOR_NAME}</li>
-          <li>БИН/ИИН: {OPERATOR_BIN}</li>
-          <li>Address: {OPERATOR_ADDRESS}</li>
-          <li>Contact: {OPERATOR_EMAIL}</li>
-        </ul>
+      <LegalSection title="1. Общие положения">
         <p>
-          This Policy follows the Law of the Republic of Kazakhstan No. 94-V dated 21 May 2013
-          &ldquo;On Personal Data and Its Protection&rdquo;.
-        </p>
-      </Section>
-
-      <Section title="2. Data we process">
-        <ul className="list-disc pl-5 space-y-1">
-          <li>
-            <strong>Technical data</strong> needed to run the service: session data, chosen
-            interface language, basic security logs.
-          </li>
-          <li>
-            <strong>Account data</strong> you provide at sign-up: name, email, and anything you add
-            voluntarily.
-          </li>
-        </ul>
-        <p>We do not collect data for advertising and do not use tracking analytics.</p>
-      </Section>
-
-      <Section title="3. Purposes">
-        <p>
-          Providing and running the service; authentication and keeping you signed in; remembering
-          preferences (e.g. language); security and abuse prevention; performing our service
-          contract with you.
-        </p>
-      </Section>
-
-      <Section title="4. Legal basis">
-        <p>
-          Your consent, performance of the contract you are party to, and other grounds permitted by
-          the legislation of the Republic of Kazakhstan.
-        </p>
-      </Section>
-
-      <Section title="5. Cookies">
-        <p>
-          We use <strong>strictly necessary cookies only</strong>: session/authentication cookies
-          (to keep you signed in) and functional cookies (to remember your language and settings).
-          No advertising or analytics cookies. Because these are essential, they are set on the
-          basis of legitimate interest and contract performance; we inform you of their use on your
-          first visit.
-        </p>
-      </Section>
-
-      <Section title="6. Retention">
-        <p>
-          Personal data is kept no longer than necessary for the stated purposes or as required by
-          RK law. Account data is kept until the account is deleted; technical cookies last for
-          their defined lifetime.
-        </p>
-      </Section>
-
-      <Section title="7. Sharing &amp; cross-border transfer">
-        <p>
-          We do not sell personal data. Data may be processed by infrastructure providers (hosting,
-          email) solely for the purposes above.
-        </p>
-        {/* TODO: List providers and hosting countries; state the lawful basis for any cross-border transfer. */}
-        <p className="ui-stat text-warning">
-          TODO: list infrastructure providers and countries, and state the basis for any
-          cross-border transfer.
-        </p>
-      </Section>
-
-      <Section title="8. Storage within Kazakhstan">
-        {/* TODO: Describe where RK citizens' personal data is physically stored per Law 94-V. */}
-        <p className="ui-stat text-warning">
-          TODO: describe where personal data of RK citizens is physically stored (data localization
-          requirement, Law No. 94-V).
-        </p>
-      </Section>
-
-      <Section title="9. Your rights">
-        <p>
-          Access, rectification, erasure, restriction of processing, and the right to{' '}
-          <strong>withdraw consent</strong> at any time. To exercise these, contact{' '}
-          <a href={`mailto:${OPERATOR_EMAIL}`} className="text-primary font-medium">
-            {OPERATOR_EMAIL}
-          </a>
-          ; we respond within the timeframes set by RK law.
-        </p>
-      </Section>
-
-      <Section title="10. Changes">
-        <p>
-          On material changes we bump the version and re-request acknowledgement on the next visit.
-        </p>
-      </Section>
-
-      <Section title="11. Operator details">
-        <p>
-          ИП &ldquo;{OPERATOR_NAME}&rdquo;, БИН/ИИН {OPERATOR_BIN}, {OPERATOR_ADDRESS},{' '}
-          <a href={`mailto:${OPERATOR_EMAIL}`} className="text-primary font-medium">
-            {OPERATOR_EMAIL}
+          1.1. Настоящая Политика определяет порядок сбора, обработки, хранения и защиты
+          персональных данных пользователей некоммерческой образовательной платформы Lexi Buddy
+          (далее — «Платформа»), доступной по адресу{' '}
+          <a href="https://www.lexi-buddy.com/" className="text-primary font-medium">
+            https://www.lexi-buddy.com/
+          </a>{' '}
+          и через Telegram-бот{' '}
+          <a href="https://t.me/lexi_buddy_bot" className="text-primary font-medium">
+            https://t.me/lexi_buddy_bot
           </a>
           .
         </p>
-      </Section>
-    </article>
-  );
-}
+        <p>
+          1.2. Платформа является <strong>некоммерческим</strong> проектом и предоставляется на
+          безвозмездной основе. Платформа не взимает плату за доступ.
+        </p>
+        <p>
+          1.3. Начиная использовать Платформу и предоставляя свои данные, пользователь подтверждает
+          согласие с настоящей Политикой. Если пользователь не согласен — он должен воздержаться от
+          использования Платформы.
+        </p>
+        <p>
+          1.4. Платформа предназначена для лиц, достигших 18 лет. Платформа не осуществляет
+          осознанный сбор данных несовершеннолетних.
+        </p>
+      </LegalSection>
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="ui-card-static ui-radius-card p-5 sm:p-6 space-y-3">
-      <h2 className="ui-title">{title}</h2>
-      <div className="ui-meta whitespace-normal! overflow-visible! space-y-2">{children}</div>
-    </section>
+      <LegalSection title="2. Категории пользователей и обрабатываемые данные">
+        <p>Платформа обрабатывает минимально необходимый объём данных.</p>
+        <p>
+          <strong>2.1. Пользователи Платформы по адресу https://www.lexi-buddy.com:</strong>
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>адрес электронной почты (обязательно);</li>
+          <li>имя или отображаемое имя (по желанию пользователя).</li>
+        </ul>
+        <p>
+          <strong>
+            2.2. Пользователи Платформы через Telegram-бот https://t.me/lexi_buddy_bot:
+          </strong>
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>имя пользователя (никнейм) в Telegram;</li>
+          <li>имя или отображаемое имя, указанное пользователем в Telegram.</li>
+        </ul>
+        <p>
+          <strong>2.3. Технические данные</strong> (при использовании веб-сайта): данные о сессии и
+          файлах cookie, необходимые для работы Платформы (см.{' '}
+          <a href={routes.cookiePolicy} className="text-primary font-medium">
+            Политику в отношении файлов cookie
+          </a>
+          ).
+        </p>
+        <p>
+          2.4. Платформа <strong>не собирает</strong> специальные категории данных (о здоровье,
+          национальности, политических или религиозных взглядах и т. п.), платёжные данные, а также
+          данные сверх перечисленных в п. 2.1–2.3.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="3. Цели и правовое основание обработки">
+        <p>
+          3.1. Данные обрабатываются{' '}
+          <strong>исключительно в целях осуществления некоммерческой деятельности Платформы</strong>
+          , а именно:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>регистрация и идентификация преподавателей и студентов;</li>
+          <li>
+            предоставление образовательной функциональности Платформы и связь студентов с
+            преподавателями и учебными материалами;
+          </li>
+          <li>направление уведомлений и учебных материалов через Telegram;</li>
+          <li>обеспечение работы и безопасности Платформы.</li>
+        </ul>
+        <p>
+          3.2. Платформа <strong>не использует</strong> данные в коммерческих целях: не продаёт их,
+          не передаёт третьим лицам для маркетинга, не использует для рекламы и профилирования в
+          маркетинговых целях.
+        </p>
+        <p>
+          3.3. <strong>Правовое основание обработки — согласие субъекта персональных данных</strong>
+          , которое может быть отозвано в любой момент (раздел 7).
+        </p>
+      </LegalSection>
+
+      <LegalSection title="4. Использование Telegram">
+        <p>
+          4.1. Регистрация и взаимодействие студентов осуществляются через мессенджер Telegram. При
+          этом Платформа получает имя пользователя (никнейм) и указанное пользователем имя в
+          Telegram.
+        </p>
+        <p>
+          4.2. Telegram является самостоятельным сервисом и третьим лицом; обработка данных на его
+          стороне регулируется собственной политикой конфиденциальности Telegram, за которую
+          Платформа не отвечает. Используя Telegram для взаимодействия с Платформой, пользователь
+          принимает условия Telegram.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="5. Передача третьим лицам">
+        <p>
+          5.1. Платформа не продаёт персональные данные и не передаёт их третьим лицам, кроме
+          поставщиков инфраструктуры, действующих по поручению Платформы (хостинг, сервис Telegram),
+          и случаев, прямо предусмотренных законом.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="6. Сроки хранения">
+        <p>
+          6.1. Данные хранятся в течение срока использования Платформы, после чего удаляются или
+          обезличиваются, за исключением случаев, когда хранение требуется по закону.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="7. Защита данных и инциденты">
+        <p>
+          7.1. Платформа принимает разумные организационные и технические меры защиты (разграничение
+          доступа, защита каналов передачи, резервное копирование).
+        </p>
+      </LegalSection>
+
+      <LegalSection title="8. Изменения Политики">
+        <p>
+          8.1. Актуальная редакция публикуется на сайте{' '}
+          <a href="https://www.lexi-buddy.com/" className="text-primary font-medium">
+            https://www.lexi-buddy.com/
+          </a>{' '}
+          с указанием даты. Существенные изменения доводятся до пользователей дополнительно.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="9. Контакты">
+        <p>
+          Email:{' '}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary font-medium">
+            {CONTACT_EMAIL}
+          </a>
+        </p>
+      </LegalSection>
+    </article>
   );
 }

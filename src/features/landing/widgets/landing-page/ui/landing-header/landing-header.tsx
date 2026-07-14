@@ -3,6 +3,7 @@
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
 import { type Locale, LOCALE_LABELS, useI18n } from '@/shared/i18n';
@@ -22,6 +23,8 @@ const LOCALE_FLAGS: Record<Locale, string> = {
 
 export function LandingHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
   const { t, locale, setLocale } = useI18n();
+  const pathname = usePathname();
+  const isQaPage = pathname === routes.help;
   const [langOpen, setLangOpen] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   const langRef = React.useRef<HTMLDivElement>(null);
@@ -44,17 +47,19 @@ export function LandingHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
           <span className="ui-brand">Lexi buddy</span>
         </Link>
 
-        <div className="nav-center">
-          <Link href="#telegram">Telegram</Link>
-          <Link href="#how">{t('landing.nav.how')}</Link>
-          <Link href="#features">{t('landing.nav.features')}</Link>
-          <Link href="#tasks">{t('landing.nav.tasks')}</Link>
-          <Link href="#testimonials">{t('landing.nav.testimonials')}</Link>
-          <span className="nav-sep" aria-hidden />
-          <Link href={routes.help} className="nav-help">
-            {t('landing.nav.help')}
-          </Link>
-        </div>
+        {!isQaPage && (
+          <div className="nav-center">
+            <Link href="#telegram">Telegram</Link>
+            <Link href="#how">{t('landing.nav.how')}</Link>
+            <Link href="#features">{t('landing.nav.features')}</Link>
+            <Link href="#tasks">{t('landing.nav.tasks')}</Link>
+            <Link href="#testimonials">{t('landing.nav.testimonials')}</Link>
+            <span className="nav-sep" aria-hidden />
+            <Link href={routes.help} className="nav-help">
+              {t('landing.nav.help')}
+            </Link>
+          </div>
+        )}
 
         <div className="nav-right">
           {/* Language badge — hides on mobile, moves into drawer */}
@@ -122,29 +127,33 @@ export function LandingHeader({ isLoggedIn }: { isLoggedIn: boolean }) {
 
       <DrawerContent className="flex flex-col gap-0 p-0 overflow-y-auto">
         <DrawerTitle className="sr-only">Navigation menu</DrawerTitle>
-        {/* Section nav links */}
-        <div className="flex flex-col p-3">
-          <Link href="#telegram" className="header-menu-row rounded-xl" onClick={closeMenu}>
-            Telegram
-          </Link>
-          <Link href="#how" className="header-menu-row rounded-xl" onClick={closeMenu}>
-            {t('landing.nav.how')}
-          </Link>
-          <Link href="#features" className="header-menu-row rounded-xl" onClick={closeMenu}>
-            {t('landing.nav.features')}
-          </Link>
-          <Link href="#tasks" className="header-menu-row rounded-xl" onClick={closeMenu}>
-            {t('landing.nav.tasks')}
-          </Link>
-          <Link href="#testimonials" className="header-menu-row rounded-xl" onClick={closeMenu}>
-            {t('landing.nav.testimonials')}
-          </Link>
-          <Link href={routes.help} className="header-menu-row rounded-xl" onClick={closeMenu}>
-            {t('landing.nav.help')}
-          </Link>
-        </div>
+        {!isQaPage && (
+          <>
+            {/* Section nav links */}
+            <div className="flex flex-col p-3">
+              <Link href="#telegram" className="header-menu-row rounded-xl" onClick={closeMenu}>
+                Telegram
+              </Link>
+              <Link href="#how" className="header-menu-row rounded-xl" onClick={closeMenu}>
+                {t('landing.nav.how')}
+              </Link>
+              <Link href="#features" className="header-menu-row rounded-xl" onClick={closeMenu}>
+                {t('landing.nav.features')}
+              </Link>
+              <Link href="#tasks" className="header-menu-row rounded-xl" onClick={closeMenu}>
+                {t('landing.nav.tasks')}
+              </Link>
+              <Link href="#testimonials" className="header-menu-row rounded-xl" onClick={closeMenu}>
+                {t('landing.nav.testimonials')}
+              </Link>
+              <Link href={routes.help} className="header-menu-row rounded-xl" onClick={closeMenu}>
+                {t('landing.nav.help')}
+              </Link>
+            </div>
 
-        <div className="h-px bg-border mx-3" />
+            <div className="h-px bg-border mx-3" />
+          </>
+        )}
 
         {/* Language switcher */}
         <div className="flex flex-col p-3">

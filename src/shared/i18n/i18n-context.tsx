@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import { readStoredLocaleRaw, writeStoredLocale } from './locale-storage';
 import { en, es, kz, ru, type Translations } from './locales';
 
 export type Locale = 'en' | 'ru' | 'kz' | 'es';
@@ -12,8 +13,6 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   kz: 'Қазақша',
   es: 'Español',
 };
-
-const LOCALE_STORAGE_KEY = 'ui-locale';
 
 const dictionaries: Record<Locale, Translations> = { en, ru, kz, es };
 
@@ -41,13 +40,15 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = React.useState<Locale>('en');
 
   React.useEffect(() => {
-    const saved = localStorage.getItem(LOCALE_STORAGE_KEY) as Locale | null;
-    if (saved && saved in dictionaries) setLocaleState(saved);
+    const saved = readStoredLocaleRaw();
+    if (saved && saved in dictionaries) setLocaleState(saved as Locale);
   }, []);
 
   const setLocale = React.useCallback((next: Locale) => {
     setLocaleState(next);
-    localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    // Language is a "functional" cookie/storage category — writeStoredLocale is a
+    // no-op without functional consent.
+    writeStoredLocale(next);
   }, []);
 
   const t = React.useCallback(

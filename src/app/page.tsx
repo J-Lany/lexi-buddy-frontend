@@ -4,11 +4,11 @@ import { cookies } from 'next/headers';
 import { LandingPageWidget } from '@/features/landing';
 
 export const metadata: Metadata = {
-  title: 'Lexi Buddy — AI Lesson Builder for English Teachers',
+  title: 'Lexi Buddy — AI Lesson Builder for Language Teachers',
   description:
-    'Turn any word list into interactive Telegram drills in under 2 minutes. AI-powered lesson builder built for English teachers.',
+    'Turn any word list into interactive Telegram drills in under 2 minutes. AI-powered lesson builder built for language teachers.',
   openGraph: {
-    title: 'Lexi Buddy — AI Lesson Builder for English Teachers',
+    title: 'Lexi Buddy — AI Lesson Builder for Language Teachers',
     description:
       'Turn any word list into interactive Telegram drills in under 2 minutes. No extra apps for students.',
     type: 'website',
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lexi Buddy — AI Lesson Builder for English Teachers',
+    title: 'Lexi Buddy — AI Lesson Builder for Language Teachers',
     description:
       'Turn any word list into interactive Telegram drills in under 2 minutes. No extra apps for students.',
   },

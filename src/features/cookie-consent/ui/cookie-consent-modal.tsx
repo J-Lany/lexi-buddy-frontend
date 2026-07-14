@@ -4,28 +4,100 @@ import { Cookie } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
-import { useI18n } from '@/shared/i18n';
+import { clearStoredLocale, useI18n, writeStoredLocale } from '@/shared/i18n';
+import {
+  acceptAllConsent,
+  hasFunctionalConsent,
+  needsConsent,
+  OPEN_COOKIE_SETTINGS_EVENT,
+  rejectNonEssentialConsent,
+  saveConsent,
+} from '@/shared/lib/cookie-consent';
+import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
+import { Checkbox } from '@/shared/ui/checkbox';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/shared/ui/dialog';
 
-import { acceptConsent, needsConsent } from '../lib/consent-storage';
+type View = 'banner' | 'settings';
 
-const PRIVACY_HREF = '/privacy';
+const LEGAL_PAGES: string[] = [
+  routes.privacy,
+  routes.terms,
+  routes.cookiePolicy,
+  routes.pdnConsent,
+];
 
 export function CookieConsentModal() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [view, setView] = useState<View>('banner');
+  const [functionalDraft, setFunctionalDraft] = useState(false);
 
-  // Re-evaluate on every navigation: suppress on /privacy so the user can read it freely.
+  // Re-evaluate on every navigation: suppress the (non-dismissible) banner on legal
+  // pages so users can read them freely before deciding.
   useEffect(() => {
-    setOpen(needsConsent() && pathname !== PRIVACY_HREF);
+    setOpen(needsConsent() && !LEGAL_PAGES.includes(pathname));
   }, [pathname]);
 
-  const handleAccept = () => {
-    acceptConsent();
+  useEffect(() => {
+    const openSettings = () => {
+      setFunctionalDraft(hasFunctionalConsent());
+      setView('settings');
+      setOpen(true);
+    };
+    window.addEventListener(OPEN_COOKIE_SETTINGS_EVENT, openSettings);
+    return () => window.removeEventListener(OPEN_COOKIE_SETTINGS_EVENT, openSettings);
+  }, []);
+
+  const close = () => {
     setOpen(false);
+    setView('banner');
+  };
+
+  const applyFunctionalStorage = (functional: boolean) => {
+    if (functional) {
+      writeStoredLocale(locale);
+    } else {
+      clearStoredLocale();
+    }
+  };
+
+  const handleAcceptAll = () => {
+    const result = acceptAllConsent();
+    if (!result.ok) {
+      toast.error(t('cookies.saveError'));
+      return;
+    }
+    applyFunctionalStorage(true);
+    close();
+  };
+
+  const handleNecessaryOnly = () => {
+    const result = rejectNonEssentialConsent();
+    if (!result.ok) {
+      toast.error(t('cookies.saveError'));
+      return;
+    }
+    applyFunctionalStorage(false);
+    close();
+  };
+
+  const handleOpenSettings = () => {
+    setFunctionalDraft(hasFunctionalConsent());
+    setView('settings');
+  };
+
+  const handleSaveSettings = () => {
+    const result = saveConsent({ functional: functionalDraft });
+    if (!result.ok) {
+      toast.error(t('cookies.saveError'));
+      return;
+    }
+    applyFunctionalStorage(functionalDraft);
+    close();
   };
 
   return (
@@ -42,31 +114,76 @@ export function CookieConsentModal() {
             <Cookie className="size-7 text-primary" />
           </div>
 
-          <DialogTitle className="ui-card-title">{t('cookies.title')}</DialogTitle>
+          {view === 'banner' ? (
+            <>
+              <DialogTitle className="ui-card-title">{t('cookies.bannerTitle')}</DialogTitle>
+              <DialogDescription className="ui-meta mt-2.5 whitespace-normal! overflow-visible!">
+                {t('cookies.bannerText')} {t('cookies.bannerLinkLead')}{' '}
+                <Link
+                  href={routes.cookiePolicy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary font-medium"
+                >
+                  {t('cookies.cookiePolicyLink')}
+                </Link>
+                .
+              </DialogDescription>
 
-          <DialogDescription className="ui-meta mt-2.5 whitespace-normal! overflow-visible!">
-            {t('cookies.body')}{' '}
-            <Link
-              href={PRIVACY_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary font-medium"
-            >
-              {t('cookies.privacyPolicy')}
-            </Link>
-            .
-          </DialogDescription>
+              <div className="mt-6 flex w-full flex-col gap-2.5">
+                <Button size="lg" className="w-full" onClick={handleAcceptAll}>
+                  {t('cookies.acceptAll')}
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleNecessaryOnly}
+                >
+                  {t('cookies.necessaryOnly')}
+                </Button>
+                <Button variant="link" className="text-primary" onClick={handleOpenSettings}>
+                  {t('cookies.settingsButton')}
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <DialogTitle className="ui-card-title">{t('cookies.settingsTitle')}</DialogTitle>
+              <DialogDescription className="ui-meta mt-2.5 whitespace-normal! overflow-visible!">
+                {t('cookies.settingsDescription')}
+              </DialogDescription>
 
-          <div className="mt-6 flex w-full flex-col gap-2.5">
-            <Button size="lg" className="w-full" onClick={handleAccept}>
-              {t('cookies.accept')}
-            </Button>
-            <Button asChild variant="link" className="text-primary">
-              <Link href={PRIVACY_HREF} target="_blank" rel="noopener noreferrer">
-                {t('cookies.privacyPolicy')}
-              </Link>
-            </Button>
-          </div>
+              <div className="mt-5 flex flex-col gap-4 text-left">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="ui-title">{t('cookies.necessaryTitle')}</div>
+                    <div className="ui-meta mt-0.5">{t('cookies.necessaryDescription')}</div>
+                  </div>
+                  <span className="ui-pill shrink-0 mt-0.5">{t('cookies.necessaryBadge')}</span>
+                </div>
+
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="ui-title">{t('cookies.functionalTitle')}</div>
+                    <div className="ui-meta mt-0.5">{t('cookies.functionalDescription')}</div>
+                  </div>
+                  <Checkbox
+                    checked={functionalDraft}
+                    onCheckedChange={(checked) => setFunctionalDraft(checked === true)}
+                    aria-label={t('cookies.functionalTitle')}
+                    className="mt-0.5 shrink-0"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-6 flex w-full flex-col gap-2.5">
+                <Button size="lg" className="w-full" onClick={handleSaveSettings}>
+                  {t('cookies.save')}
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </DialogContent>
     </Dialog>
