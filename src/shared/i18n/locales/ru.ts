@@ -569,4 +569,61 @@ export const ru: Translations = {
     functionalDescription: 'Запоминают выбранный язык интерфейса при следующих посещениях.',
     save: 'Сохранить выбор',
   },
+  legal: {
+    nav: {
+      ariaLabel: 'Правовые документы',
+      privacy: 'Политика конфиденциальности',
+      terms: 'Пользовательское соглашение',
+      cookiePolicy: 'Политика cookie',
+      pdnConsent: 'Согласие на обработку ПДн',
+    },
+    // Not shown for the ru locale (Russian is the legally approved source language);
+    // present only to satisfy the Translations shape.
+    russianOnlyNotice:
+      'Юридически утверждённая версия этого документа сейчас доступна на русском языке.',
+    // Not shown for ru either — present only to satisfy the Translations shape.
+    officialRussianTextLabel: 'Официальный текст на русском языке',
+    pages: {
+      privacyTitle: 'Политика конфиденциальности',
+      termsTitle: 'Пользовательское соглашение',
+      cookiePolicyTitle: 'Политика cookie',
+      pdnConsentTitle: 'Согласие на обработку ПДн',
+    },
+  },
+  auth: {
+    signUp: {
+      pageTitle: 'Создать аккаунт',
+      pageSubtitle: 'Введите свои данные, чтобы создать бесплатный аккаунт.',
+      emailLabel: 'Email',
+      emailPlaceholder: 'имя@example.com',
+      passwordLabel: 'Пароль',
+      confirmPasswordLabel: 'Повторите пароль',
+      showPasswordAriaLabel: 'Показать пароль',
+      hidePasswordAriaLabel: 'Скрыть пароль',
+      submitButton: 'Создать аккаунт',
+      submitPending: 'Создание…',
+      alreadyHaveAccount: 'Уже есть аккаунт?',
+      signInLink: 'Войти',
+      successToastTitle: 'Аккаунт создан',
+      successToastDescription: 'Проверьте почту, чтобы активировать аккаунт.',
+      emailInvalidError: 'Введите корректный email',
+      passwordTooShortError: 'Пароль должен содержать не менее 8 символов',
+      passwordMismatchError: 'Пароли не совпадают',
+      // {{terms}}, {{privacy}} и {{pdn}} заменяются ссылками ниже, в этом порядке.
+      // Исходный юридически согласованный текст — менять формулировку нельзя.
+      consentSentence:
+        'Мне исполнилось 18 лет. Я ознакомлен(а) и согласен(на) с {{terms}} и {{privacy}} и даю согласие на {{pdn}}',
+      consentTermsLabel: 'Пользовательским соглашением',
+      consentPrivacyLabel: 'Политикой конфиденциальности',
+      consentPdnLabel: 'обработку моих персональных данных',
+      consentError: 'Необходимо принять условия, чтобы продолжить регистрацию',
+      consentFallbackLead: 'Также ознакомьтесь:',
+      confirmModalTitle: 'Подтвердите email',
+      confirmModalDescription: 'Мы отправим ссылку для активации на этот адрес',
+      confirmModalTypoQuestion: 'Опечатались?',
+      confirmModalEditEmail: 'Изменить email',
+      confirmModalCta: 'Да, всё верно',
+      confirmModalPending: 'Создание аккаунта…',
+    },
+  },
 };

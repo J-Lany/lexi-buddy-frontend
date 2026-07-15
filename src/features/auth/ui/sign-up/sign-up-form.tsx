@@ -15,7 +15,9 @@ import {
 } from '@/features/auth/lib/schemas';
 import { useSignupMutation } from '@/features/auth/model/use-signup';
 import { AuthCard } from '@/features/auth/ui/shared/auth-card';
+import { ConsentSentence } from '@/features/auth/ui/sign-up/consent-sentence';
 import { EmailConfirmModal } from '@/features/auth/ui/sign-up/email-confirm-modal';
+import { useI18n } from '@/shared/i18n';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
@@ -31,6 +33,7 @@ type PendingSignUp = {
 };
 
 export default function SignUpForm() {
+  const { t } = useI18n();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -62,8 +65,8 @@ export default function SignUpForm() {
     if (!pendingData) return;
     mutate(pendingData, {
       onSuccess: () => {
-        toast.success('Account created', {
-          description: 'Check your email to activate your account.',
+        toast.success(t('auth.signUp.successToastTitle'), {
+          description: t('auth.signUp.successToastDescription'),
         });
         router.push(routes.login);
       },
@@ -83,7 +86,7 @@ export default function SignUpForm() {
         onConfirm={handleConfirm}
         onBack={() => setPendingData(null)}
       />
-      <AuthCard title="Create an account" subtitle="Enter your details to create a free account.">
+      <AuthCard title={t('auth.signUp.pageTitle')} subtitle={t('auth.signUp.pageSubtitle')}>
         <form
           className="flex w-full flex-col gap-6"
           onSubmit={(e) => void handleSubmit(onSubmit)(e)}
@@ -91,20 +94,22 @@ export default function SignUpForm() {
         >
           <div className="flex flex-col gap-4">
             <Field>
-              <FieldLabel>Email</FieldLabel>
+              <FieldLabel>{t('auth.signUp.emailLabel')}</FieldLabel>
               <Input
                 {...register('email')}
-                placeholder="name@example.com"
+                placeholder={t('auth.signUp.emailPlaceholder')}
                 autoComplete="email"
                 inputMode="email"
               />
               {errors.email && (
-                <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+                <p className="text-sm text-destructive mt-1">
+                  {t('auth.signUp.emailInvalidError')}
+                </p>
               )}
             </Field>
 
             <Field>
-              <FieldLabel>Password</FieldLabel>
+              <FieldLabel>{t('auth.signUp.passwordLabel')}</FieldLabel>
               <div className="relative">
                 <Input
                   {...register('password')}
@@ -114,21 +119,26 @@ export default function SignUpForm() {
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+                  className="ui-focus absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
                   onClick={() => setShowPassword((v) => !v)}
-                  tabIndex={-1}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  aria-label={
+                    showPassword
+                      ? t('auth.signUp.hidePasswordAriaLabel')
+                      : t('auth.signUp.showPasswordAriaLabel')
+                  }
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
+                <p className="text-sm text-destructive mt-1">
+                  {t('auth.signUp.passwordTooShortError')}
+                </p>
               )}
             </Field>
 
             <Field>
-              <FieldLabel>Confirm Password</FieldLabel>
+              <FieldLabel>{t('auth.signUp.confirmPasswordLabel')}</FieldLabel>
               <div className="relative">
                 <Input
                   {...register('confirmPassword')}
@@ -138,16 +148,21 @@ export default function SignUpForm() {
                 />
                 <button
                   type="button"
-                  className="absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
+                  className="ui-focus absolute inset-y-0 right-3 flex items-center text-muted-foreground hover:text-foreground transition-colors"
                   onClick={() => setShowConfirm((v) => !v)}
-                  tabIndex={-1}
-                  aria-label={showConfirm ? 'Hide password' : 'Show password'}
+                  aria-label={
+                    showConfirm
+                      ? t('auth.signUp.hidePasswordAriaLabel')
+                      : t('auth.signUp.showPasswordAriaLabel')
+                  }
                 >
                   {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
               {errors.confirmPassword && (
-                <p className="text-sm text-destructive mt-1">{errors.confirmPassword.message}</p>
+                <p className="text-sm text-destructive mt-1">
+                  {t('auth.signUp.passwordMismatchError')}
+                </p>
               )}
             </Field>
           </div>
@@ -169,38 +184,12 @@ export default function SignUpForm() {
                     className="mt-0.5"
                   />
                   <label htmlFor="consentAccepted" className="text-sm text-muted-foreground">
-                    Мне исполнилось 18 лет. Я ознакомлен(а) и согласен(на) с{' '}
-                    <Link
-                      href={routes.terms}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      Пользовательским соглашением
-                    </Link>{' '}
-                    и{' '}
-                    <Link
-                      href={routes.privacy}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      Политикой конфиденциальности
-                    </Link>{' '}
-                    и даю согласие на{' '}
-                    <Link
-                      href={routes.pdnConsent}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      обработку моих персональных данных
-                    </Link>
+                    <ConsentSentence template={t('auth.signUp.consentSentence')} />
                   </label>
                 </div>
                 {errors.consentAccepted && (
                   <p id="consentAccepted-error" className="text-sm text-destructive mt-1">
-                    {errors.consentAccepted.message}
+                    {t('auth.signUp.consentError')}
                   </p>
                 )}
               </div>
@@ -217,20 +206,20 @@ export default function SignUpForm() {
             {isPending ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating…
+                {t('auth.signUp.submitPending')}
               </>
             ) : (
-              'Create Account'
+              t('auth.signUp.submitButton')
             )}
           </Button>
 
           <p className="text-center text-sm text-muted-foreground">
-            Already have an account?{' '}
+            {t('auth.signUp.alreadyHaveAccount')}{' '}
             <Link
               href={routes.login}
               className="font-semibold text-primary hover:underline transition-colors"
             >
-              Sign in
+              {t('auth.signUp.signInLink')}
             </Link>
           </p>
         </form>

@@ -567,6 +567,63 @@ export const en = {
     functionalDescription: 'Remembers your chosen interface language across visits.',
     save: 'Save choices',
   },
+  legal: {
+    nav: {
+      ariaLabel: 'Legal documents',
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Use',
+      cookiePolicy: 'Cookie Policy',
+      pdnConsent: 'Personal Data Consent',
+    },
+    russianOnlyNotice:
+      'The legally approved version of this document is currently available in Russian only.',
+    officialRussianTextLabel: 'Official Russian text',
+    pages: {
+      privacyTitle: 'Privacy Policy',
+      termsTitle: 'Terms of Use',
+      cookiePolicyTitle: 'Cookie Policy',
+      pdnConsentTitle: 'Personal Data Consent',
+    },
+  },
+  auth: {
+    signUp: {
+      pageTitle: 'Create an account',
+      pageSubtitle: 'Enter your details to create a free account.',
+      emailLabel: 'Email',
+      emailPlaceholder: 'name@example.com',
+      passwordLabel: 'Password',
+      confirmPasswordLabel: 'Confirm Password',
+      showPasswordAriaLabel: 'Show password',
+      hidePasswordAriaLabel: 'Hide password',
+      submitButton: 'Create Account',
+      submitPending: 'Creating…',
+      alreadyHaveAccount: 'Already have an account?',
+      signInLink: 'Sign in',
+      successToastTitle: 'Account created',
+      successToastDescription: 'Check your email to activate your account.',
+      emailInvalidError: 'Enter a valid email',
+      passwordTooShortError: 'Password must be at least 8 characters long',
+      passwordMismatchError: 'Passwords do not match',
+      // {{terms}}, {{privacy}} and {{pdn}} are replaced with linked labels below.
+      // Any order/duplication is tolerated by the renderer; a missing token
+      // simply omits that link rather than breaking the page.
+      consentSentence:
+        'I am 18 years of age or older. I have read and agree to the {{terms}} and the {{privacy}}, and I give my consent to the {{pdn}}.',
+      consentTermsLabel: 'Terms of Use',
+      consentPrivacyLabel: 'Privacy Policy',
+      consentPdnLabel: 'processing of my personal data',
+      consentError: 'You must accept the terms to continue registration',
+      // Lead-in text for any legal links appended after the sentence when a
+      // locale's consentSentence template is missing a required token.
+      consentFallbackLead: 'Also review:',
+      confirmModalTitle: 'Confirm your email',
+      confirmModalDescription: "We'll send the activation link to this address",
+      confirmModalTypoQuestion: 'Made a typo?',
+      confirmModalEditEmail: 'Edit email',
+      confirmModalCta: "Yes, that's correct",
+      confirmModalPending: 'Creating account…',
+    },
+  },
 } as const;
 
 type DeepString<T> = { [K in keyof T]: T[K] extends string ? string : DeepString<T[K]> };

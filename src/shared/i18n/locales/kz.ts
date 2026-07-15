@@ -567,4 +567,59 @@ export const kz: Translations = {
     functionalDescription: 'Келесі сапарларда таңдалған интерфейс тілін есте сақтайды.',
     save: 'Таңдауды сақтау',
   },
+  legal: {
+    nav: {
+      ariaLabel: 'Құқықтық құжаттар',
+      privacy: 'Құпиялылық саясаты',
+      terms: 'Пайдаланушы келісімі',
+      cookiePolicy: 'Cookie саясаты',
+      pdnConsent: 'Жеке деректерге келісім',
+    },
+    russianOnlyNotice:
+      'Бұл құжаттың заңды түрде бекітілген нұсқасы қазіргі уақытта тек орыс тілінде қолжетімді.',
+    officialRussianTextLabel: 'Орыс тіліндегі ресми мәтін',
+    pages: {
+      privacyTitle: 'Құпиялылық саясаты',
+      termsTitle: 'Пайдаланушы келісімі',
+      cookiePolicyTitle: 'Cookie саясаты',
+      pdnConsentTitle: 'Жеке деректерге келісім',
+    },
+  },
+  auth: {
+    signUp: {
+      pageTitle: 'Тіркелгі жасау',
+      pageSubtitle: 'Тегін тіркелгі жасау үшін деректеріңізді енгізіңіз.',
+      emailLabel: 'Email',
+      emailPlaceholder: 'аты@example.com',
+      passwordLabel: 'Құпия сөз',
+      confirmPasswordLabel: 'Құпия сөзді қайталаңыз',
+      showPasswordAriaLabel: 'Құпия сөзді көрсету',
+      hidePasswordAriaLabel: 'Құпия сөзді жасыру',
+      submitButton: 'Тіркелгі жасау',
+      submitPending: 'Жасалуда…',
+      alreadyHaveAccount: 'Тіркелгіңіз бар ма?',
+      signInLink: 'Кіру',
+      successToastTitle: 'Тіркелгі жасалды',
+      successToastDescription: 'Тіркелгіні белсендіру үшін поштаңызды тексеріңіз.',
+      emailInvalidError: 'Жарамды email енгізіңіз',
+      passwordTooShortError: 'Құпия сөз кемінде 8 таңбадан тұруы керек',
+      passwordMismatchError: 'Құпия сөздер сәйкес келмейді',
+      // {{terms}}, {{privacy}} және {{pdn}} төмендегі сілтемелермен ауыстырылады.
+      // Рендерер кез келген ретті/қайталануды көтереді; жетіспейтін токен
+      // тек сол сілтемені көрсетпейді, беттің құлауына әкелмейді.
+      consentSentence:
+        'Маған 18 жас толды. Мен {{terms}} және {{privacy}} құжаттарымен таныстым және оларға келісемін, сондай-ақ {{pdn}} келісім беремін.',
+      consentTermsLabel: 'Пайдаланушы келісімі',
+      consentPrivacyLabel: 'Құпиялылық саясаты',
+      consentPdnLabel: 'жеке деректерімді өңдеуге',
+      consentError: 'Тіркеуді жалғастыру үшін шарттарды қабылдау қажет',
+      consentFallbackLead: 'Сондай-ақ танысыңыз:',
+      confirmModalTitle: 'Поштаңызды растаңыз',
+      confirmModalDescription: 'Белсендіру сілтемесін осы мекенжайға жібереміз',
+      confirmModalTypoQuestion: 'Қате жіберіп алдыңыз ба?',
+      confirmModalEditEmail: 'Поштаны өзгерту',
+      confirmModalCta: 'Иә, дұрыс',
+      confirmModalPending: 'Тіркелгі жасалуда…',
+    },
+  },
 };

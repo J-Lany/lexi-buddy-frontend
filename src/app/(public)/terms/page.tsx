@@ -1,11 +1,19 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { routes } from '@/shared/router/routes';
 import { LegalDocsNav } from '@/shared/ui/legal/legal-docs-nav';
+import { LegalDocumentHeader } from '@/shared/ui/legal/legal-document-header';
 import { LegalSection } from '@/shared/ui/legal/legal-section';
 
+// The locale is only known client-side (React context + localStorage, gated
+// on functional cookie consent) — there is no locale cookie the server can
+// read, so this Server Component's metadata cannot follow the user's chosen
+// locale without a broader architecture change (out of scope here). The
+// visible page heading IS localized via LegalDocumentHeader below; only the
+// browser <title>/meta description stay the approved Russian document title.
 export const metadata: Metadata = {
-  title: 'Пользовательское соглашение — Lexi Buddy',
+  title: 'Пользовательское соглашение',
 };
 
 const EFFECTIVE_DATE = '06.07.2026';
@@ -15,7 +23,10 @@ export default function TermsPage() {
   return (
     <article className="max-w-[720px] mx-auto space-y-8">
       <header className="space-y-3">
-        <h1 className="ui-page-title">Пользовательское соглашение (Публичная оферта)</h1>
+        <LegalDocumentHeader
+          titleKey="termsTitle"
+          originalTitle="Пользовательское соглашение (Публичная оферта)"
+        />
         <p className="ui-meta">Платформа Lexi Buddy · Редакция от {EFFECTIVE_DATE}</p>
         <LegalDocsNav current={routes.terms} />
       </header>
@@ -91,9 +102,9 @@ export default function TermsPage() {
       <LegalSection title="6. Персональные данные">
         <p>
           6.1. Обработка данных Пользователя регулируется{' '}
-          <a href={routes.privacy} className="text-primary font-medium">
+          <Link href={routes.privacy} className="text-primary font-medium">
             Политикой конфиденциальности
-          </a>{' '}
+          </Link>{' '}
           Платформы.
         </p>
       </LegalSection>

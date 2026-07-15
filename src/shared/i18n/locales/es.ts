@@ -571,4 +571,59 @@ export const es: Translations = {
     functionalDescription: 'Recuerdan el idioma de la interfaz elegido en próximas visitas.',
     save: 'Guardar selección',
   },
+  legal: {
+    nav: {
+      ariaLabel: 'Documentos legales',
+      privacy: 'Política de Privacidad',
+      terms: 'Términos de Uso',
+      cookiePolicy: 'Política de Cookies',
+      pdnConsent: 'Consentimiento de Datos Personales',
+    },
+    russianOnlyNotice:
+      'La versión legalmente aprobada de este documento está disponible actualmente solo en ruso.',
+    officialRussianTextLabel: 'Texto oficial en ruso',
+    pages: {
+      privacyTitle: 'Política de Privacidad',
+      termsTitle: 'Términos de Uso',
+      cookiePolicyTitle: 'Política de Cookies',
+      pdnConsentTitle: 'Consentimiento de Datos Personales',
+    },
+  },
+  auth: {
+    signUp: {
+      pageTitle: 'Crear una cuenta',
+      pageSubtitle: 'Introduce tus datos para crear una cuenta gratuita.',
+      emailLabel: 'Correo electrónico',
+      emailPlaceholder: 'nombre@example.com',
+      passwordLabel: 'Contraseña',
+      confirmPasswordLabel: 'Confirmar contraseña',
+      showPasswordAriaLabel: 'Mostrar contraseña',
+      hidePasswordAriaLabel: 'Ocultar contraseña',
+      submitButton: 'Crear cuenta',
+      submitPending: 'Creando…',
+      alreadyHaveAccount: '¿Ya tienes una cuenta?',
+      signInLink: 'Iniciar sesión',
+      successToastTitle: 'Cuenta creada',
+      successToastDescription: 'Revisa tu correo para activar tu cuenta.',
+      emailInvalidError: 'Introduce un correo electrónico válido',
+      passwordTooShortError: 'La contraseña debe tener al menos 8 caracteres',
+      passwordMismatchError: 'Las contraseñas no coinciden',
+      // {{terms}}, {{privacy}} y {{pdn}} se sustituyen por los enlaces de abajo.
+      // El renderer tolera cualquier orden o duplicado; un token ausente
+      // simplemente omite ese enlace en lugar de romper la página.
+      consentSentence:
+        'Tengo 18 años o más. He leído y acepto los {{terms}} y la {{privacy}}, y doy mi consentimiento para el {{pdn}}.',
+      consentTermsLabel: 'Términos de Uso',
+      consentPrivacyLabel: 'Política de Privacidad',
+      consentPdnLabel: 'tratamiento de mis datos personales',
+      consentError: 'Debes aceptar las condiciones para continuar con el registro',
+      consentFallbackLead: 'Revisa también:',
+      confirmModalTitle: 'Confirma tu correo electrónico',
+      confirmModalDescription: 'Enviaremos el enlace de activación a esta dirección',
+      confirmModalTypoQuestion: '¿Cometiste un error?',
+      confirmModalEditEmail: 'Editar correo',
+      confirmModalCta: 'Sí, es correcto',
+      confirmModalPending: 'Creando cuenta…',
+    },
+  },
 };

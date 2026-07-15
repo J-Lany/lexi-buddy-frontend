@@ -15,7 +15,9 @@ export const signupSchema = z
     path: ['confirmPassword'],
   })
   .refine((data) => data.consentAccepted === true, {
-    message: 'Необходимо принять условия, чтобы продолжить регистрацию',
+    // Not rendered directly — the UI shows the localized
+    // auth.signUp.consentError message via useI18n() instead.
+    message: 'Consent required',
     path: ['consentAccepted'],
   });
 

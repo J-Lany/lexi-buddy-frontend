@@ -1,11 +1,19 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import { routes } from '@/shared/router/routes';
 import { LegalDocsNav } from '@/shared/ui/legal/legal-docs-nav';
+import { LegalDocumentHeader } from '@/shared/ui/legal/legal-document-header';
 import { LegalSection } from '@/shared/ui/legal/legal-section';
 
+// The locale is only known client-side (React context + localStorage, gated
+// on functional cookie consent) — there is no locale cookie the server can
+// read, so this Server Component's metadata cannot follow the user's chosen
+// locale without a broader architecture change (out of scope here). The
+// visible page heading IS localized via LegalDocumentHeader below; only the
+// browser <title>/meta description stay the approved Russian document title.
 export const metadata: Metadata = {
-  title: 'Согласие на обработку персональных данных — Lexi Buddy',
+  title: 'Согласие на обработку персональных данных',
 };
 
 const CONTACT_EMAIL = 'lexi.buddy.help@gmail.com';
@@ -14,7 +22,10 @@ export default function PdnConsentPage() {
   return (
     <article className="max-w-[720px] mx-auto space-y-8">
       <header className="space-y-3">
-        <h1 className="ui-page-title">Согласие на сбор и обработку персональных данных</h1>
+        <LegalDocumentHeader
+          titleKey="pdnConsentTitle"
+          originalTitle="Согласие на сбор и обработку персональных данных"
+        />
         <p className="ui-meta">Платформа Lexi Buddy</p>
         <LegalDocsNav current={routes.pdnConsent} />
       </header>
@@ -70,9 +81,9 @@ export default function PdnConsentPage() {
         <p>
           Мне исполнилось 18 лет; предоставленные данные достоверны; я ознакомлен(а) со своими
           правами субъекта персональных данных, изложенными в{' '}
-          <a href={routes.privacy} className="text-primary font-medium">
+          <Link href={routes.privacy} className="text-primary font-medium">
             Политике конфиденциальности
-          </a>
+          </Link>
           .
         </p>
       </LegalSection>

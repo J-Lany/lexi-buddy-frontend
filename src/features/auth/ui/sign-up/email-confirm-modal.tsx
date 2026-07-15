@@ -2,6 +2,7 @@
 
 import { Loader2, Mail } from 'lucide-react';
 
+import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/shared/ui/dialog';
 
@@ -14,6 +15,8 @@ type Props = {
 };
 
 export function EmailConfirmModal({ email, open, isPending, onConfirm, onBack }: Props) {
+  const { t } = useI18n();
+
   return (
     <Dialog
       open={open}
@@ -33,10 +36,10 @@ export function EmailConfirmModal({ email, open, isPending, onConfirm, onBack }:
         {/* Heading */}
         <div className="mt-5 space-y-1.5">
           <DialogTitle className="text-[22px] font-semibold leading-tight tracking-tight">
-            Confirm your email
+            {t('auth.signUp.confirmModalTitle')}
           </DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
-            We&apos;ll send the activation link to this address
+            {t('auth.signUp.confirmModalDescription')}
           </DialogDescription>
         </div>
 
@@ -46,14 +49,14 @@ export function EmailConfirmModal({ email, open, isPending, onConfirm, onBack }:
         </div>
 
         <p className="mt-3 text-[12.5px] text-muted-foreground/80">
-          Made a typo?{' '}
+          {t('auth.signUp.confirmModalTypoQuestion')}{' '}
           <button
             type="button"
             onClick={onBack}
             disabled={isPending}
             className="font-medium text-primary hover:underline disabled:opacity-50 transition-opacity"
           >
-            Edit email
+            {t('auth.signUp.confirmModalEditEmail')}
           </button>
         </p>
 
@@ -67,10 +70,10 @@ export function EmailConfirmModal({ email, open, isPending, onConfirm, onBack }:
           {isPending ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating account…
+              {t('auth.signUp.confirmModalPending')}
             </>
           ) : (
-            "Yes, that's correct"
+            t('auth.signUp.confirmModalCta')
           )}
         </Button>
       </DialogContent>
