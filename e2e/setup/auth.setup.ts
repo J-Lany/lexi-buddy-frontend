@@ -1,6 +1,8 @@
 import { test as setup } from '@playwright/test';
 import path from 'path';
 
+import { CONSENT_VERSION } from '../../src/shared/lib/cookie-consent';
+
 const AUTH_FILE = path.join(__dirname, '../.auth/user.json');
 
 const EMAIL = process.env.E2E_USER_EMAIL ?? 'anna.ivanovna@example.com';
@@ -135,12 +137,19 @@ setup('authenticate', async ({ page }) => {
   await waitForBackendHealth(BACKEND_URL);
 
   // Pre-accept cookie consent so the modal doesn't appear on any page we navigate to.
-  await page.addInitScript(() => {
+  // Must match ConsentRecord in src/shared/lib/cookie-consent.ts exactly — see
+  // the identical note in e2e/auth.spec.ts for why a mismatch here silently
+  // reintroduces a page-covering modal.
+  await page.addInitScript((version) => {
     localStorage.setItem(
       'lexi.cookie-consent',
-      JSON.stringify({ accepted: true, version: 1, date: new Date().toISOString() }),
+      JSON.stringify({
+        version,
+        date: new Date().toISOString(),
+        categories: { necessary: true, functional: true },
+      }),
     );
-  });
+  }, CONSENT_VERSION);
 
   // Call the backend directly from Node.js — this avoids two browser-level problems:
   // 1. CORS: Node.js fetch has no origin restriction.

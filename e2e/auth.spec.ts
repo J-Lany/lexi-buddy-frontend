@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { CONSENT_VERSION } from '../src/shared/lib/cookie-consent';
+
 // Middleware only checks cookie existence, not validity —
 // a fake token is enough to test route protection.
 const FAKE_TOKEN = 'test-refresh-token';
@@ -80,12 +82,20 @@ test.describe('Login flow', () => {
   // so we intercept /auth/login, call the backend directly from Node.js, and inject
   // the returned cookies into the browser context with domain=localhost.
   test.beforeEach(async ({ page, context }) => {
-    await page.addInitScript(() => {
+    // Must match ConsentRecord in src/shared/lib/cookie-consent.ts exactly —
+    // isValidConsentRecord() rejects anything else, needsConsent() then
+    // returns true, and the cookie banner covers the whole page (including
+    // the login form's submit button).
+    await page.addInitScript((version) => {
       localStorage.setItem(
         'lexi.cookie-consent',
-        JSON.stringify({ accepted: true, version: 1, date: new Date().toISOString() }),
+        JSON.stringify({
+          version,
+          date: new Date().toISOString(),
+          categories: { necessary: true, functional: true },
+        }),
       );
-    });
+    }, CONSENT_VERSION);
 
     const BACKEND = process.env.BACKEND_API_URL?.replace(/\/$/, '');
     if (!BACKEND) return;
