@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Label UI — Snapshot renders default label 1`] = `
+<div>
+  <label
+    class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+    data-slot="label"
+  >
+    Email
+  </label>
+</div>
+`;
+
+exports[`Label UI — Snapshot renders disabled label styling 1`] = `
+<div>
+  <label
+    class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 opacity-50 cursor-not-allowed"
+    data-slot="label"
+  >
+    Disabled
+  </label>
+</div>
+`;
+
+exports[`Label UI — Snapshot renders label with custom class 1`] = `
+<div>
+  <label
+    class="flex items-center gap-2 font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 text-primary text-lg"
+    data-slot="label"
+  >
+    Custom Style
+  </label>
+</div>
+`;
+
+exports[`Label UI — Snapshot renders label with htmlFor attribute 1`] = `
+<div>
+  <label
+    class="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+    data-slot="label"
+    for="email"
+  >
+    Email
+  </label>
+</div>
+`;

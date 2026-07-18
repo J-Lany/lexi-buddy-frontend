@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Card UI — Snapshot renders correctly 1`] = `
+<div>
+  <div
+    class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm"
+    data-slot="card"
+  >
+    <div
+      class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"
+      data-slot="card-header"
+    >
+      <div
+        class="leading-none font-semibold"
+        data-slot="card-title"
+      >
+        Title
+      </div>
+      <div
+        class="text-muted-foreground text-sm"
+        data-slot="card-description"
+      >
+        This is a great description
+      </div>
+    </div>
+    <div
+      class="px-6"
+      data-slot="card-content"
+    >
+      <p>
+        Amazing content goes here
+      </p>
+    </div>
+    <div
+      class="flex items-center px-6 [.border-t]:pt-6"
+      data-slot="card-footer"
+    >
+      <button>
+        Action
+      </button>
+    </div>
+  </div>
+</div>
+`;
