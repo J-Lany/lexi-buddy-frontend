@@ -163,6 +163,11 @@ export const en = {
       chooseLevel: 'Choose level',
       ageGroup: 'Age group',
       chooseAgeGroup: 'Choose age group',
+      ageGroups: {
+        child: 'Children',
+        teenager: 'Teenagers',
+        adult: 'Adults',
+      },
       telegram: 'Telegram',
       lastVisit: 'Last visit',
     },

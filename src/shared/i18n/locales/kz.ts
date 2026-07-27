@@ -164,6 +164,11 @@ export const kz: Translations = {
       chooseLevel: 'Деңгей таңдаңыз',
       ageGroup: 'Жас тобы',
       chooseAgeGroup: 'Жас тобын таңдаңыз',
+      ageGroups: {
+        child: 'Балалар',
+        teenager: 'Жасөспірімдер',
+        adult: 'Ересектер',
+      },
       telegram: 'Telegram',
       lastVisit: 'Соңғы кіру',
     },

@@ -165,6 +165,11 @@ export const es: Translations = {
       chooseLevel: 'Elegir nivel',
       ageGroup: 'Grupo de edad',
       chooseAgeGroup: 'Elegir grupo de edad',
+      ageGroups: {
+        child: 'Niños',
+        teenager: 'Adolescentes',
+        adult: 'Adultos',
+      },
       telegram: 'Telegram',
       lastVisit: 'Última visita',
     },
