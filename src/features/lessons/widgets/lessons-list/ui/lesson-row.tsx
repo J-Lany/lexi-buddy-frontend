@@ -4,15 +4,17 @@ import { BookOpen } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { LessonSummaryDto } from '@/entities/lessons/api/get-my-lessons';
-import { AGE_GROUP_LABELS } from '@/shared/catalogs/age';
+import { getLocalizedAgeGroupLabel } from '@/shared/catalogs/age';
 import { LEVEL_ICONS } from '@/shared/catalogs/levels';
+import { useI18n } from '@/shared/i18n';
 import { routes } from '@/shared/router/routes';
 
 export function LessonRow({ lesson }: { lesson: LessonSummaryDto }) {
   const router = useRouter();
+  const { t } = useI18n();
 
   const stats = `${lesson.vocabCount} words · ${lesson.assignmentsCount} tasks`;
-  const ageLabel = lesson.ageCategory ? AGE_GROUP_LABELS[lesson.ageCategory] : null;
+  const ageLabel = lesson.ageCategory ? getLocalizedAgeGroupLabel(lesson.ageCategory, t) : null;
 
   const meta = [lesson.topic || null, lesson.level || null, ageLabel].filter(Boolean).join(' · ');
 

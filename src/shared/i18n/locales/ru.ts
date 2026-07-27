@@ -63,6 +63,11 @@ export const ru: Translations = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Дети',
+      teenager: 'Подростки',
+      adult: 'Взрослые',
+    },
     save: 'Сохранить',
     saving: 'Сохранение…',
     cancel: 'Отмена',
@@ -166,11 +171,6 @@ export const ru: Translations = {
       chooseLevel: 'Выберите уровень',
       ageGroup: 'Возрастная группа',
       chooseAgeGroup: 'Выберите возрастную группу',
-      ageGroups: {
-        child: 'Дети',
-        teenager: 'Подростки',
-        adult: 'Взрослые',
-      },
       telegram: 'Telegram',
       lastVisit: 'Последний визит',
     },

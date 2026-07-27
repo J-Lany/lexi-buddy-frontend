@@ -3,7 +3,8 @@
 import type { ReactNode } from 'react';
 
 import type { LessonDashboardDto } from '@/entities/lessons/api/get-lesson-dashboard';
-import { AGE_GROUP_LABELS } from '@/shared/catalogs/age';
+import { getLocalizedAgeGroupLabel } from '@/shared/catalogs/age';
+import { useI18n } from '@/shared/i18n';
 
 type Props = {
   lesson: LessonDashboardDto;
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export function LessonSummaryHeader({ lesson, actionSlot }: Props) {
+  const { t } = useI18n();
+
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       <div className="min-w-0">
@@ -33,9 +36,7 @@ export function LessonSummaryHeader({ lesson, actionSlot }: Props) {
         {lesson.level ? <span className="ui-pill">{lesson.level}</span> : null}
 
         {lesson.ageCategory ? (
-          <span className="ui-pill">
-            {AGE_GROUP_LABELS[lesson.ageCategory] ?? lesson.ageCategory}
-          </span>
+          <span className="ui-pill">{getLocalizedAgeGroupLabel(lesson.ageCategory, t)}</span>
         ) : null}
 
         {actionSlot ? <div className="ml-1 shrink-0">{actionSlot}</div> : null}

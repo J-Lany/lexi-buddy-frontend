@@ -63,6 +63,11 @@ export const es: Translations = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Niños',
+      teenager: 'Adolescentes',
+      adult: 'Adultos',
+    },
     save: 'Guardar',
     saving: 'Guardando…',
     cancel: 'Cancelar',
@@ -165,11 +170,6 @@ export const es: Translations = {
       chooseLevel: 'Elegir nivel',
       ageGroup: 'Grupo de edad',
       chooseAgeGroup: 'Elegir grupo de edad',
-      ageGroups: {
-        child: 'Niños',
-        teenager: 'Adolescentes',
-        adult: 'Adultos',
-      },
       telegram: 'Telegram',
       lastVisit: 'Última visita',
     },

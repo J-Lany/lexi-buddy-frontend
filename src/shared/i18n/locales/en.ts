@@ -61,6 +61,11 @@ export const en = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Children',
+      teenager: 'Teenagers',
+      adult: 'Adults',
+    },
     save: 'Save',
     saving: 'Saving…',
     cancel: 'Cancel',
@@ -163,11 +168,6 @@ export const en = {
       chooseLevel: 'Choose level',
       ageGroup: 'Age group',
       chooseAgeGroup: 'Choose age group',
-      ageGroups: {
-        child: 'Children',
-        teenager: 'Teenagers',
-        adult: 'Adults',
-      },
       telegram: 'Telegram',
       lastVisit: 'Last visit',
     },

@@ -4,7 +4,7 @@ import {
   CreateLessonDraft,
   DraftPatch,
 } from '@/features/lessons/modals/create-lesson-modal/model/types';
-import { AGE_GROUP_OPTIONS } from '@/shared/catalogs/age';
+import { getLocalizedAgeGroupOptions } from '@/shared/catalogs/age';
 import { LEVEL_OPTIONS } from '@/shared/catalogs/levels';
 import { useI18n } from '@/shared/i18n';
 import { FieldTooltip } from '@/shared/ui/field-tooltip';
@@ -28,6 +28,7 @@ function FieldLabel({ label, tooltip }: { label: string; tooltip: string }) {
 
 export function StepLessonMeta({ draft, onChange }: Props) {
   const { t } = useI18n();
+  const ageGroupOptions = getLocalizedAgeGroupOptions(t);
 
   return (
     <div className="space-y-5">
@@ -65,7 +66,7 @@ export function StepLessonMeta({ draft, onChange }: Props) {
           onValueChange={(v) => onChange({ ageCategory: v })}
           placeholder={t('lessons.meta.ageGroup')}
           title={t('lessons.meta.ageGroup')}
-          options={AGE_GROUP_OPTIONS}
+          options={ageGroupOptions}
         />
       </div>
 
