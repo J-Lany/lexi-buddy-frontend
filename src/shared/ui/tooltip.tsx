@@ -30,6 +30,13 @@ function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimiti
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
+export const popupContentClassName = cn(
+  'z-50 max-w-[240px] rounded-xl border border-border/60 bg-popover px-3 py-2 text-[13px] leading-snug text-popover-foreground shadow-md whitespace-pre-line',
+  'animate-in fade-in-0 zoom-in-95',
+  'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+  'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
+);
+
 function TooltipContent({
   className,
   sideOffset = 6,
@@ -41,13 +48,7 @@ function TooltipContent({
       <TooltipPrimitive.Content
         data-slot="tooltip-content"
         sideOffset={sideOffset}
-        className={cn(
-          'z-50 max-w-[240px] rounded-xl border border-border/60 bg-popover px-3 py-2 text-[13px] leading-snug text-popover-foreground shadow-md whitespace-pre-line',
-          'animate-in fade-in-0 zoom-in-95',
-          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-          'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-          className,
-        )}
+        className={cn(popupContentClassName, className)}
         {...props}
       >
         {children}
