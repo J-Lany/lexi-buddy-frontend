@@ -189,6 +189,9 @@ export const kz: Translations = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Топтарды іздеу',
+    },
     list: {
       error: 'Бірдеңе дұрыс болмады',
       errorDesc: 'Бетті жаңартып көріңіз.',

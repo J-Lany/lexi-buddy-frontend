@@ -9,7 +9,7 @@ import { filterLessonsByQuery } from '@/features/lessons/widgets/lessons-list/li
 import { LessonList } from '@/features/lessons/widgets/lessons-list/ui/lesson-list';
 import { useI18n } from '@/shared/i18n';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
-import { EmptyStateV2 } from '@/shared/ui/empty-state-v2';
+import { emptyStatePrimaryActionClassName, EmptyStateV2 } from '@/shared/ui/empty-state-v2';
 import { Skeleton } from '@/shared/ui/skeleton';
 
 type Props = {
@@ -28,7 +28,7 @@ export function LessonsListWidget({ query }: Props) {
 
   const showSkeleton = isLoading;
   const showError = isError;
-  const showEmpty = !isLoading && !isError && lessonsCount === 0 && !query;
+  const showEmpty = !isLoading && !isError && lessonsCount === 0;
   const showNoResults = !isLoading && !isError && lessonsCount > 0 && filtered.length === 0;
   const showList = !isLoading && !isError && filtered.length > 0;
 
@@ -59,17 +59,28 @@ export function LessonsListWidget({ query }: Props) {
           title={t('lessons.list.empty')}
           description={t('lessons.list.emptyDesc')}
           steps={[
-            { title: t('lessons.list.emptyStep1Title'), desc: t('lessons.list.emptyStep1Desc') },
-            { title: t('lessons.list.emptyStep2Title'), desc: t('lessons.list.emptyStep2Desc') },
-            { title: t('lessons.list.emptyStep3Title'), desc: t('lessons.list.emptyStep3Desc') },
+            {
+              id: 'details',
+              title: t('lessons.list.emptyStep1Title'),
+              desc: t('lessons.list.emptyStep1Desc'),
+            },
+            {
+              id: 'vocabulary',
+              title: t('lessons.list.emptyStep2Title'),
+              desc: t('lessons.list.emptyStep2Desc'),
+            },
+            {
+              id: 'assign',
+              title: t('lessons.list.emptyStep3Title'),
+              desc: t('lessons.list.emptyStep3Desc'),
+            },
           ]}
           primaryAction={
             <CreateLessonModal
               triggerProps={{
                 variant: 'default',
                 size: 'lg',
-                className:
-                  'h-11 w-full rounded-2xl px-6 text-[15px] font-semibold shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:h-12 sm:w-56',
+                className: emptyStatePrimaryActionClassName,
               }}
             />
           }

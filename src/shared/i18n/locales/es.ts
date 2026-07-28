@@ -190,6 +190,9 @@ export const es: Translations = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Buscar grupos',
+    },
     list: {
       error: 'Algo salió mal',
       errorDesc: 'Intenta actualizar la página.',

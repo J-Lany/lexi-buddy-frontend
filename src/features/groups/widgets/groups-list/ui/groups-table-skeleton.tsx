@@ -1,6 +1,6 @@
 'use client';
 
-import { GROUPS_TABLE_COLS } from '@/features/groups/widgets/groups-list/ui/ groups-table/groups-table.columns';
+import { GROUPS_TABLE_COLS } from '@/features/groups/widgets/groups-list/ui/groups-table/groups-table.columns';
 import { cn } from '@/shared/lib/cn';
 
 function SkeletonRow() {

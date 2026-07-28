@@ -191,6 +191,9 @@ export const ru: Translations = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Поиск групп',
+    },
     list: {
       error: 'Что-то пошло не так',
       errorDesc: 'Попробуйте обновить страницу.',

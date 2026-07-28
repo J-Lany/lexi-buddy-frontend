@@ -10,7 +10,7 @@ import { StudentsTable } from '@/features/students/widgets/students-list/ui/stud
 import { StudentsTableSkeleton } from '@/features/students/widgets/students-list/ui/students-table/students-table-skeleton';
 import { useI18n } from '@/shared/i18n';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
-import { EmptyStateV2 } from '@/shared/ui/empty-state-v2';
+import { emptyStatePrimaryActionClassName, EmptyStateV2 } from '@/shared/ui/empty-state-v2';
 
 export function StudentsListWidget({ query }: { query: string }) {
   const { t } = useI18n();
@@ -24,7 +24,7 @@ export function StudentsListWidget({ query }: { query: string }) {
 
   const showSkeleton = isLoading;
   const showError = isError;
-  const showEmpty = !isLoading && !isError && studentsCount === 0 && !query;
+  const showEmpty = !isLoading && !isError && studentsCount === 0;
   const showNoResults = !isLoading && !isError && studentsCount > 0 && filtered.length === 0;
   const showTable = !isLoading && !isError && filtered.length > 0;
 
@@ -45,17 +45,28 @@ export function StudentsListWidget({ query }: { query: string }) {
           title={t('students.list.empty')}
           description={t('students.list.emptyDesc')}
           steps={[
-            { title: t('students.list.emptyStep1Title'), desc: t('students.list.emptyStep1Desc') },
-            { title: t('students.list.emptyStep2Title'), desc: t('students.list.emptyStep2Desc') },
-            { title: t('students.list.emptyStep3Title'), desc: t('students.list.emptyStep3Desc') },
+            {
+              id: 'find',
+              title: t('students.list.emptyStep1Title'),
+              desc: t('students.list.emptyStep1Desc'),
+            },
+            {
+              id: 'invite',
+              title: t('students.list.emptyStep2Title'),
+              desc: t('students.list.emptyStep2Desc'),
+            },
+            {
+              id: 'assign',
+              title: t('students.list.emptyStep3Title'),
+              desc: t('students.list.emptyStep3Desc'),
+            },
           ]}
           primaryAction={
             <InviteStudentModal
               triggerProps={{
                 variant: 'default',
                 size: 'lg',
-                className:
-                  'h-11 w-full rounded-2xl px-6 text-[15px] font-semibold shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:h-12 sm:w-56',
+                className: emptyStatePrimaryActionClassName,
               }}
             />
           }

@@ -6,11 +6,11 @@ import { useMemo } from 'react';
 import { useMyGroupsQuery } from '@/entities/groups/model/query/get-my-groups';
 import { filterGroupsByQuery } from '@/features/groups/lib/filter-groups';
 import { CreateGroupModal } from '@/features/groups/modals/create-group/create-group-modal';
-import { GroupsTable } from '@/features/groups/widgets/groups-list/ui/ groups-table/group-table';
+import { GroupsTable } from '@/features/groups/widgets/groups-list/ui/groups-table/group-table';
 import { GroupsTableSkeleton } from '@/features/groups/widgets/groups-list/ui/groups-table-skeleton';
 import { useI18n } from '@/shared/i18n';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
-import { EmptyStateV2 } from '@/shared/ui/empty-state-v2';
+import { emptyStatePrimaryActionClassName, EmptyStateV2 } from '@/shared/ui/empty-state-v2';
 
 type Props = {
   query: string;
@@ -28,7 +28,7 @@ export function GroupsListWidget({ query }: Props) {
 
   const showSkeleton = isLoading;
   const showError = isError;
-  const showEmpty = !isLoading && !isError && groupsCount === 0 && !query;
+  const showEmpty = !isLoading && !isError && groupsCount === 0;
   const showNoResults = !isLoading && !isError && groupsCount > 0 && filtered.length === 0;
   const showTable = !isLoading && !isError && filtered.length > 0;
 
@@ -52,17 +52,28 @@ export function GroupsListWidget({ query }: Props) {
           title={t('groups.list.empty')}
           description={t('groups.list.emptyDesc')}
           steps={[
-            { title: t('groups.list.emptyStep1Title'), desc: t('groups.list.emptyStep1Desc') },
-            { title: t('groups.list.emptyStep2Title'), desc: t('groups.list.emptyStep2Desc') },
-            { title: t('groups.list.emptyStep3Title'), desc: t('groups.list.emptyStep3Desc') },
+            {
+              id: 'name',
+              title: t('groups.list.emptyStep1Title'),
+              desc: t('groups.list.emptyStep1Desc'),
+            },
+            {
+              id: 'students',
+              title: t('groups.list.emptyStep2Title'),
+              desc: t('groups.list.emptyStep2Desc'),
+            },
+            {
+              id: 'assign',
+              title: t('groups.list.emptyStep3Title'),
+              desc: t('groups.list.emptyStep3Desc'),
+            },
           ]}
           primaryAction={
             <CreateGroupModal
               triggerProps={{
                 variant: 'default',
                 size: 'lg',
-                className:
-                  'h-11 w-full rounded-2xl px-6 text-[15px] font-semibold shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:h-12 sm:w-56',
+                className: emptyStatePrimaryActionClassName,
               }}
             />
           }

@@ -188,6 +188,9 @@ export const en = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Search groups',
+    },
     list: {
       error: 'Something went wrong',
       errorDesc: 'Try refreshing the page.',

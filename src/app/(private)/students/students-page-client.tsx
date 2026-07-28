@@ -2,8 +2,10 @@
 
 import { useMyStudentsQuery } from '@/entities/students/model/queries/get-my-students';
 import { InviteStudentModal, StudentsListWidget } from '@/features/students';
+import { useClearStaleQuery } from '@/shared/hooks/use-clear-stale-query';
 import { useMergedQuery } from '@/shared/hooks/use-merged-query';
 import { useI18n } from '@/shared/i18n';
+import { cn } from '@/shared/lib/cn';
 import { Input } from '@/shared/ui/input';
 
 const queryKeys = {
@@ -16,12 +18,25 @@ export default function StudentsPageClient() {
   const query = getOr(queryKeys.q, '');
 
   const { data, isLoading, isError } = useMyStudentsQuery();
-  const studentsEmpty = !isLoading && !isError && (data?.length ?? 0) === 0 && !query;
+  const studentsCount = data?.length ?? 0;
+  const studentsEmpty = !isLoading && !isError && studentsCount === 0;
+
+  useClearStaleQuery({
+    queryKey: queryKeys.q,
+    query,
+    sourceCount: studentsCount,
+    isLoading,
+    isError,
+    navigateWith,
+  });
 
   return (
     <main>
       <section className="max-w-5xl flex flex-col gap-6">
-        <div className="ui-panel ui-radius-card p-4 sm:p-5">
+        <div
+          className={cn('ui-panel ui-radius-card p-4 sm:p-5', studentsEmpty && 'max-sm:hidden')}
+          data-testid="entity-list-toolbar"
+        >
           <div className="flex flex-wrap items-stretch sm:items-center gap-3 min-w-0">
             <Input
               value={query}
