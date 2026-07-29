@@ -77,6 +77,7 @@ export const es: Translations = {
     noResultsDesc: 'Verifica la escritura o prueba con otra palabra.',
     errorGeneric: 'Algo salió mal',
     tryAgain: 'Intenta actualizar la página.',
+    moreInfo: 'Más información',
   },
   students: {
     page: {
@@ -315,7 +316,6 @@ export const es: Translations = {
           'Se envía directamente a la IA como contexto de la lección — cuanto más específico, mejores tareas.',
         additionalInstructions:
           'Contexto adicional para el estudiante\nEste texto lo verá el estudiante en Telegram junto con la tarea. Por ejemplo: «Antes de hacer la tarea, mira el video de abajo».',
-        additionalInstructionsAriaLabel: 'Más información',
         materialLinks: 'Enlaces externos que los alumnos ven junto a la lección.',
       },
     },

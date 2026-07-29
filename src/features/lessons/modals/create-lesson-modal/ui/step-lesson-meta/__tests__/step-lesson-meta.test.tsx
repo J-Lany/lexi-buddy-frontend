@@ -91,3 +91,33 @@ describe('StepLessonMeta age-group field', () => {
     }
   });
 });
+
+describe('StepLessonMeta field tooltips', () => {
+  it('opens each field tooltip with its own text via the shared FieldTooltip fix', async () => {
+    render(
+      <I18nProvider>
+        <StepLessonMeta draft={draft} onChange={jest.fn()} />
+      </I18nProvider>,
+    );
+
+    const tooltipTexts = [
+      'The lesson name shown to students in the bot. Not passed to the AI.',
+      'Difficulty level (A1–C2). AI uses it to calibrate task complexity and vocabulary.',
+      'AI picks age-appropriate vocabulary and examples based on this.',
+      'Sent directly to the AI as lesson context — the more specific, the better the tasks.',
+    ];
+
+    const triggers = screen.getAllByRole('button', { name: 'More information' });
+    expect(triggers).toHaveLength(tooltipTexts.length);
+
+    for (const [index, text] of tooltipTexts.entries()) {
+      fireEvent.click(triggers[index]);
+      expect(await screen.findByText(text)).toBeInTheDocument();
+
+      const previousText = tooltipTexts[index - 1];
+      if (previousText) {
+        expect(screen.queryByText(previousText)).not.toBeInTheDocument();
+      }
+    }
+  });
+});

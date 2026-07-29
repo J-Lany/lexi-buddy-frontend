@@ -1,48 +1,32 @@
 'use client';
 
 import { CircleHelp } from 'lucide-react';
-import * as React from 'react';
 
-import { useIsCoarsePointer } from '@/shared/hooks/use-coarse-pointer';
+import { useI18n } from '@/shared/i18n';
 import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip';
 
 type Props = {
   content: string;
   contentClassName?: string;
-  ariaLabel?: string;
 };
 
-export function FieldTooltip({ content, contentClassName, ariaLabel }: Props) {
-  const isCoarse = useIsCoarsePointer();
-
-  const trigger = (
-    <button
-      type="button"
-      aria-label={ariaLabel ?? content}
-      className="relative inline-flex items-center justify-center text-muted-foreground/60 hover:text-muted-foreground transition-colors outline-none focus-visible:text-muted-foreground touch-manipulation before:absolute before:-inset-[15px] before:content-['']"
-    >
-      <CircleHelp className="h-3.5 w-3.5" />
-    </button>
-  );
-
-  if (isCoarse) {
-    return (
-      <Popover>
-        <PopoverTrigger asChild>{trigger}</PopoverTrigger>
-        <PopoverContent side="top" className={contentClassName}>
-          {content}
-        </PopoverContent>
-      </Popover>
-    );
-  }
+export function FieldTooltip({ content, contentClassName }: Props) {
+  const { t } = useI18n();
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{trigger}</TooltipTrigger>
-      <TooltipContent side="top" className={contentClassName}>
+    <Popover>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          aria-label={t('common.moreInfo')}
+          className="-my-3.5 inline-flex h-11 w-8 items-center justify-center text-muted-foreground/60 outline-none transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground touch-manipulation"
+        >
+          <CircleHelp className="h-3.5 w-3.5" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent side="top" className={contentClassName}>
         {content}
-      </TooltipContent>
-    </Tooltip>
+      </PopoverContent>
+    </Popover>
   );
 }

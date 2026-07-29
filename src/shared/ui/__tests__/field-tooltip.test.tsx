@@ -1,124 +1,129 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
+import { I18nProvider } from '@/shared/i18n';
 import { FieldTooltip } from '@/shared/ui/field-tooltip';
 
-const COARSE_QUERY = '(hover: none) and (pointer: coarse)';
-
-function mockPointer(isCoarse: boolean) {
-  window.matchMedia = jest.fn().mockImplementation((query: string) => ({
-    matches: isCoarse && query === COARSE_QUERY,
-    media: query,
-    onchange: null,
-    addListener: jest.fn(),
-    removeListener: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  }));
+function renderTooltip(node: React.ReactNode) {
+  return render(<I18nProvider>{node}</I18nProvider>);
 }
 
 describe('FieldTooltip', () => {
-  it('uses the full content as the accessible name when no ariaLabel is given', () => {
-    render(<FieldTooltip content="A fairly long explanation of what this field does." />);
-    expect(
-      screen.getByRole('button', { name: 'A fairly long explanation of what this field does.' }),
-    ).toBeInTheDocument();
+  it('opens the hint on click', async () => {
+    renderTooltip(<FieldTooltip content="Tapping the icon opens this hint." />);
+    fireEvent.click(screen.getByRole('button'));
+    expect(await screen.findByText('Tapping the icon opens this hint.')).toBeInTheDocument();
   });
 
-  it('uses a short ariaLabel for the button while keeping the full tooltip content', () => {
-    render(
-      <FieldTooltip
-        content="Additional context for the student\nA much longer explanation shown in the tooltip body."
-        ariaLabel="More information"
-      />,
-    );
+  it('closes the hint on a second click', async () => {
+    renderTooltip(<FieldTooltip content="Tapping the icon opens this hint." />);
+    const trigger = screen.getByRole('button');
+    fireEvent.click(trigger);
+    await screen.findByText('Tapping the icon opens this hint.');
+    fireEvent.click(trigger);
+    expect(screen.queryByText('Tapping the icon opens this hint.')).not.toBeInTheDocument();
+  });
 
+  it('closes the hint when clicking outside', async () => {
+    renderTooltip(<FieldTooltip content="Tapping the icon opens this hint." />);
+    fireEvent.click(screen.getByRole('button'));
+    await screen.findByText('Tapping the icon opens this hint.');
+
+    // Radix registers its outside-pointerdown listener in a setTimeout(0);
+    // let it flush before simulating the outside click.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    fireEvent.pointerDown(document.body);
+    fireEvent.click(document.body);
+    expect(screen.queryByText('Tapping the icon opens this hint.')).not.toBeInTheDocument();
+  });
+
+  it('closes the hint on Escape', async () => {
+    renderTooltip(<FieldTooltip content="Tapping the icon opens this hint." />);
+    fireEvent.click(screen.getByRole('button'));
+    const content = await screen.findByText('Tapping the icon opens this hint.');
+    fireEvent.keyDown(content, { key: 'Escape' });
+    expect(screen.queryByText('Tapping the icon opens this hint.')).not.toBeInTheDocument();
+  });
+
+  it('is a real button, so Enter and Space open it natively', () => {
+    // jsdom does not dispatch the browser's default action (a click) when a
+    // focused <button> receives Enter/Space, so this can't be exercised via
+    // fireEvent here. What we *can* assert is the invariant that makes the
+    // native behaviour guaranteed by the HTML spec: the trigger must be a
+    // real <button type="button">, not a div/span with a synthetic handler.
+    renderTooltip(<FieldTooltip content="Shown on click, tap or keyboard." />);
+    const trigger = screen.getByRole('button');
+    expect(trigger.tagName).toBe('BUTTON');
+    expect(trigger).toHaveAttribute('type', 'button');
+  });
+
+  it('does not open on hover or focus alone', () => {
+    renderTooltip(<FieldTooltip content="Shown on click, tap or keyboard." />);
+    const trigger = screen.getByRole('button');
+    fireEvent.pointerEnter(trigger);
+    fireEvent.mouseOver(trigger);
+    fireEvent.focus(trigger);
+    expect(screen.queryByText('Shown on click, tap or keyboard.')).not.toBeInTheDocument();
+  });
+
+  it('renders the exact tooltip text, including embedded newlines', async () => {
+    const content = 'Line one\nLine two';
+    renderTooltip(<FieldTooltip content={content} />);
+    fireEvent.click(screen.getByRole('button'));
+
+    // getByText's default normalizer collapses newlines to spaces, which would
+    // hide a regression that mangles the raw string. Compare textContent directly.
+    const popoverContent = await screen.findByRole('dialog');
+    expect(popoverContent.textContent).toBe(content);
+  });
+
+  it('closes the first hint when a second one is opened', async () => {
+    renderTooltip(
+      <>
+        <FieldTooltip content="First hint" />
+        <FieldTooltip content="Second hint" />
+      </>,
+    );
+    const [firstTrigger, secondTrigger] = screen.getAllByRole('button');
+
+    fireEvent.click(firstTrigger);
+    expect(await screen.findByText('First hint')).toBeInTheDocument();
+
+    fireEvent.pointerDown(secondTrigger);
+    fireEvent.click(secondTrigger);
+
+    expect(await screen.findByText('Second hint')).toBeInTheDocument();
+    expect(screen.queryByText('First hint')).not.toBeInTheDocument();
+  });
+
+  it('uses a short accessible name instead of the full tooltip text', () => {
+    renderTooltip(
+      <FieldTooltip content="Additional context for the student\nA much longer explanation shown in the tooltip body." />,
+    );
     expect(screen.getByRole('button', { name: 'More information' })).toBeInTheDocument();
   });
 
-  describe('on coarse (touch) pointers', () => {
-    beforeEach(() => mockPointer(true));
-
-    it('opens the hint on tap', async () => {
-      render(<FieldTooltip content="Tapping the icon opens this hint." />);
-      fireEvent.click(screen.getByRole('button'));
-      expect(await screen.findByRole('dialog')).toHaveTextContent(
-        'Tapping the icon opens this hint.',
-      );
-    });
-
-    it('closes the hint on a second tap', async () => {
-      render(<FieldTooltip content="Tapping the icon opens this hint." />);
-      const trigger = screen.getByRole('button');
-      fireEvent.click(trigger);
-      expect(await screen.findByRole('dialog')).toBeInTheDocument();
-      fireEvent.click(trigger);
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-
-    it('closes the hint on Escape', async () => {
-      render(<FieldTooltip content="Tapping the icon opens this hint." />);
-      fireEvent.click(screen.getByRole('button'));
-      const dialog = await screen.findByRole('dialog');
-      fireEvent.keyDown(dialog, { key: 'Escape' });
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-
-    it('closes the hint when tapping outside', async () => {
-      render(<FieldTooltip content="Tapping the icon opens this hint." />);
-      fireEvent.click(screen.getByRole('button'));
-      await screen.findByRole('dialog');
-
-      // Radix registers its outside-pointerdown listener in a setTimeout(0);
-      // let it flush before simulating the outside tap.
-      await new Promise((resolve) => setTimeout(resolve, 0));
-
-      fireEvent.pointerDown(document.body);
-      fireEvent.click(document.body);
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    });
-
-    it('closes the first hint when a second one is opened', async () => {
-      render(
-        <>
-          <FieldTooltip content="First hint" ariaLabel="First" />
-          <FieldTooltip content="Second hint" ariaLabel="Second" />
-        </>,
-      );
-
-      fireEvent.click(screen.getByRole('button', { name: 'First' }));
-      expect(await screen.findByRole('dialog')).toHaveTextContent('First hint');
-
-      fireEvent.pointerDown(screen.getByRole('button', { name: 'Second' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Second' }));
-
-      expect(await screen.findByRole('dialog')).toHaveTextContent('Second hint');
-      expect(screen.queryByText('First hint')).not.toBeInTheDocument();
-    });
-
-    it('reflects open state via aria-expanded on the trigger', async () => {
-      render(<FieldTooltip content="Tapping the icon opens this hint." />);
-      const trigger = screen.getByRole('button');
-      expect(trigger).toHaveAttribute('aria-expanded', 'false');
-      fireEvent.click(trigger);
-      await screen.findByRole('dialog');
-      expect(trigger).toHaveAttribute('aria-expanded', 'true');
-    });
+  it('does not read matchMedia', async () => {
+    const spy = jest.spyOn(window, 'matchMedia');
+    renderTooltip(<FieldTooltip content="Tapping the icon opens this hint." />);
+    fireEvent.click(screen.getByRole('button'));
+    await screen.findByText('Tapping the icon opens this hint.');
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
   });
 
-  describe('on fine (mouse) pointers', () => {
-    beforeEach(() => mockPointer(false));
+  it('exposes the expected ARIA contract', async () => {
+    renderTooltip(<FieldTooltip content="Tapping the icon opens this hint." />);
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveAttribute('aria-haspopup', 'dialog');
+    expect(trigger).toHaveAttribute('aria-expanded', 'false');
 
-    it('opens the hint on keyboard focus', async () => {
-      render(<FieldTooltip content="Shown on hover or focus." />);
-      fireEvent.focus(screen.getByRole('button'));
-      expect(await screen.findByRole('tooltip')).toBeInTheDocument();
-    });
+    fireEvent.click(trigger);
+    const content = await screen.findByText('Tapping the icon opens this hint.');
 
-    it('does not open on a plain click', () => {
-      render(<FieldTooltip content="Shown on hover or focus." />);
-      fireEvent.click(screen.getByRole('button'));
-      expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
-    });
+    expect(trigger).toHaveAttribute('aria-expanded', 'true');
+    const controlsId = trigger.getAttribute('aria-controls');
+    expect(controlsId).toBeTruthy();
+    expect(content.closest(`#${controlsId}`)).not.toBeNull();
   });
 });

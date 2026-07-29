@@ -75,6 +75,7 @@ export const en = {
     noResultsDesc: 'Check the spelling or try another keyword.',
     errorGeneric: 'Something went wrong',
     tryAgain: 'Try refreshing the page.',
+    moreInfo: 'More information',
   },
   students: {
     page: {
@@ -311,7 +312,6 @@ export const en = {
           'Sent directly to the AI as lesson context — the more specific, the better the tasks.',
         additionalInstructions:
           'Additional context for the student\nThe student will see this text in Telegram together with the assignment. For example: "Before doing the homework, watch the video below."',
-        additionalInstructionsAriaLabel: 'More information',
         materialLinks: 'External links shown to students alongside the lesson.',
       },
     },
