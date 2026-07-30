@@ -155,13 +155,16 @@ test.describe('Login flow', () => {
     await expect(page).toHaveURL('/students', { timeout: 10_000 });
   });
 
-  test('wrong password → shows error message, stays on /login', async ({ page }) => {
+  test('wrong password → shows localized "Incorrect email or password.", stays on /login', async ({
+    page,
+  }) => {
     await page.goto('/login');
     await page.locator(emailInput).fill(EMAIL);
     await page.locator(passwordInput).fill('wrong-password-123');
     await page.getByRole(submitButton.role, { name: submitButton.name }).click();
-    // Error banner rendered with text-destructive class
-    await expect(page.locator('.text-destructive').first()).toBeVisible({ timeout: 10_000 });
+    // The user must see a specific, localized message — never the raw Axios/backend text.
+    await expect(page.getByText('Incorrect email or password.')).toBeVisible({ timeout: 10_000 });
+    await expect(page.getByText(/Request failed with status code/)).toHaveCount(0);
     await expect(page).toHaveURL('/login');
   });
 

@@ -593,6 +593,26 @@ export const en = {
       pdnConsentTitle: 'Personal Data Consent',
     },
   },
+  errors: {
+    generic: 'Something went wrong. Please try again.',
+    network: 'Connection problem. Please check your internet connection and try again.',
+    timeout: 'The request timed out. Please try again.',
+    validation: 'Please check the information you entered.',
+    unauthorized: 'You need to sign in to continue.',
+    forbidden: "You don't have permission to do that.",
+    notFound: "We couldn't find what you're looking for.",
+    conflict: 'This conflicts with existing data.',
+    rateLimited: 'Too many attempts. Please wait a moment and try again.',
+    server: 'Something went wrong on our end. Please try again later.',
+    codes: {
+      AUTH_INVALID_CREDENTIALS: 'Incorrect email or password.',
+      AUTH_SESSION_EXPIRED: 'Your session has expired. Please sign in again.',
+      AUTH_EMAIL_ALREADY_EXISTS: 'An account with this email already exists.',
+      AUTH_INVALID_TOKEN: 'This link is invalid.',
+      AUTH_TOKEN_EXPIRED: 'This link has expired.',
+      AUTH_PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
+    },
+  },
   auth: {
     signUp: {
       pageTitle: 'Create an account',

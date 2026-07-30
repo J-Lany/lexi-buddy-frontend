@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-import { attachRequestIdInterceptor } from '@/shared/api/http/interceptors';
+import {
+  attachErrorNormalizationInterceptor,
+  attachRequestIdInterceptor,
+} from '@/shared/api/http/interceptors';
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -10,3 +13,4 @@ export const authApi = axios.create({
 });
 
 attachRequestIdInterceptor(authApi);
+attachErrorNormalizationInterceptor(authApi);

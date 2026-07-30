@@ -597,6 +597,26 @@ export const es: Translations = {
       pdnConsentTitle: 'Consentimiento de Datos Personales',
     },
   },
+  errors: {
+    generic: 'Algo salió mal. Inténtalo de nuevo.',
+    network: 'Problema de conexión. Comprueba tu conexión a internet e inténtalo de nuevo.',
+    timeout: 'La solicitud ha superado el tiempo de espera. Inténtalo de nuevo.',
+    validation: 'Revisa la información introducida.',
+    unauthorized: 'Debes iniciar sesión para continuar.',
+    forbidden: 'No tienes permiso para hacer esto.',
+    notFound: 'No pudimos encontrar lo que buscas.',
+    conflict: 'Esto entra en conflicto con datos existentes.',
+    rateLimited: 'Demasiados intentos. Espera un momento e inténtalo de nuevo.',
+    server: 'Algo salió mal de nuestro lado. Inténtalo más tarde.',
+    codes: {
+      AUTH_INVALID_CREDENTIALS: 'Correo electrónico o contraseña incorrectos.',
+      AUTH_SESSION_EXPIRED: 'Tu sesión ha expirado. Inicia sesión de nuevo.',
+      AUTH_EMAIL_ALREADY_EXISTS: 'Ya existe una cuenta con este correo electrónico.',
+      AUTH_INVALID_TOKEN: 'Este enlace no es válido.',
+      AUTH_TOKEN_EXPIRED: 'Este enlace ha caducado.',
+      AUTH_PASSWORDS_DO_NOT_MATCH: 'Las contraseñas no coinciden.',
+    },
+  },
   auth: {
     signUp: {
       pageTitle: 'Crear una cuenta',

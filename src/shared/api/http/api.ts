@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {
   attachAuthRefreshInterceptor,
+  attachErrorNormalizationInterceptor,
   attachRequestIdInterceptor,
 } from '@/shared/api/http/interceptors';
 
@@ -13,4 +14,6 @@ export const api = axios.create({
 });
 
 attachRequestIdInterceptor(api);
+// Order matters: refresh must see the raw AxiosError before normalization runs.
 attachAuthRefreshInterceptor(api);
+attachErrorNormalizationInterceptor(api);

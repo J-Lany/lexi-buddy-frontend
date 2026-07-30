@@ -11,7 +11,8 @@ import { loginSchema, SignInFormValues } from '@/features/auth/lib/schemas';
 import { useRequestPasswordChangeMutation } from '@/features/auth/model/use-request-password-change';
 import { useSignInMutation } from '@/features/auth/model/use-sigin';
 import { AuthCard } from '@/features/auth/ui/shared/auth-card';
-import { getErrorMessage } from '@/shared/lib/get-error-message';
+import { getErrorI18nKey } from '@/shared/api';
+import { useI18n } from '@/shared/i18n';
 import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
 import { Field, FieldLabel } from '@/shared/ui/field';
@@ -19,6 +20,7 @@ import { Input } from '@/shared/ui/input';
 
 export default function SignInForm() {
   const router = useRouter();
+  const { t } = useI18n();
   const { mutate, isPending } = useSignInMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -38,7 +40,7 @@ export default function SignInForm() {
     mutate(data, {
       onSuccess: () => router.push(routes.students),
       onError: (error) => {
-        setAuthError(getErrorMessage(error));
+        setAuthError(t(getErrorI18nKey(error)));
       },
     });
   };

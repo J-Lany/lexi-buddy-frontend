@@ -17,8 +17,8 @@ import { useSignupMutation } from '@/features/auth/model/use-signup';
 import { AuthCard } from '@/features/auth/ui/shared/auth-card';
 import { ConsentSentence } from '@/features/auth/ui/sign-up/consent-sentence';
 import { EmailConfirmModal } from '@/features/auth/ui/sign-up/email-confirm-modal';
+import { getErrorI18nKey } from '@/shared/api';
 import { useI18n } from '@/shared/i18n';
-import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { routes } from '@/shared/router/routes';
 import { Button } from '@/shared/ui/button';
 import { Checkbox } from '@/shared/ui/checkbox';
@@ -72,7 +72,7 @@ export default function SignUpForm() {
       },
       onError: (error) => {
         setPendingData(null);
-        setAuthError(getErrorMessage(error));
+        setAuthError(t(getErrorI18nKey(error)));
       },
     });
   };
