@@ -17,8 +17,10 @@ jest.mock('@/features/auth/model/use-sigin', () => ({
   useSignInMutation: () => ({ mutate, isPending: false }),
 }));
 
-jest.mock('@/features/auth/model/use-request-password-change', () => ({
-  useRequestPasswordChangeMutation: () => ({ mutate: jest.fn(), isPending: false }),
+const forgotPasswordMutate = jest.fn();
+
+jest.mock('@/features/auth/model/use-forgot-password', () => ({
+  useForgotPasswordMutation: () => ({ mutate: forgotPasswordMutate, isPending: false }),
 }));
 
 function renderSignInForm() {
@@ -160,5 +162,89 @@ describe('SignInForm — API error handling (real backend error codes, no login-
         'Connection problem. Please check your internet connection and try again.',
       ),
     ).toBeInTheDocument();
+  });
+});
+
+describe('SignInForm — forgot password (public flow)', () => {
+  beforeEach(() => {
+    forgotPasswordMutate.mockClear();
+  });
+
+  function switchToForgotMode() {
+    fireEvent.click(screen.getByRole('button', { name: 'Forgot password?' }));
+  }
+
+  it('sends only { email } — no password or confirmPassword fields exist on the form', async () => {
+    renderSignInForm();
+    switchToForgotMode();
+
+    // Only one text/email input should be present in forgot mode — no
+    // password/confirmPassword inputs from the old authorized-flow form.
+    expect(document.querySelectorAll('input')).toHaveLength(1);
+    expect(document.querySelector('input[autocomplete="new-password"]')).toBeNull();
+    expect(document.querySelector('input[autocomplete="current-password"]')).toBeNull();
+
+    fireEvent.change(screen.getByPlaceholderText('name@example.com'), {
+      target: { value: 'user@example.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Send reset link' }));
+
+    await waitFor(() => expect(forgotPasswordMutate).toHaveBeenCalledTimes(1));
+    const [payload] = forgotPasswordMutate.mock.calls[0] as [Record<string, unknown>, unknown];
+    expect(payload).toEqual({ email: 'user@example.com' });
+  });
+
+  it('shows a neutral success state after the backend responds — identical regardless of whether the account exists', async () => {
+    renderSignInForm();
+    switchToForgotMode();
+
+    fireEvent.change(screen.getByPlaceholderText('name@example.com'), {
+      target: { value: 'anyone@example.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Send reset link' }));
+
+    await waitFor(() => expect(forgotPasswordMutate).toHaveBeenCalledTimes(1));
+    const [, callbacks] = forgotPasswordMutate.mock.calls[0] as [
+      unknown,
+      { onSuccess: () => void },
+    ];
+    act(() => callbacks.onSuccess());
+
+    expect(await screen.findByText('Check your email')).toBeInTheDocument();
+    // The success copy never mentions or varies by the submitted email —
+    // it must read the same whether or not an account exists.
+    expect(screen.queryByText('anyone@example.com')).toBeNull();
+  });
+
+  it('shows a safe, localized message and lets the user retry on a network error', async () => {
+    renderSignInForm();
+    switchToForgotMode();
+
+    fireEvent.change(screen.getByPlaceholderText('name@example.com'), {
+      target: { value: 'user@example.com' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Send reset link' }));
+
+    await waitFor(() => expect(forgotPasswordMutate).toHaveBeenCalledTimes(1));
+    const [, callbacks] = forgotPasswordMutate.mock.calls[0] as [
+      unknown,
+      { onError: (e: unknown) => void },
+    ];
+    act(() =>
+      callbacks.onError({
+        isAxiosError: true,
+        message: 'Network Error',
+        code: 'ERR_NETWORK',
+        config: { headers: {} },
+      }),
+    );
+
+    expect(
+      await screen.findByText(
+        'Connection problem. Please check your internet connection and try again.',
+      ),
+    ).toBeInTheDocument();
+    // Form stays visible/editable so the user can retry the submission.
+    expect(screen.getByRole('button', { name: 'Send reset link' })).toBeEnabled();
   });
 });

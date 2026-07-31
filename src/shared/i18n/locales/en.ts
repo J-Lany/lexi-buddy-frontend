@@ -651,6 +651,37 @@ export const en = {
       confirmModalCta: "Yes, that's correct",
       confirmModalPending: 'Creating account…',
     },
+    forgotPassword: {
+      pageTitle: 'Reset password',
+      pageSubtitle: "Enter your email and we'll send you a link to reset your password.",
+      emailLabel: 'Email',
+      emailPlaceholder: 'name@example.com',
+      emailInvalidError: 'Enter a valid email',
+      submitButton: 'Send reset link',
+      submitPending: 'Sending…',
+      backToSignIn: 'Back to sign in',
+      successTitle: 'Check your email',
+      successText:
+        "If an account with that email exists, we've sent a link to reset your password.",
+    },
+    resetPassword: {
+      pageTitle: 'Set a new password',
+      pageSubtitle: 'Choose a new password for your account.',
+      passwordLabel: 'New password',
+      confirmPasswordLabel: 'Confirm new password',
+      passwordTooShortError: 'Password must be at least 8 characters long',
+      passwordMismatchError: 'Passwords do not match',
+      showPasswordAriaLabel: 'Show password',
+      hidePasswordAriaLabel: 'Hide password',
+      submitButton: 'Reset password',
+      submitPending: 'Resetting…',
+      successTitle: 'Password reset',
+      successText:
+        'Your password has been reset successfully. You can now sign in with your new password.',
+      goToLogin: 'Go to login',
+      errorTitle: 'Invalid or expired link',
+      backToSignIn: 'Back to sign in',
+    },
   },
 } as const;
 

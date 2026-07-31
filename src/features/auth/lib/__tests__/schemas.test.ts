@@ -1,4 +1,4 @@
-import { loginSchema, signupSchema } from '../schemas';
+import { forgotPasswordSchema, loginSchema, resetPasswordSchema, signupSchema } from '../schemas';
 
 describe('loginSchema', () => {
   const VALID = { email: 'teacher@example.com', password: 'password123' };
@@ -107,5 +107,53 @@ describe('signupSchema', () => {
     const withoutConsent: Partial<typeof VALID> = { ...VALID };
     delete withoutConsent.consentAccepted;
     expect(signupSchema.safeParse(withoutConsent).success).toBe(false);
+  });
+});
+
+describe('forgotPasswordSchema', () => {
+  it('accepts a valid email', () => {
+    expect(forgotPasswordSchema.safeParse({ email: 'teacher@example.com' }).success).toBe(true);
+  });
+
+  it('rejects an invalid email', () => {
+    const result = forgotPasswordSchema.safeParse({ email: 'notanemail' });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe('Enter a valid email');
+  });
+
+  it('rejects a missing email', () => {
+    expect(forgotPasswordSchema.safeParse({}).success).toBe(false);
+  });
+
+  it('does not accept a password field as part of its shape', () => {
+    // forgotPasswordSchema intentionally has no password fields — the public
+    // forgot-password flow must never accept a new password up front.
+    expect('password' in forgotPasswordSchema.shape).toBe(false);
+    expect('confirmPassword' in forgotPasswordSchema.shape).toBe(false);
+  });
+});
+
+describe('resetPasswordSchema', () => {
+  const VALID = { password: 'password123', confirmPassword: 'password123' };
+
+  it('accepts matching passwords of at least 8 characters', () => {
+    expect(resetPasswordSchema.safeParse(VALID).success).toBe(true);
+  });
+
+  it('rejects password shorter than 8 characters', () => {
+    const result = resetPasswordSchema.safeParse({ password: 'short', confirmPassword: 'short' });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe('Password must be at least 8 characters long');
+  });
+
+  it('rejects mismatched passwords', () => {
+    const result = resetPasswordSchema.safeParse({ ...VALID, confirmPassword: 'different!' });
+    expect(result.success).toBe(false);
+    expect(result.error?.issues[0].message).toBe('Passwords do not match');
+    expect(result.error?.issues[0].path).toContain('confirmPassword');
+  });
+
+  it('rejects missing fields', () => {
+    expect(resetPasswordSchema.safeParse({}).success).toBe(false);
   });
 });
