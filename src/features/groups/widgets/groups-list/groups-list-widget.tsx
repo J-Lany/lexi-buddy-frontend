@@ -9,6 +9,7 @@ import { CreateGroupModal } from '@/features/groups/modals/create-group/create-g
 import { GroupsTable } from '@/features/groups/widgets/groups-list/ui/groups-table/group-table';
 import { GroupsTableSkeleton } from '@/features/groups/widgets/groups-list/ui/groups-table-skeleton';
 import { useI18n } from '@/shared/i18n';
+import { getListViewState } from '@/shared/lib/list-view-state';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
 import { emptyStatePrimaryActionClassName, EmptyStateV2 } from '@/shared/ui/empty-state-v2';
 
@@ -18,7 +19,7 @@ type Props = {
 
 export function GroupsListWidget({ query }: Props) {
   const { t } = useI18n();
-  const { data, isLoading, isError } = useMyGroupsQuery();
+  const { data, isPending, isError } = useMyGroupsQuery();
 
   const filtered = useMemo(() => {
     return filterGroupsByQuery(data ?? [], query);
@@ -26,19 +27,20 @@ export function GroupsListWidget({ query }: Props) {
 
   const groupsCount = data?.length ?? 0;
 
-  const showSkeleton = isLoading;
-  const showError = isError;
-  const showEmpty = !isLoading && !isError && groupsCount === 0;
-  const showNoResults = !isLoading && !isError && groupsCount > 0 && filtered.length === 0;
-  const showTable = !isLoading && !isError && filtered.length > 0;
+  const view = getListViewState({
+    isPending,
+    isError,
+    totalCount: groupsCount,
+    filteredCount: filtered.length,
+  });
 
   return (
     <section className="flex flex-col gap-4">
-      {showSkeleton && <GroupsTableSkeleton />}
+      {view === 'loading' && <GroupsTableSkeleton />}
 
-      {showTable && <GroupsTable groups={filtered} />}
+      {view === 'list' && <GroupsTable groups={filtered} />}
 
-      {showError && (
+      {view === 'error' && (
         <EmptyStateCard
           surface="canvas"
           title={t('groups.list.error')}
@@ -46,7 +48,7 @@ export function GroupsListWidget({ query }: Props) {
         />
       )}
 
-      {showEmpty && (
+      {view === 'empty' && (
         <EmptyStateV2
           icon={<Users strokeWidth={1.4} />}
           title={t('groups.list.empty')}
@@ -82,7 +84,7 @@ export function GroupsListWidget({ query }: Props) {
         />
       )}
 
-      {showNoResults && (
+      {view === 'no-results' && (
         <EmptyStateCard
           surface="canvas"
           title={t('groups.list.noResults')}

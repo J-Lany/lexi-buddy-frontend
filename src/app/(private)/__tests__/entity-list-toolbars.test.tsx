@@ -9,7 +9,7 @@ let query = '';
 let lessons: unknown[] = [];
 let groups: unknown[] = [];
 let students: unknown[] = [];
-let isLoading = false;
+let isPending = false;
 let isError = false;
 const navigateWith = jest.fn();
 
@@ -17,13 +17,13 @@ jest.mock('@/shared/hooks/use-merged-query', () => ({
   useMergedQuery: () => ({ getOr: () => query, navigateWith }),
 }));
 jest.mock('@/entities/lessons/model/query/get-my-lessons', () => ({
-  useMyLessonsQuery: () => ({ data: lessons, isLoading, isError }),
+  useMyLessonsQuery: () => ({ data: lessons, isPending, isError }),
 }));
 jest.mock('@/entities/groups/model/query/get-my-groups', () => ({
-  useMyGroupsQuery: () => ({ data: groups, isLoading, isError }),
+  useMyGroupsQuery: () => ({ data: groups, isPending, isError }),
 }));
 jest.mock('@/entities/students/model/queries/get-my-students', () => ({
-  useMyStudentsQuery: () => ({ data: students, isLoading, isError }),
+  useMyStudentsQuery: () => ({ data: students, isPending, isError }),
 }));
 jest.mock('@/features/lessons/modals/create-lesson-modal/create-lesson-modal', () => ({
   CreateLessonModal: () => <button>Create lesson</button>,
@@ -52,56 +52,96 @@ describe('entity-list search toolbars', () => {
     lessons = [];
     groups = [];
     students = [];
-    isLoading = false;
+    isPending = false;
     isError = false;
     navigateWith.mockClear();
   });
 
+  const PAGES: [string, () => React.ReactElement, (items: unknown[]) => void][] = [
+    ['lessons', () => <LessonsPageClient key="lessons" />, (v) => (lessons = v)],
+    ['groups', () => <GroupsPageClient key="groups" />, (v) => (groups = v)],
+    ['students', () => <StudentsPageClient key="students" />, (v) => (students = v)],
+  ];
+
+  it.each(PAGES)(
+    'keeps the %s toolbar visible (no max-sm:hidden) while loading, with no entities',
+    (_name, page, setEntities) => {
+      isPending = true;
+      setEntities([]);
+      renderPage(page());
+
+      expect(screen.getByTestId('entity-list-toolbar')).not.toHaveClass('max-sm:hidden');
+    },
+  );
+
+  it.each(PAGES)(
+    'keeps the %s toolbar visible (no max-sm:hidden) once confirmed empty',
+    (_name, page, setEntities) => {
+      isPending = false;
+      setEntities([]);
+      renderPage(page());
+
+      expect(screen.getByTestId('entity-list-toolbar')).not.toHaveClass('max-sm:hidden');
+    },
+  );
+
+  it.each(PAGES)(
+    'keeps the %s toolbar visible (no max-sm:hidden) on error',
+    (_name, page, setEntities) => {
+      isPending = false;
+      isError = true;
+      setEntities([]);
+      renderPage(page());
+
+      expect(screen.getByTestId('entity-list-toolbar')).not.toHaveClass('max-sm:hidden');
+    },
+  );
+
+  it.each(PAGES)(
+    'keeps the %s toolbar visible (no max-sm:hidden) with a non-empty list',
+    (_name, page, setEntities) => {
+      isPending = false;
+      setEntities([{}]);
+      renderPage(page());
+
+      expect(screen.getByTestId('entity-list-toolbar')).not.toHaveClass('max-sm:hidden');
+    },
+  );
+
+  it.each(PAGES)(
+    'keeps the %s search toolbar when source entities exist',
+    (_name, page, setEntities) => {
+      query = 'no-match';
+      setEntities([{}]);
+      renderPage(page());
+
+      expect(screen.getByTestId('entity-list-toolbar')).not.toHaveClass('max-sm:hidden');
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
+      expect(navigateWith).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each(PAGES)(
+    'clears a normalized stale query once when %s source is empty',
+    (_name, page, setEntities) => {
+      query = '  stale query  ';
+      setEntities([]);
+      const view = renderPage(page());
+
+      expect(navigateWith).toHaveBeenCalledTimes(1);
+      expect(navigateWith).toHaveBeenCalledWith({ q: null });
+
+      view.rerender(<I18nProvider>{page()}</I18nProvider>);
+      expect(navigateWith).toHaveBeenCalledTimes(1);
+    },
+  );
+
   it.each([
-    ['lessons', <LessonsPageClient key="lessons" />],
-    ['groups', <GroupsPageClient key="groups" />],
-    ['students', <StudentsPageClient key="students" />],
-  ])('hides the %s search toolbar only below sm for first use', (_name, page) => {
-    renderPage(page as React.ReactNode);
-
-    expect(screen.getByTestId('entity-list-toolbar')).toHaveClass('max-sm:hidden', 'sm:p-5');
-  });
-
-  it.each([
-    ['lessons', <LessonsPageClient key="lessons-search" />, () => (lessons = [{}])],
-    ['groups', <GroupsPageClient key="groups-search" />, () => (groups = [{}])],
-    ['students', <StudentsPageClient key="students-search" />, () => (students = [{}])],
-  ])('keeps the %s search toolbar when source entities exist', (_name, page, setEntities) => {
-    query = 'no-match';
-    setEntities();
-    renderPage(page as React.ReactNode);
-
-    expect(screen.getByTestId('entity-list-toolbar')).not.toHaveClass('max-sm:hidden');
-    expect(screen.getByRole('textbox')).toBeInTheDocument();
-    expect(navigateWith).not.toHaveBeenCalled();
-  });
-
-  it.each([
-    ['lessons', <LessonsPageClient key="lessons-clear" />],
-    ['groups', <GroupsPageClient key="groups-clear" />],
-    ['students', <StudentsPageClient key="students-clear" />],
-  ])('clears a normalized stale query once when %s source is empty', (_name, page) => {
-    query = '  stale query  ';
-    const view = renderPage(page as React.ReactNode);
-
-    expect(navigateWith).toHaveBeenCalledTimes(1);
-    expect(navigateWith).toHaveBeenCalledWith({ q: null });
-
-    view.rerender(<I18nProvider>{page}</I18nProvider>);
-    expect(navigateWith).toHaveBeenCalledTimes(1);
-  });
-
-  it.each([
-    ['loading', { loading: true, error: false }],
-    ['error', { loading: false, error: true }],
+    ['loading', { pending: true, error: false }],
+    ['error', { pending: false, error: true }],
   ])('does not clear a stale query during %s', (_name, state) => {
     query = 'stale';
-    isLoading = state.loading;
+    isPending = state.pending;
     isError = state.error;
 
     renderPage(<LessonsPageClient />);

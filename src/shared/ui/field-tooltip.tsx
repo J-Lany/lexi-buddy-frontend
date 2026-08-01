@@ -19,7 +19,7 @@ export function FieldTooltip({ content, contentClassName }: Props) {
         <button
           type="button"
           aria-label={t('common.moreInfo')}
-          className="-my-3.5 inline-flex h-11 w-8 items-center justify-center text-muted-foreground/60 outline-none transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground touch-manipulation"
+          className="-my-3.5 inline-flex h-11 w-8 items-center justify-center rounded-md text-muted-foreground/60 outline-none transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 touch-manipulation"
         >
           <CircleHelp className="h-3.5 w-3.5" />
         </button>

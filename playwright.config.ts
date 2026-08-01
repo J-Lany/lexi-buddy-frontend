@@ -25,5 +25,39 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
       dependencies: ['setup'],
     },
+    // Touch/mobile projects for bug repro + regression specs that need a real
+    // touch input pipeline (tap vs click) and, for webkit-mobile, WebKit's
+    // pointer/focus event handling — jsdom/Chrome can't stand in for either.
+    // No `dependencies: ['setup']`: these specs mock the API themselves
+    // (see e2e/fixtures) so they don't need a live backend to authenticate.
+    // Scoped via testMatch so the existing chromium-only suites don't get
+    // tripled in CI runtime by running under these too.
+    {
+      name: 'chromium-touch',
+      testMatch: [
+        '**/lesson-tooltips*.spec.ts',
+        '**/entity-lists.spec.ts',
+        '**/radix-neighbors.spec.ts',
+      ],
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'webkit-mobile',
+      testMatch: [
+        '**/lesson-tooltips*.spec.ts',
+        '**/entity-lists.spec.ts',
+        '**/radix-neighbors.spec.ts',
+      ],
+      use: { ...devices['iPhone 13'] },
+    },
+    // Desktop mouse/keyboard coverage for the same mocked specs, without the
+    // `setup` -> live backend dependency the plain `chromium` project has.
+    // radix-neighbors.spec.ts is touch-only (uses `.tap()` throughout, no
+    // desktop/click path) so it's deliberately not included here.
+    {
+      name: 'chromium-desktop-mocked',
+      testMatch: ['**/lesson-tooltips*.spec.ts', '**/entity-lists.spec.ts'],
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
 });

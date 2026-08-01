@@ -34,7 +34,7 @@ function renderWithI18n(node: React.ReactNode) {
 
 describe('mobile first-use empty states', () => {
   beforeEach(() => {
-    const emptyQuery = { data: [], isLoading: false, isError: false };
+    const emptyQuery = { data: [], isPending: false, isError: false };
     useMyLessonsQuery.mockReturnValue(emptyQuery);
     useMyGroupsQuery.mockReturnValue(emptyQuery);
     useMyStudentsQuery.mockReturnValue(emptyQuery);

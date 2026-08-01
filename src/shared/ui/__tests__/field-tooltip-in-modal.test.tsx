@@ -66,17 +66,7 @@ describe('FieldTooltip inside ResponsiveModal (Radix Dialog)', () => {
     expect(screen.getByText(STEP_ONE_HINT)).toBeInTheDocument();
   });
 
-  // Skipped locally: this machine's node_modules currently holds two physically
-  // separate copies of @radix-ui/react-dismissable-layer@1.1.19 (one nested under
-  // react-dialog, one under react-popover — `npm ls @radix-ui/react-dismissable-layer`
-  // shows both as standalone, not deduped). Radix's layer-stack coordination (only the
-  // topmost layer reacts to Escape) is a module-level singleton, so two separate copies
-  // mean Dialog and Popover each think they're the topmost layer and both close on one
-  // Escape press. package-lock.json is already correct and up to date
-  // (`npm install --package-lock-only --dry-run` reports no changes needed), so a clean
-  // `npm ci` — as CI does — should install a single deduped copy and this should pass.
-  // Re-enable once verified on a clean install; if it still fails there, this is a real bug.
-  it.skip('Escape closes only the hint, a second Escape closes the Dialog', async () => {
+  it('Escape closes only the hint, a second Escape closes the Dialog', async () => {
     render(<Harness />);
     fireEvent.click(screen.getByRole('button', { name: 'More information' }));
     await screen.findByText(STEP_ONE_HINT);

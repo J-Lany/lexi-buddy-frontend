@@ -10,7 +10,7 @@ if (typeof globalThis.ResizeObserver === 'undefined') {
 }
 
 // jsdom doesn't implement matchMedia; components like ResponsiveSelect, ResponsiveModal,
-// FieldTooltip and useMediaQuery rely on it. Defaults to "no match" (desktop/fine pointer);
+// and useMediaQuery rely on it. Defaults to "no match" (desktop/fine pointer);
 // individual tests can reassign window.matchMedia to flip a specific query to true.
 // Some test files opt into the "node" environment (no window/document at all), so guard
 // for that too.
