@@ -1,4 +1,4 @@
-import { expect, Page, test } from '@playwright/test';
+import { expect, Page, test, TestInfo } from '@playwright/test';
 
 import { authenticateWithFakeCookie } from './fixtures/auth-cookie';
 import { mockApi, sampleLesson } from './fixtures/mock-api';
@@ -41,13 +41,25 @@ const FIELDS = [
   },
 ] as const;
 
-function isDesktopProject(projectName: string): boolean {
-  return projectName.includes('desktop');
+// Tailwind's `sm` breakpoint (--breakpoint-sm in globals.css, default 40rem).
+// Matches the `hidden sm:block` / `max-sm:block sm:hidden` CSS driving which
+// DOM twin is actually visible — see visibleOf() below.
+const TAILWIND_SM_BREAKPOINT_PX = 640;
+
+// Explicit capability checks, not project-name inference: a project named
+// e.g. "chromium" (no "desktop" substring, no hasTouch) matched neither
+// bucket under the old `name.includes('desktop') ? click : tap` rule and
+// silently fell into "tap", which crashes with "The page does not support
+// tap. Use hasTouch context option" on a project that isn't touch-capable.
+// Reading the project's own declared `use` options instead means a spec
+// only tap()s where the project actually configured `hasTouch: true`.
+function hasTouch(testInfo: TestInfo): boolean {
+  return testInfo.project.use.hasTouch === true;
 }
 
-async function act(page: Page, locator: ReturnType<Page['getByRole']>, projectName: string) {
-  if (isDesktopProject(projectName)) await locator.click();
-  else await locator.tap();
+async function act(page: Page, locator: ReturnType<Page['getByRole']>, testInfo: TestInfo) {
+  if (hasTouch(testInfo)) await locator.tap();
+  else await locator.click();
 }
 
 // ResponsiveModal renders some header/footer text (the title, the step
@@ -55,13 +67,16 @@ async function act(page: Page, locator: ReturnType<Page['getByRole']>, projectNa
 // `max-sm:block sm:hidden` mobile node — so a plain text locator always
 // resolves to two elements. Only one is actually visible per viewport, and
 // document order is consistently desktop-node-first, mobile-node-second.
-function visibleOf(locator: ReturnType<Page['getByText']>, projectName: string) {
-  return isDesktopProject(projectName) ? locator.first() : locator.last();
+// Driven by the project's actual configured viewport width, not its name.
+function visibleOf(locator: ReturnType<Page['getByText']>, testInfo: TestInfo) {
+  const width = testInfo.project.use.viewport?.width;
+  const isNarrow = typeof width === 'number' && width < TAILWIND_SM_BREAKPOINT_PX;
+  return isNarrow ? locator.last() : locator.first();
 }
 
-async function openLessonModal(page: Page, projectName: string) {
+async function openLessonModal(page: Page, testInfo: TestInfo) {
   await page.goto('/lessons');
-  await act(page, page.getByRole('button', { name: '+ New lesson' }), projectName);
+  await act(page, page.getByRole('button', { name: '+ New lesson' }), testInfo);
   await expect(page.locator('[data-slot="dialog-content"]')).toBeVisible();
 }
 
@@ -83,8 +98,8 @@ test.describe('Lesson details "?" field hints', () => {
 
   for (const field of FIELDS) {
     test(`opens the "${field.name}" hint with the correct text`, async ({ page }, testInfo) => {
-      await openLessonModal(page, testInfo.project.name);
-      await act(page, trigger(page, field.index), testInfo.project.name);
+      await openLessonModal(page, testInfo);
+      await act(page, trigger(page, field.index), testInfo);
 
       const content = popoverContent(page);
       await expect(content).toBeVisible();
@@ -95,8 +110,8 @@ test.describe('Lesson details "?" field hints', () => {
   test('the hint stays visible after settling, not just for one frame', async ({
     page,
   }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
-    await act(page, trigger(page, 0), testInfo.project.name);
+    await openLessonModal(page, testInfo);
+    await act(page, trigger(page, 0), testInfo);
 
     const content = popoverContent(page);
     await expect(content).toBeVisible();
@@ -108,8 +123,8 @@ test.describe('Lesson details "?" field hints', () => {
   test('the hint content is interactive (pointer-events is not "none")', async ({
     page,
   }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
-    await act(page, trigger(page, 0), testInfo.project.name);
+    await openLessonModal(page, testInfo);
+    await act(page, trigger(page, 0), testInfo);
 
     const content = popoverContent(page);
     await expect(content).toBeVisible();
@@ -118,20 +133,20 @@ test.describe('Lesson details "?" field hints', () => {
   });
 
   test('tapping/clicking inside the hint does not close it', async ({ page }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
-    await act(page, trigger(page, 0), testInfo.project.name);
+    await openLessonModal(page, testInfo);
+    await act(page, trigger(page, 0), testInfo);
 
     const content = popoverContent(page);
     await expect(content).toBeVisible();
-    await act(page, content, testInfo.project.name);
+    await act(page, content, testInfo);
     await expect(content).toBeVisible();
   });
 
   test('tapping/clicking outside the hint closes only the hint, the dialog stays open', async ({
     page,
   }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
-    await act(page, trigger(page, 0), testInfo.project.name);
+    await openLessonModal(page, testInfo);
+    await act(page, trigger(page, 0), testInfo);
     await expect(popoverContent(page)).toBeVisible();
 
     // The dialog title is a safe "outside" target — never inside the popover.
@@ -139,7 +154,7 @@ test.describe('Lesson details "?" field hints', () => {
     // real visible title div (always second, at every viewport) — unlike the
     // step counter below, this isn't a mobile/desktop duplicate, so `.last()`
     // is correct regardless of project.
-    await act(page, page.getByText('Lesson details').last(), testInfo.project.name);
+    await act(page, page.getByText('Lesson details').last(), testInfo);
 
     await expect(popoverContent(page)).not.toBeVisible();
     await expect(page.locator('[data-slot="dialog-content"]')).toBeVisible();
@@ -148,8 +163,8 @@ test.describe('Lesson details "?" field hints', () => {
   test('Escape closes only the hint; a second Escape closes the dialog', async ({
     page,
   }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
-    await act(page, trigger(page, 0), testInfo.project.name);
+    await openLessonModal(page, testInfo);
+    await act(page, trigger(page, 0), testInfo);
     await expect(popoverContent(page)).toBeVisible();
 
     await page.keyboard.press('Escape');
@@ -161,17 +176,17 @@ test.describe('Lesson details "?" field hints', () => {
   });
 
   test('a second tap/click on the trigger closes the hint', async ({ page }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
+    await openLessonModal(page, testInfo);
     const t = trigger(page, 0);
-    await act(page, t, testInfo.project.name);
+    await act(page, t, testInfo);
     await expect(popoverContent(page)).toBeVisible();
 
-    await act(page, t, testInfo.project.name);
+    await act(page, t, testInfo);
     await expect(popoverContent(page)).not.toBeVisible();
   });
 
   test('opening a second hint closes the first', async ({ page }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
+    await openLessonModal(page, testInfo);
     // Fields 1 (level) and 3 (topic), not the adjacent 0/1: the "title" field
     // sits right under the dialog header, so its side="top" popover has no
     // room and Radix's collision detection flips it below — where it would
@@ -179,20 +194,20 @@ test.describe('Lesson details "?" field hints', () => {
     // That's a viewport/anchor-spacing artifact of picking adjacent fields
     // for this specific test, not a regression, so we pick two fields with
     // enough vertical separation instead of asserting on the overlap itself.
-    await act(page, trigger(page, 1), testInfo.project.name);
+    await act(page, trigger(page, 1), testInfo);
     await expect(popoverContent(page)).toHaveText(FIELDS[1].text);
 
-    await act(page, trigger(page, 3), testInfo.project.name);
+    await act(page, trigger(page, 3), testInfo);
     await expect(popoverContent(page)).toHaveCount(1);
     await expect(popoverContent(page)).toHaveText(FIELDS[3].text);
   });
 
   test('tapping/clicking "?" does not advance the wizard or submit', async ({ page }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
-    const stepCounter = visibleOf(page.getByText('1 / 5'), testInfo.project.name);
+    await openLessonModal(page, testInfo);
+    const stepCounter = visibleOf(page.getByText('1 / 5'), testInfo);
     await expect(stepCounter).toBeVisible();
 
-    await act(page, trigger(page, 0), testInfo.project.name);
+    await act(page, trigger(page, 0), testInfo);
     await expect(popoverContent(page)).toBeVisible();
 
     // Still step 1, dialog still open — a submit or step change would fail either check.
@@ -201,9 +216,9 @@ test.describe('Lesson details "?" field hints', () => {
   });
 
   test('focus returns to the trigger after the hint closes', async ({ page }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
+    await openLessonModal(page, testInfo);
     const t = trigger(page, 0);
-    await act(page, t, testInfo.project.name);
+    await act(page, t, testInfo);
     await expect(popoverContent(page)).toBeVisible();
 
     await page.keyboard.press('Escape');
@@ -214,10 +229,10 @@ test.describe('Lesson details "?" field hints', () => {
   test('the dialog stays functional after several open/close hint cycles', async ({
     page,
   }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
+    await openLessonModal(page, testInfo);
 
     for (let i = 0; i < 3; i++) {
-      await act(page, trigger(page, 0), testInfo.project.name);
+      await act(page, trigger(page, 0), testInfo);
       await expect(popoverContent(page)).toBeVisible();
       await page.keyboard.press('Escape');
       await expect(popoverContent(page)).not.toBeVisible();
@@ -232,7 +247,7 @@ test.describe('Lesson details "?" field hints', () => {
   test('keyboard-only: Tab focuses the trigger, Enter opens the hint, Escape closes it', async ({
     page,
   }, testInfo) => {
-    await openLessonModal(page, testInfo.project.name);
+    await openLessonModal(page, testInfo);
 
     await trigger(page, 0).focus();
     await expect(trigger(page, 0)).toBeFocused();

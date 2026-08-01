@@ -6,6 +6,8 @@ import type { StudentDto } from '../src/entities/students/api/get-my-students';
 import { authenticateWithFakeCookie } from './fixtures/auth-cookie';
 import {
   mockApi,
+  MockApiHandle,
+  MockedEndpoint,
   MockResponse,
   sampleGroup,
   sampleLesson,
@@ -41,16 +43,22 @@ import {
 
 type PageSpec = {
   path: string;
+  // Which MockApiOptions key (and MockedEndpoint) this page's list request
+  // registers, so tests can assert the request actually happened instead of
+  // just asserting on rendered DOM state (which could pass for the wrong
+  // reason if e.g. a broader/earlier route handler intercepted it first).
+  endpoint: MockedEndpoint;
   addButtonName: string;
   errorTitle: string;
   emptyTitle: string;
   sample: () => StudentDto | GroupDto | LessonSummaryDto;
-  mockList: (page: Page, response: MockResponse<unknown[]>) => Promise<void>;
+  mockList: (page: Page, response: MockResponse<unknown[]>) => Promise<MockApiHandle>;
 };
 
 const PAGES: PageSpec[] = [
   {
     path: '/students',
+    endpoint: 'students',
     addButtonName: '+ Add a student',
     errorTitle: 'Something went wrong',
     emptyTitle: 'No students yet',
@@ -60,6 +68,7 @@ const PAGES: PageSpec[] = [
   },
   {
     path: '/groups',
+    endpoint: 'groups',
     addButtonName: '+ Create a new group',
     errorTitle: 'Something went wrong',
     emptyTitle: 'Groups save you time',
@@ -68,6 +77,7 @@ const PAGES: PageSpec[] = [
   },
   {
     path: '/lessons',
+    endpoint: 'lessons',
     addButtonName: '+ New lesson',
     errorTitle: "Couldn't load lessons",
     emptyTitle: 'No lessons yet',
@@ -86,11 +96,14 @@ function onboarding(page: Page) {
 }
 
 function skeleton(page: Page) {
-  // Some skeletons have both a desktop and a mobile DOM twin (`hidden
-  // sm:block` / `max-sm:hidden`), so a plain `.first()` can pin to a twin
-  // that's hidden at the current viewport even while its sibling is shown.
-  // `:visible` scopes to whichever twin is actually rendered.
-  return page.locator('[class*="animate-pulse"]:visible').first();
+  // A single semantic hook on the list widget's loading branch (see
+  // *-list-widget.tsx). Deliberately not `[class*="animate-pulse"]`: that
+  // Tailwind class is also used by unrelated shimmer elements elsewhere on
+  // the page (e.g. avatar placeholders), so once the real list mounts, a
+  // class-based locator can still find *something* animating and this
+  // assertion would pass for the wrong reason ("no skeleton" vs "no skeleton
+  // that happens to still match this CSS class").
+  return page.getByTestId('list-skeleton');
 }
 
 async function expectNoHorizontalScroll(page: Page) {
@@ -98,6 +111,28 @@ async function expectNoHorizontalScroll(page: Page) {
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
   );
   expect(overflowing).toBe(false);
+}
+
+// Fails with the actual vs. expected URL instead of letting an unexpected
+// redirect surface later as an unrelated, confusing locator timeout (e.g.
+// "toolbar not visible" when the real problem is "we're on /students, not
+// /groups"). Anchored with `^...$` on the pathname only (ignoring query
+// params like `?q=...`) so e.g. `/lessons` doesn't also match `/lessons/1`.
+async function expectOnPage(page: Page, path: string) {
+  await expect(page, `expected to land on ${path}, got redirected to ${page.url()}`).toHaveURL(
+    new RegExp(`^https?://[^/]+${path}(\\?.*)?$`),
+  );
+}
+
+// Asserts the app actually called this endpoint at least once — the
+// counterpart to asserting on rendered DOM: a test could otherwise pass for
+// the wrong reason (e.g. the wrong query hook, or a stale cached response)
+// while never actually hitting the handler this test configured.
+function expectEndpointRequested(handle: MockApiHandle, endpoint: MockedEndpoint) {
+  expect(
+    handle.requestCount(endpoint),
+    `expected ${endpoint} endpoint to be requested`,
+  ).toBeGreaterThan(0);
 }
 
 test.describe('Students/Groups/Lessons loading and empty states', () => {
@@ -112,12 +147,13 @@ test.describe('Students/Groups/Lessons loading and empty states', () => {
       test('slow successful list: skeleton then list, toolbar never disappears', async ({
         page,
       }) => {
-        await spec.mockList(page, { delayMs: 1200, body: [spec.sample()] });
+        const handle = await spec.mockList(page, { delayMs: 1200, body: [spec.sample()] });
 
         const navigation = page.goto(spec.path);
         await expect(toolbar(page)).toBeVisible();
         await expect(skeleton(page)).toBeVisible();
         await navigation;
+        await expectOnPage(page, spec.path);
 
         await expect(page.getByRole('button', { name: spec.addButtonName })).toBeVisible({
           timeout: 5000,
@@ -125,44 +161,51 @@ test.describe('Students/Groups/Lessons loading and empty states', () => {
         await expect(skeleton(page)).not.toBeVisible();
         await expect(toolbar(page)).toBeVisible();
         await expectNoHorizontalScroll(page);
+        expectEndpointRequested(handle, spec.endpoint);
       });
 
       test('slow successful empty response: no onboarding before the response arrives', async ({
         page,
       }) => {
-        await spec.mockList(page, { delayMs: 1200, body: [] });
+        const handle = await spec.mockList(page, { delayMs: 1200, body: [] });
 
         const navigation = page.goto(spec.path);
         await expect(skeleton(page)).toBeVisible();
         await expect(onboarding(page)).not.toBeVisible();
         await navigation;
+        await expectOnPage(page, spec.path);
 
         await expect(onboarding(page)).toBeVisible({ timeout: 5000 });
         await expect(page.getByText(spec.emptyTitle)).toBeVisible();
         await expect(toolbar(page)).toBeVisible();
+        expectEndpointRequested(handle, spec.endpoint);
       });
 
       test('error response: error card shown, never the onboarding empty state', async ({
         page,
       }) => {
-        await spec.mockList(page, { status: 500, body: [] });
+        const handle = await spec.mockList(page, { status: 500, body: [] });
 
         await page.goto(spec.path);
+        await expectOnPage(page, spec.path);
         await expect(page.getByText(spec.errorTitle)).toBeVisible({ timeout: 10_000 });
         await expect(onboarding(page)).not.toBeVisible();
         await expect(skeleton(page)).not.toBeVisible();
         await expect(toolbar(page)).toBeVisible();
+        expectEndpointRequested(handle, spec.endpoint);
       });
 
       test('search with no matches on a non-empty collection: compact "no results", not onboarding', async ({
         page,
       }) => {
-        await spec.mockList(page, { body: [spec.sample()] });
+        const handle = await spec.mockList(page, { body: [spec.sample()] });
 
         await page.goto(`${spec.path}?q=zzz-does-not-exist`);
+        await expectOnPage(page, spec.path);
         await expect(page.getByText('No results')).toBeVisible({ timeout: 5000 });
         await expect(onboarding(page)).not.toBeVisible();
         await expect(page.getByText(spec.emptyTitle)).not.toBeVisible();
+        expectEndpointRequested(handle, spec.endpoint);
       });
 
       // The "offline while a query is pending shows false onboarding" scenario

@@ -36,7 +36,11 @@ export function GroupsListWidget({ query }: Props) {
 
   return (
     <section className="flex flex-col gap-4">
-      {view === 'loading' && <GroupsTableSkeleton />}
+      {view === 'loading' && (
+        <div data-testid="list-skeleton">
+          <GroupsTableSkeleton />
+        </div>
+      )}
 
       {view === 'list' && <GroupsTable groups={filtered} />}
 

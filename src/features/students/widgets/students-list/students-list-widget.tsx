@@ -32,7 +32,11 @@ export function StudentsListWidget({ query }: { query: string }) {
 
   return (
     <section className="flex flex-col gap-4">
-      {view === 'loading' && <StudentsTableSkeleton />}
+      {view === 'loading' && (
+        <div data-testid="list-skeleton">
+          <StudentsTableSkeleton />
+        </div>
+      )}
       {view === 'list' && <StudentsTable students={filtered} />}
       {view === 'error' && (
         <EmptyStateCard

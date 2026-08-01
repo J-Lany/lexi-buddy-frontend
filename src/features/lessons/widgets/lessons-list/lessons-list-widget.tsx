@@ -36,7 +36,11 @@ export function LessonsListWidget({ query }: Props) {
 
   return (
     <section className="flex flex-col gap-4">
-      {view === 'loading' && <LessonsListSkeleton />}
+      {view === 'loading' && (
+        <div data-testid="list-skeleton">
+          <LessonsListSkeleton />
+        </div>
+      )}
 
       {view === 'list' && <LessonList lessons={filtered} />}
 

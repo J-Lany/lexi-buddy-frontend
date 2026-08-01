@@ -65,6 +65,16 @@ async function fulfillJson<T>(route: Route, delayMs: number | undefined, status:
   });
 }
 
+// Endpoints a test might want to assert were actually requested — e.g. to
+// tell "the mock matched and the app rendered its response" apart from "the
+// app never called this endpoint at all" (wrong hook, wrong path, or a
+// broader mock/route registered earlier stole the request first).
+export type MockedEndpoint = 'teacherProfile' | 'students' | 'groups' | 'lessons';
+
+export type MockApiHandle = {
+  requestCount(endpoint: MockedEndpoint): number;
+};
+
 /**
  * Registers response mocks for the handful of GET endpoints these pages/modals
  * depend on, so tests run without a live backend. Only endpoints explicitly
@@ -73,35 +83,45 @@ async function fulfillJson<T>(route: Route, delayMs: number | undefined, status:
  * backend — these tests never submit those forms, so aborting fails fast
  * instead of hanging on a connection timeout.
  */
-export async function mockApi(page: Page, options: MockApiOptions = {}) {
+export async function mockApi(page: Page, options: MockApiOptions = {}): Promise<MockApiHandle> {
+  const counts: Partial<Record<MockedEndpoint, number>> = {};
+
   if (options.teacherProfile !== false) {
     const cfg = options.teacherProfile ?? {};
+    counts.teacherProfile = 0;
     await page.route(bySuffix('/auth/me'), async (route) => {
       if (route.request().method() !== 'GET') return route.abort();
+      counts.teacherProfile!++;
       await fulfillJson(route, cfg.delayMs, cfg.status ?? 200, cfg.body ?? DEFAULT_TEACHER_PROFILE);
     });
   }
 
   if (options.students) {
     const cfg = options.students;
+    counts.students = 0;
     await page.route(bySuffix('/students/my'), async (route) => {
       if (route.request().method() !== 'GET') return route.abort();
+      counts.students!++;
       await fulfillJson(route, cfg.delayMs, cfg.status ?? 200, cfg.body ?? []);
     });
   }
 
   if (options.groups) {
     const cfg = options.groups;
+    counts.groups = 0;
     await page.route(bySuffix('/groups/my'), async (route) => {
       if (route.request().method() !== 'GET') return route.abort();
+      counts.groups!++;
       await fulfillJson(route, cfg.delayMs, cfg.status ?? 200, cfg.body ?? []);
     });
   }
 
   if (options.lessons) {
     const cfg = options.lessons;
+    counts.lessons = 0;
     await page.route(bySuffix('/lessons'), async (route) => {
       if (route.request().method() !== 'GET') return route.abort();
+      counts.lessons!++;
       await fulfillJson(route, cfg.delayMs, cfg.status ?? 200, cfg.body ?? []);
     });
   }
@@ -126,6 +146,10 @@ export async function mockApi(page: Page, options: MockApiOptions = {}) {
       );
     });
   }
+
+  return {
+    requestCount: (endpoint) => counts[endpoint] ?? 0,
+  };
 }
 
 export function sampleStudent(overrides: Partial<StudentDto> = {}): StudentDto {
