@@ -15,6 +15,7 @@ export const routes = {
   qa: '/qa',
   adminMetrics: '/admin/metrics',
   confirmPasswordChange: '/confirm-password-change',
+  resetPassword: '/reset-password',
 } as const;
 
 export type AppRoutes = (typeof routes)[keyof typeof routes];

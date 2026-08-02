@@ -8,6 +8,7 @@ export const routeAccess: Record<'public' | 'private', readonly AppRoutes[]> = {
     routes.activate,
     routes.help,
     routes.confirmPasswordChange,
+    routes.resetPassword,
     routes.privacy,
     routes.terms,
     routes.cookiePolicy,

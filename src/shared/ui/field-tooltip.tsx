@@ -1,31 +1,32 @@
 'use client';
 
 import { CircleHelp } from 'lucide-react';
-import * as React from 'react';
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/ui/tooltip';
+import { useI18n } from '@/shared/i18n';
+import { Popover, PopoverContent, PopoverTrigger } from '@/shared/ui/popover';
 
 type Props = {
   content: string;
   contentClassName?: string;
-  ariaLabel?: string;
 };
 
-export function FieldTooltip({ content, contentClassName, ariaLabel }: Props) {
+export function FieldTooltip({ content, contentClassName }: Props) {
+  const { t } = useI18n();
+
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <Popover>
+      <PopoverTrigger asChild>
         <button
           type="button"
-          aria-label={ariaLabel ?? content}
-          className="inline-flex items-center justify-center text-muted-foreground/60 hover:text-muted-foreground transition-colors outline-none focus-visible:text-muted-foreground"
+          aria-label={t('common.moreInfo')}
+          className="-my-3.5 inline-flex h-11 w-8 items-center justify-center rounded-md text-muted-foreground/60 outline-none transition-colors hover:text-muted-foreground focus-visible:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 touch-manipulation"
         >
           <CircleHelp className="h-3.5 w-3.5" />
         </button>
-      </TooltipTrigger>
-      <TooltipContent side="top" className={contentClassName}>
+      </PopoverTrigger>
+      <PopoverContent side="top" className={contentClassName}>
         {content}
-      </TooltipContent>
-    </Tooltip>
+      </PopoverContent>
+    </Popover>
   );
 }

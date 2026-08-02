@@ -1,6 +1,7 @@
 'use client';
 
 import type { StudentDashboardDto } from '@/entities/students/api/get-student-dashboard';
+import { useI18n } from '@/shared/i18n';
 import { Card } from '@/shared/ui/card';
 import { ResponsiveTableLayout } from '@/shared/ui/responsive-table-layout';
 import { TableHeader } from '@/shared/ui/table-header';
@@ -17,11 +18,12 @@ type Props = {
 };
 
 export function StudentLessonsList({ lessons, studentId }: Props) {
+  const { t } = useI18n();
   const isEmpty = lessons.length === 0;
 
   const empty = (
     <Card className="ui-card ui-radius-card px-5 sm:px-6 py-4">
-      <div className="ui-meta">No lessons yet</div>
+      <div className="ui-meta">{t('lessons.list.empty')}</div>
     </Card>
   );
 

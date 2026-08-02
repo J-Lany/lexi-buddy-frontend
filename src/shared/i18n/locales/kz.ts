@@ -63,6 +63,11 @@ export const kz: Translations = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Балалар',
+      teenager: 'Жасөспірімдер',
+      adult: 'Ересектер',
+    },
     save: 'Сақтау',
     saving: 'Сақталуда…',
     cancel: 'Болдырмау',
@@ -72,6 +77,7 @@ export const kz: Translations = {
     noResultsDesc: 'Жазылуын тексеріңіз немесе басқа сөзбен іздеңіз.',
     errorGeneric: 'Бірдеңе дұрыс болмады',
     tryAgain: 'Бетті жаңартып көріңіз.',
+    moreInfo: 'Толығырақ',
   },
   students: {
     page: {
@@ -184,6 +190,9 @@ export const kz: Translations = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Топтарды іздеу',
+    },
     list: {
       error: 'Бірдеңе дұрыс болмады',
       errorDesc: 'Бетті жаңартып көріңіз.',
@@ -304,7 +313,6 @@ export const kz: Translations = {
           'ЖИ-ге сабақ контексті ретінде жіберіледі — неғұрлым нақты болса, соғұрлым жақсы нәтиже.',
         additionalInstructions:
           'Оқушыға арналған қосымша контекст\nБұл мәтінді оқушы Telegram-да тапсырмамен бірге көреді. Мысалы: «Үй жұмысын орындамас бұрын төмендегі бейнені қара».',
-        additionalInstructionsAriaLabel: 'Толығырақ',
         materialLinks: 'Оқушылар сабақпен бірге көретін сыртқы сілтемелер.',
       },
     },
@@ -585,6 +593,26 @@ export const kz: Translations = {
       pdnConsentTitle: 'Жеке деректерге келісім',
     },
   },
+  errors: {
+    generic: 'Бірдеңе дұрыс болмады. Қайталап көріңіз.',
+    network: 'Байланыс мәселесі. Интернет байланысын тексеріп, қайталап көріңіз.',
+    timeout: 'Сұрау уақыты аяқталды. Қайталап көріңіз.',
+    validation: 'Енгізген деректерді тексеріңіз.',
+    unauthorized: 'Жалғастыру үшін жүйеге кіру қажет.',
+    forbidden: 'Бұл әрекетті орындауға рұқсатыңыз жоқ.',
+    notFound: 'Сұралған деректер табылмады.',
+    conflict: 'Бар деректермен қайшылық туды.',
+    rateLimited: 'Тым көп әрекет жасалды. Сәл күтіп, қайталап көріңіз.',
+    server: 'Біздің жақта қате орын алды. Кейінірек қайталап көріңіз.',
+    codes: {
+      AUTH_INVALID_CREDENTIALS: 'Email немесе құпия сөз қате.',
+      AUTH_SESSION_EXPIRED: 'Сессия аяқталды. Қайта кіріңіз.',
+      AUTH_EMAIL_ALREADY_EXISTS: 'Бұл email-мен тіркелгі бұрыннан бар.',
+      AUTH_INVALID_TOKEN: 'Сілтеме жарамсыз.',
+      AUTH_TOKEN_EXPIRED: 'Сілтеменің мерзімі өтті.',
+      AUTH_PASSWORDS_DO_NOT_MATCH: 'Құпия сөздер сәйкес келмейді.',
+    },
+  },
   auth: {
     signUp: {
       pageTitle: 'Тіркелгі жасау',
@@ -620,6 +648,36 @@ export const kz: Translations = {
       confirmModalEditEmail: 'Поштаны өзгерту',
       confirmModalCta: 'Иә, дұрыс',
       confirmModalPending: 'Тіркелгі жасалуда…',
+    },
+    forgotPassword: {
+      pageTitle: 'Құпия сөзді қалпына келтіру',
+      pageSubtitle: 'Email енгізіңіз, біз құпия сөзді қалпына келтіру сілтемесін жібереміз.',
+      emailLabel: 'Email',
+      emailPlaceholder: 'аты@example.com',
+      emailInvalidError: 'Жарамды email енгізіңіз',
+      submitButton: 'Сілтеме жіберу',
+      submitPending: 'Жіберілуде…',
+      backToSignIn: 'Кіруге оралу',
+      successTitle: 'Поштаңызды тексеріңіз',
+      successText:
+        'Егер осы email-мен тіркелгі бар болса, біз құпия сөзді қалпына келтіру сілтемесін жібердік.',
+    },
+    resetPassword: {
+      pageTitle: 'Жаңа құпия сөз орнату',
+      pageSubtitle: 'Тіркелгіңіз үшін жаңа құпия сөз таңдаңыз.',
+      passwordLabel: 'Жаңа құпия сөз',
+      confirmPasswordLabel: 'Жаңа құпия сөзді қайталаңыз',
+      passwordTooShortError: 'Құпия сөз кемінде 8 таңбадан тұруы керек',
+      passwordMismatchError: 'Құпия сөздер сәйкес келмейді',
+      showPasswordAriaLabel: 'Құпия сөзді көрсету',
+      hidePasswordAriaLabel: 'Құпия сөзді жасыру',
+      submitButton: 'Құпия сөзді қалпына келтіру',
+      submitPending: 'Қалпына келтірілуде…',
+      successTitle: 'Құпия сөз өзгертілді',
+      successText: 'Құпия сөзіңіз сәтті өзгертілді. Енді жаңа құпия сөзбен кіре аласыз.',
+      goToLogin: 'Кіруге өту',
+      errorTitle: 'Сілтеме жарамсыз немесе мерзімі өтті',
+      backToSignIn: 'Кіруге оралу',
     },
   },
 };

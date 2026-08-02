@@ -28,12 +28,25 @@ function redirectPath(res: Response): string {
 }
 
 describe('middleware — public routes, no token', () => {
-  it.each(['/', routes.login, routes.register, routes.help, routes.activate])(
+  it.each(['/', routes.login, routes.register, routes.help, routes.activate, routes.resetPassword])(
     'allows %s through',
     (path) => {
       expect(isRedirect(middleware(req(path)))).toBe(false);
     },
   );
+});
+
+describe('middleware — /reset-password stays reachable even when authenticated', () => {
+  it('does not redirect an authenticated user away from /reset-password (unlike /login and /register)', () => {
+    // A logged-in user may still hold a valid emailed reset link (e.g. a
+    // shared device, or a stale tab) — unlike login/register, this route
+    // must not bounce them to /students.
+    expect(isRedirect(middleware(req(routes.resetPassword, true)))).toBe(false);
+  });
+
+  it('allows /reset-password?token=... through with a query string', () => {
+    expect(isRedirect(middleware(req(`${routes.resetPassword}?token=abc123`)))).toBe(false);
+  });
 });
 
 describe('middleware — auth routes with token → redirect to /students', () => {

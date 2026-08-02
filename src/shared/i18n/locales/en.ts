@@ -61,6 +61,11 @@ export const en = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Children',
+      teenager: 'Teenagers',
+      adult: 'Adults',
+    },
     save: 'Save',
     saving: 'Saving…',
     cancel: 'Cancel',
@@ -70,6 +75,7 @@ export const en = {
     noResultsDesc: 'Check the spelling or try another keyword.',
     errorGeneric: 'Something went wrong',
     tryAgain: 'Try refreshing the page.',
+    moreInfo: 'More information',
   },
   students: {
     page: {
@@ -183,6 +189,9 @@ export const en = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Search groups',
+    },
     list: {
       error: 'Something went wrong',
       errorDesc: 'Try refreshing the page.',
@@ -303,7 +312,6 @@ export const en = {
           'Sent directly to the AI as lesson context — the more specific, the better the tasks.',
         additionalInstructions:
           'Additional context for the student\nThe student will see this text in Telegram together with the assignment. For example: "Before doing the homework, watch the video below."',
-        additionalInstructionsAriaLabel: 'More information',
         materialLinks: 'External links shown to students alongside the lesson.',
       },
     },
@@ -585,6 +593,26 @@ export const en = {
       pdnConsentTitle: 'Personal Data Consent',
     },
   },
+  errors: {
+    generic: 'Something went wrong. Please try again.',
+    network: 'Connection problem. Please check your internet connection and try again.',
+    timeout: 'The request timed out. Please try again.',
+    validation: 'Please check the information you entered.',
+    unauthorized: 'You need to sign in to continue.',
+    forbidden: "You don't have permission to do that.",
+    notFound: "We couldn't find what you're looking for.",
+    conflict: 'This conflicts with existing data.',
+    rateLimited: 'Too many attempts. Please wait a moment and try again.',
+    server: 'Something went wrong on our end. Please try again later.',
+    codes: {
+      AUTH_INVALID_CREDENTIALS: 'Incorrect email or password.',
+      AUTH_SESSION_EXPIRED: 'Your session has expired. Please sign in again.',
+      AUTH_EMAIL_ALREADY_EXISTS: 'An account with this email already exists.',
+      AUTH_INVALID_TOKEN: 'This link is invalid.',
+      AUTH_TOKEN_EXPIRED: 'This link has expired.',
+      AUTH_PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
+    },
+  },
   auth: {
     signUp: {
       pageTitle: 'Create an account',
@@ -622,6 +650,37 @@ export const en = {
       confirmModalEditEmail: 'Edit email',
       confirmModalCta: "Yes, that's correct",
       confirmModalPending: 'Creating account…',
+    },
+    forgotPassword: {
+      pageTitle: 'Reset password',
+      pageSubtitle: "Enter your email and we'll send you a link to reset your password.",
+      emailLabel: 'Email',
+      emailPlaceholder: 'name@example.com',
+      emailInvalidError: 'Enter a valid email',
+      submitButton: 'Send reset link',
+      submitPending: 'Sending…',
+      backToSignIn: 'Back to sign in',
+      successTitle: 'Check your email',
+      successText:
+        "If an account with that email exists, we've sent a link to reset your password.",
+    },
+    resetPassword: {
+      pageTitle: 'Set a new password',
+      pageSubtitle: 'Choose a new password for your account.',
+      passwordLabel: 'New password',
+      confirmPasswordLabel: 'Confirm new password',
+      passwordTooShortError: 'Password must be at least 8 characters long',
+      passwordMismatchError: 'Passwords do not match',
+      showPasswordAriaLabel: 'Show password',
+      hidePasswordAriaLabel: 'Hide password',
+      submitButton: 'Reset password',
+      submitPending: 'Resetting…',
+      successTitle: 'Password reset',
+      successText:
+        'Your password has been reset successfully. You can now sign in with your new password.',
+      goToLogin: 'Go to login',
+      errorTitle: 'Invalid or expired link',
+      backToSignIn: 'Back to sign in',
     },
   },
 } as const;

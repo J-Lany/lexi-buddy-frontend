@@ -3,6 +3,7 @@
 import { ChevronDown } from 'lucide-react';
 import * as React from 'react';
 
+import { useIsCoarsePointer } from '@/shared/hooks/use-coarse-pointer';
 import { cn } from '@/shared/lib/cn';
 import {
   Drawer,
@@ -13,20 +14,6 @@ import {
   DrawerTrigger,
 } from '@/shared/ui/drawer';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/ui/select';
-
-function useIsCoarsePointer() {
-  const [isCoarse, setIsCoarse] = React.useState(false);
-
-  React.useEffect(() => {
-    const mq = window.matchMedia('(hover: none) and (pointer: coarse)');
-    const update = () => setIsCoarse(mq.matches);
-    update();
-    mq.addEventListener?.('change', update);
-    return () => mq.removeEventListener?.('change', update);
-  }, []);
-
-  return isCoarse;
-}
 
 type Option<T extends string> = { value: T; label: string };
 

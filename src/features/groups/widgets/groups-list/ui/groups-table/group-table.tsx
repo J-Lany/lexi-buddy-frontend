@@ -1,7 +1,7 @@
 'use client';
 
 import type { GroupDto } from '@/entities/groups/api/get-my-groups';
-import { GroupsTableRow } from '@/features/groups/widgets/groups-list/ui/ groups-table/groups-table-row';
+import { GroupsTableRow } from '@/features/groups/widgets/groups-list/ui/groups-table/groups-table-row';
 import { useMergedQuery } from '@/shared/hooks/use-merged-query';
 import { routes } from '@/shared/router/routes';
 import { ResponsiveTableLayout } from '@/shared/ui/responsive-table-layout';

@@ -107,7 +107,6 @@ export function StepLessonContext({ draft, onChange }: Props) {
             <FieldTooltip
               content={t('lessons.meta.tooltips.additionalInstructions')}
               contentClassName="max-w-[280px]"
-              ariaLabel={t('lessons.meta.tooltips.additionalInstructionsAriaLabel')}
             />
           </div>
           <span

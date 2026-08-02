@@ -7,10 +7,11 @@ import { useMyLessonsQuery } from '@/entities/lessons/model/query/get-my-lessons
 import { CreateLessonModal } from '@/features/lessons/modals/create-lesson-modal/create-lesson-modal';
 import { filterLessonsByQuery } from '@/features/lessons/widgets/lessons-list/lib/filter-lessons';
 import { LessonList } from '@/features/lessons/widgets/lessons-list/ui/lesson-list';
+import { LessonsListSkeleton } from '@/features/lessons/widgets/lessons-list/ui/lessons-list-skeleton';
 import { useI18n } from '@/shared/i18n';
+import { getListViewState } from '@/shared/lib/list-view-state';
 import { EmptyStateCard } from '@/shared/ui/empty-state-card';
-import { EmptyStateV2 } from '@/shared/ui/empty-state-v2';
-import { Skeleton } from '@/shared/ui/skeleton';
+import { emptyStatePrimaryActionClassName, EmptyStateV2 } from '@/shared/ui/empty-state-v2';
 
 type Props = {
   query: string;
@@ -18,7 +19,7 @@ type Props = {
 
 export function LessonsListWidget({ query }: Props) {
   const { t } = useI18n();
-  const { data, isLoading, isError } = useMyLessonsQuery();
+  const { data, isPending, isError } = useMyLessonsQuery();
 
   const filtered = useMemo(() => {
     return filterLessonsByQuery(data ?? [], query);
@@ -26,25 +27,24 @@ export function LessonsListWidget({ query }: Props) {
 
   const lessonsCount = data?.length ?? 0;
 
-  const showSkeleton = isLoading;
-  const showError = isError;
-  const showEmpty = !isLoading && !isError && lessonsCount === 0 && !query;
-  const showNoResults = !isLoading && !isError && lessonsCount > 0 && filtered.length === 0;
-  const showList = !isLoading && !isError && filtered.length > 0;
+  const view = getListViewState({
+    isPending,
+    isError,
+    totalCount: lessonsCount,
+    filteredCount: filtered.length,
+  });
 
   return (
     <section className="flex flex-col gap-4">
-      {showSkeleton && (
-        <div className="space-y-3">
-          <Skeleton className="h-12 rounded-2xl" />
-          <Skeleton className="h-12 rounded-2xl" />
-          <Skeleton className="h-12 rounded-2xl" />
+      {view === 'loading' && (
+        <div data-testid="list-skeleton">
+          <LessonsListSkeleton />
         </div>
       )}
 
-      {showList && <LessonList lessons={filtered} />}
+      {view === 'list' && <LessonList lessons={filtered} />}
 
-      {showError && (
+      {view === 'error' && (
         <EmptyStateCard
           surface="canvas"
           icon={<BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-destructive" aria-hidden />}
@@ -53,23 +53,34 @@ export function LessonsListWidget({ query }: Props) {
         />
       )}
 
-      {showEmpty && (
+      {view === 'empty' && (
         <EmptyStateV2
           icon={<BookOpen strokeWidth={1.4} />}
           title={t('lessons.list.empty')}
           description={t('lessons.list.emptyDesc')}
           steps={[
-            { title: t('lessons.list.emptyStep1Title'), desc: t('lessons.list.emptyStep1Desc') },
-            { title: t('lessons.list.emptyStep2Title'), desc: t('lessons.list.emptyStep2Desc') },
-            { title: t('lessons.list.emptyStep3Title'), desc: t('lessons.list.emptyStep3Desc') },
+            {
+              id: 'details',
+              title: t('lessons.list.emptyStep1Title'),
+              desc: t('lessons.list.emptyStep1Desc'),
+            },
+            {
+              id: 'vocabulary',
+              title: t('lessons.list.emptyStep2Title'),
+              desc: t('lessons.list.emptyStep2Desc'),
+            },
+            {
+              id: 'assign',
+              title: t('lessons.list.emptyStep3Title'),
+              desc: t('lessons.list.emptyStep3Desc'),
+            },
           ]}
           primaryAction={
             <CreateLessonModal
               triggerProps={{
                 variant: 'default',
                 size: 'lg',
-                className:
-                  'h-11 w-full rounded-2xl px-6 text-[15px] font-semibold shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 sm:h-12 sm:w-56',
+                className: emptyStatePrimaryActionClassName,
               }}
             />
           }
@@ -78,7 +89,7 @@ export function LessonsListWidget({ query }: Props) {
         />
       )}
 
-      {showNoResults && (
+      {view === 'no-results' && (
         <EmptyStateCard
           surface="canvas"
           title={t('lessons.list.noResults')}

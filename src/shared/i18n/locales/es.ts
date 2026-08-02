@@ -63,6 +63,11 @@ export const es: Translations = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Niños',
+      teenager: 'Adolescentes',
+      adult: 'Adultos',
+    },
     save: 'Guardar',
     saving: 'Guardando…',
     cancel: 'Cancelar',
@@ -72,6 +77,7 @@ export const es: Translations = {
     noResultsDesc: 'Verifica la escritura o prueba con otra palabra.',
     errorGeneric: 'Algo salió mal',
     tryAgain: 'Intenta actualizar la página.',
+    moreInfo: 'Más información',
   },
   students: {
     page: {
@@ -185,6 +191,9 @@ export const es: Translations = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Buscar grupos',
+    },
     list: {
       error: 'Algo salió mal',
       errorDesc: 'Intenta actualizar la página.',
@@ -307,7 +316,6 @@ export const es: Translations = {
           'Se envía directamente a la IA como contexto de la lección — cuanto más específico, mejores tareas.',
         additionalInstructions:
           'Contexto adicional para el estudiante\nEste texto lo verá el estudiante en Telegram junto con la tarea. Por ejemplo: «Antes de hacer la tarea, mira el video de abajo».',
-        additionalInstructionsAriaLabel: 'Más información',
         materialLinks: 'Enlaces externos que los alumnos ven junto a la lección.',
       },
     },
@@ -589,6 +597,26 @@ export const es: Translations = {
       pdnConsentTitle: 'Consentimiento de Datos Personales',
     },
   },
+  errors: {
+    generic: 'Algo salió mal. Inténtalo de nuevo.',
+    network: 'Problema de conexión. Comprueba tu conexión a internet e inténtalo de nuevo.',
+    timeout: 'La solicitud ha superado el tiempo de espera. Inténtalo de nuevo.',
+    validation: 'Revisa la información introducida.',
+    unauthorized: 'Debes iniciar sesión para continuar.',
+    forbidden: 'No tienes permiso para hacer esto.',
+    notFound: 'No pudimos encontrar lo que buscas.',
+    conflict: 'Esto entra en conflicto con datos existentes.',
+    rateLimited: 'Demasiados intentos. Espera un momento e inténtalo de nuevo.',
+    server: 'Algo salió mal de nuestro lado. Inténtalo más tarde.',
+    codes: {
+      AUTH_INVALID_CREDENTIALS: 'Correo electrónico o contraseña incorrectos.',
+      AUTH_SESSION_EXPIRED: 'Tu sesión ha expirado. Inicia sesión de nuevo.',
+      AUTH_EMAIL_ALREADY_EXISTS: 'Ya existe una cuenta con este correo electrónico.',
+      AUTH_INVALID_TOKEN: 'Este enlace no es válido.',
+      AUTH_TOKEN_EXPIRED: 'Este enlace ha caducado.',
+      AUTH_PASSWORDS_DO_NOT_MATCH: 'Las contraseñas no coinciden.',
+    },
+  },
   auth: {
     signUp: {
       pageTitle: 'Crear una cuenta',
@@ -624,6 +652,37 @@ export const es: Translations = {
       confirmModalEditEmail: 'Editar correo',
       confirmModalCta: 'Sí, es correcto',
       confirmModalPending: 'Creando cuenta…',
+    },
+    forgotPassword: {
+      pageTitle: 'Restablecer contraseña',
+      pageSubtitle: 'Introduce tu email y te enviaremos un enlace para restablecer tu contraseña.',
+      emailLabel: 'Email',
+      emailPlaceholder: 'nombre@example.com',
+      emailInvalidError: 'Introduce un email válido',
+      submitButton: 'Enviar enlace',
+      submitPending: 'Enviando…',
+      backToSignIn: 'Volver a iniciar sesión',
+      successTitle: 'Revisa tu correo',
+      successText:
+        'Si existe una cuenta con ese email, hemos enviado un enlace para restablecer tu contraseña.',
+    },
+    resetPassword: {
+      pageTitle: 'Establecer nueva contraseña',
+      pageSubtitle: 'Elige una nueva contraseña para tu cuenta.',
+      passwordLabel: 'Nueva contraseña',
+      confirmPasswordLabel: 'Confirmar nueva contraseña',
+      passwordTooShortError: 'La contraseña debe tener al menos 8 caracteres',
+      passwordMismatchError: 'Las contraseñas no coinciden',
+      showPasswordAriaLabel: 'Mostrar contraseña',
+      hidePasswordAriaLabel: 'Ocultar contraseña',
+      submitButton: 'Restablecer contraseña',
+      submitPending: 'Restableciendo…',
+      successTitle: 'Contraseña restablecida',
+      successText:
+        'Tu contraseña se ha restablecido correctamente. Ya puedes iniciar sesión con tu nueva contraseña.',
+      goToLogin: 'Ir a iniciar sesión',
+      errorTitle: 'Enlace no válido o expirado',
+      backToSignIn: 'Volver a iniciar sesión',
     },
   },
 };

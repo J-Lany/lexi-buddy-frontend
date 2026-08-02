@@ -2,7 +2,7 @@
 
 import { Lock } from 'lucide-react';
 
-import { AGE_GROUP_OPTIONS } from '@/shared/catalogs/age';
+import { getLocalizedAgeGroupOptions } from '@/shared/catalogs/age';
 import { LEVEL_OPTIONS } from '@/shared/catalogs/levels';
 import type { AgeGroup, Level } from '@/shared/domain/common';
 import { useI18n } from '@/shared/i18n';
@@ -30,6 +30,7 @@ export function AboutSection({
   telegramLabel,
 }: Props) {
   const { t } = useI18n();
+  const ageGroupOptions = getLocalizedAgeGroupOptions(t);
 
   return (
     <div className="min-w-0">
@@ -61,7 +62,7 @@ export function AboutSection({
               onValueChange={onChangeAgeGroup}
               placeholder="—"
               title={t('students.about.chooseAgeGroup')}
-              options={AGE_GROUP_OPTIONS}
+              options={ageGroupOptions}
               triggerClassName="h-9 rounded-2xl px-3"
             />
           </div>

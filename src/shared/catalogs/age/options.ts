@@ -1,8 +1,19 @@
 import { ageGroup } from '@/shared/domain/common';
 
-import { AGE_GROUP_LABELS } from './labels';
+import { AGE_GROUP_TRANSLATION_KEYS } from './labels';
 
-export const AGE_GROUP_OPTIONS = Object.values(ageGroup).map((a) => ({
-  value: a,
-  label: AGE_GROUP_LABELS[a],
-}));
+type Translate = (key: string) => string;
+
+export function getLocalizedAgeGroupLabel(
+  value: keyof typeof AGE_GROUP_TRANSLATION_KEYS,
+  t: Translate,
+) {
+  return t(AGE_GROUP_TRANSLATION_KEYS[value]);
+}
+
+export function getLocalizedAgeGroupOptions(t: Translate) {
+  return Object.values(ageGroup).map((value) => ({
+    value,
+    label: getLocalizedAgeGroupLabel(value, t),
+  }));
+}

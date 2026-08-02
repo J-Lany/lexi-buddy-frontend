@@ -63,6 +63,11 @@ export const ru: Translations = {
     },
   },
   common: {
+    ageGroups: {
+      child: 'Дети',
+      teenager: 'Подростки',
+      adult: 'Взрослые',
+    },
     save: 'Сохранить',
     saving: 'Сохранение…',
     cancel: 'Отмена',
@@ -72,6 +77,7 @@ export const ru: Translations = {
     noResultsDesc: 'Проверьте написание или попробуйте другое слово.',
     errorGeneric: 'Что-то пошло не так',
     tryAgain: 'Попробуйте обновить страницу.',
+    moreInfo: 'Подробнее',
   },
   students: {
     page: {
@@ -186,6 +192,9 @@ export const ru: Translations = {
     },
   },
   groups: {
+    page: {
+      searchGroups: 'Поиск групп',
+    },
     list: {
       error: 'Что-то пошло не так',
       errorDesc: 'Попробуйте обновить страницу.',
@@ -305,7 +314,6 @@ export const ru: Translations = {
         topic: 'Отправляется в ИИ как контекст урока — чем конкретнее, тем лучше задания.',
         additionalInstructions:
           'Дополнительный контекст для студента\nЭтот текст увидит студент в Telegram вместе с заданием. Например: «Перед выполнением домашнего задания посмотри видео ниже».',
-        additionalInstructionsAriaLabel: 'Подробнее',
         materialLinks: 'Внешние ссылки, которые ученики видят вместе с уроком.',
       },
     },
@@ -590,6 +598,26 @@ export const ru: Translations = {
       pdnConsentTitle: 'Согласие на обработку ПДн',
     },
   },
+  errors: {
+    generic: 'Что-то пошло не так. Попробуйте ещё раз.',
+    network: 'Проблема с подключением. Проверьте интернет-соединение и попробуйте снова.',
+    timeout: 'Время ожидания истекло. Попробуйте ещё раз.',
+    validation: 'Проверьте введённые данные.',
+    unauthorized: 'Необходимо войти в систему, чтобы продолжить.',
+    forbidden: 'У вас нет прав для выполнения этого действия.',
+    notFound: 'Не удалось найти запрошенные данные.',
+    conflict: 'Конфликт с существующими данными.',
+    rateLimited: 'Слишком много попыток. Подождите немного и попробуйте снова.',
+    server: 'Проблема на нашей стороне. Попробуйте позже.',
+    codes: {
+      AUTH_INVALID_CREDENTIALS: 'Неверный email или пароль.',
+      AUTH_SESSION_EXPIRED: 'Сессия истекла. Пожалуйста, войдите снова.',
+      AUTH_EMAIL_ALREADY_EXISTS: 'Аккаунт с таким email уже существует.',
+      AUTH_INVALID_TOKEN: 'Ссылка недействительна.',
+      AUTH_TOKEN_EXPIRED: 'Срок действия ссылки истёк.',
+      AUTH_PASSWORDS_DO_NOT_MATCH: 'Пароли не совпадают.',
+    },
+  },
   auth: {
     signUp: {
       pageTitle: 'Создать аккаунт',
@@ -624,6 +652,36 @@ export const ru: Translations = {
       confirmModalEditEmail: 'Изменить email',
       confirmModalCta: 'Да, всё верно',
       confirmModalPending: 'Создание аккаунта…',
+    },
+    forgotPassword: {
+      pageTitle: 'Сброс пароля',
+      pageSubtitle: 'Введите email, и мы отправим ссылку для сброса пароля.',
+      emailLabel: 'Email',
+      emailPlaceholder: 'имя@example.com',
+      emailInvalidError: 'Введите корректный email',
+      submitButton: 'Отправить ссылку',
+      submitPending: 'Отправка…',
+      backToSignIn: 'Назад к входу',
+      successTitle: 'Проверьте почту',
+      successText:
+        'Если аккаунт с таким email существует, мы отправили письмо со ссылкой для сброса пароля.',
+    },
+    resetPassword: {
+      pageTitle: 'Новый пароль',
+      pageSubtitle: 'Придумайте новый пароль для своего аккаунта.',
+      passwordLabel: 'Новый пароль',
+      confirmPasswordLabel: 'Повторите новый пароль',
+      passwordTooShortError: 'Пароль должен содержать не менее 8 символов',
+      passwordMismatchError: 'Пароли не совпадают',
+      showPasswordAriaLabel: 'Показать пароль',
+      hidePasswordAriaLabel: 'Скрыть пароль',
+      submitButton: 'Сбросить пароль',
+      submitPending: 'Сброс…',
+      successTitle: 'Пароль изменён',
+      successText: 'Ваш пароль успешно изменён. Теперь вы можете войти с новым паролем.',
+      goToLogin: 'Перейти к входу',
+      errorTitle: 'Ссылка недействительна или устарела',
+      backToSignIn: 'Назад к входу',
     },
   },
 };
