@@ -35,7 +35,7 @@ export type MockResponse<T> = {
 };
 
 export type MockApiOptions = {
-  /** Fired unconditionally by TeacherProfileInitializer on every private page. Defaults to a 200. Pass `false` to leave unmocked (falls through to the real, normally-unreachable backend and errors — harmless for tests that don't depend on it). */
+  /** Fired unconditionally by TeacherProfileInitializer on every private page. Defaults to a 200. Pass `false` to leave unmocked — this now fails the test loudly via the catch-all below rather than silently falling through to a real backend. */
   teacherProfile?: MockResponse<TeacherProfileDto> | false;
   students?: MockResponse<StudentDto[]>;
   groups?: MockResponse<GroupDto[]>;
@@ -73,6 +73,8 @@ export type MockedEndpoint = 'teacherProfile' | 'students' | 'groups' | 'lessons
 
 export type MockApiHandle = {
   requestCount(endpoint: MockedEndpoint): number;
+  /** Every API request this test did NOT explicitly mock, as `"METHOD URL"`. */
+  unmockedRequests(): string[];
 };
 
 /**
@@ -82,9 +84,39 @@ export type MockApiHandle = {
  * to create a lesson) is aborted rather than left to hit an unreachable real
  * backend — these tests never submit those forms, so aborting fails fast
  * instead of hanging on a connection timeout.
+ *
+ * Any API request that matches none of the handlers below hits the catch-all
+ * registered first (see the note by isApiRequest at the bottom of this
+ * function for why "registered first" means "lowest priority"): it's
+ * recorded in `unmockedRequests()` and aborted, never left to silently fall
+ * through to a real/absent backend. That silent fallthrough is exactly what
+ * caused the /groups touch/webkit auth-redirect bug: `CreateGroupModal`
+ * unconditionally calls `useMyStudentsQuery()` (needed for its "assign
+ * students" step) the moment it mounts — which is whenever the toolbar or
+ * onboarding empty state renders, not just while the modal is open — so any
+ * `/groups` test that didn't also mock `students` let that request fall
+ * through to the real backend, 401, and trigger the app's real auth-refresh
+ * -> logout -> redirect-to-/login chain. Nothing rendered anything wrong;
+ * the page just silently navigated itself away mid-test once that chain
+ * outraced the test's own assertions — see PAGES['/groups'] below, which now
+ * mocks `students` too.
  */
 export async function mockApi(page: Page, options: MockApiOptions = {}): Promise<MockApiHandle> {
   const counts: Partial<Record<MockedEndpoint, number>> = {};
+  const unmocked: string[] = [];
+
+  // Registered first = lowest priority (Playwright invokes route handlers in
+  // reverse registration order), so every `page.route(bySuffix(...))` call
+  // below still wins for the paths it targets. Only a request matching none
+  // of them reaches this handler.
+  await page.route(
+    (url) => isApiRequest(url),
+    async (route) => {
+      const req = route.request();
+      unmocked.push(`${req.method()} ${req.url()}`);
+      await route.abort('failed');
+    },
+  );
 
   if (options.teacherProfile !== false) {
     const cfg = options.teacherProfile ?? {};
@@ -149,6 +181,7 @@ export async function mockApi(page: Page, options: MockApiOptions = {}): Promise
 
   return {
     requestCount: (endpoint) => counts[endpoint] ?? 0,
+    unmockedRequests: () => [...unmocked],
   };
 }
 

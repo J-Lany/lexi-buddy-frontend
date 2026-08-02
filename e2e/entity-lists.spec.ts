@@ -73,7 +73,15 @@ const PAGES: PageSpec[] = [
     errorTitle: 'Something went wrong',
     emptyTitle: 'Groups save you time',
     sample: () => sampleGroup({ name: '9-B' }),
-    mockList: (page, response) => mockApi(page, { groups: response as MockResponse<GroupDto[]> }),
+    // CreateGroupModal (rendered by the toolbar CTA and by the onboarding
+    // empty state's primaryAction — see groups-page-client.tsx /
+    // groups-list-widget.tsx) calls useMyStudentsQuery() unconditionally on
+    // mount, regardless of whether the modal is open. `/groups` is the only
+    // one of these three pages whose toolbar mounts a component that queries
+    // a *different* entity's list, so it's the only PageSpec that needs a
+    // second mock here.
+    mockList: (page, response) =>
+      mockApi(page, { groups: response as MockResponse<GroupDto[]>, students: { body: [] } }),
   },
   {
     path: '/lessons',
@@ -135,6 +143,14 @@ function expectEndpointRequested(handle: MockApiHandle, endpoint: MockedEndpoint
   ).toBeGreaterThan(0);
 }
 
+// Catches exactly the class of bug that caused the /groups touch/webkit
+// auth-redirect failures: a component fires a request this test never
+// mocked, which used to fall through to a real (or absent) backend instead
+// of failing here immediately.
+function expectNoUnmockedRequests(handle: MockApiHandle) {
+  expect(handle.unmockedRequests(), 'unexpected unmocked API request(s)').toEqual([]);
+}
+
 test.describe('Students/Groups/Lessons loading and empty states', () => {
   test.use({ storageState: { cookies: [], origins: [] } });
 
@@ -162,6 +178,7 @@ test.describe('Students/Groups/Lessons loading and empty states', () => {
         await expect(toolbar(page)).toBeVisible();
         await expectNoHorizontalScroll(page);
         expectEndpointRequested(handle, spec.endpoint);
+        expectNoUnmockedRequests(handle);
       });
 
       test('slow successful empty response: no onboarding before the response arrives', async ({
@@ -179,6 +196,7 @@ test.describe('Students/Groups/Lessons loading and empty states', () => {
         await expect(page.getByText(spec.emptyTitle)).toBeVisible();
         await expect(toolbar(page)).toBeVisible();
         expectEndpointRequested(handle, spec.endpoint);
+        expectNoUnmockedRequests(handle);
       });
 
       test('error response: error card shown, never the onboarding empty state', async ({
@@ -193,6 +211,7 @@ test.describe('Students/Groups/Lessons loading and empty states', () => {
         await expect(skeleton(page)).not.toBeVisible();
         await expect(toolbar(page)).toBeVisible();
         expectEndpointRequested(handle, spec.endpoint);
+        expectNoUnmockedRequests(handle);
       });
 
       test('search with no matches on a non-empty collection: compact "no results", not onboarding', async ({
@@ -206,6 +225,7 @@ test.describe('Students/Groups/Lessons loading and empty states', () => {
         await expect(onboarding(page)).not.toBeVisible();
         await expect(page.getByText(spec.emptyTitle)).not.toBeVisible();
         expectEndpointRequested(handle, spec.endpoint);
+        expectNoUnmockedRequests(handle);
       });
 
       // The "offline while a query is pending shows false onboarding" scenario
