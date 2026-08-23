@@ -324,6 +324,7 @@ export const es: Translations = {
       labelTooltip:
         'Escribe las palabras separadas por puntos (máximo {max}), pulsa el botón y la IA añadirá las traducciones. Revisa y edita antes de continuar.',
       inputHint: 'Introduce hasta {max} palabras separadas por puntos.',
+      maxWordsError: 'Máximo {max} palabras. Elimina {count} para continuar.',
       translating: 'Traduciendo…',
       translateBtn: 'Añadir traducciones y definiciones',
       editTip: 'Consejo: las traducciones y sinónimos son editables.',

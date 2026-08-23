@@ -1,4 +1,4 @@
-const MAX_TERMS = 15;
+const MAX_TERMS = 10;
 
 export function parseVocabTerms(raw: string): { terms: string[]; normalized: string } {
   const parts = raw
@@ -6,8 +6,7 @@ export function parseVocabTerms(raw: string): { terms: string[]; normalized: str
     .map((t) => t.trim())
     .filter(Boolean);
 
-  const limited = parts.slice(0, MAX_TERMS);
-  return { terms: limited, normalized: limited.join('. ') };
+  return { terms: parts, normalized: parts.join('. ') };
 }
 
 export const VOCAB_MAX_TERMS = MAX_TERMS;
