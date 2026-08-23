@@ -3,6 +3,7 @@
 import { Loader } from 'lucide-react';
 
 import { useI18n } from '@/shared/i18n';
+import { cn } from '@/shared/lib/cn';
 import { Button } from '@/shared/ui/button';
 import { FieldTooltip } from '@/shared/ui/field-tooltip';
 import { Textarea } from '@/shared/ui/textarea';
@@ -10,6 +11,7 @@ import { Textarea } from '@/shared/ui/textarea';
 type Props = {
   value: string;
   maxTerms: number;
+  count: number;
   onChange: (value: string) => void;
   onBlurNormalize?: () => void;
 
@@ -23,6 +25,7 @@ type Props = {
 export function VocabTermsInput({
   value,
   maxTerms,
+  count,
   onChange,
   onBlurNormalize,
   onTranslate,
@@ -36,9 +39,19 @@ export function VocabTermsInput({
 
   return (
     <div className="grid gap-5">
-      <div className="flex items-center gap-1.5 px-1">
-        <span className="text-xs text-muted-foreground">{t('lessons.vocab.label')}</span>
-        <FieldTooltip content={labelTooltip} />
+      <div className="flex items-center justify-between px-1">
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs text-muted-foreground">{t('lessons.vocab.label')}</span>
+          <FieldTooltip content={labelTooltip} />
+        </div>
+        <span
+          className={cn(
+            'text-xs tabular-nums',
+            count > maxTerms ? 'text-destructive' : 'text-muted-foreground',
+          )}
+        >
+          {count} / {maxTerms}
+        </span>
       </div>
       <Textarea
         name="vocab"

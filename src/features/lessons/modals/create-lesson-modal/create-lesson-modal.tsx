@@ -9,6 +9,7 @@ import { useCreateAssignmentsPreviewMutation } from '@/entities/lessons/model/mu
 import { useCreateLessonMutation } from '@/entities/lessons/model/mutation/create-lesson';
 import { useTeacherProfileQuery } from '@/entities/teacher';
 import { initExpandedTypes } from '@/features/lessons/modals/create-lesson-modal/lib/init-expanded-types';
+import { VOCAB_MAX_TERMS } from '@/features/lessons/modals/create-lesson-modal/lib/parse-vocab-terms';
 import { prepareLessonToSubmit } from '@/features/lessons/modals/create-lesson-modal/lib/prepare-lesson-to-submit';
 import {
   AssignmentAction,
@@ -115,7 +116,11 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
   const goNext = () => setStep((s: Steps) => Math.min(5, s + 1) as Steps);
   const goBack = () => setStep((s: Steps) => Math.max(1, s - 1) as Steps);
 
+  const vocabOverLimit = (draft.vocabItems ?? []).length > VOCAB_MAX_TERMS;
+
   const handleGenerateAssignments = (assignmentType: AssignmentType) => {
+    if (vocabOverLimit) return;
+
     setLoadingType(assignmentType);
 
     generateAssignments(
@@ -310,6 +315,7 @@ export function CreateLessonModal({ triggerProps }: { triggerProps?: TriggerProp
           expandedTypes={expandedTypes}
           loadingType={loadingType}
           isAnyLoading={loadingType !== null}
+          generateDisabled={vocabOverLimit}
           onToggleExpandedAction={toggleExpanded}
           onGenerateAction={handleGenerateAssignments}
           onDeleteAction={handleDeleteAssignments}

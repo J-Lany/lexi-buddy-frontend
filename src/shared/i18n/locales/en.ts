@@ -320,6 +320,7 @@ export const en = {
       labelTooltip:
         'Paste words separated by dots (up to {max}), then click the button to get AI translations. Review and edit before moving on.',
       inputHint: 'Enter up to {max} words separated by dots.',
+      maxWordsError: 'Maximum {max} words. Remove {count} to continue.',
       translating: 'Translating...',
       translateBtn: 'Provide translations and definitions',
       editTip: 'Tip: translations and synonyms are editable.',

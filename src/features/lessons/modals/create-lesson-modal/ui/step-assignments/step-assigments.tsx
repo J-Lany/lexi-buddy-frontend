@@ -24,6 +24,7 @@ type Props = {
 
   loadingType: AssignmentType | null;
   isAnyLoading: boolean;
+  generateDisabled?: boolean;
 
   errorMessage: string | null;
 
@@ -42,6 +43,7 @@ export function StepAssignments({
   expandedTypes,
   loadingType,
   isAnyLoading,
+  generateDisabled = false,
   onToggleExpandedAction,
   onGenerateAction,
   onDeleteAction,
@@ -96,7 +98,7 @@ export function StepAssignments({
                   size="sm"
                   variant="outline"
                   onClick={() => onGenerateAction(type)}
-                  disabled={isAnyLoading}
+                  disabled={isAnyLoading || generateDisabled}
                   className="h-9 rounded-full px-4"
                 >
                   {isLoading ? t('lessons.assignments.generating') : primaryLabel}
