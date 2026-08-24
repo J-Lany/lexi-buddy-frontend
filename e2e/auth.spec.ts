@@ -152,7 +152,14 @@ test.describe('Login flow', () => {
     await page.locator(emailInput).fill(EMAIL);
     await page.locator(passwordInput).fill(PASSWORD);
     await page.getByRole(submitButton.role, { name: submitButton.name }).click();
-    await expect(page).toHaveURL('/students', { timeout: 10_000 });
+    // A successful login does strictly more backend work than a rejected one
+    // (password verify + refresh-token hash + a DB write, vs. just a verify
+    // against the dummy hash — see AuthService.login), so it's the slower of
+    // the two outcomes under a cold/throttled staging instance. auth.setup.ts
+    // budgets 15s for the same login+redirect; this goes through an extra
+    // hop (React mutation → router.push → middleware) on top of that, so it
+    // shouldn't get a tighter budget than setup's.
+    await expect(page).toHaveURL('/students', { timeout: 15_000 });
   });
 
   test('wrong password → shows localized "Incorrect email or password.", stays on /login', async ({
@@ -174,7 +181,9 @@ test.describe('Login flow', () => {
     await page.locator(emailInput).fill(EMAIL);
     await page.locator(passwordInput).fill(PASSWORD);
     await page.getByRole(submitButton.role, { name: submitButton.name }).click();
-    await expect(page).toHaveURL('/students', { timeout: 10_000 });
+    // Same rationale as the "valid credentials" test above: a successful
+    // login is the slower outcome, so it gets the same 15s budget.
+    await expect(page).toHaveURL('/students', { timeout: 15_000 });
 
     // Open user menu and log out
     await page.getByRole('button', { name: 'Account menu' }).click();

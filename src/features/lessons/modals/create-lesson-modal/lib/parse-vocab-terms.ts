@@ -1,4 +1,4 @@
-const MAX_TERMS = 10;
+const MAX_TERMS = 15;
 
 export function parseVocabTerms(raw: string): { terms: string[]; normalized: string } {
   const parts = raw

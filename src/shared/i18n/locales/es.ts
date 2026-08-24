@@ -322,11 +322,12 @@ export const es: Translations = {
     vocab: {
       label: 'Vocabulario de la lección',
       labelTooltip:
-        'Escribe las palabras separadas por puntos (máximo {max}), pulsa el botón y la IA añadirá las traducciones. Revisa y edita antes de continuar.',
-      inputHint: 'Introduce hasta {max} palabras separadas por puntos.',
-      maxWordsError: 'Máximo {max} palabras. Elimina {count} para continuar.',
+        'Escribe palabras o frases separadas por puntos (hasta {max} elementos), pulsa el botón y la IA añadirá traducciones y sinónimos. Revisa y edita antes de continuar.',
+      inputHint: 'Introduce hasta {max} palabras o frases separadas por puntos.',
+      example: 'Ejemplo: weather. put down. be familiar with',
+      maxWordsError: 'Máximo {max} elementos. Elimina {count} para continuar.',
       translating: 'Traduciendo…',
-      translateBtn: 'Añadir traducciones y definiciones',
+      translateBtn: 'Añadir traducciones y sinónimos',
       editTip: 'Consejo: las traducciones y sinónimos son editables.',
       term: 'Término',
       translation: 'Traducción',
