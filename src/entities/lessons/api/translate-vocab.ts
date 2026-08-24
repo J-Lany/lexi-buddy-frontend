@@ -14,6 +14,9 @@ export type TranslateVocabPayload = {
 };
 
 export async function translateVocab(payload: TranslateVocabPayload): Promise<VocabItemDto[]> {
-  const { data } = await api.post<VocabItemDto[]>('/lessons/vocab/preview', payload);
+  // Backend does 1 AI call with a 90s timeout (ai.service.ts) — 90s + 30s headroom.
+  const { data } = await api.post<VocabItemDto[]>('/lessons/vocab/preview', payload, {
+    timeout: 120_000,
+  });
   return data;
 }

@@ -63,6 +63,8 @@ export function VocabTermsInput({
         onBlur={onBlurNormalize}
       />
 
+      <p className="px-1 text-xs text-muted-foreground">{t('lessons.vocab.example')}</p>
+
       <Button type="button" onClick={onTranslate} disabled={translateDisabled}>
         {isPending ? t('lessons.vocab.translating') : t('lessons.vocab.translateBtn')}
       </Button>

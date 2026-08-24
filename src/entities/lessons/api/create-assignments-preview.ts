@@ -4,7 +4,8 @@ import type { AgeGroup, Level } from '@/shared/domain/common';
 import type { InstructionLanguage } from '@/shared/domain/instruction-language';
 import type { Language } from '@/shared/domain/language';
 
-const AI_GENERATION_TIMEOUT_MS = 60_000;
+// Backend can do 2 sequential AI calls (repair round-trip) at 90s each — 180s + 30s headroom.
+const AI_GENERATION_TIMEOUT_MS = 210_000;
 
 export type CreateAssignmentsPayload = {
   type: AssignmentType;

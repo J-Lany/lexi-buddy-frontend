@@ -318,11 +318,12 @@ export const en = {
     vocab: {
       label: 'Lesson vocabulary',
       labelTooltip:
-        'Paste words separated by dots (up to {max}), then click the button to get AI translations. Review and edit before moving on.',
-      inputHint: 'Enter up to {max} words separated by dots.',
-      maxWordsError: 'Maximum {max} words. Remove {count} to continue.',
+        'Paste words or phrases separated by dots (up to {max} items), then click the button to get AI-generated translations and synonyms. Review and edit before moving on.',
+      inputHint: 'Enter up to {max} words or phrases separated by dots.',
+      example: 'Example: weather. put down. be familiar with',
+      maxWordsError: 'Maximum {max} items. Remove {count} to continue.',
       translating: 'Translating...',
-      translateBtn: 'Provide translations and definitions',
+      translateBtn: 'Provide translations and synonyms',
       editTip: 'Tip: translations and synonyms are editable.',
       term: 'Term',
       translation: 'Translation',
