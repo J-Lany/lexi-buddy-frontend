@@ -12,6 +12,7 @@ import type {
   DraftPatch,
 } from '@/features/lessons/modals/create-lesson-modal/model/types';
 import type { VocabItemDto } from '@/shared/api';
+import { useI18n } from '@/shared/i18n';
 import { getErrorMessage } from '@/shared/lib/get-error-message';
 
 import { VocabItemsList } from './ui/vocab-items-list';
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export function StepVocab({ draft, onChange }: Props) {
+  const { t } = useI18n();
   const [termsRaw, setTermsRaw] = useState<string>('');
   const [vocabItems, setVocabItems] = useState<VocabItemDto[]>(draft.vocabItems);
 
@@ -40,6 +42,7 @@ export function StepVocab({ draft, onChange }: Props) {
   }, [vocabItems, onChange]);
 
   const { terms, normalized } = useMemo(() => parseVocabTerms(termsRaw), [termsRaw]);
+  const overLimit = terms.length > VOCAB_MAX_TERMS;
 
   const normalizeTerms = () => {
     if (termsRaw !== normalized) setTermsRaw(normalized);
@@ -116,19 +119,26 @@ export function StepVocab({ draft, onChange }: Props) {
     });
   };
 
-  const canTranslate = !isPending && terms.length > 0;
+  const canTranslate = !isPending && terms.length > 0 && !overLimit;
+
+  const maxWordsError = overLimit
+    ? t('lessons.vocab.maxWordsError')
+        .replace('{max}', String(VOCAB_MAX_TERMS))
+        .replace('{count}', String(terms.length - VOCAB_MAX_TERMS))
+    : null;
 
   return (
     <div className="grid gap-5">
       <VocabTermsInput
         value={termsRaw}
         maxTerms={VOCAB_MAX_TERMS}
+        count={terms.length}
         onChange={setTermsRaw}
         onBlurNormalize={normalizeTerms}
         onTranslate={handleTranslate}
         translateDisabled={!canTranslate}
         isPending={isPending}
-        errorMessage={isError ? getErrorMessage(error) : null}
+        errorMessage={maxWordsError ?? (isError ? getErrorMessage(error) : null)}
       />
 
       {vocabItems.length > 0 ? (
