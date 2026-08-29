@@ -617,6 +617,8 @@ export const es: Translations = {
       AUTH_INVALID_TOKEN: 'Este enlace no es válido.',
       AUTH_TOKEN_EXPIRED: 'Este enlace ha caducado.',
       AUTH_PASSWORDS_DO_NOT_MATCH: 'Las contraseñas no coinciden.',
+      TEACHER_REQUEST_ALREADY_PENDING:
+        'Ya hay una solicitud para este estudiante esperando respuesta.',
     },
   },
   auth: {

@@ -11,6 +11,7 @@ const CODE_I18N_KEY: Record<string, string> = {
   AUTH_INVALID_TOKEN: 'errors.codes.AUTH_INVALID_TOKEN',
   AUTH_TOKEN_EXPIRED: 'errors.codes.AUTH_TOKEN_EXPIRED',
   AUTH_PASSWORDS_DO_NOT_MATCH: 'errors.codes.AUTH_PASSWORDS_DO_NOT_MATCH',
+  TEACHER_REQUEST_ALREADY_PENDING: 'errors.codes.TEACHER_REQUEST_ALREADY_PENDING',
 };
 
 const STATUS_I18N_KEY: Record<number, string> = {

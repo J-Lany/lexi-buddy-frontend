@@ -92,6 +92,7 @@ describe('getErrorI18nKey', () => {
     ['AUTH_INVALID_TOKEN', 400, 'errors.codes.AUTH_INVALID_TOKEN'],
     ['AUTH_TOKEN_EXPIRED', 400, 'errors.codes.AUTH_TOKEN_EXPIRED'],
     ['AUTH_PASSWORDS_DO_NOT_MATCH', 400, 'errors.codes.AUTH_PASSWORDS_DO_NOT_MATCH'],
+    ['TEACHER_REQUEST_ALREADY_PENDING', 409, 'errors.codes.TEACHER_REQUEST_ALREADY_PENDING'],
     ['VALIDATION_FAILED', 400, 'errors.validation'],
     ['FORBIDDEN', 403, 'errors.forbidden'],
     ['NOT_FOUND', 404, 'errors.notFound'],
