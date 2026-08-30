@@ -618,6 +618,7 @@ export const ru: Translations = {
       AUTH_INVALID_TOKEN: 'Ссылка недействительна.',
       AUTH_TOKEN_EXPIRED: 'Срок действия ссылки истёк.',
       AUTH_PASSWORDS_DO_NOT_MATCH: 'Пароли не совпадают.',
+      TEACHER_REQUEST_ALREADY_PENDING: 'Запрос этому ученику уже отправлен и ожидает ответа.',
     },
   },
   auth: {

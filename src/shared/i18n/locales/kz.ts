@@ -613,6 +613,7 @@ export const kz: Translations = {
       AUTH_INVALID_TOKEN: 'Сілтеме жарамсыз.',
       AUTH_TOKEN_EXPIRED: 'Сілтеменің мерзімі өтті.',
       AUTH_PASSWORDS_DO_NOT_MATCH: 'Құпия сөздер сәйкес келмейді.',
+      TEACHER_REQUEST_ALREADY_PENDING: 'Бұл оқушыға жіберілген сұраныс жауапты күтіп тұр.',
     },
   },
   auth: {

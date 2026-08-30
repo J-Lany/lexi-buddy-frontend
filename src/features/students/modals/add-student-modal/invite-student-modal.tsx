@@ -8,9 +8,9 @@ import { toast } from 'sonner';
 import type { StudentBySearchDto } from '@/entities/students/api/search-students';
 import { useInviteStudentMutation } from '@/entities/students/model/mutation/invite-student';
 import { useTeacherProfileQuery } from '@/entities/teacher/model/query/use-teacher-profile';
+import { getErrorI18nKey } from '@/shared/api';
 import { useI18n } from '@/shared/i18n';
 import { cn } from '@/shared/lib/cn';
-import { getErrorMessage } from '@/shared/lib/get-error-message';
 import { Button } from '@/shared/ui/button';
 import { ResponsiveModal } from '@/shared/ui/responsive-modal';
 
@@ -57,7 +57,9 @@ export function InviteStudentModal({ triggerProps }: { triggerProps?: TriggerPro
           setOpen(false);
         },
         onError: (e) => {
-          toast.error(t('students.invite.errorTitle'), { description: getErrorMessage(e) });
+          toast.error(t('students.invite.errorTitle'), {
+            description: t(getErrorI18nKey(e)),
+          });
         },
       },
     );

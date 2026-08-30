@@ -613,6 +613,7 @@ export const en = {
       AUTH_INVALID_TOKEN: 'This link is invalid.',
       AUTH_TOKEN_EXPIRED: 'This link has expired.',
       AUTH_PASSWORDS_DO_NOT_MATCH: 'Passwords do not match.',
+      TEACHER_REQUEST_ALREADY_PENDING: 'A request to this student is already awaiting a response.',
     },
   },
   auth: {
