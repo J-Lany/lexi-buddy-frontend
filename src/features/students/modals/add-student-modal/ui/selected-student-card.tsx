@@ -6,6 +6,7 @@ import type { StudentBySearchDto } from '@/entities/students/api/search-students
 import { useI18n } from '@/shared/i18n';
 import { Button } from '@/shared/ui/button';
 
+import { getStudentDisplayName, getStudentHandle } from '../lib/student-display';
 import { NameAvatar } from './name-avatar';
 
 type Props = {
@@ -15,7 +16,8 @@ type Props = {
 
 export function SelectedStudentCard({ student, onClear }: Props) {
   const { t } = useI18n();
-  const displayName = student.firstName || student.username || '?';
+  const displayName = getStudentDisplayName(student);
+  const handle = getStudentHandle(student);
 
   return (
     <div
@@ -29,10 +31,8 @@ export function SelectedStudentCard({ student, onClear }: Props) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <span className="truncate text-[15px] font-semibold leading-snug">{displayName}</span>
-        {student.username && (
-          <span className="truncate text-[13px] leading-snug text-muted-foreground">
-            @{student.username}
-          </span>
+        {handle && (
+          <span className="truncate text-[13px] leading-snug text-muted-foreground">{handle}</span>
         )}
       </div>
 
