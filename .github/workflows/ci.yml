@@ -32,7 +32,8 @@ jobs:
         run: npm run build
 
   e2e:
-    runs-on: ubuntu-latest
+    # ubuntu-latest = 26.04, Playwright 1.60 там не ставит chromium
+    runs-on: ubuntu-24.04
     needs: build
 
     steps:

@@ -9,6 +9,7 @@ import { useI18n } from '@/shared/i18n';
 import { Input } from '@/shared/ui/input';
 
 import { normalizeQuery } from '../lib/normalize-search-query';
+import { getStudentDisplayName, getStudentHandle } from '../lib/student-display';
 import { NameAvatar } from './name-avatar';
 import { SelectedStudentCard } from './selected-student-card';
 
@@ -83,7 +84,8 @@ export function StudentSearchPicker({ value, onChange }: Props) {
               ) : (
                 <div>
                   {data.map((s) => {
-                    const displayName = s.firstName || s.username || '?';
+                    const displayName = getStudentDisplayName(s);
+                    const handle = getStudentHandle(s);
                     return (
                       <button
                         key={s.id}
@@ -99,9 +101,9 @@ export function StudentSearchPicker({ value, onChange }: Props) {
                           <span className="truncate text-[14px] font-medium leading-snug">
                             {displayName}
                           </span>
-                          {s.username && (
+                          {handle && (
                             <span className="truncate text-[12.5px] leading-snug text-muted-foreground">
-                              @{s.username}
+                              {handle}
                               {s.level ? ` · ${s.level}` : ''}
                             </span>
                           )}
